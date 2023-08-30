@@ -9,7 +9,7 @@ export interface HomeProps {};
 
     return (
         <div>
-Home
+         Home
         </div>
     );
 }

@@ -5,11 +5,12 @@ import Userpanel from "./pages/Userpanel.tsx";
 import Adminpanel from "./pages/Adminpanel.tsx";
 import HomePage from "./pages/Home.tsx";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {Signup} from "./components/Signup.tsx";
+import SignupPage from "./components/Signup.tsx";
 import LoginPage from "./components/Login.tsx";
 import { initializeApp } from 'firebase/app';
 import { config } from './config/config.ts';
 import AuthRoute from './components/AuthRoute.tsx';
+import Navbar from './components/Navbar.tsx';
 
 //  initializeApp(config.firebaseConfig)//just once
 //export const firebase = initializeApp(config.firebaseConfig);
@@ -23,6 +24,7 @@ export interface IApplicationProps {}
 const Application: React.FunctionComponent<IApplicationProps> = (props) => {
   return (
     <BrowserRouter>
+    <Navbar/>
         <Routes>
         
             <Route 
@@ -38,7 +40,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
             
               <Route path="adminpanel" element={<Adminpanel/>}/>
               <Route path="userpanel" element={<Userpanel />}/>
-              <Route path="signup" element={<Signup />}/>
+              <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>
 
     </Routes>

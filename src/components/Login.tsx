@@ -11,7 +11,7 @@ import {
   } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { connectStorageEmulator } from 'firebase/storage';
-
+//https://codingpr.com/react-firebase-auth-tutorial/
 
 export interface IApplicationProps {};
 
@@ -69,15 +69,22 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     .then((response) =>{
       navigate('/');
       console.log("hej");
-        //console.log(response.user.uid);
-       // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
+        console.log(response.user.uid);
+        //nie tak zrob osobny authAdminRouthe ten nizej nie bedzie dzialac ok
+       response.user.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82" ? navigate('/adminpanel'): navigate('/')
   }).catch(error =>{
       console.log(error);
       setAuthing(false);
       console.log("ho");
    })
-};
 
+   
+};
+const resetFormFields = () => {
+  return (
+    setFormFields(defaultFormFields)
+  );
+}
   
 
     return (

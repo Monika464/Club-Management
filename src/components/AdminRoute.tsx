@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export interface IAuthRouteProps {};
+export interface IAdminRouteProps {};
 //zrob nowy authcontext z currentuser https://codingpr.com/react-firebase-auth-tutorial/
 
-const AuthRoute: React.FunctionComponent<IAuthRouteProps> =(props) => {
+const AdminRoute: React.FunctionComponent<IAdminRouteProps> =(props) => {
      const {children} = props;
      const auth = getAuth();
      const navigate = useNavigate();
@@ -14,20 +14,20 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> =(props) => {
 
      useEffect(()=>{
         
-     const AuthCheck = onAuthStateChanged (auth, (user)=>{
-         if(user){
+     const AuthCheckAdmin = onAuthStateChanged (auth, (user)=>{
+         if(user?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
             setLoading(false)
-            console.log("jest user",user.displayName, user.email, user.uid);
-            navigate('/userpanel');
+            console.log("jest admin",user.displayName, user.email);
+            navigate('/adminpanel');
                        
          } else {
-            console.log("unauthorized");
+            console.log("admin unauthorized");
             navigate('/login')
          }
 
      });
 
-     return () => AuthCheck();
+     return () => AuthCheckAdmin();
 
     },[auth]); 
 
@@ -37,4 +37,4 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> =(props) => {
     return <>{children}</>
 };
 
-export default AuthRoute;
+export default AdminRoute;

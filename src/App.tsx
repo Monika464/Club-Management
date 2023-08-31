@@ -10,6 +10,7 @@ import LoginPage from "./components/Login.tsx";
 import { initializeApp } from 'firebase/app';
 import { config } from './config/config.ts';
 import AuthRoute from './components/AuthRoute.tsx';
+import AdminRoute from './components/AdminRoute.tsx';
 import Navbar from './components/Navbar.tsx';
 
 //  initializeApp(config.firebaseConfig)//just once
@@ -31,15 +32,28 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              path="/" 
              element={
                        /*<AuthRoute>*/
-                       <AuthRoute>
+                      
                             <HomePage />
-                        </AuthRoute>
+                       
                        /* </AuthRoute>*/
                     }
             />
-            
-              <Route path="adminpanel" element={<Adminpanel/>}/>
-              <Route path="userpanel" element={<Userpanel />}/>
+             
+              <Route 
+              path="adminpanel" 
+              element={
+                       <AdminRoute>
+                         <Adminpanel/>
+                        </AdminRoute>
+
+                      }
+              />
+              <Route path="userpanel" element={
+                <AuthRoute>
+              <Userpanel />
+              </AuthRoute>       
+              
+              }/>
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>
 

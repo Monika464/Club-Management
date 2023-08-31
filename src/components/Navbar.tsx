@@ -1,5 +1,5 @@
 import { getAuth, signOut } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Temple from './../assets/temple.svg'
   import './navbar.css';  
@@ -15,6 +15,8 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const logout= ()=> {
         return signOut(auth);
         }
+
+       // useEffect(()=>{ navigate('/login')},[logout])
 
     return (
         <div>

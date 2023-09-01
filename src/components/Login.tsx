@@ -10,14 +10,20 @@ import {
    UserCredential 
   } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { connectStorageEmulator } from 'firebase/storage';
 //https://codingpr.com/react-firebase-auth-tutorial/
+import { useContext } from 'react'
+import { UserContext } from '../context/UserContext';
+import { auth } from "../App";
 
 export interface IApplicationProps {};
 
 
 const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
-    const auth = getAuth();
+  const { currentUser} = useContext(UserContext);
+
+  console.log('currentUser',currentUser)
+
+    //const auth = getAuth();
     const navigate = useNavigate();
     const [authing, setAuthing] = useState(false);
     
@@ -37,7 +43,7 @@ const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
         const googleProvider = new GoogleAuthProvider();
         signInWithPopup(auth, googleProvider)
         .then((response) =>{
-            navigate('/');
+            navigate('/userpanel');
             console.log("hej");
               //console.log(response.user.uid);
              // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
@@ -67,7 +73,7 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     // Send the email and password to firebase
     signInWithEmailAndPassword(auth, email, password)
     .then((response) =>{
-      navigate('/');
+      navigate('/userpanel');
       console.log("hej");
         console.log(response.user.uid);
         //nie tak zrob osobny authAdminRouthe ten nizej nie bedzie dzialac ok
@@ -85,7 +91,9 @@ const resetFormFields = () => {
     setFormFields(defaultFormFields)
   );
 }
-  
+
+
+
 
     return (
       

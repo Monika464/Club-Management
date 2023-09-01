@@ -1,10 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useContext } from 'react'
+import { UserContext } from '../context/UserContext';
+import { db } from "../App";
 
-const  Userpanel: React.FC =()  => {
+export interface IUserProps {};
+
+
+const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
+
+  const { currentUser} = useContext(UserContext);
+  console.log('currentUser userpan',currentUser);
+  console.log('db',db)
 
         return (
             <div>
            Userpanel
+
+      <div className="siteLink">  
+  
+    <ul>
+      <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>
+   </ul>
+
+   </div>
             </div>
         );
     }

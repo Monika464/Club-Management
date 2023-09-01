@@ -12,19 +12,31 @@ import { config } from './config/config.ts';
 import AuthRoute from './components/AuthRoute.tsx';
 import AdminRoute from './components/AdminRoute.tsx';
 import Navbar from './components/Navbar.tsx';
+import { UserContextProvider} from './context/UserContext.tsx';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 //  initializeApp(config.firebaseConfig)//just once
-//export const firebase = initializeApp(config.firebaseConfig);
-const fire = initializeApp(config.firebaseConfig)
-//console.log("fire",fire)
+
+ const app = initializeApp(config.firebaseConfig)
+ export const auth = getAuth(app);
+ export const db = getFirestore(app);
+
 
 //https://www.youtube.com/watch?v=b_52NmIfDr8  5: 31
+//aktualne
+//customhokk https://www.youtube.com/watch?v=tMpn7oUsNGA
 
 export interface IApplicationProps {}
 
 const Application: React.FunctionComponent<IApplicationProps> = (props) => {
+
+//const [isUser, setIsUser] = useContext(false)
+  
   return (
+ 
     <BrowserRouter>
+    <UserContextProvider>
     <Navbar/>
         <Routes>
         
@@ -50,7 +62,9 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               />
               <Route path="userpanel" element={
                 <AuthRoute>
+                    
               <Userpanel />
+                  
               </AuthRoute>       
               
               }/>
@@ -58,7 +72,10 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               <Route path="login" element={<LoginPage />}/>
 
     </Routes>
+    </UserContextProvider>
 </BrowserRouter>
+
+
   )
 }
 

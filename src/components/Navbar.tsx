@@ -16,7 +16,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
         return signOut(auth);
         }
 
-       // useEffect(()=>{ navigate('/login')},[logout])
+     
 
     return (
         <div>

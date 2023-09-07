@@ -2,20 +2,27 @@
 import React from "react";
 import {Link, NavLink, Outlet, RouterProvider} from "react-router-dom";
 import AuthRoute from "../components/AuthRoute";
-import { db } from "../App";
+import {DatesTrainings} from "../components/DatesTrainings.tsx";
+import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
+
 
 export interface IAdminProps {};
 
 
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
-console.log("AuthRoute",AuthRoute)
+//console.log("AuthRoute",AuthRoute)
 
     //link do usera
 
     return (
         <div>
             adminpanel
+            <br></br>
+            <DatesTrainings/>
+            <br></br>
+            <DatePickerTrainings/>
+    
 
             <div className="siteLink"> 
   

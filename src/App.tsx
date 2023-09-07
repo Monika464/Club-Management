@@ -16,9 +16,10 @@ import { UserContextProvider} from './context/UserContext.tsx';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+
 //  initializeApp(config.firebaseConfig)//just once
 
- const app = initializeApp(config.firebaseConfig)
+ export const app = initializeApp(config.firebaseConfig)
  export const auth = getAuth(app);
  export const db = getFirestore(app);
 

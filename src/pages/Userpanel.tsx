@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
-import { db } from "../App";
+
 
 export interface IUserProps {};
 
@@ -10,8 +10,8 @@ export interface IUserProps {};
 const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
   const { currentUser} = useContext(UserContext);
-  console.log('currentUser userpan',currentUser);
-  console.log('db',db)
+  //console.log('currentUser userpan',currentUser);
+
 
         return (
             <div>

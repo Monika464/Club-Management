@@ -33,8 +33,8 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
    const [isReset, setIsReset] = useState<boolean>(false)
 
 //console.log('dayRange',dayRange);
-console.log('userChoice',userChoice)
-console.log('selectedDates',selectedDates)
+//console.log('userChoice',userChoice)
+//console.log('selectedDates',selectedDates)
 
   const getDatesBetween = (startDate: Date, endDate: Date) => { 
     const datess = [];

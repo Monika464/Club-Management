@@ -9,7 +9,7 @@ import {useFetchDates} from "../hooks/useFetchDates.tsx";
 import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
 import { collection } from "firebase/firestore";
 import { db } from "../App.tsx";
-import { useSearchDates } from "../hooks/useSearchdates.tsx";
+import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
 import { ShowDays } from "../components/ShowDays.tsx";
 
 

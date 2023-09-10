@@ -35,17 +35,19 @@ export const useFetchDates = (): Date[] | null => {
 
         let tempContainer: any[] =[]; 
         let tempContainer2: any[] =[];
+
+        const getingDates = async () =>{
     
-        const unsub = onSnapshot(
+        const unsub =  onSnapshot(
             daysCollection, 
             (snapshot: { docs: { data: () => any; }[]; })=>{
                 if(snapshot){
    
-                       snapshot.docs.map((doc)=> {
-                      //console.log("uu", doc.data().datesSet,"doc")               
-                       tempContainer.push((doc.data().datesSet))      
+                      snapshot.docs.map((doc)=> {
+                      console.log("uu", doc.data().datesSet,"doc")               
+                        tempContainer.push((doc.data().datesSet))      
                        })
-                     // console.log('tempContainer',tempContainer) 
+                      console.log('tempContainer',tempContainer) 
                         tempContainer.map((elem, index)=>{
                             //console.log('elem', elem, 'index', index);
                              elem.map((elem2: any, index2: any)=>{
@@ -65,35 +67,20 @@ export const useFetchDates = (): Date[] | null => {
                      const tempContainer3 = [...tempContainer2];
           
                      tempContainer3.map((elem, index) => {
-                     console.log('elem3', elem.toDate());
+                    // console.log('elem3', elem.toDate());
                     });      
                      setData(tempContainer3);
                  //  console.log('data',data)
                    
-                 const duplicates: any[] = [];
-
-                 tempContainer3.forEach((elem, index) => {
-                    const timestampA = elem.toDate().getTime();
-                    
-                    // Porównaj aktualny element z pozostałymi
-                    for (let i = index + 1; i < tempContainer3.length; i++) {
-                      const timestampB = tempContainer3[i].toDate().getTime();
-                  
-                      if (timestampA === timestampB) {
-                        // Znaleziono duplikat
-                        duplicates.push(elem);
-                        break; // Jeśli znaleziono duplikat, można przerwać pętlę, aby nie szukać dalej
-                      }
-                    }
-                  });
-                  
-                  console.log("duplicates",duplicates)
-                  duplicates.map((dup)=>{console.log("dup",dup.toDate())})
+               
             
             }
             })
 
       return unsub;
+
+    }
+    getingDates()
 
     },[db])
 

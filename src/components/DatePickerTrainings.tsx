@@ -8,11 +8,14 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'; 
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../App';
 
 
 interface PossibleTrainingDate {
   value: Date;
   label: string;
+  possibleTrainingDate: Date | null;
 }
 
 
@@ -26,9 +29,12 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
   const [dayRange, setDayRange] = useState<Date[]>([]);
   const [closeMenu, setCloseMenu] = useState(false); // Dodaj stan closeMenu 
   //const [selectedDate, setSelectedDate] = useState([]); 
-   const[userChoice, setUserChoice] = useState({})
+   const[userChoice, setUserChoice] = useState<Date[]>([])
+   const [isReset, setIsReset] = useState<boolean>(false)
 
-console.log('dayRange',dayRange);
+//console.log('dayRange',dayRange);
+console.log('userChoice',userChoice)
+console.log('selectedDates',selectedDates)
 
   const getDatesBetween = (startDate: Date, endDate: Date) => { 
     const datess = [];
@@ -78,6 +84,39 @@ if(dayRange){
 
  },[dayRange])   
  
+ //wrzuc tutaj zawartosc komponentu SenddatesTobase
+
+ const resetState = () => {
+  setUserChoice([]);
+  setSelectedDates([]);
+  //setStartDate(new Date());
+  setEndDate(null);
+  setCloseMenu(true);
+  setIsReset(true);
+};
+
+ const sendToFirebase =async() =>{
+  console.log("wyswietl co chcesz wysłac",userChoice) 
+ // setStartDate(new Date()); // Resetuj startDate do wartości domyślnej
+  //setEndDate(null); // Resetuj endDate do wartości domyślnej
+
+console.log(userChoice,"userchoceprops")
+ 
+ const docRef = await addDoc(collection(db, "trainingDays"), {
+                      datesSet: userChoice?.map((dat)=> new Date(dat)),
+                       created_at: serverTimestamp()  
+                         })
+
+                         .then(()=>{                       
+                          console.log("susceess!! Data sent")
+                         resetState();
+                          //setIsReset(true);
+                      })
+                         .catch((err)=>{console.error(err)}) 
+            
+          
+ }
+
 
   return ( 
 <>
@@ -89,12 +128,14 @@ if(dayRange){
       onChange={onChange}
       selectsRange
       inline
+      isClearable
 />
 
 <Select
       closeMenuOnSelect={closeMenu}  
       components={animatedComponents} 
       isMulti
+      isClearable
       options={selectedDates}
       onChange={(choice) => {     
      const selectedValues = choice.map(option => option.value); 
@@ -102,8 +143,18 @@ if(dayRange){
       
       }}
     />
-    
 
+{/*
+<SendDatesToBase  
+    userChoice={userChoice}  
+    setUserChoice={setUserChoice} 
+    setStartDate={setStartDate}
+    setEndDate={setEndDate}
+    setSelectedDates={setSelectedDates} 
+    setCloseMenu={setCloseMenu} 
+    />
+    */}
+  <button className={"btn"} onClick={sendToFirebase}  >send to ok</button>
 
 </>
 

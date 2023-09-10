@@ -45,8 +45,8 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              path="/" 
              element={
                        /*<AuthRoute>*/
-                      
-                            <HomePage />
+                       <Userpanel />
+                            /*<HomePage />*/
                        
                        /* </AuthRoute>*/
                     }

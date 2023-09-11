@@ -26,8 +26,8 @@ export const useSearchDates = (howMany: number): number | null => {
     };
 
     getDates();
-console.log("paymentDate",paymentDate)
-console.log("dataFromBase",dataFromBase)
+//console.log("paymentDate",paymentDate)
+//console.log("dataFromBase",dataFromBase)
 
   }, [db]);
 
@@ -37,7 +37,7 @@ console.log("dataFromBase",dataFromBase)
     const baseCheck = async ()=>{
 
     if (isDb) {
-  console.log("mamy",dataFromBase, paymentDate);
+
   const paymentYear = paymentDate?.toDate().getFullYear();
   const paymentMonth = paymentDate?.toDate().getMonth();
   const paymentDay = paymentDate?.toDate().getDate();

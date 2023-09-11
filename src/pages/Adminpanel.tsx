@@ -11,6 +11,7 @@ import { collection } from "firebase/firestore";
 import { db } from "../App.tsx";
 import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
 import { ShowDays } from "../components/ShowDays.tsx";
+import { useSearchIndexToday } from "../hooks/useSearchIndexToday.tsx";
 
 
 export interface IAdminProps {};  
@@ -19,11 +20,15 @@ export interface IAdminProps {};
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
     //useFetchDates();
 
-    const data =  useFetchDates();
+    const dataFromBase = useFetchDates();
 
-    useSearchDates(9);
+    useSearchDates(0);
 
-  // console.log("dataAdminPan",data)
+    const dzisIndex = useSearchIndexToday()
+    
+   dataFromBase?.map((el,ind)=>{
+    console.log("dzisIndex ",dzisIndex )
+   })
 
     //link do usera
 

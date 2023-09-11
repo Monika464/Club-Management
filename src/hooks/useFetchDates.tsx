@@ -44,10 +44,10 @@ export const useFetchDates = (): Date[] | null => {
                 if(snapshot){
    
                       snapshot.docs.map((doc)=> {
-                      console.log("uu", doc.data().datesSet,"doc")               
+                     // console.log("uu", doc.data().datesSet,"doc")               
                         tempContainer.push((doc.data().datesSet))      
                        })
-                      console.log('tempContainer',tempContainer) 
+                     // console.log('tempContainer',tempContainer) 
                         tempContainer.map((elem, index)=>{
                             //console.log('elem', elem, 'index', index);
                              elem.map((elem2: any, index2: any)=>{

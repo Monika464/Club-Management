@@ -4,68 +4,78 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 
-//export const useSearchDates = ( startingDate: Date, indexesAmount: number): Date[] | null | number => {
-    export const useSearchDates = (): Date[] | null | number => {
 
-        const [paymentDate, setPaymentDate] = useState<Date[] | null>(null)
-        const [dateStartingPoint, setDateStartingPoint] = useState<Date[] | null>(null)
-        const [newPaymentDate, setNewPaymentDate] = useState<Date[] | null>(null)
+export const useSearchDates = (howMany: number): number | null => {
+  const [paymentDate, setPaymentDate] = useState<Date[] | null>(null);
+  const [wantedIndex, setWantedIndex] = useState<number | null>(null);
+  const [isDb, setIsDb] = useState<boolean>(false);
 
-    const dataFromBase =  useFetchDates();
+  const dataFromBase = useFetchDates();
 
-    //console.log("data z nowy searchhook",dataFromBase)
+  useEffect(() => {
+    const getDates = async () => {
+      const userRef = doc(db, "usersData", "z9qvxJlbbWJKLBHsgHx7");
+      const docSnap = await getDoc(userRef);
 
-    //pobieramy z bazy szukana date
+      if (docSnap.data()) {
+        setPaymentDate(docSnap.data().paymentDate);
+        setIsDb(true)
+      } else {
+        console.log("not yet");
+      }
+    };
 
-    useEffect(()=>{
+    getDates();
+console.log("paymentDate",paymentDate)
+console.log("dataFromBase",dataFromBase)
 
-       const getDates = async () =>{
+  }, [db]);
 
-        const userRef = doc(db,"usersData", "z9qvxJlbbWJKLBHsgHx7" )
-        const docSnap = await getDoc(userRef);
-       // console.log(docSnap.data()?.paymentDate);
 
-           if(docSnap.data()){
-              setPaymentDate(docSnap.data().paymentDate);
-            } else {console.log("not yet")}
+  useEffect(()=>{
+
+    const baseCheck = async ()=>{
+
+    if (isDb) {
+  console.log("mamy",dataFromBase, paymentDate);
+  const paymentYear = paymentDate?.toDate().getFullYear();
+  const paymentMonth = paymentDate?.toDate().getMonth();
+  const paymentDay = paymentDate?.toDate().getDate();
+  console.log("paymentYear",paymentYear)
+
+
+        for (let ind = 0; ind < dataFromBase?.length; ind++) {
+            const dat = dataFromBase[ind];
+            const datYear = dat?.toDate().getFullYear();
+            const datMonth = dat?.toDate().getMonth();
+            const datDay = dat?.toDate().getDate();
+
+
+
+                     if (
+                            paymentYear === datYear &&
+                            paymentMonth === datMonth &&
+                            paymentDay === datDay
+                     ) {
+            //console.log("yes, yes", dat, ind);
+            //setWantedIndex(ind + 8);
+            setWantedIndex(ind + howMany);
+            break; // Przerwij pętlę po znalezieniu odpowiedniego indeksu
+            }
         }
-            
-       getDates();
 
-      
+    } else { console.log("...loading")}
+   }
+   baseCheck();
 
-    },[db])
+   console.log("wantedIndex", wantedIndex);
 
-    
-
-    
-
-    if(dataFromBase){
-    dataFromBase.map((dat,ind) =>{
-
-        const paymentyear = paymentDate?.toDate().getYear()
-        const paymentmonth = paymentDate?.toDate().getMonth()
-        const paymentday = paymentDate?.toDate().getDate()
-
-        const datyear = dat?.toDate().getYear()
-        const datmonth = dat?.toDate().getMonth()
-        const datday = dat?.toDate().getDate()
-
-        if (paymentyear === datyear && paymentmonth === datmonth && paymentday === datday){
-            console.log("yes,yes", dat.toDate())
-        }
-        
-        //console.log("dat",dat,ind)
-    })
+  },[db,isDb,wantedIndex])
 
 
-}
-    const a: number = 1;
+  return wantedIndex;
 
-    return a
-}
 
-/*const handleComplete = async (id: string, completed: boolean): Promise<void> => {
-        await updateDoc(doc(db, `users/${userId}/tasks/${id}`), {
-            completed: !completed
-        })}*/
+};
+
+

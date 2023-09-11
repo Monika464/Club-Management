@@ -13,7 +13,7 @@ import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
 import { ShowDays } from "../components/ShowDays.tsx";
 
 
-export interface IAdminProps {}; 
+export interface IAdminProps {};  
 
 
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
@@ -21,7 +21,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
     const data =  useFetchDates();
 
-    useSearchDates()
+    useSearchDates(9);
 
   // console.log("dataAdminPan",data)
 

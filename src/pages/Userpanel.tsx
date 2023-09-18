@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
+import { UserProfile } from "../components/UserProfile";
 
 
 export interface IUserProps {};
@@ -16,7 +17,8 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
         return (
             <div>
            Userpanel
-
+           <br></br>
+        < UserProfile/>
       <div className="siteLink">  
   
     <ul>

@@ -44,11 +44,10 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
             <Route 
              path="/" 
              element={
-                       /*<AuthRoute>*/
-                       <Userpanel />
-                            /*<HomePage />*/
-                       
-                       /* </AuthRoute>*/
+                       <AuthRoute>
+                       <HomePage />
+                                             
+                       </AuthRoute>
                     }
             />
              
@@ -61,6 +60,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 
                       }
               />
+              
               <Route path="userpanel" element={
                 <AuthRoute>
                     
@@ -69,6 +69,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               </AuthRoute>       
               
               }/>
+           
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>
 

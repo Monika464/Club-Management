@@ -1,56 +1,99 @@
-import { Firestore } from "firebase/firestore";
+import { Firestore, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { SetStateAction, useEffect, useState } from "react";
+import { db } from "../App.js";
+import { doc, updateDoc, serverTimestamp  } from "firebase/firestore";
+
 
 export interface IFetchDates {
 
-    db: Firestore,
+    db: Firestore,  
     colName: string,
-    data: Date | null,
-    setData: React.Dispatch<SetStateAction<Date | null>>
+    userInfo: string | null,
+    setUserInfo: React.Dispatch<SetStateAction<string | null>>
 
 };
 
-export const useFetchUsers  = (): Date[] | null => {
+export const useFetchUsers  = ():any | null => { 
 
-	const getUsersData = ()=>{     
+    const [usersInfo, setUsersInfo ] =useState<String[] | null>(null)
+    const [loadingUsers, setLoadingusers] =useState<boolean>(false)
+    const [loadingDB, setLoadingDB] =useState<boolean>(false)
+
+    useEffect(()=>{
+
+      const getUsersData = ()=>{     
+
+        if (!db) {
+       console.error('Firebase Firestore is not ready yet');
+       setLoadingDB(true)
+        
+       } else { setLoadingDB(false)}
+                 
+      const q =  query(collection(db, "usersData"), orderBy ("surname"));
    
-        //if (db) {
-//const q = query(collection(db, "usersData"), where("name", "==", "Rafał"));
+   //zeby sie get user robily po zaladowaniu odrazu
+   const temp = []; 
+   
+         const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
+          // setLoadingusers(true) 
+ 
+             
 
- if (!db) {
-        console.error('Firebase Firestore is not ready yet');
-         return;
-        }
-                  
-    const q = query(collection(db, "usersData"), orderBy ("name"));
-    
-    //zeby sie get user robily po zaladowaniu odrazu
-    
-const tempFunction = async () =>{
-    
-     const unsubscribe = await onSnapshot(q, (querySnapshot) => {
-    
-    //zmien pobieranie jak sie da na prostsze  
-           const temp = [];
-            querySnapshot.forEach((doc) => {
-              //cities.push(doc.data().name);
-               temp.push(doc.data());
-                setUsersFromBase(temp);
-              //setUsersFromBase((prev) => [...prev,doc.data()])
-            });
+           querySnapshot.forEach((doc) => {   
+            
+             //cities.push(doc.data().name);
+              temp.push(doc.data()); 
+              
+             // setLoadingusers(false)
+             //setUsersFromBase((prev) => [...prev,doc.data()])
+           });  
           
          
-    });
-   
-         return unsubscribe;
-      }
-      
-       tempFunction();  
-   console.log('usersFromBase' ,usersFromBase )    
-         
-   };
+          });
+          setUsersInfo (temp); 
+  
+        return unsubscribe;
+     }
+     
+     
+     //console.log('usersInfoWew' ,usersInfo )    
+     //console.log('db' ,db )  
+        
+  
+
+  getUsersData()
 
 
-useEffect(()=>{
-getUsersData();
-},[currentActiveUser])
+    },[db])
+
+	
+return {usersInfo,loadingUsers,loadingDB }
 }
+
+
+
+export const useUserForUpdate =()=>{
+
+
+ // const docRef = doc(db, 'usersaData', 'Y19J2pywqfd2YKN3zVVGlzYEWR82');
+  
+  // Update the timestamp field with the value from the server
+/*
+  const updatingUser = async()=>{
+
+    const updateTimestamp = await updateDoc(washingtonRef, {
+      capital: true
+    });
+  
+    const updateTimestamp = await updateDoc(docRef, {
+        timestamp: serverTimestamp()
+    });
+*/
+
+  }
+
+  
+
+
+
+

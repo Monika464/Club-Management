@@ -11,7 +11,7 @@ export const useSearchIndexToday = (): number | null => {
     useEffect(()=>{
      
         setToday(new Date())
-        console.log("today",today);
+        //console.log("today",today);
 
         const todayYear = today?.getFullYear();
         const todayMonth = today?.getMonth();
@@ -56,7 +56,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay3 === datDay
                      ) {
-                        console.log("maaaam2", dat, ind);
+                        //console.log("maaaam2", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -79,7 +79,7 @@ export const useSearchIndexToday = (): number | null => {
 
 
         }
-  console.log(todaysIndex)
+ // console.log(todaysIndex)
 
     },[dataFromBase])
 

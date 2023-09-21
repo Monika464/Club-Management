@@ -98,14 +98,18 @@ const handleName = () =>{
        await naszeMetaUid;
        
 if(naszeMetaUid === user?.uid){
-  updateProfile(auth.currentUser, {
+  updateProfile(user, {
     // displayName: name,
      photoURL: imageUpload
    }).then(() => {
      console.log("Profile updated")
-     // Profile updated!
-     // ...
-   }).catch((error) => {
+   })
+   .then(() => {
+    alert("Photo updated. Refresh the page")
+    // Profile updated!
+    // ...
+  })
+   .catch((error) => {
      // An error occurred
      console.error(error)
      // ...

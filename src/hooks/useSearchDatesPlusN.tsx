@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 
 export const useSearchDates = (howMany: number): number | null => {
+  
   const [paymentDate, setPaymentDate] = useState<Date[] | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
   const [isDb, setIsDb] = useState<boolean>(false);
@@ -41,7 +42,7 @@ export const useSearchDates = (howMany: number): number | null => {
   const paymentYear = paymentDate?.toDate().getFullYear();
   const paymentMonth = paymentDate?.toDate().getMonth();
   const paymentDay = paymentDate?.toDate().getDate();
-  console.log("paymentYear",paymentYear)
+  //console.log("paymentYear",paymentYear)
 
 
         for (let ind = 0; ind < dataFromBase?.length; ind++) {
@@ -68,7 +69,7 @@ export const useSearchDates = (howMany: number): number | null => {
    }
    baseCheck();
 
-   console.log("wantedIndex", wantedIndex);
+   //console.log("wantedIndex", wantedIndex);
 
   },[db,isDb,wantedIndex])
 

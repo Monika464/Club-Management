@@ -30,7 +30,8 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
   const [closeMenu, setCloseMenu] = useState(false); // Dodaj stan closeMenu 
   //const [selectedDate, setSelectedDate] = useState([]); 
    const[userChoice, setUserChoice] = useState<Date[]>([])
-   const [isReset, setIsReset] = useState<boolean>(false)
+   const [isReset, setIsReset] = useState<boolean>(false);
+   
 
 //console.log('dayRange',dayRange);
 //console.log('userChoice',userChoice)

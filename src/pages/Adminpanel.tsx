@@ -9,31 +9,38 @@ import {useFetchDates} from "../hooks/useFetchDates.tsx";
 import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
 import { collection } from "firebase/firestore";
 import { db } from "../App.tsx";
-import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
+//import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
 import { ShowDays } from "../components/ShowDays.tsx";
 import { useSearchIndexToday } from "../hooks/useSearchIndexToday.tsx";
 import { WriteUsersInfo } from "../components/WriteUsersInfo.tsx";
 import { ManagingUsers } from "../components/ManagingUsers.tsx";
 import { ChooseStartDate } from "../components/ChooseStartDate";
 import { SelectDatePicker } from "../components/SelectDatePicker.tsx";
+import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN.tsx";
+import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
+import { Test } from "../components/Test.tsx";
 
 export interface IAdminProps {};         
 
 
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {  
 
+ const {usersInfo} = useFetchUsers();
+ console.log("usersInfoAdmin",usersInfo)
+
   const [isEdited, setIsEdited] = useState<boolean>(false);
 
-  //console.log('isEdited',isEdited)
+  //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
     setIsEdited(!isEdited)
 
   }
-    //useFetchDates();
+  //const wynik = useSearchDatesPlusN(3); 
+  //console.log("wynik",wynik)
 
     const dataFromBase = useFetchDates();
 
-    useSearchDates(0);
+    //useSearchDates(0);
 
     const dzisIndex = useSearchIndexToday()
     
@@ -59,11 +66,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             </div> 
             } 
            <br></br>
-            <div> <ManagingUsers/></div>
+           {/* <div> <ManagingUsers/></div> */}
    
-           < SelectDatePicker/>
+           {/*< SelectDatePicker/> */}
             
-     
+          <Test/>
             
 
             <div className="siteLink"> 

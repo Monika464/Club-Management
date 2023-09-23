@@ -101,6 +101,7 @@ console.log("userChoice2",userChoice2)
           setIsName(true);
           setIsSurname(true);
           setIsDob(true);
+          setIsStart(true);
 
       }
 
@@ -121,7 +122,7 @@ console.log("userChoice2",userChoice2)
   });
   */
 
-         console.log("Info about user  created"); 
+         console.log("Info about user  created");    
      }
       
    
@@ -138,7 +139,7 @@ console.log("userChoice2",userChoice2)
      try {
 
       if(currentUser){
-        const docRef = await doc(db, "usersData", currentUser.uid);
+        const docRef =  doc(db, "usersData", currentUser.uid);
        const docSnap = await getDoc( docRef );
    
            if (docSnap.exists()) { 
@@ -161,7 +162,7 @@ console.log("userChoice2",userChoice2)
   };
 
   checkFields(); 
-}, [currentUser,WriteUserInfo]);  
+}, [currentUser,WriteUserInfo]);   
 
 
 
@@ -175,13 +176,19 @@ console.log("userChoice2",userChoice2)
              <div id="fields">
 
            { !isName &&
-           <input onChange={handleSetName} type="text"  placeholder="name"/>
+           <><input onChange={handleSetName} type="text" placeholder="name" />
+           <button className={"btn"} onClick={WriteUserInfo}>update profile</button>
+           </>
            }
            {!isSurname &&
-           <input onChange={handleSetSurname} type="text" placeholder="surname" />
+           <><input onChange={handleSetSurname} type="text" placeholder="surname" />
+           <button className={"btn"} onClick={WriteUserInfo}>update profile</button>
+           </>
            }
           { !isDob &&
-           <input onChange={handleSetDob} type="date" placeholder="dob" />
+           <><input onChange={handleSetDob} type="date" placeholder="dob" />
+           <button className={"btn"} onClick={WriteUserInfo}>update profile</button>
+           </>
            }
 
             </div>    
@@ -205,11 +212,13 @@ console.log("userChoice2",userChoice2)
        />
      {/*<p>{userChoice}</p>*/}
      {/*<button className={"btn"} onClick={handleChoose}>send</button>*/}
+     <button className={"btn"} onClick={WriteUserInfo } >update profile</button>
      </div> }
 
-    {!isName && !isSurname && !isDob &&
-    <button className={"btn"} onClick={WriteUserInfo } >update profile</button>
-     } 
+   
+
+
+  
 
 
      {/*<ChooseStartDate/>*/}

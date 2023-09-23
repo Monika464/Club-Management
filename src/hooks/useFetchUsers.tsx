@@ -19,26 +19,20 @@ export const useFetchUsers  = ():any | null => {
     const [loadingUsers, setLoadingusers] =useState<boolean>(false)
     const [loadingDB, setLoadingDB] =useState<boolean>(false)
 
+    
+
     useEffect(()=>{
 
       const getUsersData = ()=>{     
-
         if (!db) {
        console.error('Firebase Firestore is not ready yet');
-       setLoadingDB(true)
-        
-       } else { setLoadingDB(false)}
-                 
+       setLoadingDB(true)       
+       } else { setLoadingDB(false)}              
       const q =  query(collection(db, "usersData"), orderBy ("surname"));
-   
-   //zeby sie get user robily po zaladowaniu odrazu
-   const temp = []; 
-   
-         const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
-          // setLoadingusers(true) 
- 
-             
 
+   const temp = []; 
+         const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
+           //setLoadingusers(true) 
            querySnapshot.forEach((doc) => {   
             
              //cities.push(doc.data().name);
@@ -51,18 +45,11 @@ export const useFetchUsers  = ():any | null => {
          
           });
           setUsersInfo (temp); 
-  
         return unsubscribe;
      }
-     
-     
-     //console.log('usersInfoWew' ,usersInfo )    
-     //console.log('db' ,db )  
-        
-  
-
   getUsersData()
 
+  console.log('setUsersReady');
 
     },[db])
 

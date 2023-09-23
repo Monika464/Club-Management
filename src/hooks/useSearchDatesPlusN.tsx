@@ -1,25 +1,31 @@
 import { useFetchDates } from "./useFetchDates";
 import { db } from "../App.js";
-import { doc, getDoc } from "firebase/firestore";
+import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 
 
-export const useSearchDates = (howMany: number): number | null => {
-  
-  const [paymentDate, setPaymentDate] = useState<Date[] | null>(null);
+export const useSearchDatesPlusN = (howMany: number, id: string) => {
+  //const howMany = 8;
+  //const id= "Y19J2pywqfd2YKN3zVVGlzYEWR82";
+  const [paymentDate, setPaymentDate] = useState<Date | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
-  const [isDb, setIsDb] = useState<boolean>(false);
+  const [isDb, setIsDb] = useState<boolean>(false); 
 
   const dataFromBase = useFetchDates();
 
   useEffect(() => {
     const getDates = async () => {
-      const userRef = doc(db, "usersData", "z9qvxJlbbWJKLBHsgHx7");
+      //const userRef = doc(db, "usersData", id);
+      const userRef = doc(db, "usersData", id);
       const docSnap = await getDoc(userRef);
 
       if (docSnap.data()) {
-        setPaymentDate(docSnap.data().paymentDate);
+        console.log("czy mamy snap",docSnap.data().due ) 
+        //setPaymentDate(docSnap.data().due);
+        console.log("type of",typeof(docSnap.data().due) )
+        console.log("czy mamy payment day",Timestamp.fromDate(new Date(docSnap.data().due)))
+        setPaymentDate(Timestamp.fromDate(new Date(docSnap.data().due)));
         setIsDb(true)
       } else {
         console.log("not yet");
@@ -27,8 +33,7 @@ export const useSearchDates = (howMany: number): number | null => {
     };
 
     getDates();
-//console.log("paymentDate",paymentDate)
-//console.log("dataFromBase",dataFromBase)
+
 
   }, [db]);
 
@@ -69,9 +74,10 @@ export const useSearchDates = (howMany: number): number | null => {
    }
    baseCheck();
 
-   //console.log("wantedIndex", wantedIndex);
+   console.log("wantedIndexuseSearchdatesPlusN", wantedIndex);
+   console.log("hello from useSearchdatesPlusN")
 
-  },[db,isDb,wantedIndex])
+  },[db,isDb,wantedIndex,paymentDate])
 
 
   return wantedIndex;

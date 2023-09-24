@@ -5,14 +5,36 @@ import { useEffect, useState } from "react";
 
 
 
-export const useSearchDatesPlusN = (howMany: number, id: string) => {
-  //const howMany = 8;
+export const useSearchDatesPlusN = (howMany: number | null, id: string | null) => {
+  //const howMany = 8; 
   //const id= "Y19J2pywqfd2YKN3zVVGlzYEWR82";
-  const [paymentDate, setPaymentDate] = useState<Date | null>(null);
+  const [userDueDate, setuserDueDate] = useState<Date | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
   const [isDb, setIsDb] = useState<boolean>(false); 
 
   const dataFromBase = useFetchDates();
+  ///console.log("dataFromBase",dataFromBase);
+  //console.log("iiiid",id);
+
+  useEffect(() => {
+    const getUserDueDate = async () => {
+
+      if(id && db){
+      const userRef = doc(db, "usersData", id);
+      const docSnap = await getDoc(userRef)
+    
+     // console.log("czy mamy docSnap",docSnap?.data().due )
+     setuserDueDate(docSnap?.data().due )
+     setIsDb(true)
+       }
+    }
+    getUserDueDate();
+
+   // console.log('userDueDate',userDueDate);
+   
+  },[db,id])
+
+  /*
 
   useEffect(() => {
     const getDates = async () => {
@@ -23,9 +45,9 @@ export const useSearchDatesPlusN = (howMany: number, id: string) => {
       if (docSnap.data()) {
         console.log("czy mamy snap",docSnap.data().due ) 
         //setPaymentDate(docSnap.data().due);
-        console.log("type of",typeof(docSnap.data().due) )
-        console.log("czy mamy payment day",Timestamp.fromDate(new Date(docSnap.data().due)))
-        setPaymentDate(Timestamp.fromDate(new Date(docSnap.data().due)));
+       //console.log("type of",typeof(docSnap.data().due) )
+       // console.log("czy mamy payment day",Timestamp.fromDate(new Date(docSnap.data().due)))
+       // setPaymentDate(Timestamp.fromDate(new Date(docSnap.data().due)));
         setIsDb(true)
       } else {
         console.log("not yet");
@@ -33,25 +55,26 @@ export const useSearchDatesPlusN = (howMany: number, id: string) => {
     };
 
     getDates();
-
+console.log("hej from useSerach")
 
   }, [db]);
-
+*/
 
   useEffect(()=>{
 
     const baseCheck = async ()=>{
 
-    if (isDb) {
+    if (isDb && dataFromBase) {
 
-  const paymentYear = paymentDate?.toDate().getFullYear();
-  const paymentMonth = paymentDate?.toDate().getMonth();
-  const paymentDay = paymentDate?.toDate().getDate();
-  //console.log("paymentYear",paymentYear)
+  const paymentYear = userDueDate?.toDate().getFullYear();
+  const paymentMonth = userDueDate?.toDate().getMonth();
+  const paymentDay = userDueDate?.toDate().getDate();
+  //console.log("userDueDate",userDueDate?.toDate())
 
 
         for (let ind = 0; ind < dataFromBase?.length; ind++) {
             const dat = dataFromBase[ind];
+           // console.log("dat",dat)
             const datYear = dat?.toDate().getFullYear();
             const datMonth = dat?.toDate().getMonth();
             const datDay = dat?.toDate().getDate();
@@ -74,10 +97,10 @@ export const useSearchDatesPlusN = (howMany: number, id: string) => {
    }
    baseCheck();
 
-   console.log("wantedIndexuseSearchdatesPlusN", wantedIndex);
+   //console.log("wantedIndexuseSearchdatesPlusN", wantedIndex);
    console.log("hello from useSearchdatesPlusN")
 
-  },[db,isDb,wantedIndex,paymentDate])
+  },[db,isDb,userDueDate]) 
 
 
   return wantedIndex;

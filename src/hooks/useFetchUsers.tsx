@@ -28,8 +28,8 @@ export const useFetchUsers  = ():any | null => {
        console.error('Firebase Firestore is not ready yet');
        setLoadingDB(true)       
        } else { setLoadingDB(false)}              
-      const q =  query(collection(db, "usersData"), orderBy ("surname"));
-
+     // const q =  query(collection(db, "usersData"), orderBy ("surname"));
+     const q =  query(collection(db, "usersData"))
    const temp = []; 
          const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
            //setLoadingusers(true) 
@@ -49,7 +49,7 @@ export const useFetchUsers  = ():any | null => {
      }
   getUsersData()
 
-  console.log('setUsersReady');
+ // console.log('setUsersReady');
 
     },[db])
 

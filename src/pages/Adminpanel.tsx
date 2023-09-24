@@ -19,6 +19,7 @@ import { SelectDatePicker } from "../components/SelectDatePicker.tsx";
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN.tsx";
 import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
 import { Test } from "../components/Test.tsx";
+import { Test2 } from "../components/Test2.tsx";
 
 export interface IAdminProps {};         
 
@@ -26,7 +27,7 @@ export interface IAdminProps {};
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {  
 
  const {usersInfo} = useFetchUsers();
- console.log("usersInfoAdmin",usersInfo)
+ //console.log("usersInfoAdmin",usersInfo)
 
   const [isEdited, setIsEdited] = useState<boolean>(false);
 
@@ -71,6 +72,8 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {/*< SelectDatePicker/> */}
             
           <Test/>
+
+ 
             
 
             <div className="siteLink"> 

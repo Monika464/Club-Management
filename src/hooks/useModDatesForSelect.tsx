@@ -19,7 +19,7 @@ export const useModDatesForSelect = () => {
                // setDatesModForSelect(temp);
              })
              setDatesModForSelect(temp);   
-           console.log("datesModForSelect",datesModForSelect)
+           //console.log("datesModForSelect",datesModForSelect)
        
     },[data])
 
@@ -31,7 +31,7 @@ export const useModDatesForSelect = () => {
 
 
 
- console.log("")
+ //console.log("")
   
     return datesModForSelect;
 }

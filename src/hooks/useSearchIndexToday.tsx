@@ -33,7 +33,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay === datDay
                      ) {
-                        console.log("maaaam", dat, ind);
+                        //console.log("maaaam", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -44,7 +44,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay2 === datDay
                      ) {
-                        console.log("maaaam2", dat, ind);
+                       //console.log("maaaam2", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -68,7 +68,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay4 === datDay
                      ) {
-                        console.log("maaaam2", dat, ind);
+                        //console.log("maaaam2", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);

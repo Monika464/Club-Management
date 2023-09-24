@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'; 
 import { doc, getDoc, setDoc } from "firebase/firestore";
 //import { ChooseStartDate } from "./ChooseStartDate";  
+import { useModDatesForSelect } from "../hooks/useModDatesForSelect";
 
 /*choose*/
 import {useFetchDates} from '../hooks/useFetchDates';
@@ -20,6 +21,8 @@ export const WriteUsersInfo : React.FunctionComponent<IwritingUsers> =({userChoi
   const { currentUser} = useContext(UserContext);
   const data =  useFetchDates();
 
+  const datesModForSelect = useModDatesForSelect()
+
     const [isName, setIsName] = useState(false);
     const [isSurname, setIsSurname] = useState(false);
     const [isDob, setIsDob] = useState(false);
@@ -31,9 +34,9 @@ export const WriteUsersInfo : React.FunctionComponent<IwritingUsers> =({userChoi
     //choose
     const [isStart, setIsStart] = useState<Boolean>(false);
     const[userChoice, setUserChoice] = useState({});
-    const [datesModForSelect, setDatesModForSelect] = useState<Date[] | null>([])
+   // const [datesModForSelect, setDatesModForSelect] = useState<Date[] | null>([])
 
-    //endofchoos
+   /*
 
 
     useEffect(()=>{
@@ -53,7 +56,7 @@ console.log("userChoice",userChoice)
 console.log("userChoice2",userChoice2)   
 
   },[data,db])
-
+*/
 
 
 
@@ -86,8 +89,6 @@ console.log("userChoice2",userChoice2)
 
         if(currentUser){
 	      const docRef = doc(db, "usersData", currentUser.uid);
-
-        
 
         await setDoc(docRef, {
           name: name,
@@ -195,6 +196,8 @@ console.log("userChoice2",userChoice2)
 
   
        { !isStart && <div>    
+
+        
           <p>Select date of start trainings</p>  
   
          <Select

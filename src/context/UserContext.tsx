@@ -8,7 +8,7 @@ interface Props {
 
 export const UserContext = createContext({
   // "User" comes from firebase auth-public.d.ts
-  currentUser: {} as User | null,
+  currentUser: {} as User | null ,
   setCurrentUser: (_user:User) => {},
 
 });

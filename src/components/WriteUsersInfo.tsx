@@ -13,7 +13,7 @@ import Select from 'react-select'
 
 export interface IwritingUsers { 
 
-  userChoice2: string;
+ // userChoice2: string;
 };    
 
 export const WriteUsersInfo : React.FunctionComponent<IwritingUsers> =({userChoice2: userChoice2}) => {

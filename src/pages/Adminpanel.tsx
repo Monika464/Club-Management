@@ -20,6 +20,9 @@ import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN.tsx";
 import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
 import { Test } from "../components/Test.tsx";
 import { Test2 } from "../components/Test2.tsx";
+import { UsersPayments } from "../components/UsersPayments.tsx";
+import { ReportInjury } from "../components/ReportInjury.tsx";
+import { BackAfterInjury } from "../components/BackAfterInjury.tsx";
 
 export interface IAdminProps {};         
 
@@ -30,12 +33,26 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
  //console.log("usersInfoAdmin",usersInfo)
 
   const [isEdited, setIsEdited] = useState<boolean>(false);
+  const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
+  const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
+  const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
 
   //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
     setIsEdited(!isEdited)
-
   }
+
+  const handleEditPayment =()=>{
+    setIsEditedPayment(!isEditedPayment)
+  }
+  const handleEditInjury =()=>{
+    setIsEditedInjury(!isEditedInjury)
+  }
+
+  const handleEditBackAfterInjury=()=>{
+    setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
+  }
+
   //const wynik = useSearchDatesPlusN(3); 
   //console.log("wynik",wynik)
 
@@ -70,11 +87,27 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {/* <div> <ManagingUsers/></div> */}
    
            {/*< SelectDatePicker/> */}
-            
-          <Test/>
+           <br></br>
+            <button onClick={handleEditPayment}>Edit users payment</button>
+            <br></br>  
+           {isEditedPayment &&  
+          <UsersPayments/>
+            }
+            <br></br>
+      
+            <button onClick={handleEditInjury}>Edit users injury</button>
+            {isEditedInjury && 
+            <ReportInjury/>
+            }
+            <br></br>
+            <br></br>
 
- 
+           <button onClick={handleEditBackAfterInjury}>Edit users back after injury</button>
+           {isEditedBackAfterInjury &&  
+           <BackAfterInjury/>
+            }
             
+          
 
             <div className="siteLink"> 
               <ul>

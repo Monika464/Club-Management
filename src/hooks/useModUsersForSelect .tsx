@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetchUsers } from "./useFetchUsers";
 
-
+interface users {}
 export const useModUsersForSelect = () => {  
   const {usersInfo} = useFetchUsers();
    // const [usersModForSelect, setUsersModForSelect] = useState([])

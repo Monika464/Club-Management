@@ -8,13 +8,11 @@ export const useSearchDatesByIndex= (givenIndex: number | null) => {
     const [newDate, setNewDate] = useState<Date | null>(null)
 
     const data =  useFetchDates();
-    console.log("czy mamy data", data)
+   // console.log("czy mamy data", data)
 
     useEffect(()=>{
-        
-      
-                        if(givenIndex > (data?.length -1)){
-                          alert("bład brak dat")
+                    if(givenIndex > (data?.length -1)){
+                        alert("bład brak dat")
                         }   
                 data?.forEach((elem, index) => {
 
@@ -24,7 +22,7 @@ export const useSearchDatesByIndex= (givenIndex: number | null) => {
                     }   
                  });
 
-             console.log("hejFromUseSerachDates",newDate?.toDate() )       
+           //  console.log("hejFromUseSerachDates",newDate?.toDate() )       
              
           
              

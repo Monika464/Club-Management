@@ -5,9 +5,11 @@ import { UserContext } from '../context/UserContext';
 import { UserProfile } from "../components/UserProfile";
 import { ManagingUsers } from "../components/ManagingUsers";
 import { WriteUsersInfo } from "../components/WriteUsersInfo";
+import { Test } from "../components/Test";
+import { TestingFnsLib } from "../components/testingFnsLib";
 
 
-export interface IUserProps {}; 
+export interface IUserProps {};  
 
 
 const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
@@ -17,22 +19,30 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
 
         return (
-            <div>
+            <>
            Userpanel  
-           <br></br>
-        < UserProfile/>
+               <br></br>
+              < UserProfile/>
       
-        <WriteUsersInfo/>
+             <WriteUsersInfo/>
 
-      <div className="siteLink">  
+
+             <Test/>
+<br></br><br></br>
+             <TestingFnsLib/>
+
+
+
+            <div className="siteLink">  
   
-    <ul>
-      <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>
-   </ul>
+             <ul>
+              <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>
+            </ul>
 
-   </div>
-            </div>
-        );
+          </div>
+
+          
+</>);
     }
 
 

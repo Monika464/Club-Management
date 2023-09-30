@@ -4,8 +4,8 @@ import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 
-
-export const useSearchDatesPlusN = (howMany: number | null, id: string | null) => {
+//ile dodac do daty platnosci i dla jakiego id
+export const useSearchDatesPlusN = (howMany: number | null, id: string | null | undefined) => {
   //const howMany = 8; 
   //const id= "Y19J2pywqfd2YKN3zVVGlzYEWR82";
   const [userDueDate, setuserDueDate] = useState<Date | null>(null);
@@ -98,7 +98,7 @@ console.log("hej from useSerach")
    baseCheck();
 
    //console.log("wantedIndexuseSearchdatesPlusN", wantedIndex);
-   console.log("hello from useSearchdatesPlusN")
+   //console.log("hello from useSearchdatesPlusN")
 
   },[db,isDb,userDueDate]) 
 

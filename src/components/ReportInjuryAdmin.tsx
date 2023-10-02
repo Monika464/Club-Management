@@ -25,11 +25,13 @@ export const ReportInjury : React.FunctionComponent<Itest> =(props) => {
     const indexOfDate = useSearchIndexAnyDate(chosenDate)
     console.log("index-daty-naleznosci", paymentDateIndex)
     console.log("index-daty-kontuzji", indexOfDate)
+
+    if (indexOfDate &&paymentDateIndex){
     if(indexOfDate >= paymentDateIndex){
       console.log("uczestnik dłuzyny nie dodajemy treningow")
     } else {
       console.log("treningi do zapisu",paymentDateIndex -indexOfDate )
-
+    }
     }
    
     const zapiszWBazieTreningi =async()=>{

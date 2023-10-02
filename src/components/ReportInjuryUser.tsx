@@ -1,24 +1,3 @@
-export interface Itest{}
-
-export const Test : React.FunctionComponent<Itest> =(props) => { 
-
-   // const indexDatyPowrotu = useSearchIndexAnyDate(chosenDateReturn)
-//index daty najblizzej z dziadij
-
-return(<>
-<br></br><br></br>
- <button>Wracam po kontuzji</button>
-</>)
-}
-
-
-
-
-
-
-
-
-/*
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext';
@@ -31,7 +10,7 @@ export interface Itest{}
  
 
 
-export const Test : React.FunctionComponent<Itest> =(props) => {
+export const ReportInjuryUser : React.FunctionComponent<Itest> =(props) => {
 
   const [isInjuryReporting, setIsIInjuryReporting] = useState<boolean>(false)
 
@@ -131,7 +110,10 @@ console.log("treningi do zapisu", treningiDoZapisu)
  
  <button onClick={()=>setIsIInjuryReporting(!injuryDescription)}> przycisk zglos od dzis</button>
 {injuryAlreadyReported && <p>kontuzja zglaszana - edit</p>}
- 
+  {/*<ShowDays/>*/}
+
+{/*{isInjuryReporting && <>*/}
+{/*{treningiDoZapisu && <div> */}
   <p>Zgłaszasz kontuzje od {wyliczdzisZIndexu?.toDate().toString()}</p>
     <input
     type='text'
@@ -150,4 +132,3 @@ console.log("treningi do zapisu", treningiDoZapisu)
 
 }
 
-*/

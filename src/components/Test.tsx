@@ -9,60 +9,76 @@ export interface Itest{}
 
 export const Test : React.FunctionComponent<Itest> =(props) => { 
 
+  const [isStopOn, setIsStopOn] = useState<boolean>(false)
   const [oweUser, setOweUser] = useState<number | null>(null)
+  const [stopDateNowOwe, setStopDateNowOwe] = useState<Date| null>(null)
+  const [stopDateWithOwe, setStopDateWithOwe] = useState<Date| null>(null)
 
   const { currentUser} = useContext(UserContext); 
 
    const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid)
 
   const closeToTodayIndex = useSearchIndexCloseToday();
-
   const dataCloseToday = useSearchDatesByIndex(closeToTodayIndex);
   const dataPaymentEnd = useSearchDatesByIndex(paymentDateIndex - 1)
 
   const stopTreningsToConfirm =()=>{
+
+    setIsStopOn(true)
   //robimy zmienna kliknieto stop
     //wyswietlic zmienna planujesz zatrzymac trengi
   }
 
-const stopTraings = ()=>{
+  useEffect(()=>{
+    const stopTraings = ()=>{
 
-    if(paymentDateIndex && closeToTodayIndex){
-     
-         if(paymentDateIndex-1 >= closeToTodayIndex){
-
-                const stopNoOwe =async ()=>{
-                    if(currentUser){ 
-                       const userRef = doc(db, "usersData",currentUser?.uid);
-                       const docSnap = await getDoc(userRef);
-          
-                      await updateDoc(userRef, {
-                        stop: dataPaymentEnd,     
-                      })
-                       .then(()=> {console.log("stop reported") })   
-                     }
-               }
-                stopNoOwe();
-             console.log("wpisuje do bazy stop z data",closeToTodayIndex)
-
-             } else {
-
-               const oweUser = closeToTodayIndex - (paymentDateIndex-1)
-               setOweUser(oweUser);
-               console.log("ma zadluzenie",oweUser);
-               const stopWithOwe = async ()=>{
+      if(paymentDateIndex && closeToTodayIndex){
+       
+           if(paymentDateIndex-1 >= closeToTodayIndex){
+  
+           // tu sie zaczyna wysylanie
+                  const stopNoOwe =async ()=>{
                       if(currentUser){ 
                          const userRef = doc(db, "usersData",currentUser?.uid);
-                         await updateDoc(userRef, {
-                         stop: dataCloseToday,
-                          owe: oweUser
-                          })
-                    .then(()=> {console.log("stop & owe reported") })   
-                    }
+                         const docSnap = await getDoc(userRef);
+            
+                        await updateDoc(userRef, {
+                          stop: dataPaymentEnd,     
+                        })
+                         .then(()=> {console.log("stop reported") })
+                         .then(()=>{setStopDateNowOwe(dataPaymentEnd)}) 
+                       }
+                 }
+                  stopNoOwe();
+               console.log("wpisuje do bazy stop z data",closeToTodayIndex)
+  
+               } else {
+  
+                 const oweUser = closeToTodayIndex - (paymentDateIndex-1)
+                 setOweUser(oweUser);
+                 console.log("ma zadluzenie",oweUser);
+
+
+                 //ti sie zaczyna wysylanie
+                 const stopWithOwe = async ()=>{
+                        if(currentUser){ 
+                           const userRef = doc(db, "usersData",currentUser?.uid);
+                           await updateDoc(userRef, {
+                           stop: dataCloseToday,
+                            owe: oweUser
+                            })
+                      .then(()=> {console.log("stop & owe reported") })   
+                      .then(()=>{setStopDateWithOwe(dataCloseToday)})
+                      }
+                 }
+                stopWithOwe()
                }
-              stopWithOwe()
-             }
-      }}
+        }}
+
+        stopTraings();
+
+  },[isStopOn])
+
 
 
       
@@ -87,7 +103,12 @@ const stopTraings = ()=>{
 
   return (
   <div>
-<button onClick={stopTraings}>Zatrzymaj treningi</button>
+<button onClick={stopTreningsToConfirm}>Zatrzymaj treningi</button>
+{isStopOn && <div>
+  {stopDateNowOwe ? <p>{stopDateNowOwe?.toDateString}</p> : <p>Zatrzymujesz uczestnictwo w dniu {stopDateWithOwe?.toDate().toString()} jestes dłużny {oweUser} treningów</p>}
+  <button>Potwierdz</button>
+  </div>}
+
 
   </div>)
 

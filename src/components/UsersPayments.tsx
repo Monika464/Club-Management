@@ -34,7 +34,7 @@ const [chosenDate, setChosenDate] = useState()
 const [calcNewDueDate, setCalcNewDueDate] = useState<number | null>(null)
 const [resDate, setResDate] = useState<Date | null>(null)
 
-const  calculatedIndexOfNewDue= useSearchDatesPlusN(2, chosenUserById)
+const  calculatedIndexOfNewDue= useSearchDatesPlusN(8, chosenUserById)
  
 
   const payment8 = ()=>{

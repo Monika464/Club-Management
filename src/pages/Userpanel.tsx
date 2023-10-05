@@ -8,6 +8,7 @@ import { WriteUsersInfo } from "../components/WriteUsersInfo";
 import { Test } from "../components/Test";
 import { TestingFnsLib } from "../components/testingFnsLib";
 import { ReportInjuryUser } from "../components/ReportInjuryUser";
+import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
 
 
 export interface IUserProps {};  
@@ -38,8 +39,9 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
             }
          <button onClick={handleEditInjury}>Zgłos kontuzje</button>
 
-
-         <Test/>
+<BackAfterInjuryUser/>
+     <br></br><br></br>
+     <Test/>
 
             <div className="siteLink">  
   

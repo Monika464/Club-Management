@@ -35,7 +35,7 @@ if(dataFromBase){
 
  // console.log("przykładdatabase", dataFromBase[17].toDate())
   //console.log("result0", result2.getTime())
-  console.log(dataFromBase[17].toDate().getTime() === result2.getTime())
+  //console.log(dataFromBase[17].toDate().getTime() === result2.getTime())
 
    for (let ind = 0; ind < dataFromBase?.length; ind++) {
 

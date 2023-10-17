@@ -20,9 +20,9 @@ import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN.tsx";
 import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
 import { Test } from "../components/Test.tsx";
 import { Test2 } from "../components/Test2.tsx";
-import { UsersPayments } from "../components/UsersPayments.tsx";
 import { ReportInjury} from "../components/ReportInjuryAdmin.tsx";
 import { BackAfterInjury } from "../components/BackAfterInjuryAdmin.tsx";
+import { UsersPayments } from "../components/UserPayments.tsx";
 
 export interface IAdminProps {};         
 
@@ -93,8 +93,8 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {isEditedPayment &&  
           <UsersPayments/>
             }
-            <br></br>
-      
+       
+            <br></br><br></br>
             <button onClick={handleEditInjury}>Edit users injury</button>
             {isEditedInjury && 
             <ReportInjury/>

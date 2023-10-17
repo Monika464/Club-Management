@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 
 //ile dodac do daty platnosci i dla jakiego id
 export const useSearchDatesPlusN = (howMany: number | null, id: string | null | undefined) => {
-  //const howMany = 8; 
+
+  //console.log("how many", howMany)
   //const id= "Y19J2pywqfd2YKN3zVVGlzYEWR82";
   const [userDueDate, setuserDueDate] = useState<Date | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
@@ -64,7 +65,9 @@ console.log("hej from useSerach")
 
     const baseCheck = async ()=>{
 
-    if (isDb && dataFromBase) {
+      //ale ten hook moze wystapic w miejscu bez duedata i mamy blad
+
+    if (isDb && dataFromBase && userDueDate) {
 
   const paymentYear = userDueDate?.toDate().getFullYear();
   const paymentMonth = userDueDate?.toDate().getMonth();
@@ -86,7 +89,8 @@ console.log("hej from useSerach")
                             paymentMonth === datMonth &&
                             paymentDay === datDay
                      ) {
-            //console.log("yes, yes", dat, ind);
+            console.log("tutaj in czyli parametr w usePusN czyli indeks daty kiedy płacono", ind);
+            console.log("drugi parametr w usePusN czyli o ile munerów zmienic", howMany);
             //setWantedIndex(ind + 8);
             setWantedIndex(ind + howMany);
             break; // Przerwij pętlę po znalezieniu odpowiedniego indeksu

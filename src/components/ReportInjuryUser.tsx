@@ -17,6 +17,7 @@ export const ReportInjuryUser : React.FunctionComponent<Itest> =(props) => {
     const { currentUser} = useContext(UserContext); 
 
     const [treningiDoZapisu, setTreningiDoZapisu] = useState<number | null>(null)
+    const [zadluzenieDoZapisu, setZadluzenieDoZapisu] = useState<number | null>(null)
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
 const [injuryAlreadyReported, setInjuryAlreadyReported] = useState<boolean>(false)
 const [injuryJustReported, setInjuryJustReported] = useState<boolean>(false)
@@ -39,7 +40,8 @@ const [surname, setSurname] = useState<string | null>(null)
 
         if(dzisIndex && paymentDateIndex){
             if(dzisIndex >= paymentDateIndex){
-                 console.log("uczestnik dłuzyny nie dodajemy treningow")
+                 console.log("uczestnik dłuzny / dodajemy dlug /nie dodajemy treningow")
+                 setZadluzenieDoZapisu(dzisIndex - paymentDateIndex)
            } else {
            console.log("treningi do zapisu",paymentDateIndex -dzisIndex )
           setTreningiDoZapisu(paymentDateIndex -dzisIndex)
@@ -48,6 +50,7 @@ const [surname, setSurname] = useState<string | null>(null)
     
 
     const settingName = async ()=>{
+
       if(currentUser){ 
         const userRef = doc(db, "usersData",currentUser?.uid);
         const docSnap = await getDoc(userRef);
@@ -77,6 +80,8 @@ console.log("treningi do zapisu", treningiDoZapisu)
    const handleSendInjuryToBase =async () =>{  
 
     if(currentUser){
+
+      if(treningiDoZapisu){
     
               const userRef = doc(db, "usersData",currentUser?.uid);
               const docSnap = await getDoc(userRef);
@@ -94,21 +99,60 @@ console.log("treningi do zapisu", treningiDoZapisu)
                       }           
                   } 
 
-   const data = {
-    timestamp: serverTimestamp(),
-     pausaData: wyliczdzisZIndexu,
-     userUid: currentUser?.uid,
-    kto: `${name} ${surname}`,
-    injuryDescription: injuryDescription }
+              const data = {
+                    timestamp: serverTimestamp(),
+                    pausaData: wyliczdzisZIndexu,
+                    userUid: currentUser?.uid,
+                    kto: `${name} ${surname}`,
+                    injuryDescription: injuryDescription }
 
-  const docRef = await addDoc(collection(db, "archive"), data)
-  .then(()=> console.log("injury info added"))
-  }
+               const docRef = await addDoc(collection(db, "archive"), data)
+               .then(()=> console.log("injury info added, status okay"))
+
+        }
+
+    if(zadluzenieDoZapisu){
+           
+      const userRef = doc(db, "usersData",currentUser?.uid);
+      const docSnap = await getDoc(userRef);
+         if (docSnap.exists()) {
+             if(docSnap.data().pausa){
+                setInjuryAlreadyReported(true)  
+              }  else {
+               await updateDoc(userRef, {
+              pause: wyliczdzisZIndexu,
+              debt: zadluzenieDoZapisu
+              })
+              .then(()=> {console.log("injury reported")
+               setInjuryJustReported(true);
+                })
+              }           
+          } 
+
+
+          const data = {
+            timestamp: serverTimestamp(),
+            pausaData: wyliczdzisZIndexu,
+            userUid: currentUser?.uid,
+            kto: `${name} ${surname}`,
+            injuryDescription: injuryDescription,
+            debt: zadluzenieDoZapisu
+          
+          }
+            
+
+       const docRef = await addDoc(collection(db, "archive"), data)
+       .then(()=> console.log("injury info added, debt exists"))
+
+
+          
+        }
+    }
 }
 
   return(<>
  
- <button onClick={()=>setIsIInjuryReporting(!injuryDescription)}> przycisk zglos od dzis</button>
+ <button onClick={()=>setIsIInjuryReporting(!isInjuryReporting)}> przycisk zglos od dzis</button>
 {injuryAlreadyReported && <p>kontuzja zglaszana - edit</p>}
   {/*<ShowDays/>*/}
 

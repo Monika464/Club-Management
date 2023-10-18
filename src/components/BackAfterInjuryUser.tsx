@@ -62,6 +62,9 @@ const calcDatOfNewPayDebt =  useSearchDatesByIndex(dzisIndex - zadluzenie)
 
 
 const pushToBaseNewDueDay =async ()=>{
+  //bzdury do zmiany
+  //przywracanie to od daty pausa plus add albo minus if debt
+  //tak wyznaczana data platnosci nowa
 
   if(paymentDateIndex > dzisIndex){
   
@@ -73,7 +76,7 @@ const pushToBaseNewDueDay =async ()=>{
   })
   .then(()=>{console.log("powrot do treningów nowa płatnosc zapisana")})
 
-  //wyczysc pausa date i wyczysc treningi z add
+  //kopia do archive
 }
 if(paymentDateIndex <= dzisIndex){
 

@@ -10,6 +10,8 @@ import { TestingFnsLib } from "../components/testingFnsLib";
 import { ReportInjuryUser } from "../components/ReportInjuryUser";
 import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
 import { Test2 } from "../components/Test2";
+import  StopMembershipUser  from "../components/StopMembershipUser";
+import { RestoreMembership } from "../components/RestoreMembership";
 
 
 export interface IUserProps {};  
@@ -42,9 +44,10 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
 <BackAfterInjuryUser/>
      <br></br><br></br>
-     <Test/>
-     <p>///////////////</p>
-     <Test2/>
+
+     <StopMembershipUser/>
+     <br></br><br></br>
+     <RestoreMembership/>
 
             <div className="siteLink">  
   

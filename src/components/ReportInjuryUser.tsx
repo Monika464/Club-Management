@@ -91,7 +91,8 @@ console.log("treningi do zapisu", treningiDoZapisu)
                       }  else {
                        await updateDoc(userRef, {
                       pause: wyliczdzisZIndexu,
-                      add: treningiDoZapisu
+                      add: treningiDoZapisu,
+                      due: null
                       })
                       .then(()=> {console.log("injury reported")
                        setInjuryJustReported(true);
@@ -121,7 +122,8 @@ console.log("treningi do zapisu", treningiDoZapisu)
               }  else {
                await updateDoc(userRef, {
               pause: wyliczdzisZIndexu,
-              debt: zadluzenieDoZapisu
+              debt: zadluzenieDoZapisu,
+              due: null
               })
               .then(()=> {console.log("injury reported")
                setInjuryJustReported(true);

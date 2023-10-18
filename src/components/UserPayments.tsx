@@ -98,7 +98,8 @@ useEffect(()=>{
    } 
    if(modifyAdd){
       await updateDoc(paymentDataRef, {
-         add: modifyAdd
+         add: modifyAdd,
+         debt: null
        })
        .then(()=>console.log("new treinings added. update succesful"))
        .then(()=>{setAddSent(true)})

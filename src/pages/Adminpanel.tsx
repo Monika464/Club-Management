@@ -106,7 +106,9 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {isEditedBackAfterInjury &&  
            <BackAfterInjury/>
             }
-            
+            <br></br>
+            <br></br>
+          
           
 
             <div className="siteLink"> 

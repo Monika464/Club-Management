@@ -5,7 +5,7 @@ import { db } from '../App';
 import { useSearchIndexCloseToday } from '../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
 
-export const RestoreMembership: React.FunctionComponent =() => {
+export const RestoreMembershipUser: React.FunctionComponent =() => {
 
     const { currentUser} = useContext(UserContext); 
     const [name, setName] = useState<string | null>(null)
@@ -67,13 +67,6 @@ export const RestoreMembership: React.FunctionComponent =() => {
 
     console.log('restartNewData',restartNewData?.toDate())
 
-     
-//sciagnac z bazy tam gdzie stop ustawic date
-//sprawdzic czy jest debt
-//dozwolne tylko jesli wczesniej zgloszono stop
-//ustawic nowa date due na dzis a jesli jest debt due - debt
-
-//pamietaj o archive
 
 const dataToActivityArchive = {
     timestamp: serverTimestamp(),

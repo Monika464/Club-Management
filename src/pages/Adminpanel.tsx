@@ -23,6 +23,9 @@ import { Test2 } from "../components/Test2.tsx";
 import { ReportInjury} from "../components/ReportInjuryAdmin.tsx";
 import { BackAfterInjury } from "../components/BackAfterInjuryAdmin.tsx";
 import { UsersPayments } from "../components/UserPayments.tsx";
+import StopMembershipUser from "../components/StopMembershipUser.tsx";
+import StopMembershipAdmin from "../components/StopMembershipAdmin.tsx";
+import { RestoreMembershipAdmin } from "../components/RestoreMembershipAdmin.tsx";
 
 export interface IAdminProps {};         
 
@@ -36,6 +39,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
   const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
+  const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
 
   //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
@@ -51,6 +55,10 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
   const handleEditBackAfterInjury=()=>{
     setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
+  }
+
+  const handleEditStopMembership=()=>{
+    setIsEditedStopMembership(!isEditedStopMembership)
   }
 
   //const wynik = useSearchDatesPlusN(3); 
@@ -108,8 +116,15 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             }
             <br></br>
             <br></br>
-          
-          
+
+            <button onClick={handleEditStopMembership}>Handlemembership</button>
+            { isEditedStopMembership && 
+            <div>
+            <StopMembershipAdmin/>
+            <br></br>
+            <br></br>
+            <RestoreMembershipAdmin/>
+            </div>}
 
             <div className="siteLink"> 
               <ul>

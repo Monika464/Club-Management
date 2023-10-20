@@ -9,7 +9,7 @@ import { Test } from "../components/Test";
 import { TestingFnsLib } from "../components/testingFnsLib";
 import { ReportInjuryUser } from "../components/ReportInjuryUser";
 import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
-import { Test2 } from "../components/Test2";
+import { ReportInjuryUser2 } from "../components/ReportInjuryUser2";
 import  StopMembershipUser  from "../components/StopMembershipUser";
 import { RestoreMembershipUser } from "../components/RestoreMembershipUser";
 
@@ -48,6 +48,9 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
      <StopMembershipUser/>
      <br></br><br></br>
      <RestoreMembershipUser/>
+
+     <br></br><br></br>
+     <ReportInjuryUser2/>
 
             <div className="siteLink">  
   

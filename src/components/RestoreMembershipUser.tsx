@@ -53,19 +53,21 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
   
 
     useEffect(()=>{
-        const calculateRestart =()=>{
+      
 
             if(dzisIndex || debt){
               setRestartDateIndex(dzisIndex - debt);
              }
-          }
-          calculateRestart();
+          
+         
 
-    },[dzisIndex])
+          console.log('UUUUrestartNewData',restartNewData?.toDate())
+
+    },[handleSetUserInfo])
 
     const restartNewData = useSearchDatesByIndex(restartDateIndex);
 
-    console.log('restartNewData',restartNewData?.toDate())
+    console.log('restartNewData',restartNewData?.toDate())  
 
 
 const dataToActivityArchive = {

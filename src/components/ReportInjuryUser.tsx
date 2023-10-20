@@ -30,7 +30,7 @@ const [surname, setSurname] = useState<string | null>(null)
    console.log("paymentDateIndex",paymentDateIndex)
 
    const dzisIndex = useSearchIndexCloseToday()
-   console.log("co tu mamy",dzisIndex)
+   console.log("dzis index",dzisIndex)
 
    const wyliczdzisZIndexu = useSearchDatesByIndex(dzisIndex);
    console.log("wyliczdzisZIndexu",wyliczdzisZIndexu?.toDate())
@@ -38,7 +38,7 @@ const [surname, setSurname] = useState<string | null>(null)
 
     useEffect(()=>{
 
-        if(dzisIndex && paymentDateIndex){
+        if(paymentDateIndex){
             if(dzisIndex >= paymentDateIndex){
                  console.log("uczestnik dłuzny / dodajemy dlug /nie dodajemy treningow")
                  setZadluzenieDoZapisu(dzisIndex - paymentDateIndex)

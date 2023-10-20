@@ -40,9 +40,9 @@ useEffect(() => {
 
         for (let i = 0; i < userModForSelect.length; i++) {
             const userRef = doc(db, "usersData", userModForSelect[i].value);
-            const docSnap = await getDoc(userRef);
+            const docSnap = await getDoc(userRef); 
             
-            if (docSnap.data().pausa || docSnap.data().due ) {
+            if (docSnap.data().pause || docSnap.data().due ) {
                 // Dodawanie użytkownika do listy w formie obiektu
                 usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
             }
@@ -106,6 +106,11 @@ useEffect(()=>{
                            const dateSzukana = useSearchDatesByIndex(convertToStopInd)
                            setStopDate(dateSzukana);
                         }
+                        if(docSnap.data().debt){          
+                          console.log("uzytkownik zadluzony")
+                          setStopDate(dzisData);
+                          setFinalDebt(docSnap.data().debt)
+                       }
                    } 
                   //jesli mamy due
                     if(docSnap.data().due){   
@@ -142,7 +147,8 @@ useEffect(()=>{
           pause: null,  
           add: null,
           stop: stopDate,  
-          restart: null     
+          restart: null ,
+          debt: finalDebt   
         })
         .then(()=>console.log("stop date update succesful"))
         .then(()=>  setStopDate(null))
@@ -191,7 +197,8 @@ StopMembershipAdmin
         setChosenUserId(choice.value);   
         setChosenUserByIdLabel(choice.label);   
         setStopReported(false);
-        setisSent(false)
+        setisSent(false);
+        setStopDate(null)
         }}   
     />
     <p>{chosenUserByIdLabel}</p>

@@ -73,6 +73,11 @@ useEffect(()=>{
                            const dateSzukana = useSearchDatesByIndex(convertToStopInd)
                            setStopDate(dateSzukana);
                         }
+                        if(docSnap.data().debt){          
+                          console.log("uzytkownik zadluzony")
+                          setStopDate(dzisData);
+                          setFinalDebt(docSnap.data().debt)
+                       }
                    } 
                   //jesli mamy due
                     if(docSnap.data().due){   
@@ -109,7 +114,8 @@ useEffect(()=>{
           pause: null,  
           add: null,
           stop: stopDate,  
-          restart: null     
+          restart: null,
+          debt: finalDebt     
         })
         .then(()=>console.log("stop date update succesful"))
         .then(()=>  setStopDate(null))

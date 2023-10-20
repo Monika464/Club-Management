@@ -26,6 +26,7 @@ import { UsersPayments } from "../components/UserPayments.tsx";
 import StopMembershipUser from "../components/StopMembershipUser.tsx";
 import StopMembershipAdmin from "../components/StopMembershipAdmin.tsx";
 import { RestoreMembershipAdmin } from "../components/RestoreMembershipAdmin.tsx";
+import ReportInjuryAdmin2 from "../components/ReportInjuryAdmin2.tsx";
 
 export interface IAdminProps {};         
 
@@ -125,6 +126,9 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <br></br>
             <RestoreMembershipAdmin/>
             </div>}
+            <br></br>
+            <br></br>
+            <ReportInjuryAdmin2/>
 
             <div className="siteLink"> 
               <ul>

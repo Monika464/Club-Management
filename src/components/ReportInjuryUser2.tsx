@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from '../context/UserContext';
 import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
@@ -10,11 +10,14 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "fir
 
 
 
-export const Test2: React.FunctionComponent =() => {
+export const ReportInjuryUser2: React.FunctionComponent =() => {
 
   const { currentUser} = useContext(UserContext); 
 
   const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
+  console.log('paymentDateIndex',paymentDateIndex) 
+
+
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const [name, setName] = useState<string | null>(null)
@@ -23,6 +26,7 @@ const [stopReported, setStopReported] = useState<boolean>(false)
 const [pausaReported, setPausaReported] = useState<boolean>(false)
 const [pausaDate, setPausaDate] = useState<Date | null>();
 const [pausaDebt, setPausaDebt] = useState<number | null>(null) 
+const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
 const [isSent, setisSent] = useState<boolean>(false) ;
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
 
@@ -59,7 +63,7 @@ useEffect(()=>{
          const userRef = doc(db, "usersData",currentUser.uid);
          const docSnap = await getDoc(userRef);
               if (docSnap.exists()) {
-
+                
                 //jesli mamy stop
                   if(docSnap.data().stop){
                   setStopReported(true)
@@ -67,25 +71,19 @@ useEffect(()=>{
                    if(docSnap.data().pause){
                     setPausaReported(true)
                    }
-                //jesli mamy pauze
-                /*
-                 if(docSnap.data().pause){
-                 setCurrentUserPausaDate(docSnap.data().pause);
-                  console.log("uzytkownik pauzujacy")
-                      if(docSnap.data().add){          
-                         console.log("uzytkownik majacy treningi do dodania")
-                         const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
-                         const convertToStopInd = pausaIndex + docSnap.data().add;
-                         const dateSzukana = useSearchDatesByIndex(convertToStopInd)
-                         setStopDate(dateSzukana);
-                      }
-                 } 
-                 */
+                          
                 //jesli mamy due
                   if(docSnap.data().due){   
+              
                        if(paymentDateIndex !== null && dzisIndex){
-                          console.log("odpalonypaymentDateIndex")
+                        
                           setPausaDate(dzisData)
+                          //console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
+                          if(paymentDateIndex >= dzisIndex ){
+                            setPausaAdd(paymentDateIndex - dzisIndex)
+
+  
+                          }
                           if(dzisIndex > paymentDateIndex){
                             setPausaDebt(dzisIndex - paymentDateIndex)
                           }          
@@ -95,10 +93,12 @@ useEffect(()=>{
     } else {console.error("no database connection")}
 
   }
+
+  console.log('pausaAdd',pausaAdd)
    }
 
 //console.log('pausaDate', pausaDate,'pausaDebt',pausaDebt )
-
+``
 const dataToActivityArchive = {
   timestamp: serverTimestamp(),
   pausaData: pausaDate,
@@ -118,7 +118,8 @@ const sendStopToBase =async()=>{
     await updateDoc(paymentDataRef, {
        pause: pausaDate,
        due: null,
-       restart: null
+       restart: null,
+       add: pausaAdd
      })
      .then(()=>console.log("debt modified. update succesful"))
      .then(()=>  setPausaDate(null))
@@ -146,13 +147,14 @@ setInjuryDescripton(value);
 
 return (<div>
 
-Injury reporting user
+Injury reporting user 2
 <br></br>
 <button onClick={getAddfromBase}>Wylicz pauze </button>
 <br></br>
-{stopReported && <p>juz zastopowane</p>}
+{stopReported && <p>Treningi sa juz zakończone</p>}
   {pausaDate && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
   {pausaDebt &&<p>istniejące zadłużenie: {pausaDebt} treningów</p>}
+  {pausaAdd &&<p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
   Uzupelnij formularz wspisując powód zawieszenia
   <input
     type='text'

@@ -92,7 +92,7 @@ const calculateRestart =()=>{
 }
 calculateRestart();
 
-},[dzisIndex])
+},[handleSetUserInfo])
 
 const restartNewData = useSearchDatesByIndex(restartDateIndex);
 

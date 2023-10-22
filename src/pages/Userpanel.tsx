@@ -20,6 +20,8 @@ export interface IUserProps {};
 const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
   
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
+  const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
+  const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
 
   const { currentUser} = useContext(UserContext); 
   //console.log('currentUser userpan',currentUser);
@@ -27,6 +29,15 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
   const handleEditInjury =()=>{
     setIsEditedInjury(!isEditedInjury)
   }
+
+  const handleEditInjury2 =()=>{
+    setIsEditedInjury2(!isEditedInjury2)
+   }
+
+   const handleEditmembership =()=>{
+    setIsEditedMembership(!isEditedMembership)
+
+   }
 
 
         return (
@@ -37,20 +48,32 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
       
              <WriteUsersInfo/>
 
+{/*}
             {isEditedInjury &&
              <ReportInjuryUser/>
             }
          <button onClick={handleEditInjury}>Zgłos kontuzje handleEditInjury </button>
+          */}
 
-<BackAfterInjuryUser/>
-     <br></br><br></br>
-
+<button onClick ={handleEditmembership} style={{color: "green"}}>membership  managing</button>
+{isEditedMembership && <div>
      <StopMembershipUser/>
      <br></br><br></br>
      <RestoreMembershipUser/>
+     </div>}
+     <br></br>
+    
+     <br></br>
+     <button onClick ={handleEditInjury} style={{color: "red"}}>injury managing</button>
+     <br></br>
+     {isEditedInjury && <div>
+     <ReportInjuryUser2/>
+     <BackAfterInjuryUser/>
+     </div>}
+    
+
 
      <br></br><br></br>
-     <ReportInjuryUser2/>
 
             <div className="siteLink">  
   

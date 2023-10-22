@@ -194,7 +194,6 @@ const getAddfromBase =async ()=>{
     />
 
 
-<br></br>
 <button onClick={getAddfromBase}>Wylicz pauze </button>
 <br></br>
 

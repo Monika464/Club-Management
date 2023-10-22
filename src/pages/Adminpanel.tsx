@@ -27,6 +27,7 @@ import StopMembershipUser from "../components/StopMembershipUser.tsx";
 import StopMembershipAdmin from "../components/StopMembershipAdmin.tsx";
 import { RestoreMembershipAdmin } from "../components/RestoreMembershipAdmin.tsx";
 import ReportInjuryAdmin2 from "../components/ReportInjuryAdmin2.tsx";
+import { BackAfterInjuryAdmin2 } from "../components/BackAfterInjuryAdmin2.tsx";
 
 export interface IAdminProps {};         
 
@@ -41,6 +42,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
   const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
   const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
+  const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
 
   //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
@@ -50,9 +52,9 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const handleEditPayment =()=>{
     setIsEditedPayment(!isEditedPayment)
   }
-  const handleEditInjury =()=>{
-    setIsEditedInjury(!isEditedInjury)
-  }
+  //const handleEditInjury =()=>{
+    //setIsEditedInjury(!isEditedInjury)
+  //}
 
   const handleEditBackAfterInjury=()=>{
     setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
@@ -61,6 +63,17 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const handleEditStopMembership=()=>{
     setIsEditedStopMembership(!isEditedStopMembership)
   }
+
+
+  const handleEditmembership =()=>{
+    setIsEditedMembership(!isEditedMembership)
+
+   }
+
+   const handlemanageInjury =()=>{
+    setIsEditedInjury(!isEditedInjury)
+
+   }
 
   //const wynik = useSearchDatesPlusN(3); 
   //console.log("wynik",wynik)
@@ -98,10 +111,12 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {/*< SelectDatePicker/> */}
            <br></br>
             <button onClick={handleEditPayment}>Edit users payment</button>
-            <br></br>  
+            <br></br>        <br></br>  
            {isEditedPayment &&  
           <UsersPayments/>
             }
+
+            {/* 
        
             <br></br><br></br>
             <button onClick={handleEditInjury}>Edit users injury</button>
@@ -117,8 +132,9 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             }
             <br></br>
             <br></br>
-
-            <button onClick={handleEditStopMembership}>Handlemembership</button>
+*/}
+        
+            <button onClick={handleEditStopMembership} style={{color: "green"}}>Handlemembership</button>
             { isEditedStopMembership && 
             <div>
             <StopMembershipAdmin/>
@@ -126,10 +142,17 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <br></br>
             <RestoreMembershipAdmin/>
             </div>}
-            <br></br>
-            <br></br>
+
+            <br></br>  <br></br>
+         
+            <button onClick={handlemanageInjury} style={{color: "red"}}>Handle Injury</button>
+            {isEditedInjury && <div>
             <ReportInjuryAdmin2/>
 
+            <br></br>
+            <BackAfterInjuryAdmin2/>
+            </div>}
+            
             <div className="siteLink"> 
               <ul>
                 <li> <Link to="/userpanel" className="userpanel">userpanel</Link></li>

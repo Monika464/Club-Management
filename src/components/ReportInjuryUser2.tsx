@@ -28,7 +28,8 @@ const [pausaDate, setPausaDate] = useState<Date | null>();
 const [pausaDebt, setPausaDebt] = useState<number | null>(null) 
 const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
 const [isSent, setisSent] = useState<boolean>(false) ;
-const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
+const [injuryDescription, setInjuryDescripton] = useState<string | null>("");
+const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
 
    //ustawienie imienia i nazwiska
 
@@ -43,12 +44,36 @@ useEffect(()=>{
             if (docSnap.exists()) {
               setName(docSnap.data().name);
               setSurname(docSnap.data().surname);
+
+                //jesli mamy stop
+                if(docSnap.data().stop){
+                  setStopReported(true)
+                   }
+                if(docSnap.data().pause){
+                    setPausaReported(true)
+                }
              }
        }
 
     }
-    settingName()  
+    settingName();
+    
+    if(paymentDateIndex !== null && dzisIndex){
+                        
+      setPausaDate(dzisData)
+      //console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
+      if(paymentDateIndex >= dzisIndex ){
+        setPausaAdd(paymentDateIndex - dzisIndex)
+
+
+      }
+      if(dzisIndex > paymentDateIndex){
+        setPausaDebt(dzisIndex - paymentDateIndex)
+      }          
+   }
    },[dzisIndex,paymentDateIndex])
+
+   console.log("dzisindex",dzisIndex)
 
    //funkcja kalkulująca naleznosc
 
@@ -57,7 +82,7 @@ useEffect(()=>{
     //console.log("paymentDateIndex",paymentDateIndex)
     //paymentDateIndex? console.log("paymentDateIndex",paymentDateIndex) : console.log("nic",paymentDateIndex)
 
- 
+/* 
     if(currentUser){
 
          const userRef = doc(db, "usersData",currentUser.uid);
@@ -75,25 +100,13 @@ useEffect(()=>{
                 //jesli mamy due
                   if(docSnap.data().due){   
               
-                       if(paymentDateIndex !== null && dzisIndex){
-                        
-                          setPausaDate(dzisData)
-                          //console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
-                          if(paymentDateIndex >= dzisIndex ){
-                            setPausaAdd(paymentDateIndex - dzisIndex)
-
-  
-                          }
-                          if(dzisIndex > paymentDateIndex){
-                            setPausaDebt(dzisIndex - paymentDateIndex)
-                          }          
-                       }
+                       
                    } 
      
     } else {console.error("no database connection")}
 
   }
-
+*/
   console.log('pausaAdd',pausaAdd)
    }
 
@@ -124,6 +137,7 @@ const sendStopToBase =async()=>{
      .then(()=>console.log("debt modified. update succesful"))
      .then(()=>  setPausaDate(null))
      .then(()=>   setisSent(true))
+     .then(()=>   setPausaAdd(null))
 
      const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
      .then(()=> console.log("archive"))
@@ -145,27 +159,39 @@ const handleDescriptInj =(event: ChangeEvent<HTMLInputElement>)=>{
 setInjuryDescripton(value);
  }
 
-return (<div>
 
-Injury reporting user 2
-<br></br>
-<button onClick={getAddfromBase}>Wylicz pauze </button>
+
+
+
+
+return (
+<>
+
+{/*<button onClick ={handleEditInjury} style={{color: "red"}}>injury managing</button>*/}
+
+
+{/*<button onClick={getAddfromBase}>Wylicz pauze </button>*/}
 <br></br>
 {stopReported && <p>Treningi sa juz zakończone</p>}
-  {pausaDate && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
-  {pausaDebt &&<p>istniejące zadłużenie: {pausaDebt} treningów</p>}
-  {pausaAdd &&<p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
-  Uzupelnij formularz wspisując powód zawieszenia
-  <input
-    type='text'
-    name='text'
-    value={injuryDescription}
-    onChange={handleDescriptInj}
-    placeholder="Co się stało?"
-    required
-  />
-  <button onClick={sendStopToBase}>Potwierdż</button>
-  {isSent &&<p>wyslano</p>} 
-    
-    </div>)
+{pausaReported && <p>Treningi sa zawieszone z powodu kontuzji</p>}
+
+  {pausaDate && !pausaReported && !stopReported && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
+  {pausaDebt &&!pausaReported && !stopReported && <p>istniejące zadłużenie: {pausaDebt} treningów</p>}
+  {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
+  {pausaDate && !pausaReported && !stopReported && <div>
+                 Uzupelnij formularz wspisując powód zawieszenia
+                   <input
+                     type='text'
+                     name='text'
+                     value={injuryDescription}
+                     onChange={handleDescriptInj}
+                     placeholder="Co się stało?"
+                     required
+                   />
+                 <button onClick={sendStopToBase}>Potwierdż</button>
+                {isSent &&<p>wyslano</p>} 
+  </div>}
+ 
+
+    </>)
 }

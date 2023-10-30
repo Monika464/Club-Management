@@ -28,6 +28,9 @@ import StopMembershipAdmin from "../components/StopMembershipAdmin.tsx";
 import { RestoreMembershipAdmin } from "../components/RestoreMembershipAdmin.tsx";
 import ReportInjuryAdmin2 from "../components/ReportInjuryAdmin2.tsx";
 import { BackAfterInjuryAdmin2 } from "../components/BackAfterInjuryAdmin2.tsx";
+import SwithPassToMulti from "../components/SwithPassToMulti.tsx";
+import SwitchButtonTest from "../components/SwitchButtonTest.tsx";
+import SwitchMultiToPass from "../components/SwitchMultiToPass.tsx";
 
 export interface IAdminProps {};         
 
@@ -153,6 +156,16 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <BackAfterInjuryAdmin2/>
             </div>}
             
+
+            <br></br>  <br></br>
+            <SwithPassToMulti/>
+            <br></br>  <br></br>
+            <SwitchMultiToPass/>
+
+            <br></br>  <br></br>
+            <SwitchButtonTest/>
+
+
             <div className="siteLink"> 
               <ul>
                 <li> <Link to="/userpanel" className="userpanel">userpanel</Link></li>

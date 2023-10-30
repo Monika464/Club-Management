@@ -34,6 +34,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    
    <>
    {!currentUser && <li> <Link to="/signup" className="navlink">Signup</Link></li>}
+   {!currentUser && <li> <Link to="/signup2" className="navlink">Signup2</Link></li>}
     {!currentUser &&  <li>  <Link to="/login" className="navlink">Login</Link></li>}   
    </>  
   

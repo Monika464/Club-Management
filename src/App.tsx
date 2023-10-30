@@ -15,6 +15,7 @@ import Navbar from './components/Navbar.tsx';
 import { UserContextProvider} from './context/UserContext.tsx';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import Signup2 from './components/Signup2.tsx';
 
 
 //  initializeApp(config.firebaseConfig)//just once
@@ -72,6 +73,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
            
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>
+              <Route path="signup2" element={<Signup2 />}/>
 
     </Routes>
     </UserContextProvider>

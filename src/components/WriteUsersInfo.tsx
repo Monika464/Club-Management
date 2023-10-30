@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"  
+import { SetStateAction, useEffect, useRef, useState } from "react"  
 import { db } from "../App"
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'; 
@@ -16,6 +16,12 @@ export interface IwritingUsers {
  // userChoice2: string;
 };    
 
+export interface PassMultiOptions {
+  readonly value: string;
+  readonly label: string;
+
+}
+
 export const WriteUsersInfo : React.FunctionComponent<IwritingUsers> =({userChoice2: userChoice2}) => {
    
   const { currentUser} = useContext(UserContext);
@@ -30,34 +36,23 @@ export const WriteUsersInfo : React.FunctionComponent<IwritingUsers> =({userChoi
     const [name, setName] = useState<string | null>(null);
     const [surname, setSurname] = useState<string | null >(null);
     const [dob, setDob] = useState<Date | null >(null);
+    const [isPass, setIsPass] = useState<Boolean>(false);
+    const [isMulti, setIsMulti] = useState<Boolean>(false);
+    const [passMultiChoice, setPassMultiChoice] = useState<string | null >(null);
+    const [passMultiSet, setPassMultiSet] = useState<Boolean>(false);
 
     //choose
     const [isStart, setIsStart] = useState<Boolean>(false);
     const[userChoice, setUserChoice] = useState({});
    // const [datesModForSelect, setDatesModForSelect] = useState<Date[] | null>([])
 
-   /*
 
+   const passMultiOptions: readonly PassMultiOptions[] = [
+    { value: 'pass', label: 'pass'},
+    { value: 'multi', label: 'multi'}
+   ]
 
-    useEffect(()=>{
-
-      if(db && data){
-          const temp: any[] = []; 
-      data.forEach((elem, index) => {
-          //console.log("co to za elem",elem)
-         const timestampA = elem.toDate().toString()
-         temp.push({ value: timestampA, label: timestampA }) 
-         setDatesModForSelect(temp);
-       //console.log("timestamp",timestampA);   
-        }) 
-  
-      } else {console.log("db still loading")}
-console.log("userChoice",userChoice) 
-console.log("userChoice2",userChoice2)   
-
-  },[data,db])
-*/
-
+ 
 
 
     const handleSetName = (event: { target: { value: any; }; })=>{
@@ -75,10 +70,20 @@ console.log("userChoice2",userChoice2)
       setDob(event.target.value);
     }
 
-    const handleChoose=()=>{
+    useEffect(()=>{
+      if(passMultiChoice === 'pass'){
+        console.log("say pas")
+        setIsPass(true);
+        setPassMultiSet(true)
+       } else {
+        console.log("say multi");
+        setIsMulti(true);
+        setPassMultiSet(true)
+       }
 
-      console.log("wybor uzytkoewnika",userChoice) 
-    }
+    },[passMultiChoice])
+
+ 
 
       const WriteUserInfo = async() =>{ 
   	    
@@ -96,7 +101,9 @@ console.log("userChoice2",userChoice2)
           dob: dob,
           id: currentUser?.uid, 
           start: userChoice,
-          due: userChoice 
+          due: userChoice,
+          optionPass: isPass,
+          optionMulti: isMulti
           });
   
           setIsName(true);
@@ -106,23 +113,7 @@ console.log("userChoice2",userChoice2)
 
       }
 
-      // tu musimy dopisac start date ktora musimy wybrac z dostepnych w bazie dat
-      //wyswietl selecta z datami do wboru
-
-
-        // const docSnapshot = await getDoc(docRef);
-        // if (docSnapshot.exists()) { 
-         // console.log("Document data:", docSnapshot.data().name);
-        // }
-/*
-  await setDoc(docRef, {
-    name: nameRef.current.value,
-    surname: surnameRef.current.value,
-    dob: dobRef.current.value,
-    id: currentActiveUser.uid,  
-  });
-  */
-
+    
          console.log("Info about user  created");    
      }
       
@@ -149,7 +140,8 @@ console.log("userChoice2",userChoice2)
                setIsSurname(docSnap.data().surname !== undefined);
                setIsDob(docSnap.data().dob !== undefined);
                setIsStart(docSnap.data().start !== undefined);
-               //setIsDue(docSnap.data().due !== undefined);
+               //setIsMulti(docSnap.data().optionMulti !== false);
+               //setIsPass(docSnap.data().optionPass !== undefined);
   
 
           } else {
@@ -165,7 +157,7 @@ console.log("userChoice2",userChoice2)
   checkFields(); 
 }, [currentUser,WriteUserInfo]);   
 
-
+//console.log( 'passMultiChoice', passMultiChoice)
 
 
     return ( 
@@ -218,34 +210,18 @@ console.log("userChoice2",userChoice2)
      <button className={"btn"} onClick={WriteUserInfo } >update profile</button>
      </div> }
 
-   
-
-
-  
-
-
-     {/*<ChooseStartDate/>*/}
-     {/*
-ten nizej dziala
-  { !isStart && <div>    
-  <p>Select date of start trainings</p>  
-  
+   {passMultiSet !== false && <div>
     <Select
-      closeMenuOnSelect={true} 
-      options={datesModForSelect}
-      onChange={(choice) => {     
-                    if (choice) {
-                   const selectedValue = choice.value;
-                   setUserChoice(selectedValue);
-                  } else {
-                   setUserChoice(null); // Opcjonalnie, jeśli chcesz zresetować wybór
-                   }
-      }}
-    />
-     <p>{userChoice}</p>
-     {/*<button className={"btn"} onClick={handleChoose}>send</button>*/}
-   
+    defaultValue={passMultiOptions[0]}
+    options={passMultiOptions}
+    onChange={(choice) => { setPassMultiChoice(choice.value)}}
+     />
+          <button className={"btn"} onClick={WriteUserInfo } >update profile</button>
 
+   </div>}
+ 
+   
+   
   
 
 </div>   )

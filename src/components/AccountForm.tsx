@@ -3,9 +3,9 @@ import { FormWrapper } from "./FormWrapper";
 
 interface IAccountFormProps {
 
-    email: string,
+    email: string|null,
     setEmail: (value: string) => void;
-    password: string,
+    password: string|null,
     setPassword: (value: string) => void;
 }
 

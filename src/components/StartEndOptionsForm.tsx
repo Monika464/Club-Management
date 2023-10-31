@@ -6,27 +6,27 @@ import { useSearchIndexToday } from "../hooks/useSearchIndexToday";
 import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
 
 interface IStartAndOptionForm {
-option: string;
+option: string | null;
 setOption: (value: string) => void;
-startDay: Date;
+startDay: Date |null;
 setStartDay: (value: Date) => void;
 }
 
 export function StartAndOptionForm(props: IStartAndOptionForm){
 
     const[userChoice, setUserChoice] = useState({});
-    const[passMultiChoice, setPassMultiChoice] = useState<string | null >("pass");
+    //const[passMultiChoice, setPassMultiChoice] = useState<string | null >("pass");
     const datesModForSelect = useModDatesForSelect();
 
-    if(passMultiChoice === "pass"){  
-      props.setOption("pass");
-      console.log("hej hej pass");
+   // if(passMultiChoice === "pass"){  
+      //props.setOption("pass");
+      //console.log("hej hej pass");
 
-    } 
-    if(passMultiChoice === "multi"){
-      props.setOption("multi");
-      console.log("hej hej multi");
-    } 
+   // } 
+    //if(passMultiChoice === "multi"){
+      //props.setOption("multi");
+      //console.log("hej hej multi");
+   // } 
 
     const todaysIndex = useSearchIndexToday()
     const closeTodayDay = useSearchDatesByIndex(todaysIndex)
@@ -39,6 +39,7 @@ export function StartAndOptionForm(props: IStartAndOptionForm){
       closeMenuOnSelect={true} 
       /*components={animatedComponents}  */
       options={datesModForSelect}
+      defaultValue={closeTodayDay}
       onChange={(choice) => {     
       if (choice) {
           const selectedValue = choice.value;
@@ -58,11 +59,11 @@ export function StartAndOptionForm(props: IStartAndOptionForm){
       closeMenuOnSelect={true} 
       /*components={animatedComponents}  */
       options={[{value: "pass", label: "pass"},{value: "multi", label: "mutli"}]}
-      defaultValue={{value: "pass", label: "pass"}}
+      //defaultValue={{value: "pass", label: "pass"}}
         onChange={(choice) => {   
        console.log("choice", choice?.value)
        if(choice)
-       setPassMultiChoice(choice.value)
+       props.setOption(choice.value)
       }}
        />
         

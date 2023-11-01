@@ -5,7 +5,8 @@ import Temple from './../assets/temple.svg'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
   import './navbar.css';  
-  
+  import AdminRoute from '../components/AdminRoute.tsx';
+
 export interface INavbarProps {};
 
 
@@ -14,6 +15,16 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const [authing, setAuthing] = useState(false);
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);
+    const [isAdmin,setIsAdmin] = useState(false);
+
+    useEffect(()=>{
+      if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
+        setIsAdmin(true);
+      }
+
+    },[currentUser])
+
+   
 
     const logout= ()=> {
         return signOut(auth);
@@ -33,8 +44,13 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    
    
    <>
+   {/* 
    {!currentUser && <li> <Link to="/signup" className="navlink">Signup</Link></li>}
-   {!currentUser && <li> <Link to="/signup2" className="navlink">Signup2</Link></li>}
+    */}
+   <li> 
+   {isAdmin && <AdminRoute><Link to="/signup2" className="navlink">Signup2</Link></AdminRoute>} 
+    
+    </li>
     {!currentUser &&  <li>  <Link to="/login" className="navlink">Login</Link></li>}   
    </>  
   

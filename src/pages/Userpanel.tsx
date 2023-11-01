@@ -46,7 +46,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
                <br></br>
               < UserProfile/>
       
-             <WriteUsersInfo/>
+            {/*  <WriteUsersInfo/>*/}
 
 {/*}
             {isEditedInjury &&

@@ -55,7 +55,7 @@ const navigate = useNavigate();
 
 ]);
 
-
+//popraw wyswietlanie wieku z dob jako normalnej daty
 
   
 <SigninSendingTest 
@@ -72,6 +72,14 @@ const handleCreateUser =()=>{
   createUserWithEmailAndPassword(auth, email, password)
   .then((response) =>{console.log('response',response)})
 }
+
+
+const checkFormVisib =()=>{
+
+
+}
+
+
 /*
 const handleCreateUser =()=>{
   createUserWithEmailAndPassword(auth, email, password)

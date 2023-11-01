@@ -2,23 +2,24 @@ import { useEffect, useState } from "react";
 import { useFetchUsers } from "./useFetchUsers";
 
 interface users {}
+
 export const useModUsersForSelect = () => {  
   const {usersInfo} = useFetchUsers();
-   // const [usersModForSelect, setUsersModForSelect] = useState([])
-//console.log("usersIiiiiinfo",usersInfo)
 
-    //useEffect(()=>{ 
+
   
 
      const temp: any[] = [];   
     
       usersInfo?.map((el: { dob: string | number | Date; name: string; surname: string; id: any; })=>{  
-
-       // console.log('ellll',el) 
-      
-    const formatDate: Date  = new Date(el.dob)
-    const today: Date = new Date(); // Dzisiejsza data             
-    const diffTime: number = Math.abs(today - formatDate);  
+        const today= new Date();
+       // console.log("el", el)
+        //console.log("el", el.dob.toDate())
+       const todayUTimestamp = (today.getTime());
+       const elementDobUTimestamp = el.dob?.toDate().getTime();
+      //console.log("timestamp urodzenia", el.dob?.toDate().getTime(),"timastamp dzis",todayUTimestamp)
+      const diffTime: number = Math.abs(todayUTimestamp - elementDobUTimestamp);  
+ 
     const age = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25));   
     const nameSurnameAge =  el.name + " "+ el.surname +" "+ age;  
 
@@ -26,16 +27,7 @@ export const useModUsersForSelect = () => {
     temp.push({ value: el.id, label: nameSurnameAge})    
     
     });
-    //setUsersModForSelect(usersModForSelect); 
-    //console.log("users info gotowe")
   
-
-   // },[usersInfo]) 
-
-   
-    
-    //console.log("usersInfouseMod",usersInfo)
-   // console.log("usersModForSelectorigninal",usersModForSelect)
 
   
 

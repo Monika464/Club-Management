@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext'; 
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../App';
+import { useNavigate } from 'react-router-dom';
+
 
 interface ISigninSending {
     name: string | null,
@@ -14,6 +16,8 @@ interface ISigninSending {
 }
 
 export function SigninSendingTest(props: ISigninSending){
+
+    const navigate = useNavigate();
 
     const { currentUser} = useContext(UserContext);
     console.log('currentUser',currentUser)

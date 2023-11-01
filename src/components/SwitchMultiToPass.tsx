@@ -173,7 +173,7 @@ if(calcDatOfNewPay && chosenUserId){
         setIsCalculating(false); 
         }}   
     />
-    <p>{chosenUserByIdLabel}</p>
+    {/*<p>{chosenUserByIdLabel}</p>*/}
     <button onClick={getAddfromBase}>skalkuluj sytuacje usera </button>  
    <br></br>
     {/*{calcDatOfNewPay?.toDate().toString()}*/}

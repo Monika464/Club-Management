@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
@@ -23,8 +23,18 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
   const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
   const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
 
+  const [isAdmin,setIsAdmin] = useState(false);
+
   const { currentUser} = useContext(UserContext); 
   //console.log('currentUser userpan',currentUser);
+
+
+  useEffect(()=>{
+    if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
+      setIsAdmin(true);
+    }
+
+  },[currentUser])
 
   const handleEditInjury =()=>{
     setIsEditedInjury(!isEditedInjury)
@@ -78,7 +88,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
             <div className="siteLink">  
   
              <ul>
-              <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>
+             {isAdmin && <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>}
             </ul>
 
           </div>

@@ -45,8 +45,8 @@ useEffect(() => {
           const docSnap = await getDoc(userRef);  
           
 
-          console.log("sprawdzam", docSnap.data().optionMulti) === (false || undefined || null);
-          if ((docSnap.data().optionMulti) === (false || undefined || null)) {
+ 
+          if ((docSnap.data().optionPass) === true) {
               // Dodawanie użytkownika do listy w formie obiektu
               usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
           }

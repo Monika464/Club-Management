@@ -46,6 +46,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
   const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
   const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
+  const [isEditedMultiPass, setIsEditedMultiPass] = useState<boolean>(false);
 
   //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
@@ -59,22 +60,26 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
     //setIsEditedInjury(!isEditedInjury)
   //}
 
-  const handleEditBackAfterInjury=()=>{
-    setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
-  }
+  //const handleEditBackAfterInjury=()=>{
+   // setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
+  //}
 
   const handleEditStopMembership=()=>{
     setIsEditedStopMembership(!isEditedStopMembership)
   }
 
 
-  const handleEditmembership =()=>{
-    setIsEditedMembership(!isEditedMembership)
-
-   }
+  //const handleEditmembership =()=>{
+  //  setIsEditedMembership(!isEditedMembership)
+ //  }
 
    const handlemanageInjury =()=>{
     setIsEditedInjury(!isEditedInjury)
+
+   }
+
+   const handlemanageMultiPass =()=>{
+    setIsEditedMultiPass(!isEditedMultiPass)
 
    }
 
@@ -156,14 +161,19 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <BackAfterInjuryAdmin2/>
             </div>}
             
-
             <br></br>  <br></br>
-            <SwithPassToMulti/>
+            <button onClick={handlemanageMultiPass} style={{color: "blue"}}>MultiPass</button>
+            
+            {isEditedMultiPass && <div>
+              <SwithPassToMulti/>
             <br></br>  <br></br>
             <SwitchMultiToPass/>
 
             <br></br>  <br></br>
             <SwitchButtonTest/>
+              
+              </div>}
+          
 
 
             <div className="siteLink"> 

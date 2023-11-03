@@ -19,7 +19,7 @@ export const SwitchButtonTest : React.FunctionComponent<Itest> =(props) => {
 //https://react-switch.netlify.app/
     return(
         <div className="example">
-      <h2>Reacy switch</h2>
+      <h2>Test switch</h2>
       <label>
         <span>Switch with default style</span>
         <Switch
@@ -41,7 +41,7 @@ export const SwitchButtonTest : React.FunctionComponent<Itest> =(props) => {
            className="react-switch"
           onChange={handleChange2}
           checked={checked2}
-         required
+       
         />
 
 <p>

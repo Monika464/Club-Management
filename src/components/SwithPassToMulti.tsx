@@ -146,6 +146,7 @@ useEffect(()=>{
       
         await updateDoc(paymentDataRef, {
          optionMulti: true,
+         optionPass: false,
          debt: switchDebt,
          add: null,
          due: null

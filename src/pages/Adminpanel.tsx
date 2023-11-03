@@ -31,6 +31,7 @@ import { BackAfterInjuryAdmin2 } from "../components/BackAfterInjuryAdmin2.tsx";
 import SwithPassToMulti from "../components/SwithPassToMulti.tsx";
 import SwitchButtonTest from "../components/SwitchButtonTest.tsx";
 import SwitchMultiToPass from "../components/SwitchMultiToPass.tsx";
+import AttendanceList from "../components/AttendanceList.tsx";
 
 export interface IAdminProps {};         
 
@@ -47,6 +48,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
   const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
   const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
   const [isEditedMultiPass, setIsEditedMultiPass] = useState<boolean>(false);
+  const [isEditedAttendance, setIsEditedAttendance] = useState<boolean>(false);
 
   //console.log('isEdited',isEdited) 
   const handleEdit =()=>{
@@ -80,6 +82,12 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
    const handlemanageMultiPass =()=>{
     setIsEditedMultiPass(!isEditedMultiPass)
+
+   }
+
+
+   const handlemanageAttendance =()=>{
+    setIsEditedAttendance(!isEditedAttendance)
 
    }
 
@@ -168,13 +176,14 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
               <SwithPassToMulti/>
             <br></br>  <br></br>
             <SwitchMultiToPass/>
-
+            </div>}
             <br></br>  <br></br>
-            <SwitchButtonTest/>
-              
+            <button onClick={handlemanageAttendance} style={{color: "yellow"}}>Attendance</button>       
+            {isEditedAttendance && <div>
+              <br></br>  <br></br>
+              <AttendanceList/>
               </div>}
-          
-
+             
 
             <div className="siteLink"> 
               <ul>

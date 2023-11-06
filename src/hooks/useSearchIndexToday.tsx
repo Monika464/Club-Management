@@ -44,7 +44,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayDay === datDay
                         
                      ) {
-                        console.log("maa1", dat, ind);
+                       // console.log("maa1", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -57,7 +57,7 @@ export const useSearchIndexToday = (): number | null => {
                      ) {
                        //console.log("maaaam2", dat, ind);
                         //console.log("test",todayDay+1);
-                        console.log("maa2", dat, ind);
+                        //console.log("maa2", dat, ind);
                          setTodaysIndex(ind);
          
                          break;
@@ -67,7 +67,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay3 === datDay
                      ) {
-                        console.log("maa3", dat, ind);
+                       // console.log("maa3", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -79,7 +79,7 @@ export const useSearchIndexToday = (): number | null => {
                         todayMonth === datMonth &&
                         todayDay4 === datDay
                      ) {
-                        console.log("maa4", dat, ind);
+                        //console.log("maa4", dat, ind);
                         //console.log("test",todayDay+1);
                         
                          setTodaysIndex(ind);
@@ -91,7 +91,7 @@ export const useSearchIndexToday = (): number | null => {
 
                   }
         }
-  console.log("original",todaysIndex);
+  //console.log("original",todaysIndex);
 }
   //chyba brak 
 

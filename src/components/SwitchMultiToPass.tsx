@@ -61,7 +61,7 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
 
         fetchData();
 
-        console.log('newUsersList',newUsersList)
+        //console.log('newUsersList',newUsersList)
     }, [db,useModUsersForSelect,dzisData]);
 
     const getAddfromBase =async ()=>{
@@ -88,7 +88,7 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
                 
                     //jesli mamy due optionMulti
                       if(docSnap.data().optionMulti){   
-                              console.log("multi user") 
+                             // console.log("multi user") 
                             if(docSnap.data().debt){
                             setHasDebt(docSnap.data().debt)
                            }

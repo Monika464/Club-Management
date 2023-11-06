@@ -12,6 +12,7 @@ import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
 import { ReportInjuryUser2 } from "../components/ReportInjuryUser2";
 import  StopMembershipUser  from "../components/StopMembershipUser";
 import { RestoreMembershipUser } from "../components/RestoreMembershipUser";
+import { DisplayUserTrainings } from "../components/DisplayUserTrainings";
 
 
 export interface IUserProps {};  
@@ -80,6 +81,9 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
      <ReportInjuryUser2/>
      <BackAfterInjuryUser/>
      </div>}
+
+<br></br><br></br>
+     <DisplayUserTrainings/>
     
 
 

@@ -41,19 +41,19 @@ if(dataFromBase){
 
       
           if(result0.getTime() === dataFromBase[ind].toDate().getTime()){
-                   console.log("jest wynik0")
+                  // console.log("jest wynik0")
                    setCloseTodaysIndex(ind)
                    break;
           } else if(result1.getTime() === dataFromBase[ind].toDate().getTime()){
-                  console.log("jest wynik1")
+                 // console.log("jest wynik1")
                   setCloseTodaysIndex(ind)
                   break;
           } else if(result2.getTime() === dataFromBase[ind].toDate().getTime()){
-          console.log("jest wynik2")
+          //console.log("jest wynik2")
           setCloseTodaysIndex(ind)
                 break;
            } else if(result3.getTime() === dataFromBase[ind].toDate().getTime()){
-               console.log("jest wynik3")
+              // console.log("jest wynik3")
                setCloseTodaysIndex(ind)
                   break;
            } 

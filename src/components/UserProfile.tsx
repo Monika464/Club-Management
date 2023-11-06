@@ -39,8 +39,8 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =(props) => {
     const [img, setImg] = useState<string | null>('')
     const [email, setEmail] = useState("")
 
- console.log('naszeMetaUid',naszeMetaUid)
- console.log('currentUserPhoto',currentUser?.photoURL)
+ //console.log('naszeMetaUid',naszeMetaUid)
+ //console.log('currentUserPhoto',currentUser?.photoURL)
   
 
 
@@ -48,7 +48,7 @@ const handleName = () =>{
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   //to powinno zapisywac w profilu
- console.log("czesc", name)
+ //console.log("czesc", name)
     updateProfile(auth.currentUser, {displayName: name})
       .then(() => {
         console.log("Your name was updated")
@@ -133,7 +133,7 @@ if(naszeMetaUid === user?.uid){
        //const mojUrl = await imageRef; 
        const mojUrl = await getDownloadURL(imageRef);
        setImageUpload(mojUrl);
-       console.log("mojUrl",mojUrl )
+       //console.log("mojUrl",mojUrl )
 // Get metadata properties
       getMetadata(imageRef)
       .then((metadata) => {
@@ -152,7 +152,7 @@ if(naszeMetaUid === user?.uid){
      }
      
 
-   console.log("currentUser",currentUser?.displayName,currentUser?.email,currentUser?.displayName,currentUser?.uid );
+   //console.log("currentUser",currentUser?.displayName,currentUser?.email,currentUser?.displayName,currentUser?.uid );
 //
 
     const updatingEmail = async ()=>{

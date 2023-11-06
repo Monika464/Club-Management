@@ -55,7 +55,7 @@ useEffect(() => {
                     const userData = doc.data();
                        
                     tempList.push({ ...userData, checked: true }); 
-                    console.log("name", doc.data().name,doc.data().surname );
+                   // console.log("name", doc.data().name,doc.data().surname );
 
                       if(doc.data().due){
                         tempActiveList.push(doc.data()) 
@@ -63,7 +63,7 @@ useEffect(() => {
 
                      if(doc.data().pause || doc.data().stop){
                         tempNonActiveList.push(doc.data())
-                       console.log("pause",doc.data().pause, doc.data().name)     
+                     //  console.log("pause",doc.data().pause, doc.data().name)     
                        }
 
                      
@@ -88,9 +88,9 @@ useEffect(() => {
         }
         takingQuery(); 
        
-        console.log('multiUsers',multiUsers);
-        console.log('activeUsersList',activeUsersList)
-        console.log('notActiveUsersList',notActiveUsersList) 
+        //console.log('multiUsers',multiUsers);
+        //console.log('activeUsersList',activeUsersList)
+        //console.log('notActiveUsersList',notActiveUsersList) 
       
      
     },[db,rendered])
@@ -117,7 +117,7 @@ useEffect(() => {
     setMultiusers(updatedUsers); 
   };
   
-  console.log('onToOffList',onToOffList)
+ // console.log('onToOffList',onToOffList)
   //jak liczba parzysta uzytkownika to usun a jak nieparzysta
 
   useEffect(()=>{
@@ -125,7 +125,7 @@ useEffect(() => {
 
       const tempUserIds = []
       onToOffList.map((user)=>{
-          console.log("in oftoOn", user.id)
+          //console.log("in oftoOn", user.id)
           tempUserIds.push(user.id) 
       })
           return setUsersIdsToBase(tempUserIds)
@@ -133,7 +133,7 @@ useEffect(() => {
     }
     justUsersIds();  
 
-console.log('usersIdsToBase',usersIdsToBase)
+//console.log('usersIdsToBase',usersIdsToBase)
 
   },[onToOffList])
 
@@ -172,7 +172,7 @@ if(onToOffList){
            debt: 1
          })
          .then(()=>{
-          console.log("zadluzenie zapisano1")
+          //console.log("zadluzenie zapisano1")
           setisSend(true);
         })
  
@@ -182,7 +182,7 @@ if(onToOffList){
            debt: debt + 1
          })
          .then(()=>{
-          console.log("zadluzenie zapisano2")
+          //console.log("zadluzenie zapisano2")
           setisSend(true);
         })
          }
@@ -196,7 +196,7 @@ if(onToOffList){
   
 
 
-console.log('usersIdsToBase',usersIdsToBase)
+//console.log('usersIdsToBase',usersIdsToBase)
 
 
     return (<div>  
@@ -231,6 +231,7 @@ console.log('usersIdsToBase',usersIdsToBase)
             <br></br>
             {isSend && <p>Zadluzenie zapisano</p>}
          
+         {/* zadluzenie multi musi trafiac do archiwum */}
         
         
         </div>)

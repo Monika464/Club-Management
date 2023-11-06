@@ -55,7 +55,7 @@ const navigate = useNavigate();
 
 ]);
 
-//popraw wyswietlanie wieku z dob jako normalnej daty
+
 
   
 <SigninSendingTest 
@@ -68,7 +68,7 @@ email ={email}
 password={password}
 />
 
-const handleCreateUser =()=>{
+const handleCreateUser =(e)=>{
   createUserWithEmailAndPassword(auth, email, password)
   .then((response) =>{console.log('response',response)})
 }
@@ -79,7 +79,7 @@ const checkFormVisib =()=>{
 
 }
 
-
+//https://www.youtube.com/watch?v=VvcBqPua2DI 3: 35
 /*
 const handleCreateUser =()=>{
   createUserWithEmailAndPassword(auth, email, password)
@@ -129,7 +129,7 @@ function onSubmit(e: FormEvent) {
         
             </div>
             </form>
-            <button onClick={handleCreateUser}>Create User</button>
+            {isLastStep && <button onClick={handleCreateUser}>Create User</button>}
             <div>{name} {surname} {dob.toString()}{option}{email}{startDay?.toDate().toString()}</div>
             {/*{isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>}*/}
             {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}
@@ -142,3 +142,4 @@ function onSubmit(e: FormEvent) {
 }
 
 export default Signup2;
+

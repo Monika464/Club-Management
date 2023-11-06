@@ -14,7 +14,7 @@ import { db } from '../App';
 
 interface PossibleTrainingDate {
   value: Date;
-  label: string;
+  label: Date | string;
   possibleTrainingDate: Date | null;
 }
 
@@ -27,11 +27,11 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
   const [startDate, setStartDate] = useState<Date>(new Date());   
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [dayRange, setDayRange] = useState<Date[]>([]);
-  const [closeMenu, setCloseMenu] = useState(false); // Dodaj stan closeMenu 
+  //const [closeMenu, setCloseMenu] = useState(false); // Dodaj stan closeMenu 
   //const [selectedDate, setSelectedDate] = useState([]); 
    const[userChoice, setUserChoice] = useState<Date[]>([])
    const [isReset, setIsReset] = useState<boolean>(false);
-   
+  
 
 //console.log('dayRange',dayRange);
 //console.log('userChoice',userChoice)
@@ -90,9 +90,9 @@ if(dayRange){
  const resetState = () => {
   setUserChoice([]);
   setSelectedDates([]);
-  //setStartDate(new Date());
+  setStartDate(new Date());
   setEndDate(null);
-  setCloseMenu(true);
+  //setCloseMenu(true);
   setIsReset(true);
 };
 
@@ -119,6 +119,8 @@ console.log(userChoice,"userchoceprops")
  }
 
 
+
+
   return ( 
 <>
 
@@ -133,10 +135,10 @@ console.log(userChoice,"userchoceprops")
 />
 
 <Select
-      closeMenuOnSelect={closeMenu}  
+      /*closeMenuOnSelect={closeMenu}  */
       components={animatedComponents} 
+      closeMenuOnSelect={false} 
       isMulti
-      isClearable
       options={selectedDates}
       onChange={(choice) => {     
      const selectedValues = choice.map(option => option.value); 

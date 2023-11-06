@@ -127,11 +127,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
            {/*< SelectDatePicker/> */}
            <br></br>
             <button onClick={handleEditPayment}>Edit users payment</button>
-            <br></br>        <br></br>  
+            <br></br>     
            {isEditedPayment &&  
           <UsersPayments/>
             }
-
+          <br></br>
             {/* 
        
             <br></br><br></br>
@@ -150,6 +150,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <br></br>
 */}
         
+            <br></br>
             <button onClick={handleEditStopMembership} style={{color: "green"}}>Handlemembership</button>
             { isEditedStopMembership && 
             <div>

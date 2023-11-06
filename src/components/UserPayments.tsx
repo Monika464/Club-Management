@@ -150,7 +150,6 @@ useEffect(()=>{
     {addSent && <p>dodane zmodyfikowane</p>}
     {dateSent && <p>data zmodyfikowana</p>}
     
-
     </>)
 
 }

@@ -62,7 +62,7 @@ useEffect(() => {
   //console.log('newUsersList',newUsersList)
 }, [db,useModUsersForSelect,dzisData]);
 
-console.log('newUsersList',newUsersList)
+//console.log('newUsersList',newUsersList)
 
 //ustawienie imienia i nazwiska
 
@@ -83,7 +83,7 @@ useEffect(()=>{
 
     }
     settingName()  
-    console.log("chosenUserByIdLabel",chosenUserByIdLabel,"name",name,"surname",surname)
+   // console.log("chosenUserByIdLabel",chosenUserByIdLabel,"name",name,"surname",surname)
    },[dzisData,userModForSelect]);
 
    const dataToActivityArchive = {
@@ -119,7 +119,7 @@ useEffect(()=>{
                 //jesli mamy due
                   if(docSnap.data().due){   
                        if(paymentDateIndex !== null && dzisIndex){
-                          console.log("odpalonypaymentDateIndex")
+                          //console.log("odpalonypaymentDateIndex")
                           setPausaDate(dzisData);
                           if(paymentDateIndex >= dzisIndex ){
                             setSwitchAdd(paymentDateIndex - dzisIndex)

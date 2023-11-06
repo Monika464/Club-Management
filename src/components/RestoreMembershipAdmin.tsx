@@ -77,7 +77,7 @@ export const RestoreMembershipAdmin: React.FunctionComponent =() => {
       }
 
      
-      console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt) 
+     // console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt) 
 
 
 
@@ -96,7 +96,7 @@ calculateRestart();
 
 const restartNewData = useSearchDatesByIndex(restartDateIndex);
 
-console.log('restartNewData',restartNewData?.toDate())
+//console.log('restartNewData',restartNewData?.toDate())
 
 
 const dataToActivityArchive = {

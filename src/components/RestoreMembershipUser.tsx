@@ -61,13 +61,13 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
           
          
 
-          console.log('UUUUrestartNewData',restartNewData?.toDate())
+         // console.log('UUUUrestartNewData',restartNewData?.toDate())
 
     },[handleSetUserInfo])
 
     const restartNewData = useSearchDatesByIndex(restartDateIndex);
 
-    console.log('restartNewData',restartNewData?.toDate())  
+    //console.log('restartNewData',restartNewData?.toDate())  
 
 
 const dataToActivityArchive = {

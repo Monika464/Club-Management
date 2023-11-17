@@ -32,6 +32,7 @@ import SwithPassToMulti from "../components/SwithPassToMulti.tsx";
 import SwitchButtonTest from "../components/SwitchButtonTest.tsx";
 import SwitchMultiToPass from "../components/SwitchMultiToPass.tsx";
 import AttendanceList from "../components/AttendanceList.tsx";
+import { AdminRole } from "../components/AdminRole.tsx";
 
 export interface IAdminProps {};         
 
@@ -184,7 +185,10 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
               <br></br>  <br></br>
               <AttendanceList/>
               </div>}
-             
+     <br></br>   <br></br>      
+
+
+
 
             <div className="siteLink"> 
               <ul>

@@ -74,9 +74,9 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>
               <Route path="signup2" element={
-                <AdminRoute>
+               
                   <Signup2 />
-                </AdminRoute>
+                
               
               }/>
 

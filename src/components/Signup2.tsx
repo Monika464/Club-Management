@@ -45,13 +45,13 @@ const navigate = useNavigate();
         setOption={setOption}
         startDay ={startDay}
         setStartDay = {setStartDay}
-        />,
-        <AccountForm
-        email ={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        />,
+        />
+        // <AccountForm
+        // email ={email}
+        // setEmail={setEmail}
+        // password={password}
+        // setPassword={setPassword}
+        // />,
 
 ]);
 
@@ -68,10 +68,10 @@ email ={email}
 password={password}
 />
 
-const handleCreateUser =(e)=>{
-  createUserWithEmailAndPassword(auth, email, password)
-  .then((response) =>{console.log('response',response)})
-}
+//const handleCreateUser =(e)=>{
+ // createUserWithEmailAndPassword(auth, email, password)
+  //.then((response) =>{console.log('response',response)})
+//}
 
 
 const checkFormVisib =()=>{
@@ -104,7 +104,7 @@ const handleCreateUser =()=>{
 function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!isLastStep) return next()
-    alert("Successful Account Creation")
+    alert("Successful  Creation")
   }
 
     return (<div >
@@ -129,7 +129,7 @@ function onSubmit(e: FormEvent) {
         
             </div>
             </form>
-            {isLastStep && <button onClick={handleCreateUser}>Create User</button>}
+            {/* {isLastStep && <button onClick={handleCreateUser}>Create User</button>} */}
             <div>{name} {surname} {dob.toString()}{option}{email}{startDay?.toDate().toString()}</div>
             {/*{isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>}*/}
             {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}

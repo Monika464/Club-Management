@@ -84,7 +84,7 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
       
 
         <div id="main" className="login-form"> 
-        <div>Signup</div>
+        <div>Signup a new user</div>
       
          <div id="fields">
          </div>

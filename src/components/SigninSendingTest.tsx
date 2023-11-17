@@ -30,11 +30,13 @@ export function SigninSendingTest(props: ISigninSending){
         console.log('optionoption',props.option)
         if(props.option === "multi"){
         setOptionMulti(true)
+        setOptionPass(false)
         console.log('optionMulti  true')
          }
         if(props.option === "pass"){
         console.log('optionPass true')
         setOptionPass(true)
+        setOptionMulti(false)
     }
     },[props.option])
    
@@ -63,26 +65,45 @@ export function SigninSendingTest(props: ISigninSending){
     		}
 
     if(currentUser){
-        const docRef = doc(db, "usersData", currentUser.uid);
 
-      await setDoc(docRef, {
-        name: props.name,
-        surname: props.surname,
-        dob: props.dob,
-        id: currentUser?.uid, 
-        start: props.startDay,
-        due: props.startDay,
-        optionPass: optionPass,
-        optionMulti: optionMulti
-        })
-        .then(()=>console.log("debt modified. update succesful"))
-                .then(()=>  setIsSent(true))
-                .catch((err)=> console.error(err))
-        
-       // setIsName(true);
-        //setIsSurname(true);
-        //setIsDob(true);
-        //setIsStart(true);
+           //jesli option pass a inny jesl option multi
+if(optionMulti){
+    const docRef = doc(db, "usersData", currentUser.uid);
+    await setDoc(docRef, {
+      name: props.name,
+      surname: props.surname,
+      dob: props.dob,
+      id: currentUser?.uid, 
+      start: props.startDay,
+      due: null,
+      optionPass: false,
+      optionMulti: true
+      })
+      .then(()=>console.log("multi user. update succesful"))
+              .then(()=>  setIsSent(true))
+              .catch((err)=> console.error(err))
+
+    }
+
+    if(optionPass){
+        const docRef = doc(db, "usersData", currentUser.uid);
+        await setDoc(docRef, {
+          name: props.name,
+          surname: props.surname,
+          dob: props.dob,
+          id: currentUser?.uid, 
+          start: props.startDay,
+          due: props.startDay,
+          optionPass: optionPass,
+          optionMulti: false
+          })
+          .then(()=>console.log("pass user. update succesful"))
+                  .then(()=>  setIsSent(true))
+                  .catch((err)=> console.error(err))
+
+    }
+      
+   
 
         }
     }

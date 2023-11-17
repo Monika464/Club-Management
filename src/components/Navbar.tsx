@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
   import './navbar.css';  
   import AdminRoute from '../components/AdminRoute.tsx';
+import { useRegisteringUsers } from '../hooks/useIsUserRegistered.tsx';
 
 export interface INavbarProps {};
 
@@ -30,7 +31,8 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
         return signOut(auth);
         }
 
-     
+     const isUserRegistered = useRegisteringUsers()
+     console.log("isss", isUserRegistered)
 
     return (
         <div>
@@ -44,14 +46,16 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    
    
    <>
-   {/* 
-   {!currentUser && <li> <Link to="/signup" className="navlink">Signup</Link></li>}
-    */}
+   <li>
+   {isAdmin && <li> <Link to="/signup" className="navlink">Signup</Link></li>}
+   </li>
    <li> 
-   {isAdmin && <AdminRoute><Link to="/signup2" className="navlink">Signup2</Link></AdminRoute>} 
-    
+   {currentUser && !isUserRegistered && <Link to="/signup2" className="navlink">Signup2</Link>} 
     </li>
-    {!currentUser &&  <li>  <Link to="/login" className="navlink">Login</Link></li>}   
+    
+    {!currentUser &&  <li>  <Link to="/login" className="navlink">Login</Link></li>} 
+
+     
    </>  
   
    

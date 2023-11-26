@@ -9,12 +9,13 @@ import { UserForm } from './UserForm';
 import {SigninSendingTest}  from './SigninSendingTest';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import SetAvatar from './SetAvatar';
 //https://www.youtube.com/watch?v=uDCBSnWkuH0
 //18
 
 
 
-const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
+const Signup2: React.FunctionComponent<IApplicationProps> =(props) => { 
 
     const [name, setName] = useState<string|null>("");
     const [surname, setSurname] = useState<string|null>("");
@@ -23,6 +24,11 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     const [startDay, setStartDay] = useState<Date | null>(null);
     const [email, setEmail] = useState<string|null>("");
     const [password, setPassword] = useState<string|null>("");
+
+    //// zrob props do set avatar
+    const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
+    const [thumbnailError, setThumbnailError] = useState<string | null>(null)
+    const [pictureURL, setPictureURL] = useState<URL | null>(null)
 
     const [authing, setAuthing] = useState(false);
     const auth = getAuth();
@@ -33,7 +39,7 @@ const navigate = useNavigate();
 
     const {steps,currentStepIndex,step,isFirstStep,isLastStep,back, next} = useMultistepForm([
         <UserForm 
-        setName={setName} 
+        setName={setName}   
         name={name} 
         setSurname={setSurname} 
         surname={surname}
@@ -45,14 +51,21 @@ const navigate = useNavigate();
         setOption={setOption}
         startDay ={startDay}
         setStartDay = {setStartDay}
-        />
+        />,
         // <AccountForm
         // email ={email}
         // setEmail={setEmail}
         // password={password}
         // setPassword={setPassword}
         // />,
-
+        <SetAvatar
+        thumbnail={thumbnail}
+        setThumbnail={setThumbnail}
+        thumbnailError ={thumbnailError}
+        setThumbnailError = {setThumbnailError}
+        pictureURL ={pictureURL}
+        setPictureURL={setPictureURL}
+        />
 ]);
 
 
@@ -66,6 +79,7 @@ option={option}
 startDay ={startDay}
 email ={email}
 password={password}
+
 />
 
 //const handleCreateUser =(e)=>{

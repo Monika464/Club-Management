@@ -44,7 +44,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
                 const userRef = doc(db, "usersData", userModForSelect[i].value);
                 const docSnap = await getDoc(userRef);  
                 
-                if ( docSnap.data().due ) {
+                if ( docSnap.data()) {
                     // Dodawanie użytkownika do listy w formie obiektu
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                 }

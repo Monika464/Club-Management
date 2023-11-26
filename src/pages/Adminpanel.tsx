@@ -32,7 +32,10 @@ import SwithPassToMulti from "../components/SwithPassToMulti.tsx";
 import SwitchButtonTest from "../components/SwitchButtonTest.tsx";
 import SwitchMultiToPass from "../components/SwitchMultiToPass.tsx";
 import AttendanceList from "../components/AttendanceList.tsx";
-import { AdminRole } from "../components/AdminRole.tsx";
+//import { AdminRole } from "../components/AdminRole.tsx";
+//import SidebarAdmin from "../components/SidebarAdmin.tsx";
+import DashboardIcon from '../assets/dashboard_icon.svg';
+import AddIcon from '../assets/add_icon.svg';
 
 export interface IAdminProps {};         
 
@@ -109,8 +112,8 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
     return (
         <div>
-            adminpanel   
-            <br></br>
+            Witaj adminie   
+            <br></br><br></br>
             <button onClick={handleEdit}>Edit training dates</button>
             <br></br>  
             
@@ -186,7 +189,25 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
               <AttendanceList/>
               </div>}
      <br></br>   <br></br>      
+     <nav className='links'>
+            <ul>
+                <li>              
+                    <NavLink to="/home" className="navlink">Nome
+                    <img src={DashboardIcon} alt="dashboard icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/create" className="navlink">Ureate
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
 
+            </ul>
+
+
+        </nav>        
+      
+            <br></br><br></br>
 
 
 

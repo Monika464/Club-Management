@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
 import { UserProfile } from "../components/UserProfile";
@@ -13,12 +13,15 @@ import { ReportInjuryUser2 } from "../components/ReportInjuryUser2";
 import  StopMembershipUser  from "../components/StopMembershipUser";
 import { RestoreMembershipUser } from "../components/RestoreMembershipUser";
 import { DisplayUserTrainings } from "../components/DisplayUserTrainings";
+import Sidebar from "../components/Sidebar";
+import ShowAvatar from "../components/ShowAvatar";
+import ChoosingAvatar from "../components/ChoosingAvatar";
 
 
-export interface IUserProps {};  
+export interface IUserProps {};     
 
 
-const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
+const Userpanel: React.FunctionComponent<IUserProps> =(props) => {  
   
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
   const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
@@ -46,25 +49,18 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
    }
 
    const handleEditmembership =()=>{
-    setIsEditedMembership(!isEditedMembership)
+    setIsEditedMembership(!isEditedMembership)  
 
    }
 
 
         return (
             <>
-           Userpanel  
-               <br></br>
-              < UserProfile/>
-      
-            {/*  <WriteUsersInfo/>*/}
+            
+             < UserProfile/>
 
-{/*}
-            {isEditedInjury &&
-             <ReportInjuryUser/>
-            }
-         <button onClick={handleEditInjury}>Zgłos kontuzje handleEditInjury </button>
-          */}
+             {/* <ChoosingAvatar/> */}
+             <br></br>
 
 <button onClick ={handleEditmembership} style={{color: "green"}}>membership  managing</button>
 {isEditedMembership && <div>
@@ -97,7 +93,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
           </div>
 
-          
+            
 </>);
     }
 

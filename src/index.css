@@ -84,7 +84,7 @@ textarea {
 }
 .datelist{
   display: flex;
-{/*flex-direction: row-reverse; */}
+
 }
 .datelist p{
   display: flex;

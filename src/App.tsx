@@ -16,14 +16,20 @@ import { UserContextProvider} from './context/UserContext.tsx';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import Signup2 from './components/Signup2.tsx';
+import Create from './pages/Create.tsx';
+import Project from './pages/Project.tsx';
+import Sidebar from './components/Sidebar.tsx';
+import { getStorage } from "firebase/storage";
 
+import { useContext } from 'react'
+import { UserContext } from './context/UserContext';
 
 //  initializeApp(config.firebaseConfig)//just once
 
  export const app = initializeApp(config.firebaseConfig)
  export const auth = getAuth(app);
  export const db = getFirestore(app);
-
+ export const storage = getStorage();
 
 //https://www.youtube.com/watch?v=b_52NmIfDr8  5: 31
 //aktualne
@@ -32,14 +38,21 @@ import Signup2 from './components/Signup2.tsx';
 export interface IApplicationProps {}
 
 const Application: React.FunctionComponent<IApplicationProps> = (props) => {
-
+  const { currentUser} = useContext(UserContext);
 //const [isUser, setIsUser] = useContext(false)
   
   return (
- 
+ <div className='App'>
     <BrowserRouter>
+    
+ 
+        <div className='container'>
+       
+  
     <UserContextProvider>
-    <Navbar/>
+    <Navbar/> 
+   
+   
         <Routes>
         
             <Route 
@@ -49,6 +62,29 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                        <HomePage />
                                              
                        </AuthRoute>
+                    }
+            />
+
+           <Route 
+             path="/home" 
+             element={                  
+                       <HomePage />       
+                    }
+            />
+
+           <Route 
+             path="/create" 
+             element={
+                      //  <AuthRoute>
+                       <Create />                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+<Route 
+             path="/projects/:id" 
+             element={           
+                       <Project />                                                        
                     }
             />
              
@@ -81,10 +117,12 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               }/>
 
     </Routes>
+
     </UserContextProvider>
+    </div>
 </BrowserRouter>
 
-
+</div>
   )
 }
 

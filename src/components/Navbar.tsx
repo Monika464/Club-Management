@@ -1,6 +1,6 @@
 import { getAuth, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,NavLink } from 'react-router-dom';
 import Temple from './../assets/temple.svg'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
@@ -32,11 +32,11 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
         }
 
      const isUserRegistered = useRegisteringUsers()
-     console.log("isss", isUserRegistered)
+     //console.log("isss", isUserRegistered)
 
     return (
-        <div>
-            <div className="navbar">
+      
+            <nav className="navbar">
    
    <ul>
    <li className="logo">
@@ -45,29 +45,25 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    </li>
    
    
-   <>
+ 
    <li>
-   {isAdmin && <li> <Link to="/signup" className="navlink">Signup</Link></li>}
+   {isAdmin &&  <Link to="/signup" className="navlink">Register user</Link >}
    </li>
    <li> 
-   {currentUser && !isUserRegistered && <Link to="/signup2" className="navlink">Signup2</Link>} 
+   {currentUser && !isUserRegistered && <NavLink to="/signup2" className="navlink">Fill form</NavLink>} 
     </li>
-    
-    {!currentUser &&  <li>  <Link to="/login" className="navlink">Login</Link></li>} 
-
+    <li>
+    {!currentUser &&    <NavLink to="/login" className="navlink">Login</NavLink>} 
+    </li>
      
-   </>  
-  
-   
-
     <li> 
    {currentUser && <button className="btn" onClick={logout}  >Logout</button>}
     </li> 
  
    </ul>
- </div> 
+ </nav> 
         
-        </div>
+       
     )
 
 }

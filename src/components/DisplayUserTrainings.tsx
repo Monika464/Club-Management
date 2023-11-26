@@ -34,21 +34,28 @@ export const DisplayUserTrainings : React.FunctionComponent<IDisplayUserTraining
   useEffect(()=>{
 
   const getAddfromBase =async ()=>{
-    console.log("currentUser",currentUser?.uid)
+    const displayName = currentUser?.displayName;
+    const email = currentUser?.email;
+    const photoURL = currentUser?.photoURL;
+    const emailVerified = currentUser?.emailVerified;
+
+    console.log("currentUser",currentUser?.uid, "display name",displayName,email,photoURL, emailVerified)
+  
+    
     if(currentUser){  
-
-       
-      
+          
       const userRef = doc(db, "usersData",currentUser.uid);
-      const docSnap = await getDoc(userRef);
+      const docSnap = await getDoc(userRef)
+      if (docSnap.exists()) {
+        console.log("docSnaap",docSnap.data())
+      }
+       //  if (docSnap.exists()) {
 
-         if (docSnap.exists()) {
-
-            console.log("imie",docSnap.data())
+          //  console.log("imie",docSnap.data())
             //ustaw czy ma dlug
             //ustaw czy ma pausa czy stop jak nie to active
 
-         } else (console.log("dokumemt nie istnieje"))
+        // } else (console.log("nie ma danych usera., imienia ani uid"))
         }
 
     }
@@ -56,21 +63,13 @@ export const DisplayUserTrainings : React.FunctionComponent<IDisplayUserTraining
     getAddfromBase();
 },[db,currentUser])
 
-  //console.log(data,usersInfo,closeTodaysIndex, currentUser )
 
 
-    //sciagamy daty z bazy 
-    //szukamy close todat i dwa kolejne indexy
-    //sciagamy dane o uzytkowniku
-    // czy nie jest multi
-    //multi czarne kolejne indexy i info aktywny
-    //lub pausa stop
-    //jego due date i porownujemy cz wieksze czy mniejsze
-    //jego pausa lub stop
-    //zczytujemy czy ma dlug i jesli tak wyswietlay
+
 
     return (<>
     DisplayUserTrainings
     </>)
 
 }
+//https://firebase.google.com/docs/auth/web/manage-users

@@ -15,6 +15,9 @@ import { EmailAuthProvider, User, getAuth, reauthenticateWithCredential, updateE
 import { getDownloadURL, getMetadata, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { auth } from '../App';
+import SetAvatar from './SetAvatar';
+import ChoosingAvatar from './ChoosingAvatar';
+
 
 export interface IUserProfile {};   
 
@@ -24,12 +27,19 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =(props) => {
 
   const [name, setName] = useState<string | null>('');
   const [naszeMetaUid, setNaszeMetaUid]= useState<string | null>('');
+  const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
+  const [thumbnailError, setThumbnailError] = useState<string | null>(null)
+  const [pictureURL, setPictureURL] = useState<URL | null>(null)
 
 
   const { currentUser} = useContext(UserContext);
     const storage = getStorage();
- 
-  //  console.log('uuidv4',uuidv4())
+
+  
+  //console.log('currentUser',currentUser)
+
+  console.log('auth.currentUserprofil', auth.currentUser)
+  console.log('currentUserProfilphoto', currentUser?.photoURL)  
 
     const [imageUpload, setImageUpload] = useState<any | null>(null);
    // const [imageUrls, setImageUrls] = useState<any | null>([]);
@@ -152,8 +162,7 @@ if(naszeMetaUid === user?.uid){
      }
      
 
-   //console.log("currentUser",currentUser?.displayName,currentUser?.email,currentUser?.displayName,currentUser?.uid );
-//
+
 
     const updatingEmail = async ()=>{
         await updateEmail(auth.currentUser, email).then(() => {
@@ -194,18 +203,23 @@ if(naszeMetaUid === user?.uid){
 
     }
 
+
+
+
     return(<>
-    {/*<img src={imageUrl} style= {{width: 80 }} alt="awatar"/>*/}
-     UserProfile
+
+User Profile
       <ul>
    <li className="logo">
    
      <div className="title">Cześć {auth.currentUser?.displayName}</div> 
-     <img src={currentUser?.photoURL} style= {{width: 80 }} alt="awatar" />
+     <img src={auth.currentUser?.photoURL} style= {{width: 80 }} alt="awatar" />
+
    </li>
 
    <button onClick={handleEdit}>Edit profile</button>
    </ul>
+   <br></br>
 {isEdited && 
 <ul>
 
@@ -219,29 +233,40 @@ if(naszeMetaUid === user?.uid){
          }
         }  
    />
+    </li>
 <button onClick ={handleName}>Update of name</button>
 <br></br>
-    <p>Change photo</p>
+   
+
+     {/* nowy */}
+     <br></br>
+<li>
+  Zmień awatar 
+  <br></br><br></br>
+Wybierz z dostępnych  
+<ChoosingAvatar/>
+     <SetAvatar
+        thumbnail={thumbnail}
+        setThumbnail={setThumbnail}
+        thumbnailError ={thumbnailError}
+        setThumbnailError = {setThumbnailError}
+        pictureURL ={pictureURL}
+        setPictureURL={setPictureURL}
+        />
+  <br></br><br></br>
+
+  </li>
   
-   <input 
-      type="file"  
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-      setImg(e.target.files[0])
-      }}  
-       />
-   </li>
-   <li>
-   {/*<button onClick ={handleClick}>Upload photo</button> */}
-   <button onClick={updatingAvatar}>Update your avatar</button>
-   </li>
-   <p>Before changing email logout and login again</p>
+
+
    <li>
    <p>Change email</p>
    <input 
       type="email"  
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
-      }}  
+      }} 
+
        />
 
 <button onClick={updatingEmail}>Update your email</button>

@@ -7,30 +7,27 @@ export interface IsUserRegistered {}
 
 export const useRegisteringUsers  = ():any | null => { 
 
-    const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false)
+    const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false);
+    
     const { currentUser} = useContext(UserContext); 
-
-    const checkingRegister =async()=>{
-
-        if(currentUser){
-
+    if(currentUser){
+    const checkingRegister =async()=>{      
         
-          
-                    const userRef = doc(db, "usersData",currentUser?.uid);
+                    const userRef = doc(db, "usersData",currentUser.uid);
                     const docSnap = await getDoc(userRef);
                        if (docSnap.exists()) {
-                        if(docSnap.data().name){
+                        if(docSnap.data()?.name){
                             setIsUserRegistered(true)
                         }
                       
                        }
 
                     }
-
+                    checkingRegister()
        }
 
 
-checkingRegister()
+
     
 
     

@@ -57,13 +57,15 @@ useEffect(() => {
                     tempList.push({ ...userData, checked: true }); 
                    // console.log("name", doc.data().name,doc.data().surname );
 
-                      if(doc.data().due){
-                        tempActiveList.push(doc.data()) 
-                      }
+                      //if(doc.data().due){
+                       // tempActiveList.push(doc.data()) 
+                     // }
 
                      if(doc.data().pause || doc.data().stop){
                         tempNonActiveList.push(doc.data())
                      //  console.log("pause",doc.data().pause, doc.data().name)     
+                       } else {
+                        tempActiveList.push(doc.data()) 
                        }
 
                      

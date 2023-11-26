@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext'; 
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../App';
+import { db, storage } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { getDownloadURL, uploadBytes,ref as storageRef } from 'firebase/storage';
+import { updateProfile } from 'firebase/auth';
 
 
 interface ISigninSending {
@@ -12,7 +14,8 @@ interface ISigninSending {
     startDay: Date | null,
     option: string | null,
     email: string | null,
-    password: string | null    
+    password: string | null   
+
 }
 
 export function SigninSendingTest(props: ISigninSending){
@@ -40,12 +43,7 @@ export function SigninSendingTest(props: ISigninSending){
     }
     },[props.option])
    
-
-  
-
  
-
-  
 
     //useEffect(()=>{
     
@@ -67,46 +65,97 @@ export function SigninSendingTest(props: ISigninSending){
     if(currentUser){
 
            //jesli option pass a inny jesl option multi
-if(optionMulti){
-    const docRef = doc(db, "usersData", currentUser.uid);
-    await setDoc(docRef, {
-      name: props.name,
-      surname: props.surname,
-      dob: props.dob,
-      id: currentUser?.uid, 
-      start: props.startDay,
-      due: null,
-      optionPass: false,
-      optionMulti: true
-      })
-      .then(()=>console.log("multi user. update succesful"))
-              .then(()=>  setIsSent(true))
-              .catch((err)=> console.error(err))
+                if(optionMulti){
+                    const docRef = doc(db, "usersData", currentUser.uid);
+                   await setDoc(docRef, {
+                    name: props.name,
+                    surname: props.surname,
+                    dob: props.dob,
+                    id: currentUser?.uid, 
+                    start: props.startDay,
+                    due: null,
+                    optionPass: false,
+                    optionMulti: true
+                    })
+                    .then(()=>console.log("multi user. update succesful"))
+                    .then(()=>  setIsSent(true))
+                    .catch((err)=> console.error(err))
 
-    }
+                 }
 
-    if(optionPass){
-        const docRef = doc(db, "usersData", currentUser.uid);
-        await setDoc(docRef, {
-          name: props.name,
-          surname: props.surname,
-          dob: props.dob,
-          id: currentUser?.uid, 
-          start: props.startDay,
-          due: props.startDay,
-          optionPass: optionPass,
-          optionMulti: false
-          })
-          .then(()=>console.log("pass user. update succesful"))
+                 if(optionPass){
+                 const docRef = doc(db, "usersData", currentUser.uid);
+                 await setDoc(docRef, {
+                    name: props.name,
+                    surname: props.surname,
+                    dob: props.dob,
+                    id: currentUser?.uid, 
+                    start: props.startDay,
+                    due: props.startDay,
+                    optionPass: optionPass,
+                    optionMulti: false
+                    })
+                  .then(()=>console.log("pass user. update succesful"))
                   .then(()=>  setIsSent(true))
                   .catch((err)=> console.error(err))
 
-    }
-      
-   
+                 }
+     
+         }
 
-        }
-    }
+        } 
+
+         //dolozmy updatowannie imienia automatyczne na writeusersinfo
+
+         //automatyczne updatowanie profilu
+
+        //useeffect na writeusersinfo
+        // useEffect(()=>{
+
+        //     const pathAnonim = `thumbnails/${currentUser?.uid}/anonim.png`
+        //     //const uploadPath = `thumbnails/${currentUser.uid}/${thumbnail.name}`
+        //     if(currentUser){
+
+        //         updateProfile(currentUser, {
+        //           photoURL: pathAnonim
+        //       })
+        //       .then((response) => {
+        //       //console.log("response",response);
+        //       console.log("Profile photo updated!");
+        //       })
+        //       .catch((error) => {
+        //       console.log(error);
+        //       });
+        //       }
+
+        // },[WriteUserInfo]) 
+
+//automatyczne updatowanie imienia na wrte info
+
+
+          //useeffect na writeusersinfo
+          useEffect(()=>{
+
+            //const pathAnonim = `thumbnails/anonim.png`
+  
+            if(currentUser){
+
+                updateProfile(currentUser, {
+                  displayName: props.name
+              })
+              .then((response) => {
+              //console.log("response",response);
+              console.log("Profile name updated!");
+              })
+              .catch((error) => {
+              console.log(error);
+              });
+              }
+
+        },[WriteUserInfo]) 
+
+//po zakonczeniu dorobic przekierowanie na userprofile
+        
 
    // useEffect(()=>{
         console.log("z komponentu SigninSendingTest",props.name, props.surname,props.dob,"hej", props.option,props.email,props.password)
@@ -123,4 +172,4 @@ return(<div>
 
 </div>)
 }
-
+    

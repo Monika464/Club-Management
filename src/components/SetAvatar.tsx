@@ -17,6 +17,7 @@ import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
 import { updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 
 
 const SetAvatar = (props: ISetAvatar) => {
@@ -108,8 +109,18 @@ console.log(error);
 
 },[thumbnail,uploadFile])
       
-    
-  
+useEffect(()=>{
+  const updateAvatar2 =async ()=>{
+  if(currentUser){  
+    const userRef = doc(db, "usersData",currentUser?.uid);
+    await updateDoc(userRef, {
+      avatar: pictureURL
+      })
+      .then(()=> {console.log("new avatar set")})
+    }
+  }
+  updateAvatar2()
+  },[thumbnail,uploadFile])
     
 return (
 <>

@@ -43,10 +43,22 @@ const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
             for (let i = 0; i < userModForSelect.length; i++) {
                 const userRef = doc(db, "usersData", userModForSelect[i].value);
                 const docSnap = await getDoc(userRef);  
-                
+              // wykluczyc tych z pauza i stopem
+
                 if ( docSnap.data()) {
-                    // Dodawanie użytkownika do listy w formie obiektu
-                    usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
+                  if(docSnap.data().pause ||docSnap.data().stop ){
+                     continue
+                  } else{
+                    if((docSnap.data().id  === userModForSelect[i].value)){
+              // Dodawanie użytkownika do listy w formie obiektu
+              usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
+
+                    }
+
+
+                  }   
+                      
+                
                 }
                 setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
             }
@@ -103,8 +115,13 @@ const getAddfromBase =async ()=>{
                    if(docSnap.data().pause){
                     setPausaReported(true)
                    }
-                //jesli mamy pauze
-            
+                //jesli mamy multi
+                if(docSnap.data().optionMulti === true){
+                  setPausaDate(dzisData);
+                  if(docSnap.data().debt){
+                    setPausaDebt(docSnap.data().debt)
+                  }
+                }
                 //jesli mamy due
                   if(docSnap.data().due){   
                        if(paymentDateIndex !== null && dzisIndex){
@@ -178,7 +195,7 @@ const getAddfromBase =async ()=>{
   setInjuryDescripton(value);
    }
     return(<>
-    ReportInjuryAdmin2
+
     <Select
       closeMenuOnSelect={true}  
       options={newUsersList}
@@ -190,6 +207,7 @@ const getAddfromBase =async ()=>{
         setPausaDate(null);
         setPausaAdd(null);
         setPausaDebt(null);
+        setStopReported(false);
         }}   
     />
 

@@ -89,8 +89,8 @@ console.log("hej from useSerach")
                             paymentMonth === datMonth &&
                             paymentDay === datDay
                      ) {
-            console.log("tutaj in czyli parametr w usePusN czyli indeks daty kiedy płacono", ind);
-            console.log("drugi parametr w usePusN czyli o ile munerów zmienic", howMany);
+            //console.log("tutaj in czyli parametr w usePusN czyli indeks daty kiedy płacono", ind);
+            //console.log("drugi parametr w usePusN czyli o ile munerów zmienic", howMany);
             //setWantedIndex(ind + 8);
             setWantedIndex(ind + howMany);
             break; // Przerwij pętlę po znalezieniu odpowiedniego indeksu

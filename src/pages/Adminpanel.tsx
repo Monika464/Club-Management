@@ -36,6 +36,8 @@ import AttendanceList from "../components/AttendanceList.tsx";
 //import SidebarAdmin from "../components/SidebarAdmin.tsx";
 import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
+import Create from "./Create.tsx";
+import StopMembershipAdmin2 from "../components/StopMembershipAdmin2.tsx";
 
 export interface IAdminProps {};         
 
@@ -130,11 +132,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
    
            {/*< SelectDatePicker/> */}
            <br></br>
-            <button onClick={handleEditPayment}>Edit users payment</button>
+            {/* <button onClick={handleEditPayment}>Edit users payment</button>
             <br></br>     
            {isEditedPayment &&  
           <UsersPayments/>
-            }
+            } */}
           <br></br>
             {/* 
        
@@ -154,11 +156,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             <br></br>
 */}
         
-            <br></br>
+            {/* <br></br>
             <button onClick={handleEditStopMembership} style={{color: "green"}}>Handlemembership</button>
             { isEditedStopMembership && 
             <div>
-            <StopMembershipAdmin/>
+            <StopMembershipAdmin2/>
             <br></br>
             <br></br>
             <RestoreMembershipAdmin/>
@@ -181,7 +183,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
               <SwithPassToMulti/>
             <br></br>  <br></br>
             <SwitchMultiToPass/>
-            </div>}
+            </div>} */}
             <br></br>  <br></br>
             <button onClick={handlemanageAttendance} style={{color: "yellow"}}>Attendance</button>       
             {isEditedAttendance && <div>
@@ -192,16 +194,36 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
      <nav className='links'>
             <ul>
                 <li>              
-                    <NavLink to="/home" className="navlink">Nome
+                    <NavLink to="/home" className="navlink">Home
                     <img src={DashboardIcon} alt="dashboard icon"></img>
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/create" className="navlink">Ureate
+                    <NavLink  to="/create" className="navlink">Create
                     <img src={AddIcon} alt="add project icon"></img>
                     </NavLink>
                 </li>
-
+                <li>              
+                    <NavLink  to="/membershipadmin" className="navlink">Memebr
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/paymentadmin" className="navlink">Payment
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/injuryadmin" className="navlink">Injury
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/switchmp" className="navlink">Switch
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+            
             </ul>
 
 

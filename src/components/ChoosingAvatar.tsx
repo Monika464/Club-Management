@@ -2,7 +2,7 @@ export interface IChoosingAvatar {}
 
 
  
-import { storage } from '../App.tsx';
+import { db, storage } from '../App.tsx';
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext';
 import { updateProfile } from "firebase/auth";
@@ -18,6 +18,7 @@ import samuraj2 from '../assets/samuraj2.png'
 import elfka from '../assets/elfka.png'
 import elf from '../assets/elf.png'
 import mag from '../assets/mag.png'
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const ChoosingAvatar = (props: IChoosingAvatar) => { 
 
@@ -64,7 +65,22 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
     updateAvatar()
   },[url])
 
+useEffect(()=>{
 
+  
+  const updateAvatar2 =async ()=>{
+    if(currentUser){
+    const userRef = doc(db, "usersData",currentUser?.uid);
+    await updateDoc(userRef, {
+      avatar: url
+      })
+      .then(()=> {console.log("new avatar set")})
+    }
+  }
+
+  updateAvatar2();
+ 
+},[url])
 
 
     return (<div>

@@ -23,6 +23,11 @@ import { getStorage } from "firebase/storage";
 
 import { useContext } from 'react'
 import { UserContext } from './context/UserContext';
+import StopMembershipAdmin from './components/StopMembershipAdmin.tsx';
+import Membershipage from './pages/Membershippage.tsx';
+import { UsersPayments } from './components/UserPayments.tsx';
+import Injurypage from './pages/Injurypage.tsx';
+import Switchmultipass from './pages/Switchmultipass.tsx';
 
 //  initializeApp(config.firebaseConfig)//just once
 
@@ -81,7 +86,45 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                     }
             />
 
+          <Route 
+             path="/membershipadmin" 
+             element={
+                      //  <AuthRoute>
+                       <Membershipage/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+        <Route 
+             path="/paymentadmin" 
+             element={
+                      //  <AuthRoute>
+                       <UsersPayments/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+         <Route 
+             path="/injuryadmin" 
+             element={
+                      //  <AuthRoute>
+                       <Injurypage/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
 <Route 
+             path="/switchmp" 
+             element={
+                      //  <AuthRoute>
+                       <Switchmultipass/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+
+
+          <Route 
              path="/projects/:id" 
              element={           
                        <Project />                                                        

@@ -71,65 +71,65 @@ const handleName = () =>{
        });
   }
 
-  const handleToStorage=()=>{
+//   const handleToStorage=()=>{
 
-    /*
-    //const path = `files/${uuidv4()}`;
-    const path = `files/${img?.name}`
-   */
-    const path = `files/${currentUser?.uid}`
-    const userId = currentUser?.uid;
-    const metadata = {
-      customMetadata: {
-        user: userId,
-        disabled: 'false'
-      },
-    };
-//console.log("currentUser", currentUser)    
-   const imgRef = ref(storage,path)
-   uploadBytes(imgRef,img, metadata)
-  }
+//     /*
+//     //const path = `files/${uuidv4()}`;
+//     const path = `files/${img?.name}`
+//    */
+//     const path = `files/${currentUser?.uid}`
+//     const userId = currentUser?.uid;
+//     const metadata = {
+//       customMetadata: {
+//         user: userId,
+//         disabled: 'false'
+//       },
+//     };
+// //console.log("currentUser", currentUser)    
+//    const imgRef = ref(storage,path)
+//    uploadBytes(imgRef,img, metadata)
+//   }
 
 
 
-    const updatingAvatar =  async ()=>{
+//     const updatingAvatar =  async ()=>{
 
-       const auth = getAuth();
-       const user: User | null = auth.currentUser;
+//        const auth = getAuth();
+//        const user: User | null = auth.currentUser;
    
-       if (!user) {
-        return;
-      }
+//        if (!user) {
+//         return;
+//       }
 
-       await handleToStorage();  
+//        await handleToStorage();  
 
-       getDownURL();
+//        getDownURL();
 
-       await naszeMetaUid;
+//        await naszeMetaUid;
        
-if(naszeMetaUid === user?.uid){
-  updateProfile(user, {
-    // displayName: name,
-     photoURL: imageUpload
-   }).then(() => {
-     console.log("Profile updated")
-   })
-   .then(() => {
-    alert("Photo updated. Refresh the page")
-    // Profile updated!
-    // ...
-  })
-   .catch((error) => {
-     // An error occurred
-     console.error(error)
-     // ...
-   });
+// if(naszeMetaUid === user?.uid){
+//   updateProfile(user, {
+//     // displayName: name,
+//      photoURL: imageUpload
+//    }).then(() => {
+//      console.log("Profile updated")
+//    })
+//    .then(() => {
+//     alert("Photo updated. Refresh the page")
+//     // Profile updated!
+//     // ...
+//   })
+//    .catch((error) => {
+//      // An error occurred
+//      console.error(error)
+//      // ...
+//    });
 
-}
+// }
 
   
 
-    }  
+//     }  
 
   
   ///
@@ -137,29 +137,29 @@ if(naszeMetaUid === user?.uid){
 
 
  
-     const getDownURL = async () => {
-       if(currentUser && storage){
-       const imageRef  = ref(storage, `files/${currentUser?.uid}`); // Przekaz ścieżkę do obiektu w Storage
-       //const mojUrl = await imageRef; 
-       const mojUrl = await getDownloadURL(imageRef);
-       setImageUpload(mojUrl);
-       //console.log("mojUrl",mojUrl )
-// Get metadata properties
-      getMetadata(imageRef)
-      .then((metadata) => {
-        console.log("metadata", metadata?.customMetadata?.user)
-        if(metadata){
-          setNaszeMetaUid(metadata.customMetadata.user)
-        }
+//      const getDownURL = async () => {
+//        if(currentUser && storage){
+//        const imageRef  = ref(storage, `files/${currentUser?.uid}`); // Przekaz ścieżkę do obiektu w Storage
+//        //const mojUrl = await imageRef; 
+//        const mojUrl = await getDownloadURL(imageRef);
+//        setImageUpload(mojUrl);
+//        //console.log("mojUrl",mojUrl )
+// // Get metadata properties
+//       getMetadata(imageRef)
+//       .then((metadata) => {
+//         console.log("metadata", metadata?.customMetadata?.user)
+//         if(metadata){
+//           setNaszeMetaUid(metadata.customMetadata.user)
+//         }
     
-      })
-       .catch((error) => {
-        console.error(error)
-    // Uh-oh, an error occurred!
-  });
+//       })
+//        .catch((error) => {
+//         console.error(error)
+//     // Uh-oh, an error occurred!
+//   });
 
-       } 
-     }
+//        } 
+//      }
      
 
 

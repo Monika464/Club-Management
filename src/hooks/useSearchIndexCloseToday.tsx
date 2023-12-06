@@ -15,13 +15,15 @@ export const useSearchIndexCloseToday = (): number | null => {
  useEffect(()=>{
 
     const result0 = startOfDay(new Date()); // Pobieramy dzisiejszą datę o godzinie 00:00
-       
+       //console.log("result0", result0)
     const result1 = add(result0, {
      days: 1,
     })
+
     const result2 = add(result0, {
      days: 2,
     })
+    //console.log("result2", result2)
     const result3 = add(result0, {
     days: 3,
     })
@@ -36,9 +38,12 @@ if(dataFromBase){
  // console.log("przykładdatabase", dataFromBase[17].toDate())
   //console.log("result0", result2.getTime())
   //console.log(dataFromBase[17].toDate().getTime() === result2.getTime())
+  //console.log('dataFromBase?.length',dataFromBase?.length)
+ 
 
    for (let ind = 0; ind < dataFromBase?.length; ind++) {
-
+      //console.log('dataFromBaseind',dataFromBase[ind].toDate().getTime())
+     // console.log('result2',result2.getTime())
       
           if(result0.getTime() === dataFromBase[ind].toDate().getTime()){
                   // console.log("jest wynik0")
@@ -49,11 +54,11 @@ if(dataFromBase){
                   setCloseTodaysIndex(ind)
                   break;
           } else if(result2.getTime() === dataFromBase[ind].toDate().getTime()){
-          //console.log("jest wynik2")
+         // console.log("jest wynik2")
           setCloseTodaysIndex(ind)
                 break;
            } else if(result3.getTime() === dataFromBase[ind].toDate().getTime()){
-              // console.log("jest wynik3")
+             //  console.log("jest wynik3")
                setCloseTodaysIndex(ind)
                   break;
            } 

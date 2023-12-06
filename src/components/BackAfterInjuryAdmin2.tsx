@@ -1,10 +1,11 @@
 import Select from 'react-select'
 import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchIndexCloseToday } from '../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../App';
+import { format } from 'date-fns';
 
 export interface Itest{}
 export interface US {
@@ -30,12 +31,14 @@ const [isPausa, setIsPausa] = useState<boolean>(false)
 const [backDateIndex, setBackDateIndex] = useState<number | null>(null);
 const [newPaymentDateIndex, setNewPaymentDateIndex] = useState<number | null>(null);
 const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
-
+const [isMulti, setIsMulti] = useState<boolean>(false)
+const [todayDisplay, setTodayDisplay] = useState<Date | null>();
 
     const userModForSelect  =  useModUsersForSelect(); 
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);
     
+
     //modyfikowanie listy userów
 
     useEffect(() => { 
@@ -50,7 +53,7 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
                     // Dodawanie użytkownika do listy w formie obiektu
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                 }
-
+                       
                 setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
             }
 
@@ -64,7 +67,11 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
 
     //kalkulowanie daty powrotu
 
+  
+    const now = new Date()
+
     const handleSetUserInfo = async ()=>{
+    
 
         if(chosenUserId){ 
           const userRef = doc(db, "usersData",chosenUserId);
@@ -74,20 +81,27 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
 
                    if(docSnap.data().pause){
                     setIsPausa(true);
+                 
                      setName(docSnap.data().name);
                      setSurname(docSnap.data().surname);
+                              
+                     if(docSnap.data().optionMulti === true){
+                      setIsMulti(true)
+                   
+                     }
+                    
 
                              if(docSnap.data().add ){
                                  console.log("Document data:", docSnap.data().pause);
                                 setTreningsToAdd(docSnap.data().add) 
                                   setCurrentUserPausaDate(docSnap.data().pause)  
                                  } 
-                             console.log("currentUserPausaDate",currentUserPausaDate);     
+                             //console.log("currentUserPausaDate",currentUserPausaDate);     
                              if(docSnap.data().debt ){
                                 //console.log("Document data:", docSnap.data().add);
                             setDebtsToSubstract(docSnap.data().debt) 
                              setCurrentUserPausaDate(docSnap.data().pause)         
-                         } 
+                              } 
                     } else {
                       console.log("uzytkownik nie zatrzymany")
                     }
@@ -96,26 +110,56 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
         
         console.log("p",isPausa,debt,add )
   }
-  const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex)
 
-  useEffect(()=>{
+
+  const onClick = useCallback(() => {
+    handleSetUserInfo()
+  
+    setTodayDisplay(now)
+    
+  }, []);
+
+  console.log('todaydisplay',todayDisplay)
+
+
+
+  const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
+
+  //console.log("now",now)
+   //setTodayDisplay(now)
+
+
+
+    ///////////////////////
+
+    useEffect(() => { 
 
     if( chosenUserId){
-      console.log("uruchomiony useeffect2")
+     // console.log("uruchomiony useeffect2")
 
+      if(isMulti){
+
+        setNewPaymentDate(null)
+ 
+
+      } else{
+
+        if(debtsToSubstract && dzisIndex){
+          setNewPaymentDateIndex(dzisIndex - debtsToSubstract)
+        }
+        if(treningsToAdd && dzisIndex){
+          setNewPaymentDateIndex(dzisIndex + treningsToAdd)
+         }  
+       
+        setNewPaymentDate(calcDatOfNewPay )
+        }
+        console.log('newPaymentDate', newPaymentDate?.toDate() )
+
+      }
       
-      if(debtsToSubstract && dzisIndex){
-        setNewPaymentDateIndex(dzisIndex - debtsToSubstract)
-      }
-      if(treningsToAdd && dzisIndex){
-        setNewPaymentDateIndex(dzisIndex + treningsToAdd)
-       }  
-     
-      setNewPaymentDate(calcDatOfNewPay )
-      }
-      console.log('newPaymentDate', newPaymentDate?.toDate() )
   
-  },[handleSetUserInfo,currentUserPausaDate])
+  
+  },[chosenUserId, currentUserPausaDate])
   
   const dataToActivityArchive = {
     timestamp: serverTimestamp(),
@@ -127,6 +171,8 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
   const pushToBaseNewDueDay =async ()=>{
  
     const userRef = doc(db, "usersData",chosenUserId);
+
+   
     await updateDoc(userRef, {
       due: newPaymentDate,
       add: null,
@@ -137,12 +183,15 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
 
     const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
 .then(()=> console.log("archive"))
+
+
 }
     //kopia do archive dorobic 
 
 
    return (<>
-   BackAfterInjuryAdmin2
+
+  
    <Select
       closeMenuOnSelect={true}  
       options={newUsersList}
@@ -156,12 +205,12 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
     />
     <p>{chosenUserByIdLabel}</p>
 
-    <button onClick={handleSetUserInfo}>wylicz date powrotu</button>
+    <button onClick={onClick}>wylicz date powrotu</button>
     {isPausa && <p>{newPaymentDate?.toDate()?.toString()}</p>}
+    {todayDisplay && <p>{todayDisplay?.getMonth()+1}-{todayDisplay?.getDate()}</p>}
 
-    {currentUserPausaDate &&
  <button onClick={pushToBaseNewDueDay}>Zatwierdz powrot</button>
-    }
+    
    </>)
 
 

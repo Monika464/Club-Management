@@ -8,7 +8,7 @@ import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
 
 export interface US {
     value: string | null
-    label: string | null
+    label: string | null  
 }
 
 export const RestoreMembershipAdmin: React.FunctionComponent =() => {
@@ -26,35 +26,89 @@ export const RestoreMembershipAdmin: React.FunctionComponent =() => {
     const [restartDateIndex, setRestartDateIndex] = useState<number | null>(null);
     
     const dzisIndex = useSearchIndexCloseToday();
-    const dzisData = useSearchDatesByIndex(dzisIndex);
+    const dzisData = useSearchDatesByIndex(dzisIndex);  
 
 
-    useEffect(() => { 
-        const fetchData = async () => {
-            const usersToAdd = [];
+const [rendered, setRendered] = useState(false);
 
-            for (let i = 0; i < userModForSelect.length; i++) {
-                const userRef = doc(db, "usersData", userModForSelect[i].value);
-                const docSnap = await getDoc(userRef);  
-                
-                if (docSnap.data().stop) {
-                    // Dodawanie użytkownika do listy w formie obiektu
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setRendered(true);
+    }, 1000); // 1000 milisekund = 1 sekunda
+  
+    return () => {
+      clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    };
+  }, []);
+  
+useEffect(() => {
+
+  console.log("czy mamy restore",userModForSelect)   
+
+    const fetchData = async () => {  
+        const usersToAdd = [];
+
+        //modyfikowanie listy 
+
+        for (let i = 0; i < userModForSelect.length; i++) {
+            const userRef = doc(db, "usersData", userModForSelect[i].value);
+            const docSnap = await getDoc(userRef); 
+             
+            if (docSnap.data()) {
+                console.log("say yes", )
+                // Dodawanie użytkownika do listy w formie obiektu
+                //usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
+                    if((docSnap.data().stop) && (docSnap.data().id === userModForSelect[i].value)){
+                        //console.log("say yes")
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
-                }
-
-                setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
+                    } 
+                  
+           
             }
 
+            setNewUsersList(usersToAdd); // Aktualizuj stan tablicy  
+        }
+
+        
+    }; 
+
+    fetchData();
+
+    console.log('newUsersListRestore',newUsersList)
+
+}, [db,dzisData,dzisIndex,rendered]);
+
+//lista userow zmodyfikowana tak zeby  mial stop
+
+
+    // useEffect(() => { 
+    //     const fetchData = async () => {
+    //         const usersToAdd = [];
+
+    //         for (let i = 0; i < userModForSelect.length; i++) {
+    //             const userRef = doc(db, "usersData", userModForSelect[i].value);
+    //             const docSnap = await getDoc(userRef);  
+                
+    //             if (docSnap.data().stop) {
+    //                 // Dodawanie użytkownika do listy w formie obiektu
+    //                 usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
+    //             }
+
+    //             setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
+    //         }
+
             
-        };
+    //     };
 
-        fetchData();
+    //     fetchData();
 
-        //console.log('newUsersList',newUsersList)
-    }, [db,useModUsersForSelect,dzisData]);
-    ////
+    //     //console.log('newUsersList',newUsersList)
+    // }, [db,useModUsersForSelect,dzisData]);
+    // ////
 
 
+
+    //AKCJE PO WYBORZE USERA 
           const handleSetUserInfo = async ()=>{
 
             if(chosenUserId){ 

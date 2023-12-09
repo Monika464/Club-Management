@@ -13,7 +13,8 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
     const [debt, setDebt] = useState<number | null>(null)
     const [isStop, setIsStop] = useState<boolean>(false)
     const [restartDateIndex, setRestartDateIndex] = useState<number | null>(null);
-    
+    const [isMulti, setIsMulti] = useState<boolean>(false)
+    const [isSent, setisSent] = useState<boolean>(false) ;
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);
    
@@ -31,16 +32,20 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
   
                             if (docSnap.exists()) {
                                  if(docSnap.data().stop){
-                                  setIsStop(true);
+                                  setIsStop(true);   
                                    setName(docSnap.data().name);
                                    setSurname(docSnap.data().surname);
-                                           if(docSnap.data().debt){
-                                            setDebt(docSnap.data().debt)
-                                             }
+                                    if(docSnap.data().debt){
+                                       setDebt(docSnap.data().debt)
+                                       }
+                                    if(docSnap.data().optionMulti === true){
+                                      setIsMulti(true)
+                                       }
                                   } else {
                                     console.log("uzytkownik nie zatrzymany")
                                   }
                              }
+                             console.log("nameeee", name)
                       }   
                 }
       
@@ -54,17 +59,21 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
 
     useEffect(()=>{
       
+      if(isMulti){
+        setRestartDateIndex(null)
+      } else {
 
-            if(dzisIndex || debt){
-              setRestartDateIndex(dzisIndex - debt);
-             }
-          
-         
+        if(dzisIndex || debt){
+          setRestartDateIndex(dzisIndex - debt);
+         }
+
+      }
 
          // console.log('UUUUrestartNewData',restartNewData?.toDate())
 
     },[handleSetUserInfo])
 
+   
     const restartNewData = useSearchDatesByIndex(restartDateIndex);
 
     //console.log('restartNewData',restartNewData?.toDate())  
@@ -81,7 +90,23 @@ const sendToBase =async()=>{
 
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
-    if(restartNewData){    
+    if(isMulti){
+      await updateDoc(paymentDataRef, {  
+        stop: null, 
+        due: null,    
+        restart:  dzisData,
+        debt: debt
+      })
+      .then(()=>console.log("restart succesful"))
+      .then(()=> setisSent(true))
+       
+      const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+      .then(()=> console.log("archive"))
+
+
+    } else {
+
+      if(restartNewData){    
         await updateDoc(paymentDataRef, {  
           stop: null, 
           due: restartNewData,    
@@ -89,12 +114,16 @@ const sendToBase =async()=>{
           debt: null
         })
         .then(()=>console.log("restart succesful"))
-   
-               
+        .then(()=> setisSent(true))
+         
         const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
         .then(()=> console.log("archive"))
      
-         } 
+    } 
+
+
+    }
+
 }
 
 
@@ -105,6 +134,7 @@ return(<div>
  {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
     <button onClick={sendToBase}>akceptuj</button>    
+    {isSent && <p>wyslano</p>}
     </div>)
 
 }

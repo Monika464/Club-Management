@@ -16,6 +16,7 @@ import { DisplayUserTrainings } from "../components/DisplayUserTrainings";
 import Sidebar from "../components/Sidebar";
 import ShowAvatar from "../components/ShowAvatar";
 import ChoosingAvatar from "../components/ChoosingAvatar";
+import Project from "./Project";
 
 
 export interface IUserProps {};     
@@ -93,7 +94,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
           </div>
 
-            
+               
 </>);
     }
 

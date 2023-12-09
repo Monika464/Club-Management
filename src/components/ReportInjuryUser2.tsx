@@ -8,8 +8,6 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "fir
 
 
 
-
-
 export const ReportInjuryUser2: React.FunctionComponent =() => {
 
   const { currentUser} = useContext(UserContext); 
@@ -30,6 +28,8 @@ const [pausaAdd, setPausaAdd] = useState<number | null>(null)
 const [isSent, setisSent] = useState<boolean>(false) ;
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("");
 const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
+const [isMulti, setIsMulti] = useState<boolean>(false)
+const [debt, setDebt] = useState<number | null>(null)
 
    //ustawienie imienia i nazwiska
 
@@ -49,69 +49,49 @@ useEffect(()=>{
                 if(docSnap.data().stop){
                   setStopReported(true)
                    }
+                   // jesli mamy pause
                 if(docSnap.data().pause){
                     setPausaReported(true)
                 }
+                // jesli mamy multi
+                if(docSnap.data().optionMulti === true){
+                  setIsMulti(true)
+                }
+
+                if(docSnap.data().debt){
+                  setDebt(docSnap.data().debt)
+                }
+
              }
        }
 
     }
-    settingName();
+    settingName(
+
+      
+    );
+
+    if(isMulti){}
     
     if(paymentDateIndex !== null && dzisIndex){
                         
       setPausaDate(dzisData)
-      //console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
+      console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
       if(paymentDateIndex >= dzisIndex ){
         setPausaAdd(paymentDateIndex - dzisIndex)
-
 
       }
       if(dzisIndex > paymentDateIndex){
         setPausaDebt(dzisIndex - paymentDateIndex)
       }          
-   }
+     }
+
+
    },[dzisIndex,paymentDateIndex])
 
    console.log("dzisindex",dzisIndex)
 
-   //funkcja kalkulująca naleznosc
-
-   const getAddfromBase =async ()=>{
-
-    //console.log("paymentDateIndex",paymentDateIndex)
-    //paymentDateIndex? console.log("paymentDateIndex",paymentDateIndex) : console.log("nic",paymentDateIndex)
-
-/* 
-    if(currentUser){
-
-         const userRef = doc(db, "usersData",currentUser.uid);
-         const docSnap = await getDoc(userRef);
-              if (docSnap.exists()) {
-                
-                //jesli mamy stop
-                  if(docSnap.data().stop){
-                  setStopReported(true)
-                   }
-                   if(docSnap.data().pause){
-                    setPausaReported(true)
-                   }
-                          
-                //jesli mamy due
-                  if(docSnap.data().due){   
-              
-                       
-                   } 
-     
-    } else {console.error("no database connection")}
-
-  }
-*/
-  console.log('pausaAdd',pausaAdd)
-   }
-
-//console.log('pausaDate', pausaDate,'pausaDebt',pausaDebt )
-``
+  
 const dataToActivityArchive = {
   timestamp: serverTimestamp(),
   pausaData: pausaDate,
@@ -126,12 +106,20 @@ const sendStopToBase =async()=>{
 
   const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
+if(isMulti){
+  await updateDoc(paymentDataRef, {
+    pause: pausaDate,
+    debt: debt,
+    add: null
+  })
+  .then(()=>console.log("debt modified. update succesful"))
+} else {
       
   if(!pausaReported && !stopReported){
     await updateDoc(paymentDataRef, {
        pause: pausaDate,
        due: null,
-       restart: null,
+      //  restart: null,
        add: pausaAdd
      })
      .then(()=>console.log("debt modified. update succesful"))
@@ -151,7 +139,7 @@ if(pausaDebt){
     .then(()=>{setPausaDebt(null)})
    }
  
-
+  }
 }
 
 const handleDescriptInj =(event: ChangeEvent<HTMLInputElement>)=>{

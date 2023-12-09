@@ -106,7 +106,7 @@ useEffect(()=>{
 const dataToActivityArchive = {
   timestamp: serverTimestamp(),
   restartData: dzisData,
-  userUid: currentUser.uid,
+  userUid: currentUser?.uid,
   kto: `${name} ${surname}`,          
   } 
 

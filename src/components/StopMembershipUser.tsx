@@ -45,6 +45,8 @@ useEffect(()=>{
   
       }
       settingName()  
+
+      //console.log("name", name, surname)
      },[dzisIndex,paymentDateIndex])
 
 //funkcja kalkulująca naleznosc
@@ -89,7 +91,14 @@ useEffect(()=>{
                             }          
                          }
                      } 
-       
+                     if(docSnap.data().optionMulti === true){  
+                      setStopDate(dzisData);
+                      if(docSnap.data().debt){
+                        console.log("uzytkownik zadluzony")        
+                        setFinalDebt(docSnap.data().debt)
+                      }
+
+                     }
       } else {console.error("no database connection")}
 
     }
@@ -159,9 +168,9 @@ return (<div>
   <button onClick={getAddfromBase}>Skalkuluj date zakonczenia</button>
  
   {stopReported && <p>juz zastopowane</p>}
-  {stopDate && <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>}
+  {!stopReported && stopDate && <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>}
   {finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
-  <button onClick={sendStopToBase}>Potwierdż</button>
+  {!stopReported && <button onClick={sendStopToBase}>Potwierdż</button>}
   {isSent &&<p>wyslano</p>}
 
     

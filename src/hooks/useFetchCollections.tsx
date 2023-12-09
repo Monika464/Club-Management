@@ -1,4 +1,4 @@
-import { Firestore, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { Firestore, collection, getDoc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { SetStateAction, useEffect, useState } from "react";
 import { db } from "../App.js";
 import { doc, updateDoc, serverTimestamp  } from "firebase/firestore";
@@ -34,13 +34,15 @@ useEffect(()=>{
      } else { setLoadingDB(false)}              
     // const q =  query(collection(db, "usersData"), orderBy ("surname"));
     const q =  query(collection(db, chosenCollection))
+
   
     const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
  
      const temp = []; 
       setLoadingData(true) 
                               querySnapshot.forEach((doc) => {   
-                                    temp.push(doc.data()); })
+                                //console.log("doc.data()",doc.data().id)
+                                    temp.push({...doc.data(), id: doc.id}); })
  console.log("temp", temp)
                                    setDataFromCollection (temp); 
         setLoadingData(false)

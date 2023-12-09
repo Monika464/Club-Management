@@ -28,6 +28,9 @@ import Membershipage from './pages/Membershippage.tsx';
 import { UsersPayments } from './components/UserPayments.tsx';
 import Injurypage from './pages/Injurypage.tsx';
 import Switchmultipass from './pages/Switchmultipass.tsx';
+import MembershiUserpage from './pages/MembershipUserpage.tsx';
+import InjuryUserpage from './pages/InjuryUserpage.tsx';
+import ProjectSingle from './components/ProjectSingle.tsx';
 
 //  initializeApp(config.firebaseConfig)//just once
 
@@ -122,12 +125,30 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                     }
             />
 
+        <Route 
+             path="/membershipuser" 
+             element={
+                      //  <AuthRoute>
+                       <MembershiUserpage/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+    <Route 
+             path="/injuryuser" 
+             element={
+                      //  <AuthRoute>
+                       <InjuryUserpage/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+
 
 
           <Route 
              path="/projects/:id" 
              element={           
-                       <Project />                                                        
+                       <ProjectSingle />                                                        
                     }
             />
              
@@ -149,6 +170,8 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               </AuthRoute>       
               
               }/>
+
+
            
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>

@@ -75,7 +75,8 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 
            <Route 
              path="/home" 
-             element={                  
+             element={   
+                             
                        <HomePage />       
                     }
             />
@@ -83,9 +84,9 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
            <Route 
              path="/create" 
              element={
-                      //  <AuthRoute>
+                       <AdminRoute>
                        <Create />                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             />
 

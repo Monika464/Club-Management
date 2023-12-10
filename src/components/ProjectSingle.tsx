@@ -4,6 +4,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../App";
 import { useEffect, useState } from "react";
 import ProjectSummary from "./ProjectSummary";
+import ProjectComments from "./ProjectComments";
 
 export interface IProjectProps {};
 export interface IDocument {
@@ -45,7 +46,7 @@ const [error, setError] = useState<string | null>(null)
                       console.log("Current data: ", doc.data().id);
                       setDocument({...doc.data(),id: doc.id})
                       // setDocument({...doc.data(),id: doc.id});
-                       console.log("document ", document );
+                       
                     } else {
                         setError("no such document exists")
                     }
@@ -73,14 +74,15 @@ const [error, setError] = useState<string | null>(null)
 console.log("to error", error)
            
 
-        },[id])
+        },[id,db])
       
     
-        console.log("to tu w document", document)
+        //console.log("to tu w document", document)
 
         return(<>
         <div className="project-details">
         <ProjectSummary project={document} />
+        <ProjectComments project={document}/>
            
             {/* <h1>{document?.name}</h1> */}
 

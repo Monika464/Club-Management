@@ -1,4 +1,5 @@
 import Avatar from './Avatar';
+import ProjectComments from './ProjectComments';
 import './project.css'
 
 export interface IProjectSummaryProps {
@@ -27,11 +28,12 @@ export interface IProjectSummaryProps {
 <h1 className="page-title">{props?.project?.name}</h1>
 
 <p className='due-date'>{`${props?.project?.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
-<p>{props?.project?.details}</p>
+
+<p className='details'>{props?.project?.details}</p>
 
 <img src={props?.project?.photo} className='photo' />
 <h4>projekt realizujemy z</h4>
-<div className="assigned-to">
+<div className="assigned-users">
         <ul>
           {props?.project?.assignedUsers?.map(user =>(
            <li key={user.id}>
@@ -40,13 +42,13 @@ export interface IProjectSummaryProps {
            </li>
           ))}
           </ul>
-     </div>
+ </div>
 
 </div>     
 
 
 }
-     
+  
         
         </div>)
 

@@ -4,6 +4,7 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'fir
 import { db } from '../App';
 import { useSearchIndexCloseToday } from '../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
+import { useNavigate } from 'react-router-dom';
 
 export const RestoreMembershipUser: React.FunctionComponent =() => {
 
@@ -13,45 +14,85 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
     const [debt, setDebt] = useState<number | null>(null)
     const [isStop, setIsStop] = useState<boolean>(false)
     const [restartDateIndex, setRestartDateIndex] = useState<number | null>(null);
-    const [isMulti, setIsMulti] = useState<boolean>(false)
+    const [isMulti, setIsMulti] = useState<boolean>(false);
+    const [isPass, setIsPass] = useState<boolean>(false);
     const [isSent, setisSent] = useState<boolean>(false) ;
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);
-   
+    const navigate = useNavigate();
+    
+    useEffect(()=>{
+      if(currentUser){ 
 
+        const initial = async()=>{
+        const userRef = doc(db, "usersData",currentUser?.uid);
+        const docSnap = await getDoc(userRef);
+
+            if (docSnap.exists()) {
+                 if(docSnap.data().stop){
+                  setIsStop(true);
+
+                  setName(docSnap.data().name);
+                  setSurname(docSnap.data().surname);
+                   if(docSnap.data().debt){
+                      setDebt(docSnap.data().debt)
+                      }
+                   if(docSnap.data().optionMulti === true){
+                     setIsMulti(true)
+                      }
+
+                 } else {
+                  console.log("uzytkownik aktywny")
+                }
+                }
+              }
+              initial();
+            }
+              
+
+    },[currentUser,db])
 
     //ustawienie imienia i nazwiska
 
-          //useEffect(()=>{
+          useEffect(()=>{
 
                     const handleSetUserInfo = async ()=>{
-
+                        console.log("klikniete")
                       if(currentUser){ 
                         const userRef = doc(db, "usersData",currentUser?.uid);
                         const docSnap = await getDoc(userRef);
   
                             if (docSnap.exists()) {
+
+                              setName(docSnap.data().name);
+                              setSurname(docSnap.data().surname);
+
+                              if(docSnap.data().optionMulti === true){
+                                setIsMulti(true)
+                                 }
+                               if(docSnap.data().optionPass === true){
+                                  setIsPass(true)
+                                   }
+                              console.log('isPass',isPass)
+
                                  if(docSnap.data().stop){
                                   setIsStop(true);   
-                                   setName(docSnap.data().name);
-                                   setSurname(docSnap.data().surname);
+                                  
                                     if(docSnap.data().debt){
                                        setDebt(docSnap.data().debt)
                                        }
-                                    if(docSnap.data().optionMulti === true){
-                                      setIsMulti(true)
-                                       }
                                   } else {
-                                    console.log("uzytkownik nie zatrzymany")
+                                    console.log("aktywny")
                                   }
                              }
                              console.log("nameeee", name)
                       }   
                 }
       
-               
-                console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt) 
-         //},[dzisIndex])
+                handleSetUserInfo() 
+                console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt,isPass) 
+
+        },[db,dzisIndex,currentUser])
 
 
     //wyliczam nowa date jesli jest dlug, jesli nie ma due date na dzi
@@ -61,17 +102,15 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
       
       if(isMulti){
         setRestartDateIndex(null)
-      } else {
-
+      }
+      if(isPass){
         if(dzisIndex || debt){
           setRestartDateIndex(dzisIndex - debt);
          }
-
       }
-
          // console.log('UUUUrestartNewData',restartNewData?.toDate())
 
-    },[handleSetUserInfo])
+    },[dzisIndex,currentUser])
 
    
     const restartNewData = useSearchDatesByIndex(restartDateIndex);
@@ -80,7 +119,7 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
 
 
 const dataToActivityArchive = {
-    timestamp: serverTimestamp(),
+    created_at: serverTimestamp(),
     restartData: dzisData,
     userUid: currentUser?.uid,
     kto: `${name} ${surname}`,          
@@ -102,10 +141,10 @@ const sendToBase =async()=>{
        
       const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
       .then(()=> console.log("archive"))
-
-
-    } else {
-
+      .then(()=> navigate('/userpanel'))
+    }
+   
+    if(isPass){
       if(restartNewData){    
         await updateDoc(paymentDataRef, {  
           stop: null, 
@@ -117,23 +156,21 @@ const sendToBase =async()=>{
         .then(()=> setisSent(true))
          
         const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-        .then(()=> console.log("archive"))
-     
-    } 
+        .then(()=> console.log("archive"))   
+        .then(()=> navigate('/userpanel'))
+       } 
+     }
 
-
-    }
-
-}
+  }
 
 
 
 
 return(<div>
- <button onClick={handleSetUserInfo}>wylicz date powrotu</button>  
+
  {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
-    <button onClick={sendToBase}>akceptuj</button>    
+    {isStop &&<button onClick={sendToBase} className='btn'>akceptuj</button>}    
     {isSent && <p>wyslano</p>}
     </div>)
 

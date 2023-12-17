@@ -5,6 +5,7 @@ import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
 import { useSearchIndexCloseToday } from "../hooks/useSearchIndexCloseToday";
 import { db } from "../App";
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,8 +14,8 @@ export const ReportInjuryUser2: React.FunctionComponent =() => {
   const { currentUser} = useContext(UserContext); 
 
   const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
-  console.log('paymentDateIndex',paymentDateIndex) 
-
+  //console.log('paymentDateIndex',paymentDateIndex) 
+  const navigate = useNavigate();
 
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
@@ -29,71 +30,89 @@ const [isSent, setisSent] = useState<boolean>(false) ;
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("");
 const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
 const [isMulti, setIsMulti] = useState<boolean>(false)
+const [isPass, setIsPass] = useState<boolean>(false)
 const [debt, setDebt] = useState<number | null>(null)
+
 
    //ustawienie imienia i nazwiska
 
-useEffect(()=>{
+   const settingName = async ()=>{
 
-  const settingName = async ()=>{
+    if(currentUser){ 
+      const userRef = doc(db, "usersData",currentUser?.uid);
+      const docSnap = await getDoc(userRef);
 
-      if(currentUser){ 
-        const userRef = doc(db, "usersData",currentUser?.uid);
-        const docSnap = await getDoc(userRef);
+          if (docSnap.exists()) {
+            setName(docSnap.data().name);
+            setSurname(docSnap.data().surname);
 
-            if (docSnap.exists()) {
-              setName(docSnap.data().name);
-              setSurname(docSnap.data().surname);
+              //jesli mamy stop
+              if(docSnap.data().stop){
+                setStopReported(true)
+                 }
+                 // jesli mamy pause
+              if(docSnap.data().pause){
+                  setPausaReported(true)
+              }
+                // jesli mamy dlug
+              if(docSnap.data().debt){
+                setDebt(docSnap.data().debt)
+              }
+              // jesli mamy multi
+              if(docSnap.data().optionMulti === true){
+                setIsMulti(true)
+              }
+               // jesli mamy pass
+               if(docSnap.data().optionPass === true){
+                setIsPass(true)
+              }
 
-                //jesli mamy stop
-                if(docSnap.data().stop){
-                  setStopReported(true)
-                   }
-                   // jesli mamy pause
-                if(docSnap.data().pause){
-                    setPausaReported(true)
-                }
-                // jesli mamy multi
-                if(docSnap.data().optionMulti === true){
-                  setIsMulti(true)
-                }
+             
 
-                if(docSnap.data().debt){
-                  setDebt(docSnap.data().debt)
-                }
-
-             }
-       }
-
-    }
-    settingName(
-
-      
-    );
-
-    if(isMulti){}
-    
-    if(paymentDateIndex !== null && dzisIndex){
-                        
-      setPausaDate(dzisData)
-      console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
-      if(paymentDateIndex >= dzisIndex ){
-        setPausaAdd(paymentDateIndex - dzisIndex)
-
-      }
-      if(dzisIndex > paymentDateIndex){
-        setPausaDebt(dzisIndex - paymentDateIndex)
-      }          
+           } 
      }
 
+    }
+useEffect(()=>{
+     settingName();
+  
+          if(isMulti){
+             setPausaDate(dzisData)
+             }
 
-   },[dzisIndex,paymentDateIndex])
+         if(isPass){
+           if(paymentDateIndex !== null && dzisIndex){                       
+           setPausaDate(dzisData)
+            //console.log("odpalonypaymentDateIndex",pausaDate?.toDate())
+             if(paymentDateIndex >= dzisIndex ){
+               setPausaAdd(paymentDateIndex - dzisIndex)
+                }
+              if(dzisIndex > paymentDateIndex){
+              setPausaDebt(dzisIndex - paymentDateIndex)
+             }          
+            }
+         }
 
-   console.log("dzisindex",dzisIndex)
 
+
+},[dzisIndex,paymentDateIndex,settingName,isMulti,isPass])
+  
+
+    
+    
+ 
+
+  // console.log("dzisindex",dzisIndex)
+// useEffect(()=>{
+//   if(isMulti){
+//     setPausaDate(dzisData)
+
+//   }
+
+// },[isMulti,settingName])
   
 const dataToActivityArchive = {
-  timestamp: serverTimestamp(),
+  created_at: serverTimestamp(),
   pausaData: pausaDate,
   userUid: currentUser?.uid,
   kto: `${name} ${surname}`, 
@@ -107,39 +126,54 @@ const sendStopToBase =async()=>{
   const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
 if(isMulti){
-  await updateDoc(paymentDataRef, {
+  await updateDoc(paymentDataRef, {  
     pause: pausaDate,
     debt: debt,
     add: null
   })
   .then(()=>console.log("debt modified. update succesful"))
-} else {
+  .then(()=>setisSent(true))
+
+
+  const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+  .then(()=> console.log("archive"))
+  .then(()=> navigate('/userpanel'))
+} 
+
+if(isPass){
       
   if(!pausaReported && !stopReported){
     await updateDoc(paymentDataRef, {
        pause: pausaDate,
        due: null,
-      //  restart: null,
-       add: pausaAdd
+       add: pausaAdd,
+       debt: pausaDebt
      })
      .then(()=>console.log("debt modified. update succesful"))
      .then(()=>  setPausaDate(null))
      .then(()=>   setisSent(true))
-     .then(()=>   setPausaAdd(null))
-
-     const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-     .then(()=> console.log("archive"))
+     .then(()=>   setPausaAdd(null))  
     }
 
-if(pausaDebt){
-   await updateDoc(paymentDataRef, {
-      debt: pausaDebt
-    })
-    .then(()=>console.log("debt modified. update succesful"))
-    .then(()=>{setPausaDebt(null)})
-   }
+
+  const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+  .then(()=> console.log("archive tu"))
+  .then(()=> navigate('/userpanel'))
+
+
+}
+
+
+// if(pausaDebt){
+//    await updateDoc(paymentDataRef, {
+//       debt: pausaDebt
+//     })
+//     .then(()=>console.log("debt modified. update succesful"))
+//     .then(()=>{setPausaDebt(null)})
+//    }
  
-  }
+ // }
+
 }
 
 const handleDescriptInj =(event: ChangeEvent<HTMLInputElement>)=>{
@@ -148,8 +182,12 @@ setInjuryDescripton(value);
  }
 
 
-
-
+const handlePrzenies =()=>{
+    console.log("czy wciska sie")
+      navigate('/userpanel');
+    //   //redirect("/login");
+   }
+ 
 
 
 return (
@@ -159,12 +197,12 @@ return (
 
 
 {/*<button onClick={getAddfromBase}>Wylicz pauze </button>*/}
-<br></br>
-{stopReported && <p>Treningi sa juz zakończone</p>}
+
+{stopReported && <p>Twoje treningi są juz zakończone</p>}
 {pausaReported && <p>Treningi sa zawieszone z powodu kontuzji</p>}
 
   {pausaDate && !pausaReported && !stopReported && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
-  {pausaDebt &&!pausaReported && !stopReported && <p>istniejące zadłużenie: {pausaDebt} treningów</p>}
+  {pausaDebt &&!pausaReported && !stopReported && <p>istniejące zadłużenie: {pausaDebt} treningów.</p>}
   {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
   {pausaDate && !pausaReported && !stopReported && <div>
                  Uzupelnij formularz wspisując powód zawieszenia
@@ -176,10 +214,11 @@ return (
                      placeholder="Co się stało?"
                      required
                    />
-                 <button onClick={sendStopToBase}>Potwierdż</button>
+                 <button onClick={sendStopToBase} className="btn">Wyślij </button>
                 {isSent &&<p>wyslano</p>} 
   </div>}
- 
+  
+  {/* <button onClick={handlePrzenies}>przenies</button>  */}
 
     </>)
 }

@@ -139,6 +139,7 @@ if(calcDatOfNewPay && chosenUserId){
         
           await updateDoc(paymentDataRef, {
            optionMulti: false,
+           optionPass: true,
            debt: hasDebt,
            due: calcDatOfNewPay
           })

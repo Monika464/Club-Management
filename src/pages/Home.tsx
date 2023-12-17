@@ -4,6 +4,8 @@ import ProjectList from '../components/ProjectsList.tsx';
 import useFetchRealTimeCall from '../hooks/useFetchRealTimeColl.tsx';
 import Project from './Project.tsx';
 import ProjectSingle from '../components/ProjectSingle.tsx';
+import { Link, NavLink } from 'react-router-dom';
+import AddIcon from '../assets/add_icon.svg';
 
 export interface HomeProps {};
 //console.log("auth",auth)
@@ -15,7 +17,7 @@ export interface HomeProps {};
        
         useEffect(()=>{
     
-   console.log("dataFromCollection",dataFromCollection)
+   //console.log("dataFromCollection",dataFromCollection)
     },[dataFromCollection])
     
   
@@ -27,6 +29,14 @@ export interface HomeProps {};
        {dataFromCollection && <ProjectList projects={dataFromCollection}/>}
 
   <ProjectSingle/>
+
+  <ul>
+  <li>              
+    <NavLink  to="/userpanel" className="navlink">Panel usera
+    <img src={AddIcon} alt="add project icon"></img>
+      </NavLink>
+   </li>
+  </ul>
 
              {/* <p key={doc.uid}>
                  {doc.name}
@@ -53,5 +63,10 @@ export interface HomeProps {};
 
 }
 
+{/* <div className="siteLink"> 
+<ul>
+  <li> <Link to="/userpanel" className="userpanel">userpanel</Link></li>
+</ul>
+</div> */}
 
 export default HomePage;

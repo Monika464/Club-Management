@@ -25,7 +25,9 @@ return (
                 <h4>{project.name}</h4>   
                  <p>{`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
                  <br></br>
-                 <img src={project.photo} style= {{width: 80 }} alt="photo" className="photo"/>
+                 
+                 {/* <img src={project.photo} style= {{width: 80 }} alt="photo" className="photo"/> */}
+                 <img src={project.photo} alt="photo" className="photo"/>
               </Link>
 
               <div className="assigned-to">

@@ -20,29 +20,37 @@ export interface IProjectSummaryProps {
 
     const ProjectSummary: React.FunctionComponent<IProjectSummaryProps> =(props) => {
 
-        console.log("props.project",props?.project?.name)
+       // console.log("props.project",props?.project?.name)
+        
+        
         return(<div>
 {props.project && 
     <div className="project-summary"> 
 
-<h1 className="page-title">{props?.project?.name}</h1>
+            <h1 className="page-title">{props?.project?.name}</h1>
 
-<p className='due-date'>{`${props?.project?.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
+            <p className='due-date'>{`${props?.project?.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
 
-<p className='details'>{props?.project?.details}</p>
+            <p className='details'>{props?.project?.details}</p>
 
-<img src={props?.project?.photo} className='photo' />
-<h4>projekt realizujemy z</h4>
-<div className="assigned-users">
+            <img src={props?.project?.photo} className='photo' />
+
+        <h4>projekt realizujemy z</h4>
+       
+       
+        <div className="assigned-users">
         <ul>
           {props?.project?.assignedUsers?.map(user =>(
            <li key={user.id}>
-           <Avatar src={user.avatar}/> 
-           <p>{user.name}</p>   
+          <div className='wyrownaj'>
+           <Avatar src={user.avatar} /> 
+           <p>{user.name}</p>  
+           </div>
            </li>
           ))}
+           
           </ul>
- </div>
+          </div>
 
 </div>     
 

@@ -22,8 +22,8 @@ const ReportInjuryAdmin2: React.FunctionComponent =() => {
     const userModForSelect  =  useModUsersForSelect(); 
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
     const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
-    const [name, setName] = useState<string | null>(null)
-    const [surname, setSurname] = useState<string | null>(null);
+    const [name, setName] = useState("")
+    const [surname, setSurname] = useState("");
     const [stopReported, setStopReported] = useState<boolean>(false)
     const [pausaReported, setPausaReported] = useState<boolean>(false)
     const [pausaDate, setPausaDate] = useState<Date | null>();
@@ -31,10 +31,24 @@ const ReportInjuryAdmin2: React.FunctionComponent =() => {
     const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
     const [isSent, setisSent] = useState<boolean>(false) ;
     const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
+    const [archiveName, setArchiveName] = useState<string | null>("")
+    const [isMulti, setIsMulti] = useState<boolean>(false)
+    const [rendered, setRendered] = useState(false);
+  
 
     const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setRendered(true);
+  }, 1000); // 1000 milisekund = 1 sekunda
+
+  return () => {
+    clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+  };
+}, []);
 
     useEffect(() => {
 
@@ -73,25 +87,46 @@ const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
     }, [db,useModUsersForSelect,dzisData]);
 
 
-      //ustawienie imienia i nazwiska
+      // //ustawienie imienia i nazwiska
+      // useEffect(()=>{
 
-useEffect(()=>{
+      //   if(db && chosenUserId){
+      //   const userRef = doc(db, "usersData",chosenUserId);
+      //   const getName =async()=>{
+      
+      //     const docSnap = await getDoc(userRef);
+      //     console.log("snaaap",docSnap.data())
+     
+      //   }
+      //   getName();
+      // }
+        
+       
 
-    const settingName = async ()=>{
+      // },[chosenUserId,db])
+//setting name
+// useEffect(()=>{
+
+//     const settingName = async ()=>{
   
-        if(chosenUserId){ 
-          const userRef = doc(db, "usersData",chosenUserId);
-          const docSnap = await getDoc(userRef);
+//         if(chosenUserId){ 
+//           const userRef = doc(db, "usersData",chosenUserId);
+//           const docSnap = await getDoc(userRef);
   
-              if (docSnap.exists()) {
-                setName(docSnap.data().name);
-                setSurname(docSnap.data().surname);
-               }
-         }
+//               if (docSnap.exists()) {
+//                 console.log("w snapie",docSnap.data().name)
+//                 setName(docSnap.data().name);
+//                 setSurname(docSnap.data().surname);
+//                } else{
+//                 console.log("snap nie istnieje")
+//                }
+//          }
+         
   
-      }
-      settingName()  
-     },[dzisIndex,paymentDateIndex])
+//       }
+//       settingName() 
+//       console.log("a czy tu jest name",name, surname)
+//      },[db,dzisIndex,paymentDateIndex,rendered])
 
 
 //funkcja kalkulująca naleznosc
@@ -106,8 +141,10 @@ const getAddfromBase =async ()=>{
 
          const userRef = doc(db, "usersData",chosenUserId);
          const docSnap = await getDoc(userRef);
+      
               if (docSnap.exists()) {
 
+        
                 //jesli mamy stop
                   if(docSnap.data().stop){
                   setStopReported(true)
@@ -117,6 +154,7 @@ const getAddfromBase =async ()=>{
                    }
                 //jesli mamy multi
                 if(docSnap.data().optionMulti === true){
+                  setIsMulti(true)
                   setPausaDate(dzisData);
                   if(docSnap.data().debt){
                     setPausaDebt(docSnap.data().debt)
@@ -140,19 +178,19 @@ const getAddfromBase =async ()=>{
 
   }
 
-  console.log('pausaDate',pausaDate)
+  //console.log('pausaDate',pausaDate)
    }
 
 
 
    const dataToActivityArchive = {
-    timestamp: serverTimestamp(),
+    created_at: serverTimestamp(),
     pausaData: pausaDate,
     userUid: chosenUserId,
-    kto: `${name} ${surname}`, 
+    kto: `${archiveName}`, 
     reason:  injuryDescription        
   } 
-  
+
   //funkcja zapisujaca w bazie
   
   const sendStopToBase =async()=>{
@@ -160,13 +198,25 @@ const getAddfromBase =async ()=>{
          if(chosenUserId){
   
              const paymentDataRef = doc(db, "usersData", chosenUserId);
-  
+            
+             if(isMulti){
+              await updateDoc(paymentDataRef, {
+                pause: pausaDate,
+                  due: pausaDebt,
+                  return: null,
+                  add: null
+                 })
+             .then(()=>console.log("debt modified. update succesful"))
+             .then(()=>  setPausaDate(null))
+             .then(()=>   setisSent(true))
+
+             }
         
                 if(!pausaReported && !stopReported){
                  await updateDoc(paymentDataRef, {
                    pause: pausaDate,
                      due: null,
-                     restart: null,
+                     return: null,
                      add: pausaAdd
                     })
                 .then(()=>console.log("debt modified. update succesful"))
@@ -174,7 +224,7 @@ const getAddfromBase =async ()=>{
                 .then(()=>   setisSent(true))
   
              const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-             .then(()=> console.log("archive"))
+             .then(()=> console.log("pausa sent to archive"))
             }
   
          if(pausaDebt){
@@ -202,6 +252,7 @@ const getAddfromBase =async ()=>{
       onChange={(choice) => {
         setChosenUserId(choice.value);   
         setChosenUserByIdLabel(choice.label);   
+        setArchiveName(choice.label)
         setPausaReported(false);
         setisSent(false);
         setPausaDate(null);

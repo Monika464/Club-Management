@@ -222,14 +222,14 @@ if(onToOffList){
                    </div>
               ))}
 <br></br><br></br>
-              Tym userom zostanie dopisany dług
+             <p> Tym userom zostanie dopisany dług</p>
               {onToOffList && <div>{onToOffList.map((elem)=>(
               <div key={elem.id}>
               <p>{elem.name} {elem.surname}</p>
               </div>
               ))}
               </div>}
-              <button onClick={sendConfirmedReport}>Potwierdzam </button>
+              <button onClick={sendConfirmedReport} className="btn">Potwierdzam </button>
             <br></br>
             {isSend && <p>Zadluzenie zapisano</p>}
          

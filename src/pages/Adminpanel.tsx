@@ -38,7 +38,7 @@ import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 import Create from "./Create.tsx";
 import StopMembershipAdmin2 from "../components/StopMembershipAdmin2.tsx";
-
+import'./adminpanel.css'
 export interface IAdminProps {};         
 
 
@@ -113,84 +113,16 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
     //link do usera 
 
     return (
-        <div>
+        <div className="adminpanel">
             Witaj adminie   
-            <br></br><br></br>
-            <button onClick={handleEdit}>Edit training dates</button>
-            <br></br>  
-            
-           
-            {isEdited &&  
-           <div>
-            <DatePickerTrainings/>   
-            <br></br>
-            <ShowDays/>
-            </div> 
-            } 
-           <br></br>
-           {/* <div> <ManagingUsers/></div> */}
-   
-           {/*< SelectDatePicker/> */}
-           <br></br>
-            {/* <button onClick={handleEditPayment}>Edit users payment</button>
-            <br></br>     
-           {isEditedPayment &&  
-          <UsersPayments/>
-            } */}
-          <br></br>
-            {/* 
-       
-            <br></br><br></br>
-            <button onClick={handleEditInjury}>Edit users injury</button>
-            {isEditedInjury && 
-            <ReportInjury/>
-            }
-            <br></br>
-            <br></br>
-
-           <button onClick={handleEditBackAfterInjury}>Edit users back after injury</button>
-           {isEditedBackAfterInjury &&  
-           <BackAfterInjury/>
-            }
-            <br></br>
-            <br></br>
-*/}
-        
-            {/* <br></br>
-            <button onClick={handleEditStopMembership} style={{color: "green"}}>Handlemembership</button>
-            { isEditedStopMembership && 
-            <div>
-            <StopMembershipAdmin2/>
-            <br></br>
-            <br></br>
-            <RestoreMembershipAdmin/>
-            </div>}
-
-            <br></br>  <br></br>
-         
-            <button onClick={handlemanageInjury} style={{color: "red"}}>Handle Injury</button>
-            {isEditedInjury && <div>
-            <ReportInjuryAdmin2/>
-
-            <br></br>
-            <BackAfterInjuryAdmin2/>
-            </div>}
-            
-            <br></br>  <br></br>
-            <button onClick={handlemanageMultiPass} style={{color: "blue"}}>MultiPass</button>
-            
-            {isEditedMultiPass && <div>
-              <SwithPassToMulti/>
-            <br></br>  <br></br>
-            <SwitchMultiToPass/>
-            </div>} */}
-            <br></br>  <br></br>
+                  
+            {/* <br></br>  <br></br>
             <button onClick={handlemanageAttendance} style={{color: "yellow"}}>Attendance</button>       
             {isEditedAttendance && <div>
               <br></br>  <br></br>
               <AttendanceList/>
               </div>}
-     <br></br>   <br></br>      
+     <br></br>   <br></br>       */}
      <nav className='links'>
             <ul>
                 <li>              
@@ -223,6 +155,23 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
                     <img src={AddIcon} alt="add project icon"></img>
                     </NavLink>
                 </li>
+                <li>              
+                    <NavLink  to="/datespicker" className="navlink">Pick date
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/attendancelist" className="navlink">Attendance
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+                <li>              
+                    <NavLink  to="/archiveadmin" className="navlink">Archive
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
+
+
             
             </ul>
 

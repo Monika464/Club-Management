@@ -56,7 +56,7 @@ const handleSubmit =async(e)=>{
    }
 }
 
-console.log("props.project",props.project)
+//console.log("props.project",props.project)
 
 
 return(
@@ -64,7 +64,7 @@ return(
 
 
     <div className="project-comments">
-      <h4>Komentarze</h4>
+    {props.project?.comments  && <h4>Komentarze</h4>}
      <ul>
     {props.project?.comments &&  props.project?.comments?.length>0 && props.project.comments.map((com)=>(
       <li key={com.id}>
@@ -75,7 +75,13 @@ return(
             <p>{com.displayName}</p>
             </div>
           
-             <p className="comment-date">{`${com.created_at?.toDate().toLocaleDateString('pl-PL')}`}</p>
+             <p className="comment-date">{`${com.created_at?.toDate().toLocaleDateString('pl-PL',{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+             })}`}</p>
  
         <div className="comment-content">
         <p>{com.content}</p>

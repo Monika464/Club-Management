@@ -71,7 +71,7 @@ const [error, setError] = useState<string | null>(null)
           
            
             
-console.log("to error", error)
+//console.log("to error", error)
            
 
         },[id,db])

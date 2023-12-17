@@ -1,6 +1,6 @@
 import { getAuth, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate,NavLink } from 'react-router-dom';
+import { Link, useNavigate,NavLink, Navigate, redirect } from 'react-router-dom';
 import Temple from './../assets/temple.svg'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
@@ -14,9 +14,11 @@ export interface INavbarProps {};
 const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const auth = getAuth();
     const [authing, setAuthing] = useState(false);
+    const [isAdmin,setIsAdmin] = useState(false);
+    
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);
-    const [isAdmin,setIsAdmin] = useState(false);
+ 
 
     useEffect(()=>{
       if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
@@ -25,14 +27,22 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
 
     },[currentUser])
 
-   
+  
 
-    const logout= ()=> {
+    const logout=()=> {
+      navigate('/login');
         return signOut(auth);
         }
 
      const isUserRegistered = useRegisteringUsers()
      //console.log("isss", isUserRegistered)
+
+
+    //  const handlePrzenies =()=>{
+    //   console.log("czy wciska sie")
+    //   navigate('/login');
+    //   //redirect("/login");
+    //  }
 
     return (
       
@@ -59,6 +69,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     <li> 
    {currentUser && <button className="btn" onClick={logout}  >Logout</button>}
     </li> 
+    {/* <button onClick={handlePrzenies}>przenies</button> */}
  
    </ul>
  </nav> 

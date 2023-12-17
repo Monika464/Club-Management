@@ -38,8 +38,8 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =(props) => {
   
   //console.log('currentUser',currentUser)
 
-  console.log('auth.currentUserprofil', auth.currentUser)
-  console.log('currentUserProfilphoto', currentUser?.photoURL)  
+  //console.log('auth.currentUserprofil', auth.currentUser)
+  //console.log('currentUserProfilphoto', currentUser?.photoURL)  
 
     const [imageUpload, setImageUpload] = useState<any | null>(null);
    // const [imageUrls, setImageUrls] = useState<any | null>([]);

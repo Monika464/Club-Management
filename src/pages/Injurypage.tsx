@@ -9,12 +9,11 @@ const Injurypage: React.FunctionComponent =() => {
         <div>
             ReportInjuryAdmin
             <ReportInjuryAdmin2/>
+   
 
-            <br></br>
-
-            RestoreMembershipAdmin
+            Back after injury
             <BackAfterInjuryAdmin2/>
-            <br></br>
+         
 
 
         </div>

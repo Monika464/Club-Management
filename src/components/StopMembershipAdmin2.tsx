@@ -197,7 +197,7 @@ useEffect(()=>{
     }
 }
      const dataToActivityArchive = {
-        timestamp: serverTimestamp(),
+       created_at: serverTimestamp(),
         stopData: stopDate,
         userUid: chosenUserId,
         kto: `${name} ${surname}`,          

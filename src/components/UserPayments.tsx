@@ -78,7 +78,7 @@ useEffect( ()=>{
    },[hasAdd])
 
 useEffect(()=>{
-   console.log('hasDebt',hasDebt,'modifyDebt',modifyDebt,'hasAdd',hasAdd,'modifyAdd',modifyAdd)
+  // console.log('hasDebt',hasDebt,'modifyDebt',modifyDebt,'hasAdd',hasAdd,'modifyAdd',modifyAdd)
 },[hasDebt,hasAdd])
 
 

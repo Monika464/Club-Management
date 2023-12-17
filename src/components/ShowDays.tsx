@@ -77,7 +77,12 @@ data?.forEach((elem) => {
         ))}
 </div>
 </div>}
-<button onClick={manageShowAllDaysButton}>show all dates </button> 
+
+
+{isShowAllDays ? <button onClick={manageShowAllDaysButton} className="btn">hide all dates </button>  
+: <button onClick={manageShowAllDaysButton} className="btn">show all dates </button> 
+}
+    
     {/* 
     dates form database
     <div className="datelist">

@@ -31,6 +31,10 @@ import Switchmultipass from './pages/Switchmultipass.tsx';
 import MembershiUserpage from './pages/MembershipUserpage.tsx';
 import InjuryUserpage from './pages/InjuryUserpage.tsx';
 import ProjectSingle from './components/ProjectSingle.tsx';
+import DatePickerpages from './pages/DatePickerpage.tsx';
+import Attendancepage from './pages/AttendanceListpage.tsx';
+import ArchiveViews, { ArchiveViewAdmin } from './components/ArchiveViewAdmin.tsx';
+import ArchiveViewUser from './components/ArchiveViewUser.tsx';
 
 //  initializeApp(config.firebaseConfig)//just once
 
@@ -126,6 +130,35 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                     }
             />
 
+<Route 
+             path="/datespicker" 
+             element={
+                      //  <AuthRoute>
+                       <DatePickerpages/>                                     
+                      //  </AuthRoute>
+                    }
+            />        
+        
+ <Route 
+             path="/attendancelist" 
+             element={
+                      //  <AuthRoute>
+                       <Attendancepage/>                                     
+                      //  </AuthRoute>
+                    }
+            /> 
+
+      <Route 
+             path="/archiveadmin" 
+             element={
+                      //  <AuthRoute>
+                       <ArchiveViewAdmin/>                                     
+                      //  </AuthRoute>
+                    }
+            />             
+        
+        
+        
         <Route 
              path="/membershipuser" 
              element={
@@ -139,6 +172,16 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              element={
                       //  <AuthRoute>
                        <InjuryUserpage/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+
+<Route 
+             path="/archiveuser" 
+             element={
+                      //  <AuthRoute>
+                       <ArchiveViewUser/>                                     
                       //  </AuthRoute>
                     }
             />

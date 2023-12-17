@@ -21,8 +21,9 @@ export const ReportInjuryUser : React.FunctionComponent<Itest> =(props) => {
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
 const [injuryAlreadyReported, setInjuryAlreadyReported] = useState<boolean>(false)
 const [injuryJustReported, setInjuryJustReported] = useState<boolean>(false)
-const [name, setName] = useState<string | null>(null)
-const [surname, setSurname] = useState<string | null>(null)
+const [name, setName] = useState<string | null>(null);
+const [surname, setSurname] = useState<string | null>(null);
+const [isMulti, setIsMulti] = useState<boolean>(false);
 
 
    const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid)
@@ -34,6 +35,27 @@ const [surname, setSurname] = useState<string | null>(null)
 
    const wyliczdzisZIndexu = useSearchDatesByIndex(dzisIndex);
    console.log("wyliczdzisZIndexu",wyliczdzisZIndexu?.toDate())
+
+   // musze pobrac dane usera zeby sprawdzic czy multi czy nie
+   //jesli multi zorbic update do bazy pola pauza
+
+   //checkin if multi
+
+   useEffect(()=>{
+
+    const checkIfMulti =async()=>{
+
+      const userRef = doc(db, "usersData",currentUser?.uid);
+      const docSnap = await getDoc(userRef);
+  
+          if (docSnap.exists()) {
+            console.log("report injury user",docSnap.data().optionMulti);
+          }
+
+    }
+  
+   },[currentUser,db])
+
 
 
     useEffect(()=>{
@@ -58,7 +80,7 @@ const [surname, setSurname] = useState<string | null>(null)
             if (docSnap.exists()) {
               setName(docSnap.data().name);
               setSurname(docSnap.data().surname);
-             }
+            }
        }
 
     }

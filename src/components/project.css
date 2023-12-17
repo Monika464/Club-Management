@@ -28,17 +28,25 @@
   }
   .project-summary .assigned-users {
     display: flex;
+    flex-direction:row;
     margin-top: 20px;
   }
-  .project-summary .assigned-users .avatar {
-    margin-right: 10px;
+
+  .project-summary .assigned-users li{
+    display: flex;
+    flex-direction:column;
+    margin-right: 10px; 
   }
+
+
+
+
   .project-summary + .btn {
     margin-top: 20px;
   }
 
   .project-summary .photo {
-    width: 200px;
+    width: 400px;
     /* height: 30px; */
   }
   
@@ -76,7 +84,6 @@
   margin-right: 10px;
 }
  
-
 .comment-date {
   color: var(--text-color);
   font-size: 0.6em;
@@ -86,4 +93,11 @@
   color: var(--text-color);
   font-size: 0.9em;
 } 
+
+.project-summary ul{
+  display: flex;
+  flex-direction:row;
+  align-items:flex-end;
+  margin-left: 10px;
+}
 

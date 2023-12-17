@@ -154,7 +154,7 @@ const restartNewData = useSearchDatesByIndex(restartDateIndex);
 
 
 const dataToActivityArchive = {
-timestamp: serverTimestamp(),
+created_at: serverTimestamp(),
 restartData: dzisData,
 userUid: chosenUserId,
 kto: `${name} ${surname}`,          

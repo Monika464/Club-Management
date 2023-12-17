@@ -12,12 +12,12 @@ import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
 import { ReportInjuryUser2 } from "../components/ReportInjuryUser2";
 import  StopMembershipUser  from "../components/StopMembershipUser";
 import { RestoreMembershipUser } from "../components/RestoreMembershipUser";
-import { DisplayUserTrainings } from "../components/DisplayUserTrainings";
+import { DisplayUserDataUser, DisplayUserTrainings } from "../components/DisplayUserDataUser";
 import Sidebar from "../components/Sidebar";
 import ShowAvatar from "../components/ShowAvatar";
 import ChoosingAvatar from "../components/ChoosingAvatar";
 import Project from "./Project";
-
+import AddIcon from '../assets/add_icon.svg';
 
 export interface IUserProps {};     
 
@@ -63,7 +63,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
              {/* <ChoosingAvatar/> */}
              <br></br>
 
-<button onClick ={handleEditmembership} style={{color: "green"}}>membership  managing</button>
+{/* <button onClick ={handleEditmembership} style={{color: "green"}}>membership  managing</button>
 {isEditedMembership && <div>
      <StopMembershipUser/>
      <br></br><br></br>
@@ -77,10 +77,38 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
      {isEditedInjury && <div>
      <ReportInjuryUser2/>
      <BackAfterInjuryUser/>
-     </div>}
+     </div>} */}
+
+
+<ul>
+  <li>
+  <NavLink  to="/membershipuser" className="navlink">Członkostwo w klubie
+      <img src={AddIcon} alt="add project icon"></img>
+   </NavLink>
+  </li>
+  <li>              
+    <NavLink  to="/injuryuser" className="navlink">Zgłaszanie kontuzji
+    <img src={AddIcon} alt="add project icon"></img>
+      </NavLink>
+   </li>
+   <li>              
+    <NavLink  to="/home" className="navlink">Home
+    <img src={AddIcon} alt="add project icon"></img>
+      </NavLink>
+   </li>
+   <li>
+   <NavLink  to="/archiveuser" className="navlink">Archive
+    <img src={AddIcon} alt="add project icon"></img>
+      </NavLink>
+   </li>
+
+
+</ul>
+
+        
 
 <br></br><br></br>
-     <DisplayUserTrainings/>
+     <DisplayUserDataUser/>
     
 
 
@@ -89,7 +117,8 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
             <div className="siteLink">  
   
              <ul>
-             {isAdmin && <li> <Link to="/adminpanel" className="adminpanel">adminpanel</Link></li>}
+
+              <li> {isAdmin &&<Link to="/adminpanel" className="adminpanel">adminpanel</Link>}</li>
             </ul>
 
           </div>

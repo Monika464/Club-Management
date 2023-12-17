@@ -43,7 +43,7 @@ useEffect(()=>{
                               querySnapshot.forEach((doc) => {   
                                 //console.log("doc.data()",doc.data().id)
                                     temp.push({...doc.data(), id: doc.id}); })
- console.log("temp", temp)
+ //console.log("temp", temp)
                                    setDataFromCollection (temp); 
         setLoadingData(false)
         //setUsersFromBase((prev) => [...prev,doc.data()])

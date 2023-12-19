@@ -1,22 +1,22 @@
-import { UsersPayments } from "../components/UserPayments"
+// import { UsersPayments } from "../components/UserPayments"
 
 
 
-const Paymentpage: React.FunctionComponent =() => {
+// const Paymentpage: React.FunctionComponent =() => {
 
-    return(
+//     return(
 
-        <div>
-           UsersPayments
-            <UsersPayments/>
-
-
+//         <div>
+//            UsersPayments
+//             <UsersPayments/>
 
 
 
-        </div>
-    )
 
-}
 
-export default Paymentpage
+//         </div>
+//     )
+
+// }
+
+// export default Paymentpage

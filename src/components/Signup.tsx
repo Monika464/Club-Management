@@ -110,7 +110,7 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
     await createUserWithEmailAndPassword(auth, email, password)
     .then((response) =>{
       navigate('/');
-      console.log("hej", response);
+      console.log("data created", response);
         //console.log(response.user.uid);
        // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
   }).catch(error =>{

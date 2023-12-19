@@ -151,7 +151,7 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/switchmp" className="navlink">Switch
+                    <NavLink  to="/report" className="navlink">Report
                     <img src={AddIcon} alt="add project icon"></img>
                     </NavLink>
                 </li>

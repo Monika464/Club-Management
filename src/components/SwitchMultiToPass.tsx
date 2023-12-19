@@ -175,13 +175,13 @@ if(calcDatOfNewPay && chosenUserId){
         }}   
     />
     {/*<p>{chosenUserByIdLabel}</p>*/}
-    <button onClick={getAddfromBase}>skalkuluj sytuacje usera </button>  
+    <button onClick={getAddfromBase} className="btn">skalkuluj sytuacje usera </button>  
    <br></br>
     {/*{calcDatOfNewPay?.toDate().toString()}*/}
     {newPaymentDate && isCalculating &&<p>{newPaymentDate?.toDate().toString()}</p>}
 
 
-    <button onClick={handleSwitchToPass}>przelacz usera na pass</button>  
+    <button onClick={handleSwitchToPass} className="btn">przelacz usera na pass</button>  
       {isSent && <p>uzytkownik teraz pass</p>}
 
         </div>)

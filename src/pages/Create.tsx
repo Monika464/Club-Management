@@ -13,7 +13,7 @@ import { addDoc, collection, doc, getDoc, onSnapshot, query, serverTimestamp } f
 import { db, storage } from '../App';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import { useModAvatUsers } from '../hooks/useModAvatUsers';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage';
 //import { Timestamp } from 'firebase-admin/firestore';
 
@@ -252,7 +252,17 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
         
       </form>
       {formError && <p className="error">{formError}</p>}
-        </div>
+
+      <div className="siteLink"> 
+              <ul>
+                <li> <Link to="/adminpanel" className="userpanel">adminpanel</Link></li>
+              </ul>
+            </div>
+
+    </div>
+       
+
+        
     );
 }
 

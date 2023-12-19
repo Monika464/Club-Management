@@ -290,7 +290,9 @@ const getfromBase3 =async()=>{
       }, [timestampArr1]);
    
     return (<>
-
+<br></br><br></br>
+HISTORIA AKTYWNOŚCI
+<br></br><br></br>
 
     {timestampArr1 &&
      timestampArr1.map((elem)=>(

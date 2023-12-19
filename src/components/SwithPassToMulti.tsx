@@ -196,7 +196,7 @@ useEffect(()=>{
         }}   
     />
 
-    <button onClick={getAddfromBase}>skalkuluj sytuacje usera </button>
+    <button onClick={getAddfromBase} className="btn">skalkuluj sytuacje usera </button>
     { switchDebt && <p>jest zadluzenie {switchDebt} treningów </p>}
     { switchAdd && <p>masz nadpłate ktora po zamianie na multi zostanie skasowana {switchAdd} treningi </p>}
     {stopReported && <p>uzytkownik zawiesił czlonkostwo</p>}
@@ -206,7 +206,7 @@ useEffect(()=>{
 
        
  
-      <button onClick={handleSwitchToMulti}>przelacz usera na multi</button>  
+      <button onClick={handleSwitchToMulti} className="btn">przelacz usera na multi</button>  
       {isSent && <p>uzytkownik teraz multi</p>}
         </div>)
 }

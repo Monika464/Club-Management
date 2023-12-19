@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import useFetchCollectionData from "../hooks/useFetchCollections"
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../App";
@@ -87,6 +87,12 @@ const [error, setError] = useState<string | null>(null)
             {/* <h1>{document?.name}</h1> */}
 
 {/* {error && <p>{error.toString}</p>} */}
+
+<div className="siteLink"> 
+              <ul>
+                <li> <Link to="/home" className="userpanel">Home</Link></li>
+              </ul>
+            </div>
 
         </div>
         </>)

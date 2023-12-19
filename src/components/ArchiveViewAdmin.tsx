@@ -1,17 +1,266 @@
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
+import Select from 'react-select'
+import { UserContext } from "../context/UserContext";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../App";
+
 
 export interface IArchiveViewAdmin{}
+export interface ItimestampArr1{
+    id: string
+    time: Date
+    pausaData: Date
+    reason: string
+  }
+  
+  export interface ItimestampArr2{
+    id: string
+    time: Date
+    endPauseData: Date
+  }
+  
+  export interface ItimestampArr3{
+    id: string
+    time: Date
+    stopData: Date
+  }
+  export interface ItimestampArr4{
+    id: string
+    time: Date
+    restartData: Date
+  }
+
+const ArchiveViewAdmin : React.FunctionComponent<IArchiveViewAdmin> =(props) => {
+
+    const userModForSelect  =  useModUsersForSelect(); 
+
+    const [chosenUserId, setChosenUserId] = useState<string | null>(null)
+    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
+    const [timestampArr1, setTimestampsArr1] = useState< ItimestampArr1 | null>(null);
+const [timestampArr2, setTimestampsArr2] = useState< ItimestampArr2 | null>(null);
+const [timestampArr3, setTimestampsArr3] = useState< ItimestampArr3 | null>(null);
+const [timestampArr4, setTimestampsArr4] = useState< ItimestampArr4 | null>(null);
+const [rendered, setRendered] = useState(false);
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setRendered(true);
+    }, 1000); // 1000 milisekund = 1 sekunda
+  
+    return () => {
+      clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    };
+  }, []);
+const getArchiveDatafromBase = useCallback(async() => {
+
+console.log("chosenUserId",chosenUserId)
+
+    const getfromBase1 =async()=>{         
+      if(chosenUserId){
  
+      //Q 1 
+      const q1 = query(collection(db, "activitiArchive"), where("userUid", "==", chosenUserId), where("pausaData", "!=", null));
+      
+      const unsubscribe = onSnapshot(q1, (querySnapshot) => { 
+        const temp1 = querySnapshot.docs.map((doc) => {
+          
+         console.log("tuuu", doc.id, " => ", doc.data());
+       
+          if(doc.data().pausaData){
+            return {
+              id: doc.id,
+              time: doc.data().created_at,
+              pausaData: doc.data().pausaData,
+              reason: doc.data().reason
+            };
+          }            
+          });
+         // console.log("temp1",temp1)
+          setTimestampsArr1([...temp1])
+         
+       });
 
 
+  return () => unsubscribe();
+}
+
+}
 
 
-export const ArchiveViewAdmin : React.FunctionComponent<IArchiveViewAdmin> =(props) => {
+const getfromBase2 =async()=>{    
 
+if(chosenUserId){
+ // Q2
+ const q2 = query(collection(db, "activitiArchive"), where("userUid", "==", chosenUserId), where("endPauseData", "!=", null));
+      
+ const unsubscribe = onSnapshot(q2, (querySnapshot) => { 
+   const temp2 = querySnapshot.docs.map((doc) => {
+     
+     //console.log("tu2", doc.id, " => ", doc.data());
+  
+     if(doc.data().endPauseData){
+       return {
+         id: doc.id,
+         time: doc.data().created_at,
+         endPauseData: doc.data().endPauseData
+       };
+     }            
+     });
+     //console.log("temp2",temp2)
+     setTimestampsArr2([...temp2])
+    // console.log("timestampArr2",timestampArr2)
+  });
+
+
+return () => unsubscribe();
+
+}
+}
+
+const getfromBase3 =async()=>{    
+
+if(chosenUserId){
+   // Q3
+   const q3 = query(collection(db, "activitiArchive"), where("userUid", "==", chosenUserId), where("stopData", "!=", null));
+        
+   const unsubscribe = onSnapshot(q3, (querySnapshot) => { 
+     const temp3 = querySnapshot.docs.map((doc) => {
+       
+      // console.log("tu3", doc.id, " => ", doc.data());
     
-    return (<>
-    ArchiveViewsAdmin
-    
-    </>)
+       if(doc.data().stopData){
+         return {
+           id: doc.id,
+           time: doc.data().created_at,
+           stopData: doc.data().stopData
+         };
+       }            
+       });
+       //console.log("temp3",temp3)
+       setTimestampsArr3([...temp3])
+       //console.log("timestampArr3",timestampArr3)
+    });
+
+
+return () => unsubscribe();
+
+}
+}
+
+const getfromBase4 =async()=>{    
+
+  if(chosenUserId){
+     // Q4
+     const q4 = query(collection(db, "activitiArchive"), where("userUid", "==", chosenUserId), where("restartData", "!=", null));
+          
+     const unsubscribe = onSnapshot(q4, (querySnapshot) => { 
+       const temp4 = querySnapshot.docs.map((doc) => {
+         
+         //console.log("tu4", doc.id, " => ", doc.data());
+      
+         if(doc.data().restartData){
+           return {
+             id: doc.id,
+             time: doc.data().created_at,
+             restartData: doc.data().restartData
+           };
+         }            
+         });
+         //console.log("temp4",temp4)
+         setTimestampsArr4([...temp4])
+         //console.log("timestampArr4",timestampArr4)
+      });
+  
+  
+  return () => unsubscribe();
+  
+  }
+  }
+
+
+
+
+
+  getfromBase1();
+  getfromBase2();
+  getfromBase3();
+  getfromBase4();
+
+
+}, [db,chosenUserId]); 
+
+  
+
+
+
+    useEffect(()=>{
+   
+      getArchiveDatafromBase();
+
+    },[db,chosenUserId, getArchiveDatafromBase]) 
+
+
+
+    return (
+      <div>
+   
+    <Select
+      closeMenuOnSelect={true}  
+      options={userModForSelect}
+      onChange={(choice) => {
+        setChosenUserId(choice.value);   
+        setChosenUserByIdLabel(choice.label); 
+      }} 
+      />
+      {chosenUserByIdLabel}
+<br></br><br></br>
+HISTORIA AKTYWNOŚCI
+<br></br><br></br>
+
+<ul>
+
+    {timestampArr1 &&
+     timestampArr1.map((elem)=>(
+     <li key={elem.id}>
+    pauza zgłoszona dnia: {elem.time.toDate().toString()}
+    <br></br>
+    od: {elem.pausaData.toDate().toString()}
+     </li> 
+     ))}
+
+   <br></br>   <br></br>
+    {timestampArr2 &&
+     timestampArr2.map((elem)=>(
+     <li key={elem.id}>
+    powrót po kontuzji zgłoszony dnia: {elem.time.toDate().toString()}
+    <br></br>
+    od: {elem.endPauseData.toDate().toString()}
+     </li> 
+     ))}
+
+<br></br>   <br></br>
+    {timestampArr3 &&
+     timestampArr3.map((elem)=>(
+     <li key={elem.id}>
+    zatrzymanie członkostwa zgłoszone dnia: {elem.time.toDate().toString()}
+    <br></br>
+    od: {elem.stopData.toDate().toString()}
+     </li> 
+     ))}
+
+<br></br>   <br></br>
+    {timestampArr4 && 
+     timestampArr4.map((elem)=>(
+     <li key={elem.id}>
+    powrót do klubu zgłoszony dnia: {elem.time.toDate().toString()}
+    <br></br>
+    od: {elem.restartData.toDate().toString()}
+     </li> 
+     ))}
+
+</ul>
+
+</div>)
 
 }
 

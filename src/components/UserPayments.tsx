@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
 import Select from 'react-select'
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../App";
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
 import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
@@ -22,6 +22,9 @@ export const UsersPayments : React.FunctionComponent<Itest> =(props) => {
 const [debtSent, setDebtSent] = useState<boolean>(false)
 const [addSent, setAddSent] = useState<boolean>(false)
 const [dateSent, setDateSent] = useState<boolean>(false)
+const [isMulti, setIsMulti] = useState<boolean>(false)
+const [name,setName] = useState<string | null>(null)
+const [surname,setSurname] = useState<string | null>(null)
 
     console.log(chosenUserById,chosenUserByIdLabel)
 
@@ -30,10 +33,16 @@ const  calculatedIndexOfNewDue= useSearchDatesPlusN(8, chosenUserById);
 const newDate =  useSearchDatesByIndex(calculatedIndexOfNewDue);  
 
 const checkingFunction =async ()=>{
+
    if(chosenUserById){
       const userRef = doc(db, "usersData",chosenUserById);
       const docSnap = await getDoc(userRef);
          if (docSnap.exists()) {
+            
+            setName(docSnap.data().name)
+            setSurname(docSnap.data().surname)
+
+
              if(docSnap.data().pause || docSnap.data().stop){
                console.log("ma pauze albo stop")                   
                if(docSnap.data().debt){
@@ -42,7 +51,12 @@ const checkingFunction =async ()=>{
                     if(docSnap.data().add){
                     setHasAdd(docSnap.data().add)
                    }
-                } else {
+
+                } else if(docSnap.data().optionMulti === true){
+                  setIsMulti(true)
+                }
+                
+                else {
                   console.log("nie ma pauzy ani stopu") 
                   setOldDueDate(docSnap.data().due)
                   setNewDueDate(newDate)
@@ -105,12 +119,26 @@ useEffect(()=>{
        .then(()=>{setAddSent(true)})
     //wyslij do bazy jako add  
    }
+
+   const dataToPaymentArchive = {
+      created_at: serverTimestamp(),
+      userUid: chosenUserById,
+      kto: `${name} ${surname}`,
+      trenings: 8,
+      amount: 120  
+    } 
+
    if(newDueDate){
       await updateDoc(paymentDataRef, {
          due: newDueDate
        })
        .then(()=>console.log("new payment day set. update succesful"))
        .then(()=>{setDateSent(true)})
+
+
+       //dodaj do archive
+       const docRef = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
+       .then(()=> console.log("payment set to archive"))
    }
 
  }
@@ -132,20 +160,20 @@ useEffect(()=>{
         setDebtSent(false);
         setAddSent(false);
         setDateSent(false);
-
+         setIsMulti(false);
         }}   
     />
 
-    <button onClick={checkingFunction}>Edytuj uzytkownika</button>
-
-    {newDueDate && <div>
+    <button onClick={checkingFunction} className="btn">Edytuj uzytkownika</button>
+    {isMulti && <p>użytkownik Multi</p>}
+    {newDueDate && !isMulti && <div>
     <p>Data naleznosci stara: {oldDueDate?.toDate()?.toString()}</p>
     <p>Data naleznosci nowa: {newDueDate?.toDate()?.toString()}</p>
     </div>
     }
     {modifyDebt && <p>Nowa wartość debt: {modifyDebt}</p>}
     {modifyAdd && <p>Nowa wartość add:{modifyAdd}</p>}
-    <button onClick={handleAccept}>Zaakceptuj i wyslij</button>
+    <button onClick={handleAccept} className="btn">Zaakceptuj i wyslij</button>
     {debtSent && <p>dług zmodyfikowany</p>}
     {addSent && <p>dodane zmodyfikowane</p>}
     {dateSent && <p>data zmodyfikowana</p>}

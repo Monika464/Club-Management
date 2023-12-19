@@ -18,6 +18,7 @@ import ShowAvatar from "../components/ShowAvatar";
 import ChoosingAvatar from "../components/ChoosingAvatar";
 import Project from "./Project";
 import AddIcon from '../assets/add_icon.svg';
+import ArchiveUserPayment from "../components/ArchiveUserPayment";
 
 export interface IUserProps {};     
 
@@ -109,7 +110,6 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
 <br></br><br></br>
      <DisplayUserDataUser/>
-    
 
 
      <br></br><br></br>

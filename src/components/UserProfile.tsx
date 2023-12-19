@@ -208,7 +208,7 @@ const handleName = () =>{
 
     return(<>
 
-User Profile
+
       <ul>
    <li className="logo">
    

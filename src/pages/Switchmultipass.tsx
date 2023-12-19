@@ -1,24 +1,24 @@
-import SwitchMultiToPass from "../components/SwitchMultiToPass"
-import SwithPassToMulti from "../components/SwithPassToMulti"
+// import SwitchMultiToPass from "../components/SwitchMultiToPass"
+// import SwithPassToMulti from "../components/SwithPassToMulti"
 
-const Switchmultipass: React.FunctionComponent =() => {
+// const Switchmultipass: React.FunctionComponent =() => {
 
-    return(
+//     return(
 
-        <div>
-            ReportInjuryAdmin
-            <SwithPassToMulti/>
+//         <div>
+//             ReportInjuryAdmin
+//             <SwithPassToMulti/>
 
-            <br></br>
+//             <br></br>
 
-            RestoreMembershipAdmin
-            <SwitchMultiToPass/>
-            <br></br>
+//             RestoreMembershipAdmin
+//             <SwitchMultiToPass/>
+//             <br></br>
 
 
-        </div>
-    )
+//         </div>
+//     )
 
-}
+// }
 
-export default Switchmultipass
+// export default Switchmultipass

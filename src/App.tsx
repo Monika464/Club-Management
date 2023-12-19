@@ -27,14 +27,21 @@ import StopMembershipAdmin from './components/StopMembershipAdmin.tsx';
 import Membershipage from './pages/Membershippage.tsx';
 import { UsersPayments } from './components/UserPayments.tsx';
 import Injurypage from './pages/Injurypage.tsx';
-import Switchmultipass from './pages/Switchmultipass.tsx';
+//import Switchmultipass from './pages/Switchmultipass.tsx';
 import MembershiUserpage from './pages/MembershipUserpage.tsx';
 import InjuryUserpage from './pages/InjuryUserpage.tsx';
 import ProjectSingle from './components/ProjectSingle.tsx';
 import DatePickerpages from './pages/DatePickerpage.tsx';
 import Attendancepage from './pages/AttendanceListpage.tsx';
-import ArchiveViews, { ArchiveViewAdmin } from './components/ArchiveViewAdmin.tsx';
+import  ArchiveViewAdmin  from './components/ArchiveViewAdmin.tsx';
 import ArchiveViewUser from './components/ArchiveViewUser.tsx';
+import ArchiveUserpage from './pages/ArchiveUserpage.tsx';
+import ArchiveAdminpage from './pages/ArchiveAdminpage.tsx';
+import { Test } from './components/Test.tsx';
+import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
+import RaportPage from './pages/RaportPage.tsx';
+// import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
+
 
 //  initializeApp(config.firebaseConfig)//just once
 
@@ -107,7 +114,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              path="/paymentadmin" 
              element={
                       //  <AuthRoute>
-                       <UsersPayments/>                                     
+                       <PaymentAdminPage/>                                     
                       //  </AuthRoute>
                     }
             />
@@ -122,10 +129,10 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
             />
 
 <Route 
-             path="/switchmp" 
+             path="/report" 
              element={
                       //  <AuthRoute>
-                       <Switchmultipass/>                                     
+                      <RaportPage/>                                  
                       //  </AuthRoute>
                     }
             />
@@ -152,7 +159,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              path="/archiveadmin" 
              element={
                       //  <AuthRoute>
-                       <ArchiveViewAdmin/>                                     
+                       <ArchiveAdminpage/>                                     
                       //  </AuthRoute>
                     }
             />             
@@ -181,7 +188,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
              path="/archiveuser" 
              element={
                       //  <AuthRoute>
-                       <ArchiveViewUser/>                                     
+                       <ArchiveUserpage/>                                     
                       //  </AuthRoute>
                     }
             />

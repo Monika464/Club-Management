@@ -42,14 +42,17 @@ const SetAvatar = (props: ISetAvatar) => {
       
         if (!selected) {
           setThumbnailError('Please select a file')
+          alert('Please select a file')
           return
         }
         if (!selected.type.includes('image')) {
           setThumbnailError('Selected file must be an image')
+          alert('Selected file must be an image')
           return
         }
         if (selected.size > 100000) {
           setThumbnailError('Image file size must be less than 100kb')
+          alert('Image file size must be less than 100kb')
           return
         }
         console.log("selected2", selected)  
@@ -92,6 +95,12 @@ const SetAvatar = (props: ISetAvatar) => {
       console.log('PictureURL',pictureURL ); 
 
 useEffect(()=>{
+  uploadFile()
+
+},[thumbnail])
+
+
+useEffect(()=>{
 
   if(currentUser){
 
@@ -102,6 +111,10 @@ useEffect(()=>{
 //console.log("response",response);
 console.log("Profile updated!");
 })
+.then((response) => {
+  //console.log("response",response);
+ // alert("Profile updated!");
+  })
 .catch((error) => {
 console.log(error);
 });
@@ -125,7 +138,7 @@ console.log(error);
     
 return (
 <>
-  <p>lub wgraj własny </p>
+
 <input
   // label="Image"
   placeholder="Choose image"
@@ -134,10 +147,10 @@ return (
   onChange={(e) => {
     handleFileChange(e)
     //console.log(e.target.files[0])
-   // setThumbnail(e.target.files[0]);
+   setThumbnail(e.target.files[0]);
   }}
 />
-<button onClick={uploadFile}>Upload</button>
+{/* <button onClick={uploadFile}>Upload</button> */}
 </>)
 }
 

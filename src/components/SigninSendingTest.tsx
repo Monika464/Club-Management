@@ -80,6 +80,7 @@ export function SigninSendingTest(props: ISigninSending){
                     })
                     .then(()=>console.log("multi user. update succesful"))
                     .then(()=>  setIsSent(true))
+                    .then(()=> navigate('/userpanel'))
                     .catch((err)=> console.error(err))
 
                  }
@@ -98,12 +99,14 @@ export function SigninSendingTest(props: ISigninSending){
                     })
                   .then(()=>console.log("pass user. update succesful"))
                   .then(()=>  setIsSent(true))
+                  .then(()=> navigate('/userpanel'))
                   .catch((err)=> console.error(err))
 
                  }
      
          }
 
+         
         } 
 
          //dolozmy updatowannie imienia automatyczne na writeusersinfo

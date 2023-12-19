@@ -15,6 +15,8 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const auth = getAuth();
     const [authing, setAuthing] = useState(false);
     const [isAdmin,setIsAdmin] = useState(false);
+
+    const isUserRegistered = useRegisteringUsers()
     
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);
@@ -28,7 +30,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
       return () => {
         clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
       };
-    }, []);
+    }, [isUserRegistered]);
 
 
     // useEffect(()=>{
@@ -45,10 +47,11 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
         return signOut(auth);
         }
 
-     const isUserRegistered = useRegisteringUsers()
+
      //console.log("isss", isUserRegistered)
 
 
+     
     //  const handlePrzenies =()=>{
     //   console.log("czy wciska sie")
     //   navigate('/login');

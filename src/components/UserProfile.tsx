@@ -210,24 +210,46 @@ const handleName = () =>{
 
 
       <ul>
-   <li className="logo">
-   
-     <div className="title">Cześć {auth.currentUser?.displayName}</div> 
-     <img src={auth.currentUser?.photoURL} style= {{width: 80 }} alt="awatar" />
+         <li className="logo">
+          <div className="title">Cześć {auth.currentUser?.displayName}</div> 
+          <img src={auth.currentUser?.photoURL} style= {{width: 80 }} alt="awatar" />
+         </li>
 
-   </li>
-
-   <button onClick={handleEdit}>Edit profile</button>
-   </ul>
-   <br></br>
-{isEdited && 
-<ul>
-
+         <button onClick={handleEdit}>
+         {isEdited ? 'Zamknij' : 'Edytuj profil'}
+          </button>
   
-   <li>
-   <p>Change name</p>
-      <input
-   type="text"
+     </ul>
+     <br></br>
+      
+      {isEdited && 
+    <ul>  
+<li>
+  Wgraj własny avatar i przeaładuj stronę
+     <SetAvatar
+        thumbnail={thumbnail}
+        setThumbnail={setThumbnail}
+        thumbnailError ={thumbnailError}
+        setThumbnailError = {setThumbnailError}
+        pictureURL ={pictureURL}
+        setPictureURL={setPictureURL}
+        />
+        <br></br>
+      Wybierz z dostępnych awatarów i przeaładuj stronę
+        <ChoosingAvatar/>
+     <br></br><br></br>
+
+  </li>
+
+
+
+
+
+       <li>
+          
+          <p>Change name</p>
+            <input
+            type="text"
     onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
       setName(e.target.value)  
          }
@@ -240,22 +262,7 @@ const handleName = () =>{
 
      {/* nowy */}
      <br></br>
-<li>
-  Zmień awatar 
-  <br></br><br></br>
-Wybierz z dostępnych  
-<ChoosingAvatar/>
-     <SetAvatar
-        thumbnail={thumbnail}
-        setThumbnail={setThumbnail}
-        thumbnailError ={thumbnailError}
-        setThumbnailError = {setThumbnailError}
-        pictureURL ={pictureURL}
-        setPictureURL={setPictureURL}
-        />
-  <br></br><br></br>
 
-  </li>
   
 
 

@@ -109,18 +109,19 @@ console.log(error);
 
 },[thumbnail,uploadFile])
       
-useEffect(()=>{
-  const updateAvatar2 =async ()=>{
-  if(currentUser){  
-    const userRef = doc(db, "usersData",currentUser?.uid);
-    await updateDoc(userRef, {
-      avatar: pictureURL
-      })
-      .then(()=> {console.log("new avatar set")})
-    }
-  }
-  updateAvatar2()
-  },[thumbnail,uploadFile])
+//tego jeszcze nie ma
+// useEffect(()=>{
+//   const updateAvatar2 =async ()=>{
+//   if(currentUser){  
+//     const userRef = doc(db, "usersData",currentUser?.uid);
+//     await updateDoc(userRef, {
+//       avatar: pictureURL
+//       })
+//       .then(()=> {console.log("new avatar set")})
+//     }
+//   }
+//   updateAvatar2()
+//   },[thumbnail,uploadFile])
     
 return (
 <>

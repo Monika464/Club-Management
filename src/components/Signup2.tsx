@@ -17,8 +17,8 @@ import SetAvatar from './SetAvatar';
 
 const Signup2: React.FunctionComponent<IApplicationProps> =(props) => { 
 
-    const [name, setName] = useState<string|null>("");
-    const [surname, setSurname] = useState<string|null>("");
+    const [name, setName] = useState<string>("");
+    const [surname, setSurname] = useState<string>("");
     const [dob, setDob] = useState<Date>(new Date());
     const [option, setOption] = useState<string|null>("");
     const [startDay, setStartDay] = useState<Date | null>(null);
@@ -28,7 +28,7 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     //// zrob props do set avatar
     const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
     const [thumbnailError, setThumbnailError] = useState<string | null>(null)
-    const [pictureURL, setPictureURL] = useState<URL | null>(null)
+    const [pictureURL, setPictureURL] = useState<string | null>(null)
 
     const [authing, setAuthing] = useState(false);
     const auth = getAuth();

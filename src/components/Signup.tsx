@@ -7,6 +7,7 @@ import {
    GoogleAuthProvider,
    sendPasswordResetEmail,
    signInWithEmailAndPassword,signInWithPopup, 
+   signOut, 
    updateProfile, 
    UserCredential 
   } from 'firebase/auth';
@@ -86,12 +87,12 @@ const SignupPage: React.FunctionComponent<IApplicationProps> =(props) => {
 
 
 
-   const handleDisplayName =(event: ChangeEvent<HTMLInputElement>)=>{
- let displayName = event.target.value;
+//    const handleDisplayName =(event: ChangeEvent<HTMLInputElement>)=>{
+//  let displayName = event.target.value;
 
- setDisplayName(displayName)
- console.log('displayName', displayName)
-   }
+//  setDisplayName(displayName)
+//  console.log('displayName', displayName)
+//    }
 
 const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
   const { name, value } = event.target
@@ -102,9 +103,13 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
  // console.log("thumbnail-gora",thumbnail);
 }
 
+const logout=()=> {
+  navigate('/login');
+    return signOut(auth);
+    }
+    
 const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
   event.preventDefault()   
-
   
     // Send the email and password to firebase
     await createUserWithEmailAndPassword(auth, email, password)
@@ -113,7 +118,11 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
       console.log("data created", response);
         //console.log(response.user.uid);
        // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
-  }).catch(error =>{
+  })
+  .then(() =>{alert("New user Created!! Now login as a new user")})
+  .then(() =>{logout()})
+  
+  .catch(error =>{
       console.log(error);
       setAuthing(false);
      
@@ -134,30 +143,30 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
 
 };
 
-const handleFileChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
-  setThumbnail(null)
-  let selected = e.target.files[0]  
-  console.log("selected1", selected) 
+// const handleFileChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
+//   setThumbnail(null)
+//   let selected = e.target.files[0]  
+//   console.log("selected1", selected) 
 
-  if (!selected) {
-    setThumbnailError('Please select a file')
-    return
-  }
-  if (!selected.type.includes('image')) {
-    setThumbnailError('Selected file must be an image')
-    return
-  }
-  if (selected.size > 100000) {
-    setThumbnailError('Image file size must be less than 100kb')
-    return
-  }
-  console.log("selected2", selected)  
-  setThumbnailError(null)
-  setThumbnail(selected)
-  //console.log("thumbnailFin", thumbnail)
-  //console.log('thumbnail updated')
-  //console.log('thumbnailError', thumbnailError)
-}
+//   if (!selected) {
+//     setThumbnailError('Please select a file')
+//     return
+//   }
+//   if (!selected.type.includes('image')) {
+//     setThumbnailError('Selected file must be an image')
+//     return
+//   }
+//   if (selected.size > 100000) {
+//     setThumbnailError('Image file size must be less than 100kb')
+//     return
+//   }
+//   console.log("selected2", selected)  
+//   setThumbnailError(null)
+//   setThumbnail(selected)
+//   //console.log("thumbnailFin", thumbnail)
+//   //console.log('thumbnail updated')
+//   //console.log('thumbnailError', thumbnailError)
+// }
 console.log("thumbnail2", thumbnail)
     return (  
       

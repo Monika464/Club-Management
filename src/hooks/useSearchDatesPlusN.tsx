@@ -25,7 +25,11 @@ export const useSearchDatesPlusN = (howMany: number | null, id: string | null | 
       const docSnap = await getDoc(userRef)
     
      // console.log("czy mamy docSnap",docSnap?.data().due )
+     if(docSnap?.data().due ){
      setuserDueDate(docSnap?.data().due )
+     }
+     
+
      setIsDb(true)
        }
     }

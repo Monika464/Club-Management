@@ -170,7 +170,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
                     <img src={AddIcon} alt="add project icon"></img>
                     </NavLink>
                 </li>
-
+                <li>              
+                    <NavLink  to="/signup" className="navlink">Register user
+                    <img src={AddIcon} alt="add project icon"></img>
+                    </NavLink>
+                </li>
 
             
             </ul>

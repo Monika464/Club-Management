@@ -18,14 +18,25 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);
- 
+    const [rendered, setRendered] = useState(false);
 
-    useEffect(()=>{
-      if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
-        setIsAdmin(true);
-      }
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setRendered(true);
+      }, 1000); // 1000 milisekund = 1 sekunda
+    
+      return () => {
+        clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+      };
+    }, []);
 
-    },[currentUser])
+
+    // useEffect(()=>{
+    //   if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
+    //     setIsAdmin(true);
+    //   }
+
+    // },[currentUser])
 
   
 
@@ -56,9 +67,9 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    
    
  
-   <li>
+   {/* <li>
    {isAdmin &&  <Link to="/signup" className="navlink">Register user</Link >}
-   </li>
+   </li> */}
    <li> 
    {currentUser && !isUserRegistered && <NavLink to="/signup2" className="navlink">Fill form</NavLink>} 
     </li>

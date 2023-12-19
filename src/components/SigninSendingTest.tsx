@@ -19,6 +19,7 @@ interface ISigninSending {
 }
 
 export function SigninSendingTest(props: ISigninSending){
+    //console.log("czy ten komponent zostaje uruchomiony?")
 
     const navigate = useNavigate();
 

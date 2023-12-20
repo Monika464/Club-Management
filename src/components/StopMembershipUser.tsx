@@ -36,8 +36,6 @@ const navigate = useNavigate();
 
 const settingName = async ()=>{
 
-
-
   if(currentUser){ 
     const userRef = doc(db, "usersData",currentUser?.uid);
     const docSnap = await getDoc(userRef);
@@ -45,14 +43,13 @@ const settingName = async ()=>{
         if (docSnap.exists()) {  
           setName(docSnap.data().name);
           setSurname(docSnap.data().surname);
-  
+        
           //jesli mamy stop
            if(docSnap.data().stop){
            setStopReported(true)
           }
          
            //jesli mamy multi
-
          if(docSnap.data().optionMulti === true){  
 
            setIsMulti(true);
@@ -71,11 +68,7 @@ const settingName = async ()=>{
                  }
       }
       if(docSnap.data().optionPass === true){  
-  
-
         setIsPass(docSnap.data().optionPass);
-
-             //console.log("czy tu jest isPass",isPass)
 
              //jesli mamy pauze
              if(docSnap.data().pause){
@@ -100,9 +93,8 @@ const settingName = async ()=>{
         } 
        //jesli mamy due
          if(docSnap.data().due){     
-   
-              if(paymentDateIndex && dzisIndex){
-              
+        
+              if((paymentDateIndex !== null) && dzisIndex){
                  setStopDate(dzisData)
                  if(dzisIndex > paymentDateIndex){
                  setFinalDebt(dzisIndex - paymentDateIndex)
@@ -127,7 +119,7 @@ useEffect(()=>{
     
       settingName()  
      
- },[currentUser,dzisIndex,paymentDateIndex,settingName])
+ },[db,currentUser,dzisIndex,paymentDateIndex,settingName])
 
 
 
@@ -142,13 +134,7 @@ useEffect(()=>{
 
      const sendStopToBase =async()=>{
 
-     
-  
-
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
-
-    
-
     if(currentUserPausaDate){    
       await updateDoc(paymentDataRef, {
         pause: null,  

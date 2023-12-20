@@ -28,8 +28,7 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
     const [pictureURL, setPictureURL] = useState<string | null>(null)
     const [url,setUrl] =  useState<string | null>(null)
     const [avatarChanged, setAvatarChanged] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const [isHovered1, setIsHovered1] = useState(false);
+    const [isHovered, setIsHovered] = useState<number | null>(null);
     const [isClicked, setIsClicked] = useState(false);
     const { currentUser} = useContext(UserContext); 
     const navigate = useNavigate();
@@ -105,6 +104,9 @@ useEffect(()=>{
  
 },[url])
 
+const handleAvatHover =(index: number)=>{
+  setIsHovered(index);
+}
 
     return (<div>
      
@@ -112,14 +114,16 @@ useEffect(()=>{
      src={wojownik0} 
     //  style= {{width: 40 }} 
     style={{ 
-      width: isHovered ? 80 : 40, 
+      width: isHovered === 0 ? 80 : 40, 
       filter: mod0 ? 'blur(80px)' : 'none',
     }}
      alt="awatar" 
      onClick={(e) => {
         setThumbnail("wojownik0.png")
         setMod0(true)
+       
       }}
+      onMouseOver={() => handleAvatHover(0)}
       // onMouseOver={() => setIsHovered(true)}
       // onMouseOut={() => setIsHovered(false)}
  
@@ -127,7 +131,7 @@ useEffect(()=>{
      <img 
      src={wojownik1} 
      style={{ 
-      width: isHovered ? 80 : 40 ,
+      width: isHovered === 1 ? 80 : 40 ,
       filter: mod1 ? 'blur(80px)' : 'none',
     }}
      alt="awatar" 
@@ -135,13 +139,14 @@ useEffect(()=>{
       setThumbnail("wojownik1.png");
       setMod1(true)
     }}
+    onMouseOver={() => handleAvatHover(1)}
     // onMouseOver={() => setIsHovered(true)}
     // onMouseOut={() => setIsHovered(false)}
      />
 
      <img src={wojownik2} 
     style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 2 ? 80 : 40,
       filter: mod2 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -149,6 +154,7 @@ useEffect(()=>{
       setThumbnail("wojownik2.png");
       setMod2(true)
     }}
+    onMouseOver={() => handleAvatHover(2)}
     // onMouseOver={() => setIsHovered(true)}
     // onMouseOut={() => setIsHovered(false)}
      />
@@ -156,7 +162,7 @@ useEffect(()=>{
      <img 
      src={samuraj1} 
      style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 3 ? 80 : 40,
       filter: mod3 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -164,6 +170,7 @@ useEffect(()=>{
       setThumbnail("samuraj1.png")
       setMod3(true)
     }}
+    onMouseOver={() => handleAvatHover(3)}
     // onMouseOver={() => setIsHovered(true)}
     // onMouseOut={() => setIsHovered(false)}
      />
@@ -173,7 +180,7 @@ useEffect(()=>{
      <img 
      src={samuraj2} 
      style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 4 ? 80 : 40,
       filter: mod4 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -181,13 +188,14 @@ useEffect(()=>{
       setThumbnail("samuraj2.png")
       setMod4(true)
     }}
+    onMouseOver={() => handleAvatHover(4)}
     // onMouseOver={() => setIsHovered1(true)}
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
      src={elfka} 
      style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 5 ? 80 : 40,
       filter: mod5 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -195,13 +203,14 @@ useEffect(()=>{
       setThumbnail("elfka.png")
       setMod5(true)
     }}
+    onMouseOver={() => handleAvatHover(5)}
     // onMouseOver={() => setIsHovered1(true)}
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
      src={elf} 
      style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 6? 80 : 40,
       filter: mod6 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -209,13 +218,14 @@ useEffect(()=>{
       setThumbnail("elf.png")
       setMod6(true)
     }}
+    onMouseOver={() => handleAvatHover(6)}
     // onMouseOver={() => setIsHovered1(true)}
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
      src={mag} 
      style={{ 
-      width: isHovered ? 80 : 40,
+      width: isHovered === 7 ? 80 : 40,
       filter: mod7 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
@@ -223,6 +233,7 @@ useEffect(()=>{
       setThumbnail("mag.png")
       setMod7(true)
     }}
+    onMouseOver={() => handleAvatHover(7)}
     // onMouseOver={() => setIsHovered1(true)}
     // onMouseOut={() => setIsHovered1(false)}
      />

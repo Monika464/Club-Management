@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { auth } from '../App';
 import SetAvatar from './SetAvatar';
 import ChoosingAvatar from './ChoosingAvatar';
+import { useNavigate } from 'react-router-dom';
 
 
 export interface IUserProfile {};   
@@ -34,7 +35,7 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =(props) => {
 
   const { currentUser} = useContext(UserContext);
     const storage = getStorage();
-
+    const navigate = useNavigate();
   
   //console.log('currentUser',currentUser)
 
@@ -52,7 +53,7 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =(props) => {
  //console.log('naszeMetaUid',naszeMetaUid)
  //console.log('currentUserPhoto',currentUser?.photoURL)
   
-
+//dpisz navigate to userpanel po wszystkich updatach
 
 const handleName = () =>{  
   const auth = getAuth();
@@ -70,98 +71,6 @@ const handleName = () =>{
        // ...
        });
   }
-
-//   const handleToStorage=()=>{
-
-//     /*
-//     //const path = `files/${uuidv4()}`;
-//     const path = `files/${img?.name}`
-//    */
-//     const path = `files/${currentUser?.uid}`
-//     const userId = currentUser?.uid;
-//     const metadata = {
-//       customMetadata: {
-//         user: userId,
-//         disabled: 'false'
-//       },
-//     };
-// //console.log("currentUser", currentUser)    
-//    const imgRef = ref(storage,path)
-//    uploadBytes(imgRef,img, metadata)
-//   }
-
-
-
-//     const updatingAvatar =  async ()=>{
-
-//        const auth = getAuth();
-//        const user: User | null = auth.currentUser;
-   
-//        if (!user) {
-//         return;
-//       }
-
-//        await handleToStorage();  
-
-//        getDownURL();
-
-//        await naszeMetaUid;
-       
-// if(naszeMetaUid === user?.uid){
-//   updateProfile(user, {
-//     // displayName: name,
-//      photoURL: imageUpload
-//    }).then(() => {
-//      console.log("Profile updated")
-//    })
-//    .then(() => {
-//     alert("Photo updated. Refresh the page")
-//     // Profile updated!
-//     // ...
-//   })
-//    .catch((error) => {
-//      // An error occurred
-//      console.error(error)
-//      // ...
-//    });
-
-// }
-
-  
-
-//     }  
-
-  
-  ///
-
-
-
- 
-//      const getDownURL = async () => {
-//        if(currentUser && storage){
-//        const imageRef  = ref(storage, `files/${currentUser?.uid}`); // Przekaz ścieżkę do obiektu w Storage
-//        //const mojUrl = await imageRef; 
-//        const mojUrl = await getDownloadURL(imageRef);
-//        setImageUpload(mojUrl);
-//        //console.log("mojUrl",mojUrl )
-// // Get metadata properties
-//       getMetadata(imageRef)
-//       .then((metadata) => {
-//         console.log("metadata", metadata?.customMetadata?.user)
-//         if(metadata){
-//           setNaszeMetaUid(metadata.customMetadata.user)
-//         }
-    
-//       })
-//        .catch((error) => {
-//         console.error(error)
-//     // Uh-oh, an error occurred!
-//   });
-
-//        } 
-//      }
-     
-
 
 
     const updatingEmail = async ()=>{
@@ -200,7 +109,7 @@ const handleName = () =>{
    console.log('isEdited',isEdited)
     const handleEdit =()=>{
       setIsEdited(!isEdited)
-
+      //navigate('/userpanel')
     }
 
 
@@ -235,7 +144,7 @@ const handleName = () =>{
         setPictureURL={setPictureURL}
         />
         <br></br>
-      Wybierz z dostępnych awatarów i przeaładuj stronę
+      Albo wybierz jeden z dostępnych
         <ChoosingAvatar/>
      <br></br><br></br>
 

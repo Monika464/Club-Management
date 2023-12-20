@@ -40,6 +40,7 @@ import ArchiveAdminpage from './pages/ArchiveAdminpage.tsx';
 import { Test } from './components/Test.tsx';
 import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 import RaportPage from './pages/RaportPage.tsx';
+import Profilepage from './pages/Profilepage.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -214,15 +215,13 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               />
               
               <Route path="userpanel" element={
-                <AuthRoute>
-                    
-              <Userpanel />
-                  
+                <AuthRoute>     
+              <Userpanel />          
               </AuthRoute>       
-              
               }/>
 
-
+    
+          
            
               <Route path="signup" element={<SignupPage />}/>
               <Route path="login" element={<LoginPage />}/>

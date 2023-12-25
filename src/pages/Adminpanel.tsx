@@ -3,7 +3,7 @@
 //https://www.youtube.com/watch?v=4-GAobpDyXU
 
 import React, { useState } from "react";
-import {Link, NavLink, Outlet, RouterProvider} from "react-router-dom";
+import {Link, NavLink, Outlet, RouterProvider, useNavigate} from "react-router-dom";
 import AuthRoute from "../components/AuthRoute"; 
 import {useFetchDates} from "../hooks/useFetchDates.tsx";
 import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
@@ -39,6 +39,9 @@ import AddIcon from '../assets/add_icon.svg';
 import Create from "./Create.tsx";
 import StopMembershipAdmin2 from "../components/StopMembershipAdmin2.tsx";
 import'./adminpanel.css'
+import MailboxToUserSend from "../components/mail/MailBoxToUserSend.tsx";
+import { MailToAdminReceive } from "../components/mail/MailToAdminReceive.tsx";
+import mail from '../assets/mail.png'
 export interface IAdminProps {};         
 
 
@@ -46,7 +49,8 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
  const {usersInfo} = useFetchUsers();
  //console.log("usersInfoAdmin",usersInfo)
-
+ const navigate = useNavigate();
+ 
   const [isEdited, setIsEdited] = useState<boolean>(false);
   const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
@@ -114,15 +118,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 
     return (
         <div className="adminpanel">
-            Witaj adminie   
-                  
-            {/* <br></br>  <br></br>
-            <button onClick={handlemanageAttendance} style={{color: "yellow"}}>Attendance</button>       
-            {isEditedAttendance && <div>
-              <br></br>  <br></br>
-              <AttendanceList/>
-              </div>}
-     <br></br>   <br></br>       */}
+            Witaj adminie  
+<br></br><br></br>
+            <img src={mail} onClick={() => navigate('/mailboxadmin')}/> 
+
+
      <nav className='links'>
             <ul>
                 <li>              
@@ -180,17 +180,12 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             </ul>
 
 
-        </nav>        
-      
+        </nav>   
+        <br></br><br></br>     
+      {/* <MailToAdminReceive/> */}
             <br></br><br></br>
+            {/* <MailboxToUserSend/> */}
 
-
-
-            <div className="siteLink"> 
-              <ul>
-                <li> <Link to="/userpanel" className="userpanel">userpanel</Link></li>
-              </ul>
-            </div>
          
         </div>
     );

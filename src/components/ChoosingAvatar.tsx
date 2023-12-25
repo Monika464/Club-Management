@@ -28,11 +28,11 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
     const [pictureURL, setPictureURL] = useState<string | null>(null)
     const [url,setUrl] =  useState<string | null>(null)
     const [avatarChanged, setAvatarChanged] = useState(false);
-    const [isHovered, setIsHovered] = useState<number | null>(null);
+
     const [isClicked, setIsClicked] = useState(false);
     const { currentUser} = useContext(UserContext); 
     const navigate = useNavigate();
-
+    const [isHovered, setIsHovered] = useState<number | null>(null);
     const [mod0, setMod0] = useState(false);
     const [mod1, setMod1] = useState(false);
     const [mod2, setMod2] = useState(false);

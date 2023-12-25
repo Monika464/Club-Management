@@ -19,11 +19,7 @@ const MembershiUserpage: React.FunctionComponent =() => {
             <RestoreMembershipUser/>
             <br></br>
             
-            <div className="siteLink"> 
-              <ul>
-                <li> <Link to="/userpanel" className="userpanel">userpanel</Link></li>
-              </ul>
-            </div>
+        
 
         </div>
     )

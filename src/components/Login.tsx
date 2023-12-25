@@ -50,7 +50,7 @@ const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
         }).catch(error =>{
             console.log(error);
             setAuthing(false);
-            console.log("ho");
+            //console.log("ho");
          })
     }
    

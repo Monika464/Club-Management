@@ -1,0 +1,51 @@
+/* .main{
+    display: flex;
+  background: #fff;
+  padding: 2px 2px;
+  font-size: 1em;
+  color: #777;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  flex-wrap: wrap;
+  flex: 1 1 100px;
+} */
+
+.main{
+  display:flex;
+  background-color: aliceblue; 
+ max-width: 960px;
+}
+
+
+
+.box{
+    display:flex;
+    height: 100px;
+    min-width: 200px;
+    flex-basis: 200px;
+    flex-grow: 1;
+}
+
+
+.one{
+    display:flex;
+    background-color: aqua;
+    flex-basis: 200px;
+    flex-wrap: wrap;
+}
+
+.two{
+    display:flex;
+    background-color:red;
+    flex-basis: 800px;
+    flex-wrap: wrap;
+}
+
+
+.three{
+    display:flex;
+    background-color: green;
+    flex-basis: 200px
+}

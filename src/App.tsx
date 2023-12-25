@@ -41,6 +41,9 @@ import { Test } from './components/Test.tsx';
 import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 import RaportPage from './pages/RaportPage.tsx';
 import Profilepage from './pages/Profilepage.tsx';
+import Footer from './components/Footer.tsx';
+import UserMailbox from './pages/UserMailbox.tsx';
+import AdminMailbox from './pages/AdminMailbox.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -194,7 +197,33 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                     }
             />
 
+<Route 
+             path="/mailboxuser" 
+             element={
+                      //  <AuthRoute>
+                       <UserMailbox/>                                     
+                      //  </AuthRoute>
+                    }
+            />
 
+<Route 
+             path="/mailboxadmin" 
+             element={
+                      //  <AuthRoute>
+                       <AdminMailbox/>                                     
+                      //  </AuthRoute>
+                    }
+            />
+
+
+<Route 
+             path="/test" 
+             element={
+                      //  <AuthRoute>
+                       <Test/>                                     
+                      //  </AuthRoute>
+                    }
+            />
 
 
           <Route 
@@ -233,7 +262,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               }/>
 
     </Routes>
-
+    <Footer/>
     </UserContextProvider>
     </div>
 </BrowserRouter>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Avatar from './Avatar';
 import ProjectComments from './ProjectComments';
 import './project.css'
@@ -51,6 +52,7 @@ export interface IProjectSummaryProps {
            
           </ul>
           </div>
+          <p className='linkback'><Link to="/home">powrót</Link></p>
 
 </div>     
 

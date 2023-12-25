@@ -1,20 +1,23 @@
 .project-list {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    grid-gap: 20px;
-  }
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+
+
   .project-list .petla {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff; 
-    /* padding: 16px; */
+    flex: 1 1 calc(33.33% - 20px); /* Ustawienie flexbox na jednej trzeciej szerokości z odstępem */
+    background-color: #fff;
     border-radius: 6px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
     text-decoration: none;
     color: inherit;
-
+    padding: 16px;
   }
+
+
 
   .project-list h4 {
     font-size: 0.9em;
@@ -43,5 +46,8 @@
 
   .project-list .photo {
     width: 200px;
+    /* height: auto; */
     /* height: 30px; */
   }
+
+  

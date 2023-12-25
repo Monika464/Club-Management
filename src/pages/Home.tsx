@@ -30,13 +30,7 @@ export interface HomeProps {};
 
   <ProjectSingle/>
 
-  <ul>
-  <li>              
-    <NavLink  to="/userpanel" className="navlink">Panel usera
-    <img src={AddIcon} alt="add project icon"></img>
-      </NavLink>
-   </li>
-  </ul>
+ 
 
              {/* <p key={doc.uid}>
                  {doc.name}

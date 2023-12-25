@@ -88,11 +88,6 @@ const [error, setError] = useState<string | null>(null)
 
 {/* {error && <p>{error.toString}</p>} */}
 
-<div className="siteLink"> 
-              <ul>
-                <li> <Link to="/home" className="userpanel">Home</Link></li>
-              </ul>
-            </div>
 
         </div>
         </>)

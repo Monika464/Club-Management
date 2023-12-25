@@ -19,7 +19,11 @@ import ChoosingAvatar from "../components/ChoosingAvatar";
 import Project from "./Project";
 import AddIcon from '../assets/add_icon.svg';
 import ArchiveUserPayment from "../components/ArchiveUserPayment";
-
+import MailboxToUserSend from "../components/mail/MailBoxToUserSend";
+import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive";
+import mail from '../assets/mail.png'
+import { useNavigate } from "react-router-dom";
+import MailToAdminSend from "../components/mail/MailToAdminSend";
 export interface IUserProps {};     
 
 
@@ -33,7 +37,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
   const { currentUser} = useContext(UserContext); 
   //console.log('currentUser userpan',currentUser);
-
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
@@ -57,29 +61,19 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
 
         return (
-            <>
-            
+        
+            <>   
+            <div className="A">        
              < UserProfile/>
-
+             </div> 
              {/* <ChoosingAvatar/> */}
-             <br></br>
+            
+             
+<br></br>
+{isAdmin &&<Link to="/adminpanel">adminpanel</Link>}
+<br></br><br></br>
 
-{/* <button onClick ={handleEditmembership} style={{color: "green"}}>membership  managing</button>
-{isEditedMembership && <div>
-     <StopMembershipUser/>
-     <br></br><br></br>
-     <RestoreMembershipUser/>
-     </div>}
-     <br></br>
-    
-     <br></br>
-     <button onClick ={handleEditInjury} style={{color: "red"}}>injury managing</button>
-     <br></br>
-     {isEditedInjury && <div>
-     <ReportInjuryUser2/>
-     <BackAfterInjuryUser/>
-     </div>} */}
-
+ <img src={mail} onClick={() => navigate('/mailboxuser')}/> 
 
 <ul>
   <li>
@@ -105,8 +99,8 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
 
 </ul>
-
-        
+<br></br><br></br>
+ {/* <MailToAdminSend/>      */}
 
 <br></br><br></br>
      <DisplayUserDataUser/>
@@ -114,12 +108,11 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
 
      <br></br><br></br>
 
-            <div className="siteLink">  
+            <div>  
   
-             <ul>
-
-              <li> {isAdmin &&<Link to="/adminpanel" className="adminpanel">adminpanel</Link>}</li>
-            </ul>
+             
+               
+           
 
           </div>
 

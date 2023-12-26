@@ -10,6 +10,7 @@ export const MailToAdminSend : React.FunctionComponent<IMailToAdminSend> =(props
     const [name, setName] = useState<string | null>(null);
     const [surname, setSurname] = useState<string | null>(null);
     const { currentUser} = useContext(UserContext);
+    const [messageSent, setMessageSent] = useState<boolean>(false)
 
     useEffect(()=>{
         const settingName = async ()=>{
@@ -46,6 +47,7 @@ export const MailToAdminSend : React.FunctionComponent<IMailToAdminSend> =(props
 
   const docRef = await addDoc(collection(db, "usersmessages"), messageToAdd)
   .then(()=> console.log("user message added"))
+  .then(()=> setMessageSent(true))
     //.then(()=> navigate('/userpanel'))
   } 
 }
@@ -70,6 +72,7 @@ value={newmessage}
 
 <button className="btn">Send</button>
 </form>
+{messageSent && <p>wysłano</p>}
     </div>)
 }
 

@@ -1,51 +1,75 @@
-/* .main{
+.main {
     display: flex;
-  background: #fff;
-  padding: 2px 2px;
-  font-size: 1em;
-  color: #777;
-  width: 100%;
-  box-sizing: border-box;
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  flex-wrap: wrap;
-  flex: 1 1 100px;
-} */
-
-.main{
-  display:flex;
-  background-color: aliceblue; 
- max-width: 960px;
-}
-
-
-
-.box{
-    display:flex;
-    height: 100px;
-    min-width: 200px;
-    flex-basis: 200px;
+    background-color: aliceblue;
+    max-width: 960px;
+  }
+  
+  .box {
+    display: flex;
+    flex-direction: column; /* Zmiana kierunku flexbox na kolumnę */
     flex-grow: 1;
+  }
+  
+  .zero {
+    display: flex;
+    /* background-color: rgb(255, 255, 255);  */
+    flex-grow: 1;
+    align-items: center; /* Wyśrodkowanie tekstu w pionie */
+    justify-content: center; /* Wyśrodkowanie tekstu w poziomie */
+    /* max-height: 120px */
 }
 
 
-.one{
-    display:flex;
-    background-color: aqua;
-    flex-basis: 200px;
+
+  .profile,
+  .mail {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px; /* Dostosuj padding według potrzeb */
+    margin-top: 10px;
+}
+  
+  .mail {
+    text-align: right;
+    padding-right: 30px; /* Dostosuj padding według potrzeb */
+  }
+  
+  
+  .content {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+
+  
+  .glowna {
+     display: flex; */
+    flex-basis: 2; /* Zwiększenie flex-basis dla Item 2 (przykład) */
+    flex-grow: 1;
     flex-wrap: wrap;
 }
 
-.two{
-    display:flex;
-    background-color:red;
-    flex-basis: 800px;
+  .linkowisko{
+    background-color: lightgrey;
+    display: flex;
+    flex-basis: calc(30% / 2 - 5px); /* Przykładowa wartość, możesz dostosować według potrzeb */
+    flex-grow: 1;
     flex-wrap: wrap;
-}
+    max-width: 30%;
+    margin-right: 20px;
+  }
+  .linkshape a {
+    font-size: 18px; /* Dostosuj rozmiar czcionki według potrzeb */
+    text-decoration: none; /* Usunięcie podkreślenia */
+    color: black; /* Dostosuj kolor tekstu według potrzeb */
+  }
+  
+  .linkshape a:hover {
+    color: whitesmoke
+    ; /* Dostosuj kolor tekstu przy najechaniu myszką według potrzeb */
+  } 
 
 
-.three{
-    display:flex;
-    background-color: green;
-    flex-basis: 200px
-}
+
+
+

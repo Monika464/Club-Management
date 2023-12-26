@@ -8,7 +8,8 @@ import { db } from "../App";
 import { toNamespacedPath } from "path/win32";
 import is from "date-fns/esm/locale/is/index.js";
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
-
+import './displayUserDataUser.css'
+import { format } from "date-fns";
 export interface IDisplayUserDataUser{
 
 }
@@ -50,10 +51,10 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
           if (docSnap.exists()) {
 
                         //name
-                        if(docSnap.data().name){
+               if(docSnap.data().name){
 
-                            setName(docSnap.data().name)
-                        }
+                setName(docSnap.data().name)
+                 }
 
                       //multi
               if(docSnap.data().optionMulti === true){
@@ -68,19 +69,29 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
               }
               //debt
               if(docSnap.data().debt){
-                  setDebt(null)
+                console.log("czy tu jest debt",docSnap.data().debt)
+                  setDebt(docSnap.data().debt)
               }
+            
               //add
               if(docSnap.data().add){
                   setAdd(null)
               }
 
+              //due
               if(docSnap.data().due){
                   setDue(docSnap.data().due)
               }
               //pause
+              if(docSnap.data().pause){
+                setIsPause(true)
+            }
+
               //stop
-              //duedate
+              if(docSnap.data().stop){
+                setisStop(docSnap.data().stop)
+              }
+             
              }
 
           }
@@ -90,36 +101,42 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
     
     useEffect(()=>{
         getUserDatafromBase();
-        console.log("curr", currentUser?.email, "name",name, "multi",isMulti)
+        console.log("curr", currentUser?.email, "name",name, "multi",isMulti, isPause)
+        console.log("debt poawla", debt)
       },[getUserDatafromBase])
 
 
     return (<>
 
-   {!isStop && !isPause && <p>status aktywny</p>}
-  
-    {isMulti && <div>
-        <p>uzytkownik multi</p>
-          {isPause && 
-             <div>uzytkownik kontuzjowany
-              {debt && <p>zadłużenie {debt}treningów</p>}
-              {add && <p>do dodania: {add} treningów</p>}
-              </div>
-            }
-          {isStop && 
-          <div>uzytkownik zastopowany
-            { debt && <p>zadłużenie {debt}treningów</p>}
-          </div>
-          }
+   {!isStop && !isPause && <div>status aktywny</div>}
+  <br></br>
+    {isMulti && 
+      <div>
+         <p>uzytkownik multi</p>
+          {isPause && <div>uzytkownik kontuzjowany  </div> }
+              {debt && <div className="debt">
+              <p> zadluzenie {debt} treningów</p>
+               </div>}
+           {add && <p>do dodania: {add} treningów</p>}
+
     </div>}
+    {isStop && <div>uzytkownik zastopowany</div> }
 
-
-    {isPass &&  <div>
+    {isPass &&  
+    <div>
        <p>uzytkownik karnetu</p>
-         {due && <p>należna płatnośc {due?.toDate().toString()}</p>}
-         {paymentDateIndex < dzisIndex ? <p>zadłuzenie: {dzisIndex -paymentDateIndex} treningów</p> 
-         :<p>nie ma zadłużenia</p> }
-       </div>}
+       {isPause && 
+       <div>uzytkownik kontuzjowany  
+        {debt && <div className="debt">
+              <p> zadluzenie {debt} treningów</p>
+               </div>}
+           {add && <p>do dodania: {add} treningów</p>}
+       </div> }
+         {/* {due && <p>należna płatność {due?.toDate().toString()}</p>} */}
+         {due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>}
+         {paymentDateIndex < dzisIndex ? <div className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} treningi</div> 
+         :<p>nie ma zadłużenia</p> }  
+    </div>}
 
     </>)
 

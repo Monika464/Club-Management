@@ -24,8 +24,9 @@ import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive";
 import mail from '../assets/mail.png'
 import { useNavigate } from "react-router-dom";
 import MailToAdminSend from "../components/mail/MailToAdminSend";
+import EmailComponent from "../components/mail/EmailComponent";
 export interface IUserProps {};     
-
+import './userpanel.css'
 
 const Userpanel: React.FunctionComponent<IUserProps> =(props) => {  
   
@@ -58,56 +59,73 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
     setIsEditedMembership(!isEditedMembership)  
 
    }
+console.log("jakie tutaj id usera",currentUser?.uid)
 
-
-        return (
+        return ( 
         
-            <>   
-            <div className="A">        
+            <> 
+<div className='main'>
+        <div className='box'>
+
+        <div className='zero'>
+            <div className="profile">        
              < UserProfile/>
              </div> 
              {/* <ChoosingAvatar/> */}
-            
+
+               {/* <img src={mail} onClick={() => navigate('/mailboxuser')}/>  */}
+              <div className="mail">
+              <EmailComponent 
+              collectionName={"adminmessages"} 
+              currentId = {currentUser?.uid}   
+              onClick={() => navigate('/mailboxuser')}
+              />
+              </div>
+              
+</div>
+<div className='content'>
+<div className='linkowisko'>
+            <ul className="linkshape">
+              <li>
+              <NavLink  to="/membershipuser">Członkostwo 
+          
+              </NavLink>
+              </li>
+              <li>              
+                <NavLink  to="/injuryuser" >Kontuzje
              
-<br></br>
-{isAdmin &&<Link to="/adminpanel">adminpanel</Link>}
-<br></br><br></br>
-
- <img src={mail} onClick={() => navigate('/mailboxuser')}/> 
-
-<ul>
-  <li>
-  <NavLink  to="/membershipuser" className="navlink">Członkostwo w klubie
-      <img src={AddIcon} alt="add project icon"></img>
-   </NavLink>
-  </li>
-  <li>              
-    <NavLink  to="/injuryuser" className="navlink">Zgłaszanie kontuzji
-    <img src={AddIcon} alt="add project icon"></img>
-      </NavLink>
-   </li>
-   <li>              
-    <NavLink  to="/home" className="navlink">Home
-    <img src={AddIcon} alt="add project icon"></img>
-      </NavLink>
-   </li>
-   <li>
-   <NavLink  to="/archiveuser" className="navlink">Archive
-    <img src={AddIcon} alt="add project icon"></img>
-      </NavLink>
-   </li>
-
-
-</ul>
-<br></br><br></br>
- {/* <MailToAdminSend/>      */}
-
-<br></br><br></br>
-     <DisplayUserDataUser/>
-
-
-     <br></br><br></br>
-
+                  </NavLink>
+              </li>
+              <li>              
+                <NavLink  to="/home" >Wydarzenia
+             
+                  </NavLink>
+              </li>
+              <li>
+              <NavLink  to="/archiveuser" >Archiwum
+             
+                  </NavLink>
+              </li>
+         <br></br>   
+               {/* <li>
+              <NavLink  to="/test" >test
+            
+                  </NavLink>
+              </li> */}
+              <li>
+              {isAdmin &&<Link to="/adminpanel">adminpanel</Link>}
+              </li>
+            </ul>
+         
+              <br></br><br></br>
+            <br></br><br></br>
+            {/* <MailToAdminSend/>      */}
+</div>
+<div className='glowna'>
+            <br></br><br></br>
+          <DisplayUserDataUser/>
+          <br></br><br></br>
+</div>
             <div>  
   
              
@@ -115,8 +133,9 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
            
 
           </div>
-
-               
+</div>
+</div>
+   </div>            
 </>);
     }
 

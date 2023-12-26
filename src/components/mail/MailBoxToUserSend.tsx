@@ -15,12 +15,8 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/fi
 export const MailboxToUserSend : React.FunctionComponent<IMailboxUser> =(props) => {
 
     const usersModForSelect =  useModUsersForSelect(); 
-
+const [messageSent, setMessageSent] = useState<boolean>(false)
   
- 
-
- 
-    
     const samevalue = usersModForSelect.map(
       option => option.value
     )
@@ -52,6 +48,7 @@ export const MailboxToUserSend : React.FunctionComponent<IMailboxUser> =(props) 
   
       const docRef = await addDoc(collection(db, "adminmessages"), messageToAdd)
       .then(()=> console.log("admin message added"))
+      .then(()=> setMessageSent(true))
         //.then(()=> navigate('/userpanel'))
       } 
 }
@@ -102,7 +99,10 @@ value={newmessage}
   <button className="btn">Send</button>
 
 </form> 
- }
+
+}
+
+{messageSent && <p>wysłano</p>}
 
 
 

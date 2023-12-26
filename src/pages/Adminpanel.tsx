@@ -38,10 +38,11 @@ import DashboardIcon from '../assets/dashboard_icon.svg';
 import AddIcon from '../assets/add_icon.svg';
 import Create from "./Create.tsx";
 import StopMembershipAdmin2 from "../components/StopMembershipAdmin2.tsx";
-import'./adminpanel.css'
+import './userpanel.css'
 import MailboxToUserSend from "../components/mail/MailBoxToUserSend.tsx";
 import { MailToAdminReceive } from "../components/mail/MailToAdminReceive.tsx";
 import mail from '../assets/mail.png'
+import EmailComponent from "../components/mail/EmailComponent.tsx";
 export interface IAdminProps {};         
 
 
@@ -114,65 +115,77 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
    // console.log("dzisIndex ",dzisIndex )
    })
 
-    //link do usera 
+ 
+    return (<>
+        <div className="main">
+            <div className='box'>
 
-    return (
-        <div className="adminpanel">
-            Witaj adminie  
-<br></br><br></br>
-            <img src={mail} onClick={() => navigate('/mailboxadmin')}/> 
+              <div className='zero'>
+                     <div className="profile">
+                      <p>Witaj adminie  </p> 
+                      <br></br><br></br>
+                    {/* <img src={mail} onClick={() => navigate('/mailboxadmin')}/>  */}
+                    </div>
 
-
-     <nav className='links'>
-            <ul>
+                    <div className="mail">
+                       <EmailComponent 
+                         collectionName={"usersmessages"} 
+                         currentId = {"empty"} 
+                         onClick ={() => navigate('/mailboxadmin')}  
+                         />
+                    </div>
+             </div>
+             <div className='content'>
+<div className='linkowisko'>
+            <ul className="linkshape">
                 <li>              
-                    <NavLink to="/home" className="navlink">Home
-                    <img src={DashboardIcon} alt="dashboard icon"></img>
+                    <NavLink to="/home"  >Home
+               
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/create" className="navlink">Create
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/create"  >Create
+               
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/membershipadmin" className="navlink">Memebr
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/membershipadmin"  >Memebr
+                
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/paymentadmin" className="navlink">Payment
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/paymentadmin"  >Payment
+                 
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/injuryadmin" className="navlink">Injury
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/injuryadmin"  >Injury
+                  
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/report" className="navlink">Report
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/report"  >Report
+             
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/datespicker" className="navlink">Pick date
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/datespicker"  >Pick date
+             
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/attendancelist" className="navlink">Attendance
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/attendancelist"  >Attendance
+                 
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/archiveadmin" className="navlink">Archive
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/archiveadmin"  >Archive
+            
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/signup" className="navlink">Register user
-                    <img src={AddIcon} alt="add project icon"></img>
+                    <NavLink  to="/signup"  >Register user
+                
                     </NavLink>
                 </li>
 
@@ -180,15 +193,19 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
             </ul>
 
 
-        </nav>   
+        
         <br></br><br></br>     
       {/* <MailToAdminReceive/> */}
             <br></br><br></br>
             {/* <MailboxToUserSend/> */}
 
-         
+            </div>
         </div>
-    );
+       
+        </div>
+        </div>
+        
+        </> );
 }
 
 

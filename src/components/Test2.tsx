@@ -1,169 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from '../context/UserContext';
-import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
-import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
-import { useSearchIndexCloseToday } from "../hooks/useSearchIndexCloseToday";
-import { db } from "../App";
-import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
-
-
-
-
+import { useFetchDates } from "../hooks/useFetchDates";
+import { lastDayOfMonth } from "date-fns";
 
 export const Test2: React.FunctionComponent =() => {
 
-  const { currentUser} = useContext(UserContext); 
-
-  const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
-const dzisIndex = useSearchIndexCloseToday();
-const dzisData = useSearchDatesByIndex(dzisIndex);
-const [name, setName] = useState<string | null>(null)
-const [surname, setSurname] = useState<string | null>(null);
-const [stopReported, setStopReported] = useState<boolean>(false)
-const [pausaReported, setPausaReported] = useState<boolean>(false)
-const [pausaDate, setPausaDate] = useState<Date | null>();
-const [pausaDebt, setPausaDebt] = useState<number | null>(null) 
-const [isSent, setisSent] = useState<boolean>(false) ;
-const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
-
-   //ustawienie imienia i nazwiska
-
-useEffect(()=>{
-
-  const settingName = async ()=>{
-
-      if(currentUser){ 
-        const userRef = doc(db, "usersData",currentUser?.uid);
-        const docSnap = await getDoc(userRef);
-
-            if (docSnap.exists()) {
-              setName(docSnap.data().name);
-              setSurname(docSnap.data().surname);
-             }
-       }
-
-    }
-    settingName()  
-   },[dzisIndex,paymentDateIndex])
-
-   //funkcja kalkulująca naleznosc
-
-   const getAddfromBase =async ()=>{
-
-    //console.log("paymentDateIndex",paymentDateIndex)
-    //paymentDateIndex? console.log("paymentDateIndex",paymentDateIndex) : console.log("nic",paymentDateIndex)
-
- 
-    if(currentUser){
-
-         const userRef = doc(db, "usersData",currentUser.uid);
-         const docSnap = await getDoc(userRef);
-              if (docSnap.exists()) {
-
-                //jesli mamy stop
-                  if(docSnap.data().stop){
-                  setStopReported(true)
-                   }
-                   if(docSnap.data().pause){
-                    setPausaReported(true)
-                   }
-                //jesli mamy pauze
-                /*
-                 if(docSnap.data().pause){
-                 setCurrentUserPausaDate(docSnap.data().pause);
-                  console.log("uzytkownik pauzujacy")
-                      if(docSnap.data().add){          
-                         console.log("uzytkownik majacy treningi do dodania")
-                         const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
-                         const convertToStopInd = pausaIndex + docSnap.data().add;
-                         const dateSzukana = useSearchDatesByIndex(convertToStopInd)
-                         setStopDate(dateSzukana);
-                      }
-                 } 
-                 */
-                //jesli mamy due
-                  if(docSnap.data().due){   
-                       if(paymentDateIndex !== null && dzisIndex){
-                          console.log("odpalonypaymentDateIndex")
-                          setPausaDate(dzisData)
-                          if(dzisIndex > paymentDateIndex){
-                            setPausaDebt(dzisIndex - paymentDateIndex)
-                          }          
-                       }
-                   } 
-     
-    } else {console.error("no database connection")}
-
+  const data =  useFetchDates();
+  if(data){
+    const result =  lastDayOfMonth(new Date(data[3].toDate()))
+    console.log('result', result)
   }
-   }
-
-//console.log('pausaDate', pausaDate,'pausaDebt',pausaDebt )
-
-const dataToActivityArchive = {
-  timestamp: serverTimestamp(),
-  pausaData: pausaDate,
-  userUid: currentUser?.uid,
-  kto: `${name} ${surname}`, 
-  reason:  injuryDescription        
-} 
-
-//funkcja zapisujaca w bazie
-
-const sendStopToBase =async()=>{
-
-  const paymentDataRef = doc(db, "usersData", currentUser.uid);
-
-      
-  if(!pausaReported && !stopReported){
-    await updateDoc(paymentDataRef, {
-       pause: pausaDate,
-       due: null,
-       restart: null
-     })
-     .then(()=>console.log("debt modified. update succesful"))
-     .then(()=>  setPausaDate(null))
-     .then(()=>   setisSent(true))
-
-     const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-     .then(()=> console.log("archive"))
-    }
-
-if(pausaDebt){
-   await updateDoc(paymentDataRef, {
-      debt: pausaDebt
-    })
-    .then(()=>console.log("debt modified. update succesful"))
-    .then(()=>{setPausaDebt(null)})
-   }
- 
-
-}
-
-const handleDescriptInj =(event: ChangeEvent<HTMLInputElement>)=>{
-  const { value } = event.target
-setInjuryDescripton(value);
- }
+  //const result = lastDayOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ //where gdzie dta wieksza lub rowna od first day i mniejsza lub rowna od last day
 
 return (<div>
 
-Injury reporting user
-<br></br>
-<button onClick={getAddfromBase}>Wylicz pauze </button>
-<br></br>
-{stopReported && <p>juz zastopowane</p>}
-  {pausaDate && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
-  {pausaDebt &&<p>istniejące zadłużenie: {pausaDebt} treningów</p>}
-  Uzupelnij formularz wspisując powód zawieszenia
-  <input
-    type='text'
-    name='text'
-    value={injuryDescription}
-    onChange={handleDescriptInj}
-    placeholder="Co się stało?"
-    required
-  />
-  <button onClick={sendStopToBase}>Potwierdż</button>
-  {isSent &&<p>wyslano</p>} 
-    
+test2
     </div>)
 }

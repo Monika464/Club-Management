@@ -44,6 +44,7 @@ import Profilepage from './pages/Profilepage.tsx';
 import Footer from './components/Footer.tsx';
 import UserMailbox from './pages/UserMailbox.tsx';
 import AdminMailbox from './pages/AdminMailbox.tsx';
+import { Test2 } from './components/Test2.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -219,12 +220,19 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 <Route 
              path="/test" 
              element={
-                      //  <AuthRoute>
+                        <AuthRoute>
                        <Test/>                                     
+                        </AuthRoute>
+                    }
+            />
+<Route 
+             path="/test2" 
+             element={
+                      // <AuthRoute>
+                       <Test2/>                                     
                       //  </AuthRoute>
                     }
             />
-
 
           <Route 
              path="/projects/:id" 

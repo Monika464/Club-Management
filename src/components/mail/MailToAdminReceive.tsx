@@ -4,7 +4,7 @@ import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firesto
 import { db } from "../../App";
 import notread from '../../assets/notread.png'
 import read from '../../assets/read.png'
-
+import './email.css'
 export interface IMailToAdminReceive {}
 export interface IMessage {
     created_at: Date;
@@ -146,8 +146,18 @@ return(<div>
                     />
                   </div>
                   {elem.message}
-                  {elem.created_at.toDate().toString()}
-                  {elem.name}{elem.surname}
+                  {/* {elem.created_at.toDate().toString()} */}
+                  <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL',{
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+             })}`}</p>
+                     <div className="comment-author mail">
+                  <p>wiadomośc od: {elem.name}{elem.surname}</p>
+                  </div>
+                  <br></br>
                 </label>
                 {elem.fresh === true ? (
                   <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} />

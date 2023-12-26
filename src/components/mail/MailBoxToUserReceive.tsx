@@ -143,80 +143,104 @@ const handleReadChange =(id: string)=>{
   };
   
   ///
-  return (
-    <div>
-      <div className="checkboxFlex">
-        User mailbox 
-        {messages &&
-          messages.map((elem) => {
-           // const labelStyle = isReadMessages[elem.id] ? { color: 'gray' } : {};
-           const labelStyle = {
-            color: isReadMessages[elem.id] || !elem.fresh ? 'gray' : 'black'
+
+  return(<div>
+    <div className="checkboxFlex">
+      {/* ... Pozostała część kodu ... */}
+      {messages &&
+        messages.map((elem) => {
+          const labelStyle = {
+            color: isReadMessages[elem.id] || !elem.fresh ? 'gray' : 'black',
           };
 
-            return (
-              <div key={elem.id} className="messageContainer">
-                <label style={labelStyle}>
-                  <div className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={checkedMessages[elem.id] || false}
-                      onChange={() => {
-                        handleCheckboxChange(elem.id);
-                      }}
-                    />
+          return (
+            <div key={elem.id} className="messageContainer">
+              <label style={labelStyle}>
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={checkedMessages[elem.id] || false}
+                    onChange={() => {
+                      handleCheckboxChange(elem.id);
+                    }}
+                  />
+                </div>
+                {elem.message}
+                <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL', {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}`}</p>
+              </label>
+              {elem.fresh === true ? (
+                <>
+                  <div className="arrow-animation" onClick={() => handleReadChange(elem.id)}>
+                    {/* Strzałka */}
+                    <div className="arrow"></div>
                   </div>
-                  {elem.message}
-                  {elem.created_at.toDate().toString()}
-                </label>
-                {elem.fresh === true ? (
                   <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} />
-                ) : (
-                  <img src={read} />
-                )}
-              </div>
-            );
-          })}
-      </div>
-      <button onClick={deletingMessage} className="btn">usunac</button>
+                </>
+              ) : (
+                <img src={read} />
+              )}
+            </div>
+          );
+        })}
     </div>
-  );
-  ///
+    <button onClick={deletingMessage} className="btn">
+      Usunąć
+    </button>
+  </div>)
+  // return (
+  //   <div>
+  //     <div className="checkboxFlex">
+  //       User mailbox 
+  //       {messages &&
+  //         messages.map((elem) => {
+  //          // const labelStyle = isReadMessages[elem.id] ? { color: 'gray' } : {};
+  //          const labelStyle = {
+  //           color: isReadMessages[elem.id] || !elem.fresh ? 'gray' : 'black'
+  //         };
 
+  //           return (
+  //             <div key={elem.id} className="messageContainer">
+  //               <label style={labelStyle}>
+  //                 <div className="checkbox">
+  //                   <input
+  //                     type="checkbox"
+  //                     checked={checkedMessages[elem.id] || false}
+  //                     onChange={() => {
+  //                       handleCheckboxChange(elem.id);
+  //                     }}
+  //                   />
+  //                 </div>
+  //                 {elem.message}
+  //                 {/* {elem.created_at.toDate().toString()} */}
+  //                 <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL',{
+  //                 year: 'numeric',
+  //                 month: 'numeric',
+  //                 day: 'numeric',
+  //                  hour: '2-digit',
+  //                  minute: '2-digit',
+  //                 })}`}</p>
+  //               </label>
+  //               {elem.fresh === true ? (
+                  
+  //                 <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} />
+  //               ) : (
+  //                 <img src={read} />
+                 
+  //               )}
+  //             </div>
+  //           );
+  //         })}
+  //     </div>
+  //     <button onClick={deletingMessage} className="btn">usunac</button>
+  //   </div>
+  // );
 
-
-
-  // return <div>
-  //   <div className="checkboxFlex">
-  //     MailboxToUserReceive
-  //      {messages && messages.map((elem)=>(
-
-
-  //       <div key={elem.id} className="messageContainer">
-  //           <label>
-  //            <div className="checkbox">  
-  //              <input
-  //                   type="checkbox"
-  //                   checked={checkedMessages[elem.id] || false}
-  //                   onChange={() => {handleCheckboxChange(elem.id)}}
-  //               /> 
-             
-  //           </div>    
-  //           {elem.message}
-  //           {elem.created_at.toDate().toString()}
-     
-  //          </label>
-  //          {(elem.fresh == true) ? <img src={isReadMessages[elem.id] ? read : notread} onClick={()=>handleReadChange(elem.id)}/>
-  //          : <img src={read}/>}
-
-
-
-  
-  //       </div>))}
-  //    </div>
-  //       <button onClick={deletingMessage}>usunac</button>
-
-  //   </div>;
 };
 
 export default MailboxToUserReceive;

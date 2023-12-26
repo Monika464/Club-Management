@@ -1,0 +1,66 @@
+.mail{
+    font-size: small;
+}
+
+.mailIcon1{
+}
+
+/* .mailIcon2 {
+    animation: shake 0.5s ease-in-out infinite;
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    20%, 50%, 80% {
+      transform: translateX(-5px);
+    }
+    40%, 60% {
+      transform: translateX(5px);
+    }
+  } */
+
+
+.mailIcon2 {
+  animation: glow 1s ease-in-out infinite alternate;
+  box-shadow: 0 0 5px 2px red;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px 5px red;
+  }
+  50% {
+    box-shadow: 0 0 10px 10px red;
+  }
+}
+
+.arrow-animation {
+  position: relative;
+  display: inline-block;
+}
+
+.arrow {
+  position: absolute;
+  transform: rotate(180deg);
+  margin-left: 10px;
+  top: -20px; /* Dostosuj tę wartość w zależności od położenia strzałki nad ikoną */
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  /* border-right: 10px solid transparent; */
+  border-bottom: 20px solid red; /* Kolor strzałki */
+  animation: arrowBlink 1s infinite alternate;
+}
+
+@keyframes arrowBlink {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+

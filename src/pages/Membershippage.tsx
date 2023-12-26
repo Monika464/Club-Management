@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { RestoreMembershipAdmin } from "../components/RestoreMembershipAdmin"
 import StopMembershipAdmin from "../components/StopMembershipAdmin"
 import StopMembershipAdmin2 from "../components/StopMembershipAdmin2"
-import'./adminpanel.css'
+
 
 const Membershipage: React.FunctionComponent =() => {
 

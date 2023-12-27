@@ -61,6 +61,8 @@ import { Test2 } from './components/Test2.tsx';
 
 export interface IApplicationProps {}
 
+
+
 const Application: React.FunctionComponent<IApplicationProps> = (props) => {
   const { currentUser} = useContext(UserContext);
 //const [isUser, setIsUser] = useContext(false)

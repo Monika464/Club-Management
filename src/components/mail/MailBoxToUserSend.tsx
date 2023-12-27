@@ -61,7 +61,7 @@ const handleEditMailToUsers =()=>{
 
 return (<div>
 
-<button onClick={handleEditMailToUsers}>
+<button onClick={handleEditMailToUsers} className='btn'>
          {isEditedmailToUsers ? 'Zamknij' : 'Edytuj mailing do userów'}
           </button>
 

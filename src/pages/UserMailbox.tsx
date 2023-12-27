@@ -24,7 +24,7 @@ const UserMailbox: React.FunctionComponent<IUserMailbox > =(props) => {
 
 
         <br></br>
-        <button onClick={handleEditMailToAdmin}>
+        <button onClick={handleEditMailToAdmin} className="btn">
          {isEditedmailToAdmin ? 'Zamknij' : 'Wyślij wiadomośc do trenera'}
           </button>
           {isEditedmailToAdmin &&

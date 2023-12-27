@@ -18,8 +18,8 @@ body {
   max-width: 1200px;
 }
 ul, li, p, h1, h2, h3, h4 {
-  margin: 0;
-  padding: 0;
+  margin: 4px;
+  padding: 1px;
 }
 ul {
   list-style-type: none;
@@ -69,7 +69,11 @@ input, textarea {
 
 .messageContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  background-color: white;
+  border: 3px solid #dbd9d9;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .checkbox {

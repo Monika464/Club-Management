@@ -41,26 +41,26 @@
   display: inline-block;
 }
 
-.arrow {
+/* .arrow {
   position: absolute;
   transform: rotate(180deg);
   margin-left: 10px;
-  top: -20px; /* Dostosuj tę wartość w zależności od położenia strzałki nad ikoną */
+  top: -20px; 
   left: 50%;
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
-  /* border-right: 10px solid transparent; */
-  border-bottom: 20px solid red; /* Kolor strzałki */
-  animation: arrowBlink 1s infinite alternate;
-}
 
-@keyframes arrowBlink {
+  border-bottom: 20px solid red; 
+  animation: arrowBlink 1s infinite alternate;
+} */
+
+/* @keyframes arrowBlink {
   0%, 100% {
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
-}
+} */
 

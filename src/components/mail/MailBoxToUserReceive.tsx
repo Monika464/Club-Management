@@ -75,6 +75,7 @@ export const MailboxToUserReceive: React.FunctionComponent<IMailboxUser> = (prop
   //w przypadku jak jest true to pojdzie do usuniecia
 
 const handleReadChange =(id: string)=>{
+
     setReadMessages((prevReadMessages) => ({
         ...prevReadMessages,
         [id]: !prevReadMessages[id],
@@ -84,6 +85,9 @@ const handleReadChange =(id: string)=>{
         ...prevIsReadMessages,
         [id]: !prevIsReadMessages[id],
       }))
+      navigate('/mailboxuser')
+
+ 
 }
 
 
@@ -94,14 +98,14 @@ const handleReadChange =(id: string)=>{
   };
 
   //console.log('checkedMessages',checkedMessages)
-  console.log('readMessages',readMessages)
+  //console.log('readMessages',readMessages)
   const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id]);
   const filteredMessages = messages ? messages.filter((elem) => readMessagesIds.includes(elem.id)) : [];
-  console.log("messages do zmiany statutu", filteredMessages)
+  //console.log("messages do zmiany statutu", filteredMessages)
 
   const checkedMessagesIds = Object.keys(checkedMessages).filter((id) => checkedMessages[id]);
   const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMessagesIds.includes(elem.id)) : [];
-  console.log("messages do usuniecia", filteredCheckedMessages)
+  //console.log("messages do usuniecia", filteredCheckedMessages)
 
    useEffect(()=>{
     if(filteredMessages){
@@ -176,11 +180,12 @@ const handleReadChange =(id: string)=>{
               </label>
               {elem.fresh === true ? (
                 <>
-                  <div className="arrow-animation" onClick={() => handleReadChange(elem.id)}>
-                    {/* Strzałka */}
+                  {/* <div className="arrow-animation" onClick={() => handleReadChange(elem.id)}>
                     <div className="arrow"></div>
-                  </div>
-                  <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} />
+                  </div> */}
+                  <img src={isReadMessages[elem.id] ? read : notread} 
+                  onClick={() => handleReadChange(elem.id)}          
+                  />
                 </>
               ) : (
                 <img src={read} />
@@ -189,7 +194,7 @@ const handleReadChange =(id: string)=>{
           );
         })}
     </div>
-    <button onClick={deletingMessage} className="btn">
+    <button onClick={deletingMessage} >
       Usunąć
     </button>
   </div>)

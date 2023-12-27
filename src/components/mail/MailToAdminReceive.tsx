@@ -99,6 +99,7 @@ const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id
    },[handleReadChange])
 
    const deletingMessage = async () => {
+
     if (filteredCheckedMessages) {
       const updatedMessages = messages.filter((message) => !filteredCheckedMessages.includes(message));
   
@@ -106,7 +107,7 @@ const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id
         await Promise.all(
           filteredCheckedMessages.map(async (message) => {
             console.log("message-id", message.id);
-            await deleteDoc(doc(db, "adminmessages", message.id));
+            await deleteDoc(doc(db, "usersmessages", message.id));
           })
         );
   
@@ -168,7 +169,7 @@ return(<div>
             );
           })}
       </div>
-      <button onClick={deletingMessage} className="btn">usunac</button>
+      <button onClick={deletingMessage}>usunac</button>
     </div>
 
     </div>)

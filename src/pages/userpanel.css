@@ -31,7 +31,7 @@
   
   .mail {
     text-align: right;
-    padding-right: 30px; /* Dostosuj padding według potrzeb */
+    padding-right: 60px; /* Dostosuj padding według potrzeb */
   }
   
   
@@ -43,19 +43,19 @@
 
   
   .glowna {
-     display: flex; */
-    flex-basis: 2; /* Zwiększenie flex-basis dla Item 2 (przykład) */
+     /* display: flex;  */
+    /* flex-basis: 2; Zwiększenie flex-basis dla Item 2 (przykład)
     flex-grow: 1;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
 }
 
   .linkowisko{
     background-color: lightgrey;
     display: flex;
     flex-basis: calc(30% / 2 - 5px); /* Przykładowa wartość, możesz dostosować według potrzeb */
-    flex-grow: 1;
+    /* flex-grow: 1; */
     flex-wrap: wrap;
-    max-width: 30%;
+     max-width: 50%; 
     margin-right: 20px;
   }
   .linkshape a {
@@ -70,6 +70,13 @@
   } 
 
 
-
+/* Media queries dla responsywności */
+@media only screen and (max-width: 768px) {
+  .content {
+    /* display: flex;
+    flex-grow: 1; */
+   flex-direction: column; 
+  }
+}
 
 

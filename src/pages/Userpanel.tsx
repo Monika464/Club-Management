@@ -12,7 +12,7 @@ import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
 import { ReportInjuryUser2 } from "../components/ReportInjuryUser2";
 import  StopMembershipUser  from "../components/StopMembershipUser";
 import { RestoreMembershipUser } from "../components/RestoreMembershipUser";
-import { DisplayUserDataUser, DisplayUserTrainings } from "../components/DisplayUserDataUser";
+import { DisplayUserDataUser, DisplayUserTrainings } from "../components/displayDetails/DisplayUserDataUser";
 import Sidebar from "../components/Sidebar";
 import ShowAvatar from "../components/ShowAvatar";
 import ChoosingAvatar from "../components/ChoosingAvatar";
@@ -107,11 +107,11 @@ console.log("jakie tutaj id usera",currentUser?.uid)
                   </NavLink>
               </li>
          <br></br>   
-               {/* <li>
+               <li>
               <NavLink  to="/test" >test
             
                   </NavLink>
-              </li> */}
+              </li>
               <li>
               {isAdmin &&<Link to="/adminpanel">adminpanel</Link>}
               </li>

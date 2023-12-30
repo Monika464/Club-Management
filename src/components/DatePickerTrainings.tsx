@@ -157,7 +157,7 @@ console.log(userChoice,"userchoceprops")
     setCloseMenu={setCloseMenu} 
     />
     */}
-  <button className={"btn"} onClick={sendToFirebase}  >send to ok</button>
+  <button className={"btn"} onClick={sendToFirebase}  >send to base</button>
 
 </>
 

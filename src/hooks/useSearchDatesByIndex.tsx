@@ -8,7 +8,7 @@ export const useSearchDatesByIndex= (givenIndex: number | null) => {
     const [newDate, setNewDate] = useState<Date | null>(null)
 
     const data =  useFetchDates();
-   // console.log("czy mamy data", data)
+    //console.log("czy mamy givenIndex", givenIndex)
 
     useEffect(()=>{
                     if(givenIndex > (data?.length -1)){

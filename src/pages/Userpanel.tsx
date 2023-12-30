@@ -27,25 +27,37 @@ import MailToAdminSend from "../components/mail/MailToAdminSend";
 import EmailComponent from "../components/mail/EmailComponent";
 export interface IUserProps {};     
 import './userpanel.css'
+import { DisplayNextTrainings } from "../components/displayDetails/DisplayNextTrainings";
 
 const Userpanel: React.FunctionComponent<IUserProps> =(props) => {  
   
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
   const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
   const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
-
+  const [rendered, setRendered] =   useState(false);
   const [isAdmin,setIsAdmin] = useState(false);
 
   const { currentUser} = useContext(UserContext); 
   //console.log('currentUser userpan',currentUser);
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRendered(true);
+    }, 1000); // 1000 milisekund = 1 sekunda
+  
+    return () => {
+      clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    };
+  }, []);
+
   useEffect(()=>{
     if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
       setIsAdmin(true);
     }
 
-  },[currentUser])
+  },[currentUser,rendered])
 
   const handleEditInjury =()=>{
     setIsEditedInjury(!isEditedInjury)
@@ -86,26 +98,28 @@ console.log("jakie tutaj id usera",currentUser?.uid)
 <div className='content'>
 <div className='linkowisko'>
             <ul className="linkshape">
+            <li>              
+                <NavLink  to="/home" >Aktualności
+                  </NavLink>
+              </li>
+
+              <li>
+              <NavLink  to="/archiveuser" >Archiwum
+               </NavLink>
+              </li>
+              <li>              
+                <NavLink  to="/injuryuser" >Kontuzja          
+                </NavLink>
+              </li>
+
               <li>
               <NavLink  to="/membershipuser">Członkostwo 
           
               </NavLink>
               </li>
-              <li>              
-                <NavLink  to="/injuryuser" >Kontuzje
              
-                  </NavLink>
-              </li>
-              <li>              
-                <NavLink  to="/home" >Wydarzenia
-             
-                  </NavLink>
-              </li>
-              <li>
-              <NavLink  to="/archiveuser" >Archiwum
-             
-                  </NavLink>
-              </li>
+            
+            
          <br></br>   
                <li>
               <NavLink  to="/test" >test
@@ -113,7 +127,7 @@ console.log("jakie tutaj id usera",currentUser?.uid)
                   </NavLink>
               </li>
               <li>
-              {isAdmin &&<Link to="/adminpanel">adminpanel</Link>}
+              {isAdmin &&<Link to="/adminpanel">Administracja</Link>}
               </li>
             </ul>
          
@@ -122,6 +136,9 @@ console.log("jakie tutaj id usera",currentUser?.uid)
             {/* <MailToAdminSend/>      */}
 </div>
 <div className='glowna'>
+           <DisplayNextTrainings
+           userid={currentUser?.uid}       
+           />
             <br></br><br></br>
           <DisplayUserDataUser/>
           <br></br><br></br>

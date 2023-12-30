@@ -12,7 +12,7 @@ export const useSearchDatesPlusN = (howMany: number | null, id: string | null | 
   const [userDueDate, setuserDueDate] = useState<Date | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
   const [isDb, setIsDb] = useState<boolean>(false); 
-  console.log("how many z usehook", howMany,"userDueDate",userDueDate )
+  //console.log("how many z usehook", howMany,"userDueDate",userDueDate )
   const dataFromBase = useFetchDates();
   ///console.log("dataFromBase",dataFromBase);
   //console.log("iiiid",id);

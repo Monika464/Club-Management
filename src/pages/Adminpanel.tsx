@@ -139,52 +139,59 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
 <div className='linkowisko'>
             <ul className="linkshape">
                 <li>              
-                    <NavLink to="/home"  >Home
+                    <NavLink to="/home"  >Aktualności
                
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/create"  >Create
+                    <NavLink  to="/create"  >Stwórz
                
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/membershipadmin"  >Memebr
+                    <NavLink  to="/membershipadmin"  >Zatrzymaj
                 
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/paymentadmin"  >Payment
+                    <NavLink  to="/paymentadmin"  >Płatnośc
                  
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/injuryadmin"  >Injury
+                    <NavLink  to="/injuryadmin"  >Kontuzja
                   
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/report"  >Report
+                    <NavLink  to="/report"  >Księgowość
              
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/datespicker"  >Pick date
+                    <NavLink  to="/usersreport"  >Użytkownicy
+             
+                    </NavLink>
+                </li>
+             
+
+                <li>              
+                    <NavLink  to="/datespicker"  >Treningi
              
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/attendancelist"  >Attendance
+                    <NavLink  to="/attendancelist"  >Obecność
                  
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/archiveadmin"  >Archive
+                    <NavLink  to="/archiveadmin"  >Archiwum
             
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/signup"  >Register user
+                    <NavLink  to="/signup"  >Nowy
                 
                     </NavLink>
                 </li>

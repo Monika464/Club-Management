@@ -15,7 +15,7 @@ import { EmailAuthProvider, User, getAuth, reauthenticateWithCredential, updateE
 import { getDownloadURL, getMetadata, getStorage, listAll, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { auth } from '../App';
-import SetAvatar from './SetAvatar';
+import SetAvatar from './newuserform/SetAvatar';
 import ChoosingAvatar from './ChoosingAvatar';
 import { useNavigate } from 'react-router-dom';
 
@@ -106,7 +106,7 @@ const handleName = () =>{
       });
     }
 
-   console.log('isEdited',isEdited)
+   //console.log('isEdited',isEdited)
     const handleEdit =()=>{
       setIsEdited(!isEdited)
       //navigate('/userpanel')

@@ -61,13 +61,13 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
             getDataToTrainer();
         }, [db, currentUser, getDataToTrainer, props.currentId]);
 
-        console.log('messagetoTrain',freshMessagestoTrainer)
+       // console.log('messagetoTrain',freshMessagestoTrainer)
 
         const checkAndLogTrain = useCallback(() => {
             if (freshMessagestoTrainer) {
                  freshMessagestoTrainer.map((fressMes)=>{
                  if ( fressMes.fresh === true) {
-                    console.log("trzesiemy trenera");
+                   // console.log("trzesiemy trenera");
                     setIsShaking(true)
                  return;
                 } 
@@ -111,10 +111,10 @@ if(props.collectionName === "adminmessages"){
 
  useEffect(() => {
      getDataToUser();
-   console.log('drugiWQiadmosciusera',freshMessagestoUser)
+  // console.log('drugiWQiadmosciusera',freshMessagestoUser)
 
   }, [db, currentUser, getDataToUser, props.currentId]);
-  console.log('wiadUsera',freshMessagestoUser)
+ // console.log('wiadUsera',freshMessagestoUser)
 
   const checkAndLogUser = useCallback(() => {
       if (freshMessagestoUser) {
@@ -122,7 +122,7 @@ if(props.collectionName === "adminmessages"){
           if (fressMes.receivers.includes(props.currentId) || fressMes.receivers.includes("all")){
             if (fressMes.fresh) {
               setIsShaking(true)
-                console.log("trzesiemy usera");
+               // console.log("trzesiemy usera");
                 return;
             }
             

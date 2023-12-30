@@ -1,4 +1,5 @@
-import Raportpayments from "../components/Raportpayments"
+import Raportpayments from "../components/raports/Raportpayments"
+import Raportusers from "../components/raports/Raportusers"
 
 export interface IRaportPage {
 
@@ -16,6 +17,11 @@ const RaportPage : React.FunctionComponent<IRaportPage > =(props) => {
 
     return(<div>
         <Raportpayments/>
+<br></br>
+
+        <Raportusers/>
+
+        <br></br>
     </div>)
 
 }

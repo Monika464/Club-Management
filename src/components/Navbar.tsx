@@ -74,7 +74,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    {isAdmin &&  <Link to="/signup" className="navlink">Register user</Link >}
    </li> */}
    <li> 
-   {currentUser && !isUserRegistered && <NavLink to="/signup2" className="navlink">Fill form</NavLink>} 
+   {currentUser && !isUserRegistered && <NavLink to="/signup2" className="navlink">Register</NavLink>} 
     </li>
     <li>
     {!currentUser &&    <NavLink to="/login" className="navlink">Login</NavLink>} 

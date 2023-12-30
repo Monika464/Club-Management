@@ -1,4 +1,5 @@
  import '../pages/userpanel.css'
+ import './displayDetails/displayNextTrainings.css'
 export interface Itest{}  
 
 export const Test : React.FunctionComponent<Itest> =(props) => { 
@@ -15,10 +16,18 @@ export const Test : React.FunctionComponent<Itest> =(props) => {
             
             </div>
           <div className='content'>
-            <div className='linkowisko'>Item 1</div>
-            <div className='glowna'>Item 2</div>
+            <div className='linkowisko'>linkowisko</div>
+            <div className='glowna'>glowna</div>        
             {/* <div className='three'>Item 3</div> */}
+        
           </div>
+{/* wyjete poza content */}
+          <div className='itemsAB'>
+               <div className='item a'>Item a</div>
+               <div className='item b'>Item b</div>
+               <div className='item c'>Item c</div>
+               <div className='item d'>Item d</div>
+           </div>
         </div>
       </div>
      {/* <div  className='main'>

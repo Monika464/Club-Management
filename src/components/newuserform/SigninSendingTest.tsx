@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../context/UserContext'; 
-import { doc, setDoc } from 'firebase/firestore';
-import { db, storage } from '../App';
+import { UserContext } from '../../context/UserContext'; 
+import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { db, storage } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import { getDownloadURL, uploadBytes,ref as storageRef } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
@@ -51,7 +51,8 @@ export function SigninSendingTest(props: ISigninSending){
 
    // },[props.option])
 
-   
+
+
 
 
     const WriteUserInfo = async() =>{ 
@@ -101,6 +102,20 @@ export function SigninSendingTest(props: ISigninSending){
                   .then(()=>  setIsSent(true))
                   .then(()=> navigate('/userpanel'))
                   .catch((err)=> console.error(err))
+
+
+
+   const dataToPaymentArchive = {
+    created_at: serverTimestamp(),
+    userUid: currentUser?.uid,
+    kto: `${props.name} ${props.surname}`,
+    trenings: 8,
+    amount: 120  
+  } 
+
+    //dodaj do archive
+    const docArchive = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
+    .then(()=> console.log("payment set to archive"))
 
                  }
      
@@ -162,7 +177,7 @@ export function SigninSendingTest(props: ISigninSending){
         
 
    // useEffect(()=>{
-        console.log("z komponentu SigninSendingTest",props.name, props.surname,props.dob,"hej", props.option,props.email,props.password)
+        //console.log("z komponentu SigninSendingTest",props.name, props.surname,props.dob,"hej", props.option,props.email,props.password)
         //trzeba wyslac do bazy
 
 

@@ -1,6 +1,6 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
-import { db } from "../App";
+import { db } from "../../App";
 
 
 export interface IRaportpayments {}

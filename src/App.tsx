@@ -15,7 +15,7 @@ import Navbar from './components/Navbar.tsx';
 import { UserContextProvider} from './context/UserContext.tsx';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import Signup2 from './components/Signup2.tsx';
+import Signup2 from './components/newuserform/Signup2.tsx';
 import Create from './pages/Create.tsx';
 import Project from './pages/Project.tsx';
 import Sidebar from './components/Sidebar.tsx';
@@ -45,6 +45,9 @@ import Footer from './components/Footer.tsx';
 import UserMailbox from './pages/UserMailbox.tsx';
 import AdminMailbox from './pages/AdminMailbox.tsx';
 import { Test2 } from './components/Test2.tsx';
+import DisplayUserDataAdmin from './components/displayDetails/DisplayUserDataAdmin.tsx';
+import { RaportUsersPage } from './pages/RaportUserspage.tsx';
+import StopActivityPage from './pages/StopActivitypage.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -143,6 +146,18 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                       //  </AuthRoute>
                     }
             />
+
+
+
+<Route 
+             path="/usersreport" 
+             element={
+                      //  <AuthRoute>
+                      <RaportUsersPage/>                                  
+                      //  </AuthRoute>
+                    }
+            />
+
 
 <Route 
              path="/datespicker" 

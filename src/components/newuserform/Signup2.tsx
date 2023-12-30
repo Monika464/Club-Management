@@ -1,7 +1,7 @@
 export interface IApplicationProps {};
 import { FormEvent, useEffect, useState } from 'react';
-import { useMultistepForm } from '../hooks/useMultiStepForm';
-import { AccountForm } from './AccountForm';
+import { useMultistepForm } from '../../hooks/useMultiStepForm';
+import { AccountForm } from '../AccountForm';
 import './Signup2.css'
 import { StartAndOptionForm } from './StartEndOptionsForm';
 import { UserForm } from './UserForm';
@@ -10,6 +10,8 @@ import {SigninSendingTest}  from './SigninSendingTest';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import SetAvatar from './SetAvatar';
+import { format } from "date-fns";
+import { pl } from 'date-fns/locale';
 //https://www.youtube.com/watch?v=uDCBSnWkuH0
 //18
 
@@ -34,8 +36,11 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     const auth = getAuth();
 const navigate = useNavigate();
 
-   console.log("czy w signup option?",option )
-
+  const displayStartDay = startDay?.toDate() 
+   //console.log(format(sssartDay, 'dd.MM.yyyy'))
+   if(displayStartDay){
+   console.log(format(displayStartDay, 'PPP', {locale: pl}))
+  }
 
     const {steps,currentStepIndex,step,isFirstStep,isLastStep,back, next} = useMultistepForm([
         <UserForm 
@@ -144,8 +149,11 @@ function onSubmit(e: FormEvent) {
             </div>
             </form>
             {/* {isLastStep && <button onClick={handleCreateUser}>Create User</button>} */}
-            <div>{name} {surname} {dob.toString()}{option}{email}{startDay?.toDate().toString()}</div>
-            {/*{isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>}*/}
+            <div>imię: {name} nazwisko: {surname} <br></br>ur.{dob.toDateString()}{email}<br></br>start: {startDay?.toDate().toDateString()}{option}</div>
+            {/* {<div>{name} {surname} ur. {format(dob,'PPP', {locale: pl})} {email} <br></br> start: {format(displayStartDay, 'PPP', {locale: pl})} <br></br>{option}</div> }*/}
+            {/* <div>{name} {surname} {format(dob,'PPP', {locale: pl})} platnośc: {option} start: {startDay?.toDate().toString()}</div> */}
+            {/* <div>{name} {surname} {format(dob,'PPP', {locale: pl})} platnośc: {option} start: {format(startDay?.toDate(), 'dd.MM.yyyy')}</div> */}
+            {/* {isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>} */}
             {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}
          
         </div>

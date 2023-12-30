@@ -11,11 +11,11 @@ export interface ISetAvatar {
 //https://www.youtube.com/watch?v=YOAeBSCkArA
 
 import { useEffect, useState } from "react"
-import { db } from "../App";
-import { storage } from '../App.tsx';
+import { db } from "../../App.tsx";
+import { storage } from '../../App.tsx';
 import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage";
 import { useContext } from 'react'
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext.tsx';
 import { updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 

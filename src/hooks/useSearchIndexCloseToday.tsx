@@ -27,7 +27,15 @@ export const useSearchIndexCloseToday = (): number | null => {
     const result3 = add(result0, {
     days: 3,
     })
-  
+    const result4 = add(result0, {
+      days: 4,
+      })
+   const result5 = add(result0, {
+         days: 5,
+         })
+   const result6 = add(result0, {
+         days: 6,
+          })
 
 
 
@@ -61,7 +69,25 @@ if(dataFromBase){
              //  console.log("jest wynik3")
                setCloseTodaysIndex(ind)
                   break;
-           } 
+           }  else if(result4.getTime() === dataFromBase[ind].toDate().getTime()){
+              //console.log("jest wynik4")
+              setCloseTodaysIndex(ind)
+                 break;
+          } else if(result5.getTime() === dataFromBase[ind].toDate().getTime()){
+           // console.log("jest wynik5")
+            setCloseTodaysIndex(ind)
+               break;
+        } else if(result6.getTime() === dataFromBase[ind].toDate().getTime()){
+         //console.log("jest wynik5")
+         setCloseTodaysIndex(ind)
+            break;
+     } 
+          
+          
+          
+         // else {console.log("nie ma wyniku")}
+         
+
 
     }
 }

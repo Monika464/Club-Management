@@ -1,4 +1,4 @@
-import { FormWrapper } from "./FormWrapper";
+import { FormWrapper } from "./newuserform/FormWrapper";
 
 
 interface IAccountFormProps {

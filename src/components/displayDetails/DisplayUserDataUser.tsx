@@ -25,6 +25,8 @@ const [isPause, setIsPause] = useState<boolean>(false);
 const [isStop, setisStop] = useState<boolean>(false);
 const [due, setDue] = useState<Date | null>(null);
 const [rendered, setRendered] =   useState(false);
+const [isEdited, setIsEdited] = useState<boolean>(false)
+
 
 const { currentUser} = useContext(UserContext); 
 const dzisIndex = useSearchIndexCloseToday();
@@ -42,7 +44,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 
     const getUserDatafromBase = useCallback(async () => {
       
-      console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
+     // console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
         if(currentUser){  
               
           const userRef = doc(db, "usersData",currentUser.uid);
@@ -54,7 +56,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
               if(docSnap.data().optionMulti === true){
                // console.log("optionMulti",docSnap.data().optionMulti === true)
                   setIsMulti(true)
-           console.log("optionMulti",isMulti)
+          // console.log("optionMulti",isMulti)
               }
                //pass
               if(docSnap.data().optionPass === true){
@@ -63,7 +65,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
               }
               //debt
               if(docSnap.data().debt){
-                console.log("czy tu jest debt",docSnap.data().debt)
+               // console.log("czy tu jest debt",docSnap.data().debt)
                   setDebt(docSnap.data().debt)
               }
             
@@ -95,13 +97,17 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
     
     useEffect(()=>{
         getUserDatafromBase();
-        console.log("current user", currentUser?.email, "multi",isMulti, isPause,
-      "add",add)
-        console.log("debt", debt)
-        paymentDateIndex < dzisIndex ? console.log('zzzadłuzenie:' , dzisIndex -paymentDateIndex, 'treningi') 
-        :console.log("nie ma zadluzenia")
+        //console.log("current user", currentUser?.email, "multi",isMulti, isPause,"add",add)
+        //console.log("debt", debt)
+        //paymentDateIndex < dzisIndex ? console.log('zzzadłuzenie:' , dzisIndex -paymentDateIndex, 'treningi') 
+       // :console.log("nie ma zadluzenia")
    
       },[getUserDatafromBase])
+
+      const handleEditDetails =()=>{
+        setIsEdited(!isEdited)
+        //navigate('/userpanel')
+      }
 
 
       return (<>
@@ -132,49 +138,18 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
         <p className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} wejśc</p> 
          }
         </div>}
+        <br></br> 
+        <button onClick={handleEditDetails}>
+         {isEdited ? 'Zamknij' : 'Edytuj szczegóły'}
+          </button>
+{isEdited && <>
       {due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>}
       {!isStop && !isPause && <div>status aktywny</div>}
       {isStop && <p>członkostwo zatrzymane</p>}
       {isPause && <p>zgłoszona kontuzja</p>}
       {isPass &&  <p>uzytkownik karnetu</p>}
       {isMulti && <p>uzytkownik multi/medicov</p>}
-      </>)
-
-  //   return (<>
-
-  //  {!isStop && !isPause && <div>status aktywny</div>}
-  // <br></br>
-  //   {isMulti && 
-  //     <div>
-  //        <p>uzytkownik multi</p>
-  //         {isPause && <div>uzytkownik kontuzjowany  </div> }
-  //             {debt && <div className="debt">
-  //             <p> zadluzenie {debt} treningów</p>
-  //              </div>}
-  //          {add && <p>do dodania: {add} treningów</p>}
-
-  //   </div>}
-  //   {isStop && <div>uzytkownik zastopowany
-
-      
-  //   </div> }
-
-  //   {isPass &&  
-  //   <div>
-  //      <p>uzytkownik karnetu</p>
-  //      {isPause && 
-  //      <div>uzytkownik kontuzjowany  
-  //       {debt && <div className="debt">
-  //             <p> zadluzenie {debt} treningów</p>
-  //              </div>}
-  //          {add && <p>do dodania: {add} treningów</p>}
-  //      </div> }
-        
-  //        {due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>}
-  //        {paymentDateIndex < dzisIndex ? <div className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} treningi</div> 
-  //        :<p>nie ma zadłużenia</p> }  
-  //   </div>}
-
-  //   </>)
+      </>}
+  </>)
 
 }

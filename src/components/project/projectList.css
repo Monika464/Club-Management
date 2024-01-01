@@ -1,51 +1,5 @@
-.project-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
 
-.project-list .petla {
-  flex: 0 0 calc(33.33% - 20px); /* Set a fixed width for each item */
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
-  text-decoration: none;
-  color: inherit;
-  padding: 16px;
-}
 
-.project-list h4 {
-  font-size: 0.9em;
-  color: var(--heading-color);
-}
-
-.project-list p {
-  color: var(--text-color);
-  font-size: 0.9em;
-}
-
-.project-list .assigned-to ul {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.project-list .assigned-to li {
-  margin-right: 5px;
-}
-
-.project-list .photo {
-  width: 100%; /* Adjust the width as needed */
-  height: auto;
-  border-radius: 4px;
-}
-
-.project-list .details {
-  margin-top: 10px;
-}
-
-/* 
 .project-list {
   margin-top: 40px;
   display: flex;
@@ -96,5 +50,4 @@
   .project-list .photo {
     width: 200px;
   }
-
-   */
+ 

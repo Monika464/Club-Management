@@ -206,7 +206,8 @@ return (
   {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
   {pausaDate && !pausaReported && !stopReported && <div>
                  Uzupelnij formularz wspisując powód zawieszenia
-                   <input
+                   {/* <input */}
+                   <textarea
                      type='text'
                      name='text'
                      value={injuryDescription}

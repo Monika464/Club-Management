@@ -52,7 +52,7 @@ const SetAvatar = (props: ISetAvatar) => {
         }
         if (selected.size > 100000) {
           setThumbnailError('Image file size must be less than 100kb')
-          alert('Image file size must be less than 100kb')
+          alert('Image file size must be less than 100kb. e.g. 170px : 170px res. 70 px/in')
           return
         }
         console.log("selected2", selected)  

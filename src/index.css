@@ -5,8 +5,10 @@
   --heading-color: #444;
   --text-color: #999;
   --primary-color: #8d69f1;
+  --primary-color: #8a3eacfc;
   --highlight-color: #d13267;
   --bg-color: #f4f4f4;
+    /* background-image: url(" https://firebasestorage.googleapis.com/v0/b/club-ts-407c6.appspot.com/o/pages-photos%2Ftemple2.png?alt=media&token=4802134b-412d-4c70-81bd-a009b371c08b"); */
 }
 
 /* base styles */
@@ -14,7 +16,8 @@ body {
   font-family: Poppins, sans-serif;
   margin: 0 auto;
   font-size: 1.1em;
-  background: var(--bg-color);
+  /* background: var(--bg-color); */
+  background: var(--bg-background-image);
   max-width: 1200px;
 }
 ul, li, p, h1, h2, h3, h4 {
@@ -59,7 +62,8 @@ label span {
 input, textarea {
   display: flex;
   padding: 8px 6px;
-  font-size: 1em;
+  /* font-size: 1em; */
+  font-size: 0,6em;
   color: #777;
   /* width: 100%; */
   box-sizing: border-box;

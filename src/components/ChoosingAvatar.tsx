@@ -18,6 +18,18 @@ import samuraj2 from '../assets/samuraj2.png'
 import elfka from '../assets/elfka.png'
 import elf from '../assets/elf.png'
 import mag from '../assets/mag.png'
+
+import warrior0 from '../assets/avatars/0warrior.png'
+import warrior1 from '../assets/avatars/1warrior.png'
+import warrior2 from '../assets/avatars/2warrior.png'
+import warrior3 from '../assets/avatars/3warrior.png'
+import warrior4 from '../assets/avatars/4warrior.png'
+import warrior5 from '../assets/avatars/5warrior.png'
+import warrior6 from '../assets/avatars/6warrior.png'
+import warrior7 from '../assets/avatars/7warrior.png'
+
+console.log("warrior0",warrior0);
+
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,7 +40,6 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
     const [pictureURL, setPictureURL] = useState<string | null>(null)
     const [url,setUrl] =  useState<string | null>(null)
     const [avatarChanged, setAvatarChanged] = useState(false);
-
     const [isClicked, setIsClicked] = useState(false);
     const { currentUser} = useContext(UserContext); 
     const navigate = useNavigate();
@@ -45,8 +56,8 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
     console.log("thumb",thumbnail)
 
         const uploadFile = async () => {
-
-         await getDownloadURL(storageRef(storage, `avatars/${thumbnail}`))
+if(thumbnail){
+         await getDownloadURL(storageRef(storage, `avatars2/${thumbnail}`))
           .then((url) => {
          setUrl(url)
            })
@@ -54,7 +65,7 @@ const ChoosingAvatar = (props: IChoosingAvatar) => {
           console.log(error);
            });       
           }
-
+        }
 
           useEffect(()=>{
             uploadFile();
@@ -111,7 +122,7 @@ const handleAvatHover =(index: number)=>{
     return (<div>
      
      <img 
-     src={wojownik0} 
+     src={warrior0} 
     //  style= {{width: 40 }} 
     style={{ 
       width: isHovered === 0 ? 80 : 40, 
@@ -119,7 +130,7 @@ const handleAvatHover =(index: number)=>{
     }}
      alt="awatar" 
      onClick={(e) => {
-        setThumbnail("wojownik0.png")
+        setThumbnail("0warrior.png")
         setMod0(true)
        
       }}
@@ -129,14 +140,14 @@ const handleAvatHover =(index: number)=>{
  
       />
      <img 
-     src={wojownik1} 
+     src={warrior1} 
      style={{ 
       width: isHovered === 1 ? 80 : 40 ,
       filter: mod1 ? 'blur(80px)' : 'none',
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("wojownik1.png");
+      setThumbnail("1warrior.png");
       setMod1(true)
     }}
     onMouseOver={() => handleAvatHover(1)}
@@ -144,14 +155,14 @@ const handleAvatHover =(index: number)=>{
     // onMouseOut={() => setIsHovered(false)}
      />
 
-     <img src={wojownik2} 
+     <img src={warrior2} 
     style={{ 
       width: isHovered === 2 ? 80 : 40,
       filter: mod2 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("wojownik2.png");
+      setThumbnail("2warrior.png");
       setMod2(true)
     }}
     onMouseOver={() => handleAvatHover(2)}
@@ -160,14 +171,14 @@ const handleAvatHover =(index: number)=>{
      />
 
      <img 
-     src={samuraj1} 
+     src={warrior3} 
      style={{ 
       width: isHovered === 3 ? 80 : 40,
       filter: mod3 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("samuraj1.png")
+      setThumbnail("3warrior.png")
       setMod3(true)
     }}
     onMouseOver={() => handleAvatHover(3)}
@@ -178,14 +189,14 @@ const handleAvatHover =(index: number)=>{
 
      <br></br>
      <img 
-     src={samuraj2} 
+     src={warrior4} 
      style={{ 
       width: isHovered === 4 ? 80 : 40,
       filter: mod4 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("samuraj2.png")
+      setThumbnail("4warrior.png")
       setMod4(true)
     }}
     onMouseOver={() => handleAvatHover(4)}
@@ -193,14 +204,14 @@ const handleAvatHover =(index: number)=>{
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
-     src={elfka} 
+     src={warrior5} 
      style={{ 
       width: isHovered === 5 ? 80 : 40,
       filter: mod5 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("elfka.png")
+      setThumbnail("5warrior.png")
       setMod5(true)
     }}
     onMouseOver={() => handleAvatHover(5)}
@@ -208,14 +219,14 @@ const handleAvatHover =(index: number)=>{
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
-     src={elf} 
+     src={warrior6} 
      style={{ 
       width: isHovered === 6? 80 : 40,
       filter: mod6 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("elf.png")
+      setThumbnail("6warrior.png")
       setMod6(true)
     }}
     onMouseOver={() => handleAvatHover(6)}
@@ -223,14 +234,14 @@ const handleAvatHover =(index: number)=>{
     // onMouseOut={() => setIsHovered1(false)}
      />
      <img 
-     src={mag} 
+     src={warrior7} 
      style={{ 
       width: isHovered === 7 ? 80 : 40,
       filter: mod7 ? 'blur(80px)' : 'none', 
     }}
      alt="awatar" 
      onClick={(e) => {
-      setThumbnail("mag.png")
+      setThumbnail("7warrior.png")
       setMod7(true)
     }}
     onMouseOver={() => handleAvatHover(7)}

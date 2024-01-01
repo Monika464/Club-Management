@@ -30,7 +30,7 @@ import Injurypage from './pages/Injurypage.tsx';
 //import Switchmultipass from './pages/Switchmultipass.tsx';
 import MembershiUserpage from './pages/MembershipUserpage.tsx';
 import InjuryUserpage from './pages/InjuryUserpage.tsx';
-import ProjectSingle from './components/ProjectSingle.tsx';
+import ProjectSingle from './components/project/ProjectSingle.tsx';
 import DatePickerpages from './pages/DatePickerpage.tsx';
 import Attendancepage from './pages/AttendanceListpage.tsx';
 import  ArchiveViewAdmin  from './components/ArchiveViewAdmin.tsx';

@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom"
-import useFetchCollectionData from "../hooks/useFetchCollections"
+import useFetchCollectionData from "../../hooks/useFetchCollections"
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../App";
+import { db } from "../../App";
 import { useEffect, useState } from "react";
 import ProjectSummary from "./ProjectSummary";
 import ProjectComments from "./ProjectComments";

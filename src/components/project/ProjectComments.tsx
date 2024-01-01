@@ -1,8 +1,8 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import { Timestamp, doc, serverTimestamp, updateDoc} from "firebase/firestore";
-import { db } from "../App";
-import Avatar from "./Avatar";
+import { db } from "../../App";
+import Avatar from "../Avatar";
 
 export interface IProjectComments {
     project: {

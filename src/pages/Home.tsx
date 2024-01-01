@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import useFetchCollectionData from '../hooks/useFetchCollections.tsx';
-import ProjectList from '../components/ProjectsList.tsx';
+import ProjectList from '../components/project/ProjectsList.tsx';
 import useFetchRealTimeCall from '../hooks/useFetchRealTimeColl.tsx';
 import Project from './Project.tsx';
-import ProjectSingle from '../components/ProjectSingle.tsx';
+import ProjectSingle from '../components/project/ProjectSingle.tsx';
 import { Link, NavLink } from 'react-router-dom';
 import AddIcon from '../assets/add_icon.svg';
 

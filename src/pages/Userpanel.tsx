@@ -127,6 +127,13 @@ console.log("jakie tutaj id usera",currentUser?.uid)
                   </NavLink>
               </li>
               <li>
+              <NavLink  to="/test2" >test
+            
+                  </NavLink>
+              </li>
+
+
+              <li>
               {isAdmin &&<Link to="/adminpanel">Administracja</Link>}
               </li>
             </ul>

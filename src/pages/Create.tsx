@@ -37,6 +37,8 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
       const usersWithAvatars = useModAvatUsers()
       const navigate = useNavigate();
 
+      console.log("usersWithAvatars",usersWithAvatars)
+
       const categories  = [
         {value: 'zawody', label: 'Zawody'},
         {value: 'treningi', label: 'Treningi'}, 
@@ -48,7 +50,6 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
         {value: 'privat', label: 'Prywatne'}
       ];
 
- //console.log('assignedUsers', assignedUsers)
 
 
     const handleDateTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,9 +109,9 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
           console.log("urlLLL", url);
      
 
-        console.log('PictureURLnadole',pictureURL );
+        
   
-
+     
     const assignedUsersList = assignedUsers?.map((u)=>{
 
        return {
@@ -157,7 +158,7 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
 }
 
    
-
+console.log('assignedUsers',assignedUsers );
 
 
 

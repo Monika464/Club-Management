@@ -99,7 +99,7 @@ console.log("cow duplicates",duplicates)
 {/* {isShowAllDays ? <button onClick={manageShowAllDaysButton} className="btn">hide all dates </button>  
 : <button onClick={manageShowAllDaysButton} className="btn">show all dates </button> 
 } */}
-<button onClick={manageShowAllDaysButton}>
+<button onClick={manageShowAllDaysButton} className="btnsmall">
          {isShowAllDays? 'Zamknij' : 'Wyświetl daty'}
           </button>
     

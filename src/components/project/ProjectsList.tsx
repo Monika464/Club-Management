@@ -9,11 +9,33 @@ export interface IProjectListProps {};
     const ProjectList: React.FunctionComponent<IProjectListProps> =(props) => {
 
      // const [catDetailAr, setCutDetailsAr] = useState<string[]>("")
-
+     if(props.projects){
          props.projects.forEach((el)=>{
-          console.log(console.log("projectsEl",el.created_at))
+
+          //const a1 = 
+          console.log(console.log("projectsEl",el.created_at.toDate().getTime()))
         })
 
+        const projectesMod = props.projects.sort((a, b) => {
+          const projectA = a.created_at.toDate().getTime();
+          console.log(console.log("timestampA",projectA))
+          const projectB = b.created_at.toDate().getTime();
+          console.log(console.log("timestampB",projectB));
+          
+          return projectB - projectA;
+        })
+
+        console.log("projectesMod",projectesMod)
+        // props.projects.sort((a, b) => {
+        //   const timestampA = a.toDate().getTime();
+        //   console.log(console.log("timestampA",timestampA))
+        //   const timestampB = b.toDate().getTime();
+        //   console.log(console.log("timestampB",timestampB))
+
+        //   return timestampA - timestampB;
+        // });
+
+      }
         //sortedProjects.sort((a, b) => b.created_at - a.created_at);
 
         // useEffect(()=>{
@@ -26,7 +48,7 @@ export interface IProjectListProps {};
 
         // },[props.projects])
 
-       
+       //tutaj zmodyfikowac liste projektow tak jak w datach jest !!!!!!!!!
 
         
 

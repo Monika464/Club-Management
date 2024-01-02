@@ -2,6 +2,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate,NavLink, Navigate, redirect } from 'react-router-dom';
 import Temple from './../assets/temple.svg'
+import ColovLogo from './../assets/kolovlogo.png'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
   import './navbar.css';  
@@ -68,7 +69,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
    
    <ul>
    <li className="logo">
-     <img src={Temple} alt="logo" />
+     <img src={ColovLogo} alt="logo" />
      <span className="title"> Krakowskie Stowarzyszenie Bokserskie</span> 
    </li>
    

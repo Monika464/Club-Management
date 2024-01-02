@@ -46,7 +46,11 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
       navigate('/login');
         return signOut(auth);
         }
+        
+        const redirectToPanel =()=>{
+          navigate('/userpanel');
 
+        }
 
      //console.log("isss", isUserRegistered)
 
@@ -79,10 +83,14 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     <li>
     {!currentUser &&    <NavLink to="/login" className="navlink">Login</NavLink>} 
     </li>
+    <li> 
+   {currentUser && <button className="btn" onClick={redirectToPanel}>Panel</button>}
+    </li> 
      
     <li> 
    {currentUser && <button className="btn" onClick={logout}  >Logout</button>}
     </li> 
+  
     {/* <button onClick={handlePrzenies}>przenies</button> */}
  
    </ul>

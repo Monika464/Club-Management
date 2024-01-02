@@ -26,6 +26,7 @@
     box-sizing: border-box;
     flex-wrap: wrap;
   display: flex;
+  margin-bottom: 10%;
   }
 
   .project-list h4 {

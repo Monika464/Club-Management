@@ -8,17 +8,23 @@ export interface IProjectListProps {};
 
     const ProjectList: React.FunctionComponent<IProjectListProps> =(props) => {
 
-      const [catDetail, setCutDetails] = useState<string>("")
+     // const [catDetailAr, setCutDetailsAr] = useState<string[]>("")
 
-        console.log("projects", props.projects)
+         props.projects.forEach((el)=>{
+          console.log(console.log("projectsEl",el.created_at))
+        })
 
-        useEffect(()=>{
-          props.projects.forEach((project) => {
-            console.log('project',project.details.slice(0, 180))
-            setCutDetails(project.details.slice(0, 150))
-          })
+        //sortedProjects.sort((a, b) => b.created_at - a.created_at);
 
-        },[props.projects])
+        // useEffect(()=>{
+        //   const temp =[]
+        //   props.projects.forEach((project) => {
+        //     console.log('project',project.details.slice(0, 180))
+        //     temp.push(project.details.slice(0, 150))
+        //     setCutDetailsAr(temp)
+        //   })
+
+        // },[props.projects])
 
        
 
@@ -43,7 +49,8 @@ export interface IProjectListProps {};
                        </Link> 
                             <div className="details">
                               {/* <p>{project.details}</p>  */}
-                              <p>{catDetail}</p>
+                              {/* <p>{catDetail}</p> */}
+                              <p>{project.details.slice(0, 180)}</p> 
                               <Link to={`/projects/${project.id}`} style={{ fontSize: 'small' }}>{'czytaj dalej >>>'}</Link>
                           </div>
                           <Link to={`/projects/${project.id}`}>

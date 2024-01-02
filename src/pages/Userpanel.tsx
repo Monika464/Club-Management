@@ -36,6 +36,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
   const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
   const [rendered, setRendered] =   useState(false);
   const [isAdmin,setIsAdmin] = useState(false);
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   const { currentUser} = useContext(UserContext); 
   //console.log('currentUser userpan',currentUser);
@@ -73,7 +74,15 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
    }
 //console.log("jakie tutaj id usera",currentUser?.uid)
 
-        return ( 
+const handelonmouseover =()=>{
+  setIsMouseOver(!isMouseOver);
+}
+
+      
+//console.log("czy w email component",isMouseOver)
+
+
+return ( 
         
             <> 
 <div className='main'>
@@ -91,6 +100,9 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
               collectionName={"adminmessages"} 
               currentId = {currentUser?.uid}   
               onClick={() => navigate('/mailboxuser')}
+              onmouseover={()=> handelonmouseover()}
+              isMO ={isMouseOver}
+       
               />
               </div>
               

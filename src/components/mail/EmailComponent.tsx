@@ -3,13 +3,19 @@ import { db } from "../../App";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import mail from '../../assets/mail.png'
+import mailblurred from '../../assets/mailblurred.png'
 import { useNavigate } from "react-router-dom";
+import { isModuleNamespaceObject } from "util/types";
+
+
 
 export interface IEmailprops {
   
     collectionName: string | undefined;
     currentId: string | undefined;
     onClick: () => any;
+    onmouseover: () => any;
+    isMO: boolean;
 }
 
 export interface IFreshMessageToTrainer {
@@ -29,7 +35,8 @@ export const EmailComponent: React.FunctionComponent<IEmailprops> = (props) => {
 const [isShaking, setIsShaking] = useState<boolean>(false)
     const navigate = useNavigate();
     // pierwszy
-//console.log("jakie propsy", props)
+
+    //console.log("mailblurred", mailblurred)
 
     if(props.collectionName ===  "usersmessages"){
     
@@ -139,13 +146,21 @@ if(props.collectionName === "adminmessages"){
 }
 
 
+//console.log("z email komponentu isMO",props.isMO)
+
 
 
     return(<div>
 
+
+
           {/* <div className="mailIcon2"> */}
-          {isShaking ? <img src={mail} onClick={props.onClick} className="mailIcon2"/>
-          : <img src={mail} onClick={props.onClick} className="mailIcon1"/>}
+          {isShaking ? <img src={props.isMO ? mailblurred : mail} onClick={props.onClick} className="mailIcon2" onMouseOver={props.onmouseover} />
+          : <img  src={props.isMO ? mailblurred : mail} onClick={props.onClick} className="mailIcon1" onMouseOver={props.onmouseover} 
+          />}
+          <div
+ 
+/>
           {/* </div> */}
     </div>)
 }

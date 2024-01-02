@@ -161,9 +161,9 @@ return(<div>
                   <br></br>
                 </label>
                 {elem.fresh === true ? (
-                  <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} />
+                  <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} style={{ width: '17px', height: '17px' }}/>
                 ) : (
-                  <img src={read} />
+                  <img src={read} style={{ width: '17px', height: '17px' }}/>
                 )}
               </div>
             );

@@ -184,11 +184,12 @@ const handleReadChange =(id: string)=>{
                     <div className="arrow"></div>
                   </div> */}
                   <img src={isReadMessages[elem.id] ? read : notread} 
-                  onClick={() => handleReadChange(elem.id)}          
+                  onClick={() => handleReadChange(elem.id)} 
+                  style={{ width: '17px', height: '17px' }}         
                   />
                 </>
               ) : (
-                <img src={read} />
+                <img src={read} style={{ width: '17px', height: '17px' }}/>
               )}
             </div>
           );

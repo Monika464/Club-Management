@@ -18,14 +18,14 @@ export interface IProjectListProps {};
 
         const projectesMod = props.projects.sort((a, b) => {
           const projectA = a.created_at.toDate().getTime();
-          console.log(console.log("timestampA",projectA))
+         // console.log(console.log("timestampA",projectA))
           const projectB = b.created_at.toDate().getTime();
-          console.log(console.log("timestampB",projectB));
+         // console.log(console.log("timestampB",projectB));
           
           return projectB - projectA;
         })
 
-        console.log("projectesMod",projectesMod)
+        //console.log("projectesMod",projectesMod)
         // props.projects.sort((a, b) => {
         //   const timestampA = a.toDate().getTime();
         //   console.log(console.log("timestampA",timestampA))

@@ -152,9 +152,9 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 <Route 
              path="/usersreport" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                       <RaportUsersPage/>                                  
-                      //  </AuthRoute>
+               </AdminRoute>
                     }
             />
 
@@ -162,28 +162,29 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 <Route 
              path="/datespicker" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                        <DatePickerpages/>                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             />        
         
  <Route 
              path="/attendancelist" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                        <Attendancepage/>                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             /> 
 
+    
       <Route 
              path="/archiveadmin" 
              element={
-                      //  <AuthRoute>
-                       <ArchiveAdminpage/>                                     
-                      //  </AuthRoute>
-                    }
+              <AdminRoute>
+                <ArchiveAdminpage/>                            
+              </AdminRoute>
+                }
             />             
         
         
@@ -191,17 +192,17 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
         <Route 
              path="/membershipuser" 
              element={
-                      //  <AuthRoute>
+                       <AuthRoute>
                        <MembershiUserpage/>                                     
-                      //  </AuthRoute>
+                       </AuthRoute>
                     }
             />
     <Route 
              path="/injuryuser" 
              element={
-                      //  <AuthRoute>
+                        <AuthRoute>
                        <InjuryUserpage/>                                     
-                      //  </AuthRoute>
+                        </AuthRoute>
                     }
             />
 
@@ -209,9 +210,9 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 <Route 
              path="/archiveuser" 
              element={
-                      //  <AuthRoute>
+                        <AuthRoute>
                        <ArchiveUserpage/>                                     
-                      //  </AuthRoute>
+                        </AuthRoute>
                     }
             />
 
@@ -287,7 +288,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
               }/>
 
     </Routes>
-    <Footer/>
+    {/* <Footer/> */}
     </UserContextProvider>
     </div>
 </BrowserRouter>

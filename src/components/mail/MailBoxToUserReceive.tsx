@@ -194,8 +194,8 @@ const handleReadChange =(id: string)=>{
           );
         })}
     </div>
-    <button onClick={deletingMessage} >
-      Usunąć
+    <button onClick={deletingMessage} className="btnsmall">
+      Usuń
     </button>
   </div>)
   // return (

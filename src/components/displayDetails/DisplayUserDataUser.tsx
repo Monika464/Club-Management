@@ -139,7 +139,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
          }
         </div>}
         <br></br> 
-        <button onClick={handleEditDetails}>
+        <button onClick={handleEditDetails} className="btnsmall">
          {isEdited ? 'Zamknij' : 'Edytuj szczegóły'}
           </button>
 {isEdited && <>

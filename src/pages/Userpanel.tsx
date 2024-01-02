@@ -71,7 +71,7 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
     setIsEditedMembership(!isEditedMembership)  
 
    }
-console.log("jakie tutaj id usera",currentUser?.uid)
+//console.log("jakie tutaj id usera",currentUser?.uid)
 
         return ( 
         

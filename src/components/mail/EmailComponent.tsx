@@ -41,7 +41,7 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
   
                 const temp = [];
                 const unsub = querySnapshot.forEach((doc) => {    
-                 console.log("obiekt", doc.data().fresh, doc.id,doc.data().userid)
+                // console.log("obiekt", doc.data().fresh, doc.id,doc.data().userid)
          
                     if(doc.data()){
 

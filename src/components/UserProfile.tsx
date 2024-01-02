@@ -124,7 +124,7 @@ const handleName = () =>{
           <img src={auth.currentUser?.photoURL} style= {{width: 80 }} alt="awatar" />
          </li>
 
-         <button onClick={handleEdit}>
+         <button onClick={handleEdit} className='btnsmall'>
          {isEdited ? 'Zamknij' : 'Edytuj profil'}
           </button>
   

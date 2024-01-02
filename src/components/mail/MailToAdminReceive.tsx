@@ -169,7 +169,7 @@ return(<div>
             );
           })}
       </div>
-      <button onClick={deletingMessage}>usunac</button>
+      <button onClick={deletingMessage} className="btnsmall">usuń</button>
     </div>
 
     </div>)

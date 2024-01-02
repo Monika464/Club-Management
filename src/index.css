@@ -50,6 +50,25 @@ ul {
   background-color: var(--primary-color);
 }
 
+
+
+.btnsmall{
+  background: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: var(--primary-color);
+  cursor: pointer;
+  /* font-size: 1em; */
+  border: 1px solid var(--primary-color);
+  margin-bottom: 10px;
+}
+
+  .btnsmall:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+  }
+
+
 /* forms */
 label {
   /* display: block;

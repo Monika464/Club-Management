@@ -57,7 +57,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
             setName(docSnap.data().name);
             setSurname(docSnap.data().surname);
             setDebtsToSubstract(docSnap.data().debt)
-            console.log("debtsToSubstract ",debtsToSubstract,dzisIndex)
+           // console.log("debtsToSubstract ",debtsToSubstract,dzisIndex)
             setTreningsToAdd(docSnap.data().add)
             setCurrentUserPausaDate(docSnap.data().pause)
 
@@ -98,21 +98,21 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
        }  
        setNewPaymentDate(calcDatOfNewPay );  
        //sprawdz czy tu kalkuluje
-       console.log("newPaymentDateIndex ",newPaymentDateIndex )
+      // console.log("newPaymentDateIndex ",newPaymentDateIndex )
     
     }
   }
   calculate();
      },[ getUserData])
 
-        console.log("dzisData",dzisData, name, surname,newPaymentDateIndex,debtsToSubstract )
+       // console.log("dzisData",dzisData, name, surname,newPaymentDateIndex,debtsToSubstract )
 
-        console.log("newPaymentDate", newPaymentDate)
+        //console.log("newPaymentDate", newPaymentDate)
     
     
         const pushToBaseNewDueDay =async ()=>{
 
-          console.log("czy sie wczytuje?",isMulti, isPass)
+         // console.log("czy sie wczytuje?",isMulti, isPass)
 
           const dataToActivityArchive = {
             created_at: serverTimestamp(),

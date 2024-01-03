@@ -5,10 +5,11 @@
   margin-bottom: 40px;
 }
 .navbar ul {
-  display: flex;
+  display: flex; 
   margin: 0 auto;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap; 
 }
 .navbar .logo {
   font-weight: bold;

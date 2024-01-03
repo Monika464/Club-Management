@@ -102,11 +102,12 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
        <ol>
             {paymentsArr &&
      paymentsArr.map((elem)=>(
-  
         <li key={elem.id}>
-        płatność dnia: <DateFnsFormat
-        element={elem.time}/>
-        za: {elem.trenings} treningów
+          <div className="archive">
+        <p>płatność dnia: </p>
+        <p><DateFnsFormat element={elem.time}/></p>
+        <p>za: {elem.trenings} treningów</p>
+        </div>
          </li> 
           
      ))}

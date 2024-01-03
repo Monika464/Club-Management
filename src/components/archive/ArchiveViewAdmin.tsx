@@ -223,44 +223,47 @@ HISTORIA AKTYWNOŚCI
     {timestampArr1 &&
      timestampArr1.map((elem)=>(
      <li key={elem.id}>
-      pauza zgłoszona dnia:<DateFnsFormat
-        element={elem.time}/>
-    {/* pauza zgłoszona dnia: {elem.time.toDate().toString()}
-    <br></br> */}
-    od: <DateFnsFormat
-        element={elem.pausaData}/>
-    {/* od: {elem.pausaData.toDate().toString()} */}
+       <div className="archive">
+      <p>pauza zgłoszona dnia:</p>
+      <p> <DateFnsFormat element={elem.time}/></p>
+      <p>od: <DateFnsFormat element={elem.pausaData}/></p>
+    </div>
      </li> 
      ))}
 
-   <br></br>   <br></br>
-    {timestampArr2 &&
+   {timestampArr2 &&
      timestampArr2.map((elem)=>(
      <li key={elem.id}>
-    powrót po kontuzji zgłoszony dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.endPauseData.toDate().toString()}
+  <div className="archive">
+    <p>powrót po kontuzji zgłoszony dnia: </p>
+    <p><DateFnsFormat element={elem.time}/></p>
+     <p>od: <DateFnsFormat element={elem.endPauseData}/></p> 
+     </div>
      </li> 
      ))}
 
-<br></br>   <br></br>
-    {timestampArr3 &&
+{timestampArr3 &&
      timestampArr3.map((elem)=>(
      <li key={elem.id}>
-    zatrzymanie członkostwa zgłoszone dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.stopData.toDate().toString()}
+          <div className="archive">
+    <p>stop zgłoszony dnia: </p>
+    <p><DateFnsFormat element={elem.time}/></p>
+    <p>od: <DateFnsFormat element={elem.stopData}/></p> 
+         </div>
      </li> 
      ))}
 
-<br></br>   <br></br>
-    {timestampArr4 && 
+
+{timestampArr4 &&
      timestampArr4.map((elem)=>(
      <li key={elem.id}>
-    powrót do klubu zgłoszony dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.restartData.toDate().toString()}
+        <div className="archive">
+         <p>powrót do klubu zgłoszony dnia: </p>
+         <p><DateFnsFormat element={elem.time}/></p>
+         <p>od: <DateFnsFormat element={elem.restartData}/></p> 
+         </div>
      </li> 
+    
      ))}
 
 </ol>

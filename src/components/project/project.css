@@ -18,6 +18,9 @@
     background-color: #fff;
     padding: 30px;
     border-radius: 4px;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
   }
   .project-summary .due-date {
     margin: 10px 0;
@@ -29,6 +32,7 @@
     color: var(--text-color);
     line-height: 1.8em;
     font-size: 0.9em;
+
   }
   .project-summary h4 {
     color: var(--text-color);
@@ -67,6 +71,11 @@
     /* min-height: 40px; */
     font-size: 1.5em;
   }
+  .comments-container {
+    display: flex;
+    flex-direction: column;
+  }
+
 
 /* comment list */
 .project-comments h4 {
@@ -110,6 +119,12 @@
   margin-left: 10px;
 }
 
+.add-comment-container {
+  width: 100%; /* Możesz dostosować szerokość według potrzeb */
+  margin-top: 20px; /* Dodatkowy margines między sekcjami */
+  margin-left: 10px;
+}
+
 
 .linkback{
   font-size: 14px;
@@ -124,4 +139,19 @@
     gap: 60px;
     flex-wrap: wrap;
   }
-}
+
+  project-summary .details {
+    margin: 30px 0;
+    color: var(--text-color);
+    line-height: 1.8em;
+    font-size: 0.9em;
+  }
+    .navbar ul {
+      display: flex;
+      margin: 0 auto;
+      align-items: center;
+      /* justify-content: flex-end; */
+      flex-wrap: wrap;
+    }
+
+  }

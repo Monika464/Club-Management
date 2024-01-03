@@ -5,7 +5,7 @@
 .App .container{
  
   flex: 1 1 0; 
-  padding: 0 60px;
+   padding: 0 60px; 
   /* flex-wrap: wrap; */
  
 } 

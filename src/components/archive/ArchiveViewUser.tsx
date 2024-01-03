@@ -4,6 +4,7 @@ import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } f
 import { db } from "../../App";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
+import DateFnsFormat from "../DateFnsFormat";
 
 export interface IArchiveViewUser{}
 
@@ -61,72 +62,6 @@ const [restartData, setRestartData]= useState<Date | null>(null);
 const { currentUser} = useContext(UserContext); 
 
 
-//     useEffect(() => {
-//         const timer = setTimeout(() => {
-//           setRendered(true);
-//         }, 1000); // 1000 milisekund = 1 sekunda
-      
-//         return () => {
-//           clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
-//         };
-//       }, []);
-
-//     const getUserDatafromBase = useCallback(async () => {
-      
-//         if(currentUser){  
-              
-//           const userRef = doc(db, "usersData",currentUser.uid);
-//           const docSnap = await getDoc(userRef)
-//           if (docSnap.exists()) {
-//            // console.log("docSnaap",docSnap.data())
-
-//             //multi
-//               if(docSnap.data().optionMulti){
-//                   setIsMulti(true)
-//               }
-//               //pass
-//               if(docSnap.data().optionPass){
-//                   setIsMulti(true)
-//               }
-//               //debt
-//               if(docSnap.data().debt){
-//                   setDebt(null)
-//               }
-//               //add
-//               if(docSnap.data().add){
-//                   setAdd(null)
-//               }
-//               //pause
-//               //stop
-//               //duedate
-//              }
-
-//           }
-    
-
-//     }, [currentUser,db]);
-    
-//     useEffect(()=>{
-
-    
-//         getUserDatafromBase();
-
-//           //pauzujacy i ewentualny dlug lub nadpłata
-
-// //zastopowany i ewentualny dlug
-
-// //aktywny czyli due ewentualny dlug 
-
-//       },[getUserDatafromBase])
-
-
-
-
-
-
-
-
-/////od tttttttttttttttttttttttttttttttttttttttttttad
 
       const getArchiveDatafromBase = useCallback(async() => {
 
@@ -275,63 +210,67 @@ const getfromBase3 =async()=>{
       },[rendered,db,currentUser, getArchiveDatafromBase]) 
       //,getArchiveDatafromBase i ta druga tez do memo podobnie jak w ktoryms komponencie ?
 
-      useEffect(()=>{
-        //console.log("timestampArr",timestampArr1,timestampArr2,timestampArr3,timestampArr4);
+      // useEffect(()=>{
+      //   //console.log("timestampArr",timestampArr1,timestampArr2,timestampArr3,timestampArr4);
 
-       // timestampArr?.map((ele)=>{
-        //  console.log("ele",(ele.endPauseData)?.toDate(), "timestamp",ele.endPauseData)
-        //})
+      //  // timestampArr?.map((ele)=>{
+      //   //  console.log("ele",(ele.endPauseData)?.toDate(), "timestamp",ele.endPauseData)
+      //   //})
 
-      },[rendered])
+      // },[rendered])
 
-      useEffect(() => {
-       // console.log("timestampArr1.length", timestampArr1?.length);
-        // timestampArr1.map((elem) => console.log("element 1", elem));
-      }, [timestampArr1]);
+      // useEffect(() => {
+      //  // console.log("timestampArr1.length", timestampArr1?.length);
+      //   // timestampArr1.map((elem) => console.log("element 1", elem));
+      // }, [timestampArr1]);
    
     return (<>
 <br></br><br></br>
 HISTORIA AKTYWNOŚCI
-<br></br><br></br>
 <ol>
     {timestampArr1 &&
      timestampArr1.map((elem)=>(
      <li key={elem.id}>
-
-    pauza zgłoszona dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.pausaData.toDate().toString()}
+  <div className="archive">
+    <p>pauza zgłoszona dnia: </p>
+    <p><DateFnsFormat element={elem.time}/></p>
+    <p>od: <DateFnsFormat element={elem.pausaData}/></p>
+    </div>
      </li> 
      ))}
 
-   <br></br>   <br></br>
     {timestampArr2 &&
      timestampArr2.map((elem)=>(
      <li key={elem.id}>
-    powrót po kontuzji zgłoszony dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.endPauseData.toDate().toString()}
+  <div className="archive">
+    <p>powrót po kontuzji zgłoszony dnia: </p>
+    <p><DateFnsFormat element={elem.time}/></p>
+     <p>od: <DateFnsFormat element={elem.endPauseData}/></p> 
+     </div>
      </li> 
      ))}
 
-<br></br>   <br></br>
     {timestampArr3 &&
      timestampArr3.map((elem)=>(
      <li key={elem.id}>
-    zatrzymanie członkostwa zgłoszone dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.stopData.toDate().toString()}
+          <div className="archive">
+    <p>stop zgłoszony dnia: </p>
+    <p><DateFnsFormat element={elem.time}/></p>
+    <p>od: <DateFnsFormat element={elem.stopData}/></p> 
+         </div>
      </li> 
      ))}
 
-<br></br>   <br></br>
     {timestampArr4 &&
      timestampArr4.map((elem)=>(
-     <p key={elem.id}>
-    powrót do klubu zgłoszony dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.restartData.toDate().toString()}
-     </p> 
+     <li key={elem.id}>
+        <div className="archive">
+         <p>powrót do klubu zgłoszony dnia: </p>
+         <p><DateFnsFormat element={elem.time}/></p>
+         <p>od: <DateFnsFormat element={elem.restartData}/></p> 
+         </div>
+     </li> 
+    
      ))}
 
 

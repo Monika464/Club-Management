@@ -6,6 +6,7 @@ import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { db } from "../../App";
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import DateFnsFormat from "../DateFnsFormat";
 
 
 
@@ -201,9 +202,14 @@ return (
 {stopReported && <p>Twoje treningi są juz zakończone</p>}
 {pausaReported && <p>Treningi sa zawieszone z powodu kontuzji</p>}
 
-  {pausaDate && !pausaReported && !stopReported && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
+  {/* {pausaDate && !pausaReported && !stopReported && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>} */}
+  {pausaDate && !pausaReported && !stopReported && 
+  <div className="archive">
+  <p>Treningi zostana zawieszone: </p>
+     <p><DateFnsFormat element={pausaDate}/></p>
+     </div>}
   {pausaDebt &&!pausaReported && !stopReported && <p>istniejące zadłużenie: {pausaDebt} treningów.</p>}
-  {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
+  {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych: {pausaAdd} treningów</p>}
   {pausaDate && !pausaReported && !stopReported && <div>
                  Uzupelnij formularz wspisując powód zawieszenia
                    {/* <input */}

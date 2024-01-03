@@ -55,7 +55,7 @@
     flex-basis: calc(30% / 2 - 5px); /* Przykładowa wartość, możesz dostosować według potrzeb */
     /* flex-grow: 1; */
     flex-wrap: wrap;
-     max-width: 50%; 
+     /* max-width: 50%;  */
     margin-right: 20px;
   }
   .linkshape a {

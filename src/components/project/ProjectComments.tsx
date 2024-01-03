@@ -62,8 +62,9 @@ const handleSubmit =async(e)=>{
 return(
 <div>
 
-
+<div className="comments-container">
     <div className="project-comments">
+      
     {props.project?.comments  && <h4>Komentarze</h4>}
      <ul>
     {props.project?.comments &&  props.project?.comments?.length>0 && props.project.comments.map((com)=>(
@@ -97,24 +98,12 @@ return(
    </div>
 
 
-{/* {props.project?.comments?.length>0 &&
-
-<ul> 
- <div>
-     {props.project.comments.map((com)=>(
-      <li key={com.id}>{com.content}</li>
-     )) }
-  </div>
-</ul> 
-} */}
-
-
-
 {props.project && <div>
-<h4>Project comments</h4>
+  <div className="add-comment-container">
+{/* <h4>Project comments</h4> */}
 <form className="add-comment" onSubmit={handleSubmit}>
   <label>
-<span>Skomentuj post</span>
+<span>Skomentuj</span>
 <textarea
 required
 onChange={(e)=>setNewComment(e.target.value)}
@@ -124,7 +113,9 @@ value={newComment}
   <button className="btn">Send</button>
 
 </form> 
+</div>
 </div>}
+</div>
 </div>)
 }
 

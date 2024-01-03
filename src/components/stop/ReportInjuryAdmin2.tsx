@@ -6,6 +6,7 @@ import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import Select from 'react-select'
+import DateFnsFormat from "../DateFnsFormat";
 
 
 export interface US {
@@ -268,7 +269,14 @@ const getAddfromBase =async ()=>{
 
 
 {stopReported && <p>Treningi sa juz zakończone</p>}
-  {pausaDate && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>}
+
+  {/* {pausaDate && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>} */}
+  {pausaDate && 
+    <div className="archive">
+        <p>Treningi zostana zawieszone: </p>
+        <p><DateFnsFormat element={pausaDate}/></p>
+     </div>}
+
   {pausaDebt &&<p>istniejące zadłużenie: {pausaDebt} treningów</p>}
   {pausaAdd &&<p>pozostało opłaconych treningów: {pausaAdd} treningów</p>}
   {pausaDate && <div>

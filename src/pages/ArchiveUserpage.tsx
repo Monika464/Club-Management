@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import ArchiveUserPayment from "../components/ArchiveUserPayment"
-import ArchiveViewUser from "../components/ArchiveViewUser"
+import ArchiveUserPayment from "../components/archive/ArchiveUserPayment"
+import ArchiveViewUser from "../components/archive/ArchiveViewUser"
 
 
 export interface IArchiveUserpage {

@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { UserContext } from '../context/UserContext';
-import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
-import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
-import { useSearchIndexCloseToday } from "../hooks/useSearchIndexCloseToday";
-import { db } from "../App";
+import { UserContext } from '../../context/UserContext';
+import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
+import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
+import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
+import { db } from "../../App";
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 

@@ -136,11 +136,11 @@ useEffect(()=>{
        .then(()=>{setDateSent(true)})
 
 
-       //dodaj do archive
-       const docRef = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
-       .then(()=> console.log("payment set to archive"))
+      
    }
-
+ //dodaj do archive
+ const docRef = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
+ .then(()=> console.log("payment set to archive"))
  }
 
     return(<>

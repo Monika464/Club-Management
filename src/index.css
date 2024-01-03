@@ -29,6 +29,13 @@ ul {
   
 }
 
+.archive {
+  display: flex; /* or display: flex; */
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+
+
 /* layout */
 .page-title {
   font-size: 1em;

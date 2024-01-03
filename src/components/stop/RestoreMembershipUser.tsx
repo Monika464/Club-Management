@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import { db } from '../App';
-import { useSearchIndexCloseToday } from '../hooks/useSearchIndexCloseToday';
-import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
+import { db } from '../../App';
+import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
+import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { useNavigate } from 'react-router-dom';
 
 export const RestoreMembershipUser: React.FunctionComponent =() => {
@@ -21,6 +21,18 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
     const dzisData = useSearchDatesByIndex(dzisIndex);
     const navigate = useNavigate();
     
+    const [rendered, setRendered] = useState(false);
+
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setRendered(true);
+    }, 1000); // 1000 milisekund = 1 sekunda
+  
+    return () => {
+      clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    };
+  }, []);
+
     useEffect(()=>{
       if(currentUser){ 
 
@@ -50,7 +62,7 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
             }
               
 
-    },[currentUser,db])
+    },[currentUser,db,rendered])
 
     //ustawienie imienia i nazwiska
 
@@ -77,7 +89,7 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
 
                                  if(docSnap.data().stop){
                                   setIsStop(true);   
-                                  
+                                  console.log('isStop',isStop)
                                     if(docSnap.data().debt){
                                        setDebt(docSnap.data().debt)
                                        }
@@ -85,14 +97,14 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
                                     console.log("aktywny")
                                   }
                              }
-                             console.log("nameeee", name)
+                             //console.log("name", name)
                       }   
                 }
       
                 handleSetUserInfo() 
                 console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt,isPass) 
 
-        },[db,dzisIndex,currentUser])
+        },[db,dzisIndex,currentUser,rendered])
 
 
     //wyliczam nowa date jesli jest dlug, jesli nie ma due date na dzi
@@ -110,7 +122,7 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
       }
          // console.log('UUUUrestartNewData',restartNewData?.toDate())
 
-    },[dzisIndex,currentUser])
+    },[dzisIndex,currentUser,rendered])
 
    
     const restartNewData = useSearchDatesByIndex(restartDateIndex);
@@ -126,32 +138,35 @@ const dataToActivityArchive = {
   } 
 
 const sendToBase =async()=>{
+  console.log("wcisnieto przycisk",isPass,restartNewData)
+
+  //if(currentUser){
 
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
     if(isMulti){
-      await updateDoc(paymentDataRef, {  
-        stop: null, 
-        due: null,    
-        restart:  dzisData,
-        debt: debt
-      })
-      .then(()=>console.log("restart succesful"))
-      .then(()=> setisSent(true))
+            await updateDoc(paymentDataRef, {  
+                                  stop: null, 
+                                  due: null,    
+                              restart:  dzisData,
+                                  debt: debt
+            })
+        .then(()=>console.log("restart succesful"))
+        .then(()=> setisSent(true))
        
-      const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+       const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
       .then(()=> console.log("archive"))
       .then(()=> navigate('/userpanel'))
     }
    
-    if(isPass){
-      if(restartNewData){    
-        await updateDoc(paymentDataRef, {  
-          stop: null, 
-          due: restartNewData,    
-          restart:  dzisData,
-          debt: null
-        })
+      if(isPass){
+          if(restartNewData){    
+                   await updateDoc(paymentDataRef, {  
+                             stop: null, 
+                             due: restartNewData,    
+                            restart:  dzisData,
+                             debt: null
+                   })
         .then(()=>console.log("restart succesful"))
         .then(()=> setisSent(true))
          

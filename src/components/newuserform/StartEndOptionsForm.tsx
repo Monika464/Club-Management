@@ -52,7 +52,7 @@ export function StartAndOptionForm(props: IStartAndOptionForm){
         }
       }}
        />
-</FormWrapper>
+     </FormWrapper>
         <label>Pass Or Multi</label>
     
        <Select
@@ -61,7 +61,7 @@ export function StartAndOptionForm(props: IStartAndOptionForm){
       options={[{value: "pass", label: "pass"},{value: "multi", label: "mutli"}]}
       //defaultValue={{value: "pass", label: "pass"}}
         onChange={(choice) => {   
-       console.log("choice", choice?.value)
+       //console.log("choice", choice?.value)
        if(choice)
        props.setOption(choice.value)
       }}

@@ -1,8 +1,9 @@
 import Select from 'react-select'
-import { useModUsersForSelect } from '../hooks/useModUsersForSelect ';
+import { useModUsersForSelect } from '../../hooks/useModUsersForSelect ';
 import { useCallback, useEffect, useState } from 'react'; 
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../App';
+import { db } from '../../App';
+import DateFnsFormat from '../DateFnsFormat';
 
 export interface IArchiveAdminPayment{}
 export interface ItimestampArr{
@@ -83,17 +84,6 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     return(
         <div>
           <br></br>  <br></br>
@@ -109,20 +99,19 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
             <br></br><br></br>
             HISTORIA PŁATNOŚCI 
             <br></br>
-        
+       <ol>
             {paymentsArr &&
      paymentsArr.map((elem)=>(
   
-        <p key={elem.id}>
-        <br></br>
-        płatność dnia: {elem.time.toDate().toString()}
-        <br></br>
+        <li key={elem.id}>
+        płatność dnia: <DateFnsFormat
+        element={elem.time}/>
         za: {elem.trenings} treningów
-         </p> 
+         </li> 
           
      ))}
         
-        
+        </ol>  
         
         
         </div>

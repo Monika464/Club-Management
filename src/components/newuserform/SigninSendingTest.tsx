@@ -21,10 +21,9 @@ interface ISigninSending {
 export function SigninSendingTest(props: ISigninSending){
     //console.log("czy ten komponent zostaje uruchomiony?")
 
-    const navigate = useNavigate();
-
-    const { currentUser} = useContext(UserContext);
-    console.log('currentUser',currentUser)
+         const navigate = useNavigate();
+         const { currentUser} = useContext(UserContext);
+         console.log('currentUser',currentUser)
 
     const [optionMulti, setOptionMulti] = useState<boolean>(false);
     const [optionPass, setOptionPass] = useState<boolean>(false);
@@ -44,21 +43,16 @@ export function SigninSendingTest(props: ISigninSending){
     }
     },[props.option])
    
- 
-
-    //useEffect(()=>{
-    
-
-   // },[props.option])
-
-
-
-
+    const dataToPaymentArchive = {
+        created_at: serverTimestamp(),
+        userUid: currentUser?.uid,
+        kto: `${props.name} ${props.surname}`,
+        trenings: 8,
+        amount: 120  
+      }
 
     const WriteUserInfo = async() =>{ 
-
-        console.log("przycisk wcisniety")
-  	    
+        //console.log("przycisk wcisniety")  
         if (!db) {
     		  console.error('Firebase Firestore is not initialized yet');
    		   return;
@@ -66,7 +60,7 @@ export function SigninSendingTest(props: ISigninSending){
 
     if(currentUser){
 
-           //jesli option pass a inny jesl option multi
+           //jesli  option multi
                 if(optionMulti){
                     const docRef = doc(db, "usersData", currentUser.uid);
                    await setDoc(docRef, {
@@ -83,42 +77,31 @@ export function SigninSendingTest(props: ISigninSending){
                     .then(()=>  setIsSent(true))
                     .then(()=> navigate('/userpanel'))
                     .catch((err)=> console.error(err))
-
+  
                  }
-
+            //jesli  option pass   
                  if(optionPass){
-                 const docRef = doc(db, "usersData", currentUser.uid);
-                 await setDoc(docRef, {
-                    name: props.name,
-                    surname: props.surname,
-                    dob: props.dob,
-                    id: currentUser?.uid, 
-                    start: props.startDay,
-                    due: props.startDay,
-                    optionPass: optionPass,
-                    optionMulti: false
-                    })
+                        const docRef = doc(db, "usersData", currentUser.uid);
+                            await setDoc(docRef, {
+                                 name: props.name,
+                                 surname: props.surname,
+                                 dob: props.dob,
+                                 id: currentUser?.uid, 
+                                 start: props.startDay,
+                                 due: props.startDay,
+                                 optionPass: optionPass,
+                                 optionMulti: false
+                            })
                   .then(()=>console.log("pass user. update succesful"))
                   .then(()=>  setIsSent(true))
                   .then(()=> navigate('/userpanel'))
                   .catch((err)=> console.error(err))
-
-
-
-   const dataToPaymentArchive = {
-    created_at: serverTimestamp(),
-    userUid: currentUser?.uid,
-    kto: `${props.name} ${props.surname}`,
-    trenings: 8,
-    amount: 120  
-  } 
-
-    //dodaj do archive
-    const docArchive = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
-    .then(()=> console.log("payment set to archive"))
-
+   
+                  //dodaj do archive
+                    const docArchive = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
+                    .then(()=> console.log("payment set to archive"))
                  }
-     
+    
          }
 
          

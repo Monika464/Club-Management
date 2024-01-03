@@ -1,8 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
-import { db } from "../App";
+import { UserContext } from "../../context/UserContext";
+import { db } from "../../App";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import DateFnsFormat from "../DateFnsFormat";
 
 export interface IArchiveUserPayment{}
 export interface ItimestampArr{
@@ -71,18 +72,21 @@ const ArchiveUserPayment : React.FunctionComponent<IArchiveUserPayment> =() => {
     return(<div>
 
         HISTORIA PŁATNOSCI
-        
+   <ol>    
         {paymentsArr &&
      paymentsArr.map((elem)=>(
   
-        <p key={elem.id}>
-        płatność dnia: {elem.time.toDate().toString()}
-        <br></br>
-        za: {elem.trenings} treningów
-         </p> 
+        <li key={elem.id} >
+        {/* płatność dnia: {elem.time.toDate().toString()} */}
+        <div className="archive">
+        <p>płatność dnia: </p>
+       <p><DateFnsFormat element={elem.time}/></p> 
+        <p>za: {elem.trenings} treningów</p>
+        </div>
+         </li> 
           
      ))}
-        
+      </ol>   
    
         
         </div>)

@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import { db } from "../App";
-import { useSearchIndexCloseToday } from "../hooks/useSearchIndexCloseToday";
-import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
+import { db } from "../../App";
+import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
+import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 
 export interface IArchiveViewUser{}
 
@@ -293,34 +293,35 @@ const getfromBase3 =async()=>{
 <br></br><br></br>
 HISTORIA AKTYWNOŚCI
 <br></br><br></br>
-
+<ol>
     {timestampArr1 &&
      timestampArr1.map((elem)=>(
-     <p key={elem.id}>
+     <li key={elem.id}>
+
     pauza zgłoszona dnia: {elem.time.toDate().toString()}
     <br></br>
     od: {elem.pausaData.toDate().toString()}
-     </p> 
+     </li> 
      ))}
 
    <br></br>   <br></br>
     {timestampArr2 &&
      timestampArr2.map((elem)=>(
-     <p key={elem.id}>
+     <li key={elem.id}>
     powrót po kontuzji zgłoszony dnia: {elem.time.toDate().toString()}
     <br></br>
     od: {elem.endPauseData.toDate().toString()}
-     </p> 
+     </li> 
      ))}
 
 <br></br>   <br></br>
     {timestampArr3 &&
      timestampArr3.map((elem)=>(
-     <p key={elem.id}>
+     <li key={elem.id}>
     zatrzymanie członkostwa zgłoszone dnia: {elem.time.toDate().toString()}
     <br></br>
     od: {elem.stopData.toDate().toString()}
-     </p> 
+     </li> 
      ))}
 
 <br></br>   <br></br>
@@ -334,7 +335,7 @@ HISTORIA AKTYWNOŚCI
      ))}
 
 
-
+</ol>
 
     </>)
 

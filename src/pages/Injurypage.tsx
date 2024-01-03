@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { BackAfterInjury } from "../components/BackAfterInjuryAdmin"
-import { BackAfterInjuryAdmin2 } from "../components/BackAfterInjuryAdmin2"
-import ReportInjuryAdmin2 from "../components/ReportInjuryAdmin2"
+import { BackAfterInjury } from "../components/stop/BackAfterInjuryAdmin"
+import { BackAfterInjuryAdmin2 } from "../components/stop/BackAfterInjuryAdmin2"
+import ReportInjuryAdmin2 from "../components/stop/ReportInjuryAdmin2"
 
 const Injurypage: React.FunctionComponent =() => {
 

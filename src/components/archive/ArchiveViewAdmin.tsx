@@ -1,9 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
+import { useModUsersForSelect } from "../../hooks/useModUsersForSelect ";
 import Select from 'react-select'
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "../App";
+import { db } from "../../App";
+import DateFnsFormat from "../DateFnsFormat";
 
 
 export interface IArchiveViewAdmin{}
@@ -217,14 +218,18 @@ const getfromBase4 =async()=>{
 HISTORIA AKTYWNOŚCI
 <br></br><br></br>
 
-<ul>
+<ol>
 
     {timestampArr1 &&
      timestampArr1.map((elem)=>(
      <li key={elem.id}>
-    pauza zgłoszona dnia: {elem.time.toDate().toString()}
-    <br></br>
-    od: {elem.pausaData.toDate().toString()}
+      pauza zgłoszona dnia:<DateFnsFormat
+        element={elem.time}/>
+    {/* pauza zgłoszona dnia: {elem.time.toDate().toString()}
+    <br></br> */}
+    od: <DateFnsFormat
+        element={elem.pausaData}/>
+    {/* od: {elem.pausaData.toDate().toString()} */}
      </li> 
      ))}
 
@@ -258,7 +263,7 @@ HISTORIA AKTYWNOŚCI
      </li> 
      ))}
 
-</ul>
+</ol>
 
 </div>)
 

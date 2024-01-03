@@ -133,9 +133,7 @@ function onSubmit(e: FormEvent) {
                <div className={"pageNum"}>
                  {currentStepIndex + 1}/{steps?.length}
                </div>
-               {step}
-              
-               
+               {step}                 
                
             
             <div className='pageContent'>
@@ -149,10 +147,10 @@ function onSubmit(e: FormEvent) {
             </div>
             </form>
             {/* {isLastStep && <button onClick={handleCreateUser}>Create User</button>} */}
-            <div>imię: {name} nazwisko: {surname} <br></br>ur.{dob.toDateString()}{email}<br></br>start: {startDay?.toDate().toDateString()}{option}</div>
-            {/* {<div>{name} {surname} ur. {format(dob,'PPP', {locale: pl})} {email} <br></br> start: {format(displayStartDay, 'PPP', {locale: pl})} <br></br>{option}</div> }*/}
-            {/* <div>{name} {surname} {format(dob,'PPP', {locale: pl})} platnośc: {option} start: {startDay?.toDate().toString()}</div> */}
-            {/* <div>{name} {surname} {format(dob,'PPP', {locale: pl})} platnośc: {option} start: {format(startDay?.toDate(), 'dd.MM.yyyy')}</div> */}
+            <div>imię: {name} nazwisko: {surname} <br></br>ur.{dob.toDateString()}</div>
+            {startDay && <div>start: {startDay?.toDate().toDateString()} </div>}
+            {option && <div>typ: {option}</div>}
+       
             {/* {isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>} */}
             {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}
          

@@ -1,10 +1,10 @@
 import Select from 'react-select'
-import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
+import { useModUsersForSelect } from "../../hooks/useModUsersForSelect ";
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchIndexCloseToday } from '../hooks/useSearchIndexCloseToday';
-import { useSearchDatesByIndex } from '../hooks/useSearchDatesByIndex';
+import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
+import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import { db } from '../App';
+import { db } from '../../App';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 

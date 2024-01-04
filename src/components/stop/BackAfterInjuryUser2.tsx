@@ -5,6 +5,7 @@ import { db } from "../../App";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useNavigate } from "react-router-dom";
+import DateFnsFormat from "../DateFnsFormat";
 
 export interface Itest {};         
 
@@ -160,7 +161,12 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
     
 
     return(<> 
-    {newPaymentDate && <p>Jeśłi chcesz wrócic do treningów {newPaymentDate?.toDate()?.toString()}potwierdż</p>}
+    {newPaymentDate && 
+    
+    <div className="archive">
+    <p>Jeśli chcesz wrócic do treningów: </p>
+       <p><DateFnsFormat element={newPaymentDate}/> zatwierdź</p>
+       </div>}
     {currentUserPausaDate&&<button onClick={pushToBaseNewDueDay} className="btn">Zatwierdz powrot</button>}
     {isSent&&<p>wyslano</p>} 
     {/* <button onClick={calculate}>caculate</button> */}

@@ -1,12 +1,13 @@
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../App";
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../context/UserContext';
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useSearchIndexAnyDate } from "../../hooks/useSearchIndexAnyDate";
 import { useNavigate } from "react-router-dom";
+import DateFnsFormat from "../DateFnsFormat";
 
 
 
@@ -25,16 +26,22 @@ const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null)
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
-
+const [modIndFin, setModIndFin] = useState<number | null>(null) 
+const [modDatFin, setModDatFin] = useState<Date | null>(null) 
+const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
 const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const navigate = useNavigate();
 
-//console.log("name", name, surname)
+
+//console.log("paymentDateIndex", paymentDateIndex, surname)
 //ustawienie podstawowych danych
 
-const settingName = async ()=>{
+ // console.log("stop date from base", stopDateFromBase);
+
+
+const settingName = useCallback( async ()=>{
 
   if(currentUser){ 
     const userRef = doc(db, "usersData",currentUser?.uid);
@@ -45,8 +52,13 @@ const settingName = async ()=>{
           setSurname(docSnap.data().surname);
         
           //jesli mamy stop
+          const temp = [];
            if(docSnap.data().stop){
            setStopReported(true)
+           setStopDateFromBase(docSnap.data().stop)
+           //console.log("stop date from base", docSnap.data().stop);
+         
+           //console.log("stop date from base",stopDateFromBase?.toDate())
           }
          
            //jesli mamy multi
@@ -57,49 +69,61 @@ const settingName = async ()=>{
 
                 //jezeli jest debt w multi
                 if(docSnap.data().debt){
-                  console.log("uzytkownik zadluzony")        
+                 // console.log("uzytkownik zadluzony")        
                   setFinalDebt(docSnap.data().debt)
                  }
 
                //jezeli mamy pauze w 
                  if(docSnap.data().pause){
                   setCurrentUserPausaDate(docSnap.data().pause);
-                  console.log("uzytkownik pauzujacy")
+                 // console.log("uzytkownik pauzujacy")
                  }
       }
+
       if(docSnap.data().optionPass === true){  
         setIsPass(docSnap.data().optionPass);
 
              //jesli mamy pauze
              if(docSnap.data().pause){
             setCurrentUserPausaDate(docSnap.data().pause);
-             console.log("uzytkownik pauzujacy")
-            
+             console.log("currentUserPausaDate",currentUserPausaDate)
+             setStopDate(dzisData);
                  //jezeli w pauzie sa do dodania 
-                     if(docSnap.data().add){          
-                       console.log("uzytkownik majacy treningi do dodania")
-                       const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
-                       const convertToStopInd = pausaIndex + docSnap.data().add;
-                       const dateSzukana = useSearchDatesByIndex(convertToStopInd)
-                       setStopDate(dateSzukana);
-                     }
+                    // if(docSnap.data().add){          
+                      //  console.log("uzytkownik majacy treningi do dodania")
+                      //  const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
+                      //  const convertToStopInd = pausaIndex + docSnap.data().add;
+                      //  const dateSzukana = useSearchDatesByIndex(convertToStopInd)
+                      //  setStopDate(dateSzukana);
+                    // }
    
                      //jezeli w pauzie jest zadluzenie
                      if(docSnap.data().debt){          
-                       console.log("uzytkownik zadluzony")
+                       //console.log("uzytkownik zadluzony")
                        setStopDate(dzisData);
                        setFinalDebt(docSnap.data().debt)
                      }
         } 
        //jesli mamy due
          if(docSnap.data().due){     
-        
+          
               if((paymentDateIndex !== null) && dzisIndex){
                  setStopDate(dzisData)
                  if(dzisIndex > paymentDateIndex){
                  setFinalDebt(dzisIndex - paymentDateIndex)
-                 }          
-              }
+                   }  
+                 if(dzisIndex < paymentDateIndex){
+                  const temp = paymentDateIndex - dzisIndex
+                  const newDI = dzisIndex + temp;
+                  setModIndFin(newDI)
+                  //setStopDate(dateSzukana)
+                 
+                    }   
+                      
+               }
+               
+             
+          
           }
      }
       
@@ -112,14 +136,18 @@ const settingName = async ()=>{
    
 
 
-      }
-   
+      },[])
+  const dateSzukana = useSearchDatesByIndex(modIndFin)   
           
 useEffect(()=>{
     
       settingName()  
-     
- },[db,currentUser,dzisIndex,paymentDateIndex,settingName])
+      setModDatFin(dateSzukana);
+     // console.log('dateSzukana',dateSzukana?.toDate())
+     // console.log('modDatFin',modDatFin)
+    // console.log("uzytkownik pauzujacy")
+   
+ },[currentUser,dzisIndex,settingName])
 
 
 
@@ -131,10 +159,11 @@ useEffect(()=>{
       } 
 
       //funkcja zapisujaca w bazie
-
+//console.log("z funkcji zapisującej w bazie",'stopDate',stopDate,'finalDebt',finalDebt,'name',name)
      const sendStopToBase =async()=>{
 
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
+    
     if(currentUserPausaDate){    
       await updateDoc(paymentDataRef, {
         pause: null,  
@@ -163,20 +192,43 @@ useEffect(()=>{
     }
    // console.log("czy tu jest isPass",isPass)   false
     if(isPass){
-      await updateDoc(paymentDataRef, {
-        pause: null,  
-        add: null,
-        stop: stopDate,  
-        restart: null,
-        debt: finalDebt,
-        due: null  
-      })
-      .then(()=>console.log("stop date for multiuser update succesful"))
-      .then(()=>  setStopDate(null))
-      .then(()=>   setisSent(true))
-      .then(()=>   setFinalDebt(null))
+      if(finalDebt){
+          await updateDoc(paymentDataRef, {
+             pause: null,  
+             add: null,
+             stop: stopDate,  
+             restart: null,
+             debt: finalDebt,
+             due: null  
+          })
+          .then(()=>console.log("stop date for passuser update succesful"))
+          .then(()=>  setStopDate(null))
+          .then(()=>   setisSent(true))
+          .then(()=>   setFinalDebt(null))
+
+      }
+     
+         if(modDatFin){
+            await updateDoc(paymentDataRef, {
+             pause: null,  
+             add: null,
+             stop: modDatFin,  
+             restart: null,
+             debt: null,
+             due: null  
+           })
+            .then(()=>console.log("stop date for passuser update succesful"))
+            .then(()=>  setStopDate(null))
+            .then(()=>   setisSent(true))
+            .then(()=>   setFinalDebt(null))
+
+            }
+
 
     }
+
+
+
 
           const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
         .then(()=> console.log("archive"))  
@@ -193,10 +245,15 @@ return (<div>
 
   {/* <button onClick={getAddfromBase}>Skalkuluj date zakonczenia</button> */}
  
-  {stopReported && <p>uczestnictwo w klubie zatrzymane</p>}
-  {}
-
-  {!stopReported && stopDate && <p>Czy chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>}
+  {/* {stopReported && <p>uczestnictwo w klubie będzie zatrzymane od {stopDateFromBase?.toDate().toString()}</p>} */}
+  {/* {!stopReported && <p>uczestnictwo w klubie będzie zatrzymane od 
+    {stopDateFromBase?.toDate().toString()}</p>} */}
+  {currentUserPausaDate && <p>Pauzujacy użytkownik rezygnuje dzis z członkostwa</p>}
+    {!stopReported && 
+     <div className="archive">    
+     <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+        <p><DateFnsFormat element={dzisData}/></p>
+     </div>}
   {finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
   {!stopReported && <button onClick={sendStopToBase} className="btn">Potwierdż</button>}
   {isSent &&<p>wyslano</p>}

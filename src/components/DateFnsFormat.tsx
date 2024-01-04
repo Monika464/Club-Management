@@ -10,7 +10,7 @@ element: Date;
 
 const DateFnsFormat : React.FunctionComponent<IDateFnsFormatProps> =(props) => {
 
-    console.log("elem z propsow",format(props.element.toDate(), 'PPP', {locale: pl}))
+    //console.log("elem z propsow",format(props.element.toDate(), 'PPP', {locale: pl}))
    
     return(<>
     {props.element && <>{format(props.element.toDate(), 'PPP', {locale: pl})}</>}

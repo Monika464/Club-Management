@@ -35,26 +35,9 @@ const [error, setError] = useState<string | null>(null)
         const {id} = useParams()
         
         useEffect(()=>{
-          
-            //const projectRef = doc(db, "projects", "t3uDsH8i1IuNsvieBwXK");
-          
+             
             try {
-                // const projectRef = collection(db, "projects");
-
-                // const q = query(projectRef, orderBy("created_at", "desc"));
-                
-                // const unsub = onSnapshot(q, (snapshot) => {
-                //   snapshot.docs.forEach((doc) => {
-                //     if (doc.exists()) {
-                //       //console.log("Current data: ", doc.data());
-                //       setDocument({ ...doc.data(), id: doc.id });
-                //     } else {
-                //       setError("no such document exists");
-                //     }
-                //   });
-                // });
-                
-                // return () => unsub();
+           
 
 
 
@@ -63,7 +46,7 @@ const [error, setError] = useState<string | null>(null)
                 const unsub = onSnapshot(projectRef, (doc) => {
 
                    if(doc.data()){
-                      console.log("Current data: ", doc.data());
+                      //console.log("Current data: ", doc.data());
                       setDocument({...doc.data(),id: doc.id})
                       // setDocument({...doc.data(),id: doc.id});
                      

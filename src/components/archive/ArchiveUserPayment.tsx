@@ -65,7 +65,7 @@ const ArchiveUserPayment : React.FunctionComponent<IArchiveUserPayment> =() => {
       
       useEffect(()=>{
 
-      console.log("paymentsArr",paymentsArr )
+      //console.log("paymentsArr",paymentsArr )
 
             },[getArchivePayfromBase, paymentsArr])
 

@@ -13,7 +13,7 @@ export interface IProjectListProps {};
          props.projects.forEach((el)=>{
 
           //const a1 = 
-          console.log(console.log("projectsEl",el.created_at.toDate().getTime()))
+          //console.log(console.log("projectsEl",el.created_at.toDate().getTime()))
         })
 
         const projectesMod = props.projects.sort((a, b) => {

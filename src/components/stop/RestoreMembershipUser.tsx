@@ -5,6 +5,7 @@ import { db } from '../../App';
 import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { useNavigate } from 'react-router-dom';
+import DateFnsFormat from '../DateFnsFormat';
 
 export const RestoreMembershipUser: React.FunctionComponent =() => {
 
@@ -54,7 +55,7 @@ useEffect(() => {
                       }
 
                  } else {
-                  console.log("uzytkownik aktywny")
+                  //console.log("uzytkownik aktywny")
                 }
                 }
               }
@@ -69,7 +70,7 @@ useEffect(() => {
           useEffect(()=>{
 
                     const handleSetUserInfo = async ()=>{
-                        console.log("klikniete")
+                       // console.log("klikniete")
                       if(currentUser){ 
                         const userRef = doc(db, "usersData",currentUser?.uid);
                         const docSnap = await getDoc(userRef);
@@ -85,16 +86,16 @@ useEffect(() => {
                                if(docSnap.data().optionPass === true){
                                   setIsPass(true)
                                    }
-                              console.log('isPass',isPass)
+                             // console.log('isPass',isPass)
 
                                  if(docSnap.data().stop){
                                   setIsStop(true);   
-                                  console.log('isStop',isStop)
+                                  //console.log('isStop',isStop)
                                     if(docSnap.data().debt){
                                        setDebt(docSnap.data().debt)
                                        }
                                   } else {
-                                    console.log("aktywny")
+                                    //console.log("aktywny")
                                   }
                              }
                              //console.log("name", name)
@@ -102,7 +103,7 @@ useEffect(() => {
                 }
       
                 handleSetUserInfo() 
-                console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt,isPass) 
+               // console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt,isPass) 
 
         },[db,dzisIndex,currentUser,rendered])
 
@@ -138,7 +139,7 @@ const dataToActivityArchive = {
   } 
 
 const sendToBase =async()=>{
-  console.log("wcisnieto przycisk",isPass,restartNewData)
+  //console.log("wcisnieto przycisk",isPass,restartNewData)
 
   //if(currentUser){
 
@@ -183,7 +184,12 @@ const sendToBase =async()=>{
 
 return(<div>
 
- {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>}
+ {/* {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>} */}
+ {isStop && 
+   <div className="archive">
+      <p>Planujesz powrót</p>
+     <p><DateFnsFormat element={dzisData}/></p>
+     </div>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
     {isStop &&<button onClick={sendToBase} className='btn'>akceptuj</button>}    
     {isSent && <p>wyslano</p>}

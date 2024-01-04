@@ -7,6 +7,7 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'fir
 import { db } from '../../App';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import DateFnsFormat from '../DateFnsFormat';
 
 export interface Itest{}
 export interface US {
@@ -249,8 +250,21 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
 
     {/* {isPausa && <p>{newPaymentDate?.toDate()?.toString()}</p>} */}
     {/* {todayDisplay && <p>{todayDisplay?.getMonth()+1}-{todayDisplay?.getDate()}</p>} */}
-    { isMulti ? <p>{dzisData?.toDate().toLocaleDateString()}</p> : <p></p>}
-    { isPass ? <p>{newPaymentDate?.toDate().toString()}</p> : <p></p>}  
+    {/* { isMulti ? <p>{dzisData?.toDate().toLocaleDateString()}</p> : <p></p>}
+    { isPass ? <p>{newPaymentDate?.toDate().toString()}</p> : <p></p>}   */}
+
+{ isMulti && 
+   <div className="archive">
+     <p>Powrót</p>
+   <p><DateFnsFormat element={dzisData}/></p>
+   </div>}
+   
+   { isPass && 
+   <div className="archive">
+    <p>Powrót</p>
+   <p><DateFnsFormat element={newPaymentDate}/></p>
+   </div>}
+
  <button onClick={pushToBaseNewDueDay}>Zatwierdz powrot</button>
  {isSent &&<p>wyslano</p>}
     

@@ -262,7 +262,7 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
    { isPass && 
    <div className="archive">
     <p>Powrót</p>
-   <p><DateFnsFormat element={newPaymentDate}/></p>
+   <p><DateFnsFormat element={dzisData}/></p>
    </div>}
 
  <button onClick={pushToBaseNewDueDay}>Zatwierdz powrot</button>

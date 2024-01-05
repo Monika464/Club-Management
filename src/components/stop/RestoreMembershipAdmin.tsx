@@ -5,6 +5,7 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'fir
 import { db } from '../../App';
 import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
+import DateFnsFormat from '../DateFnsFormat';
 
 export interface US {
     value: string | null
@@ -24,7 +25,7 @@ export const RestoreMembershipAdmin: React.FunctionComponent =() => {
     const [debt, setDebt] = useState<number | null>(null)
     const [isStop, setIsStop] = useState<boolean>(false)
     const [restartDateIndex, setRestartDateIndex] = useState<number | null>(null);
-    
+    const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);  
 
@@ -116,19 +117,22 @@ useEffect(() => {
               const docSnap = await getDoc(userRef);
 
                   if (docSnap.exists()) {
-                       if(docSnap.data().stop){
+
+                    setName(docSnap.data().name);
+                    setSurname(docSnap.data().surname);
+                      
+                    if(docSnap.data().stop){
                         setIsStop(true);
-                         setName(docSnap.data().name);
-                         setSurname(docSnap.data().surname);
-                                 if(docSnap.data().debt){
-                                  setDebt(docSnap.data().debt)
-                                   }
-                        } else {
-                          console.log("uzytkownik nie zatrzymany")
+                        setStopDateFromBase(docSnap.data().stop)
+                       }
+
+                      if(docSnap.data().debt){
+                        setDebt(docSnap.data().debt)
                         }
+                   } 
                    }
             }   
-      }
+      
 
      
      // console.log('name',name,'dzisData',dzisData?.toDate(),'debt',debt) 
@@ -206,8 +210,20 @@ RestoreMembershipAdmin
     />
     <p>{chosenUserByIdLabel}</p>
 
-    <button onClick={handleSetUserInfo}>wylicz date powrotu</button>  
- {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>}
+    <button onClick={handleSetUserInfo} className='btn'>wylicz date powrotu</button>  
+    {/* {stopDateFromBase} */}
+ 
+    {stopDateFromBase && <div className="archive">    
+         <p>Treningi zatrzymane od:  </p>
+        <p><DateFnsFormat element={stopDateFromBase}/></p>
+        </div>
+     }
+ {/* {isStop && <p>Planowany powrót {dzisData?.toDate()?.toString()}</p>} */}
+ {isStop && 
+   <div className="archive">
+      <p>Czy planuje powrót w najbliższym terminie </p>
+     <p><DateFnsFormat element={dzisData}/> ?</p>
+     </div>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
     <button onClick={sendToBase}>akceptuj</button>   
 </>)

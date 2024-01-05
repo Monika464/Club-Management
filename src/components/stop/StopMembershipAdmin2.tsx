@@ -7,6 +7,8 @@ import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../../App';
 import { useSearchIndexAnyDate } from '../../hooks/useSearchIndexAnyDate';
+import DateFnsFormat from '../DateFnsFormat';
+import { compareAsc, isToday } from 'date-fns';
 
 export interface US {
   value: string | null
@@ -27,14 +29,17 @@ const [stopDate, setStopDate] = useState<Date | null>()
 const [finalDebt, setFinalDebt] = useState<number | null>(null) 
 const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null)
-
+const [isMulti, setIsMulti] = useState<boolean>(false)
+const [isPass, setIsPass] = useState<boolean>(false)
+const [isMoved, setIsMoved] = useState<boolean>(false)
 const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const [newUsersList, setNewUsersList] = useState<US[]>([])  
-
-console.log("czy jest dzis index", stopDate?.toDate(), dzisIndex,dzisData?.toDate())
-console.log("paymentDateIndex", paymentDateIndex)
+const [modIndFin, setModIndFin] = useState<number | null>(null) 
+const [modDatFin, setModDatFin] = useState<Date | null>(null) 
+const [dataDue, setDataDue] = useState<Date | null>()
+const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
 
 const userModForSelect  =  useModUsersForSelect();  
 
@@ -68,13 +73,13 @@ useEffect(() => {
                 // Dodawanie użytkownika do listy w formie obiektu
                 //usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                     if((docSnap.data().optionMulti === true) && (!docSnap.data().stop)&& (docSnap.data().id === userModForSelect[i].value)){
-                        console.log("say yes")
+                    
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                     } 
                     if( (docSnap.data().id  === userModForSelect[i].value)
                     && (docSnap.data().due || docSnap.data().pause)
                     ){
-                        console.log("say no")
+                       
                         usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                      }
            
@@ -88,115 +93,153 @@ useEffect(() => {
 
     fetchData();
 
-    console.log('newUsersList222',newUsersList)
+    //console.log('newUsersList222',newUsersList)
 
 }, [db,dzisData,paymentDateIndex,dzisIndex,rendered]);
-
-//lista userow zmodyfikowana tak zeby zaden nie mial stop
-//ci z karnetem moga miec duedate albo pausa
-//ci z multi wszyscy moge
-
-
 
 
 //AKCJE PO WYBORZE USERA
 
-//console.log('paymentDateIndex',paymentDateIndex)
 
 useEffect(()=>{
 
-    const settingName = async ()=>{
+  const settingName = async ()=>{
 
         if(chosenUserId){ 
           const userRef = doc(db, "usersData",chosenUserId);
           const docSnap = await getDoc(userRef);
   
               if (docSnap.exists()) {
-                console.log("tutaj snap",docSnap.data())
+                //console.log("tutaj snap",docSnap.data())
                 setName(docSnap.data().name);
-                setSurname(docSnap.data().surname);
-              
-               
-                    }
+                setSurname(docSnap.data().surname)        
+                }
 
          }
   
       }
       settingName() 
 
-     },[chosenUserId,db,dzisData,paymentDateIndex,dzisIndex,rendered])
+ },[chosenUserId,db,dzisData,paymentDateIndex,dzisIndex,rendered])
 
   
 
 //funkcja kalkulująca naleznosc
 
-    const getAddfromBase =async ()=>{
+  const getAddfromBase =async ()=>{
 
         if(chosenUserId){ 
             const userRef = doc(db, "usersData",chosenUserId);
             const docSnap = await getDoc(userRef);
     
-                if (docSnap.exists()) {    
+                if (docSnap.exists()) { 
+                  
+                  //ustaw ze wczytuje
+                  setIsMoved(true)
+                  
 
-        //jesli mamy stop
-        if(docSnap.data().stop){
-         setStopReported(true)
-         }
+                      //jesli mamy stop
+                      if(docSnap.data().stop){
+                      setStopReported(true)
+                      setStopDateFromBase(docSnap.data().stop)
+                    
+                      }
 
-        //jesli mamy pauze
-     if(docSnap.data().pause){
-        setCurrentUserPausaDate(docSnap.data().pause);
-         console.log("uzytkownik pauzujacy")
-             if(docSnap.data().add){          
-                console.log("uzytkownik majacy treningi do dodania")
-                const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
-                const convertToStopInd = pausaIndex + docSnap.data().add;
-                const dateSzukana = useSearchDatesByIndex(convertToStopInd)
-                setStopDate(dateSzukana);
-             }
-             if(docSnap.data().debt){          
-               console.log("uzytkownik zadluzony")
-               setStopDate(dzisData);
-               setFinalDebt(docSnap.data().debt)  
-            }
-      } 
-       //jesli mamy due
-         if(docSnap.data().due){  
-            console.log("uzytkownik z data due")
-            console.log("paymentDateIndex",paymentDateIndex,dzisIndex,paymentDateIndex)
-              if(paymentDateIndex && dzisIndex){
-               
-                 setStopDate(dzisData)
-                 if(dzisIndex > paymentDateIndex){
-                 setFinalDebt(dzisIndex - paymentDateIndex)
-                 }          
-              }
-          }  
-          
-          //jesli mamy multiOption true
-          // setStopDate(dzisData)
-          //if debt setFinalDebt debt
-          
-          if(docSnap.data().optionMulti === true){  
-            console.log("uzytkownik z multi")
+                       //jesli mamy multi
+                      if(docSnap.data().optionMulti === true){  
+                        console.log("uzytkownik z multi")
             
-              if(dzisIndex){
-                 setStopDate(dzisData)
-                 if(docSnap.data().debt){
-                 setFinalDebt(docSnap.data().debt)
-                 }          
-              }
-          }  
-          
+                           setIsMulti(true);
+                            setStopDate(dzisData);
+                        
+                            //jezeli jest debt w multi
+                              if(docSnap.data().debt){
+                              setFinalDebt(docSnap.data().debt)
+                              }   
+                              
+                              //jezeli mamy pauze w multi
+                            if(docSnap.data().pause){
+                            setCurrentUserPausaDate(docSnap.data().pause);
+                            // console.log("uzytkownik pauzujacy")
+                            } 
+                          }
+                     
+                      //jesli mamy pass
+                       if(docSnap.data().optionPass === true){  
+                          setIsPass(docSnap.data().optionPass);
+
+                                  //jesli mamy pauze
+                                if(docSnap.data().pause){
+                                 console.log("uzytkownik pauzujacy")
+                                 setStopDate(dzisData);
+                                 setCurrentUserPausaDate(docSnap.data().pause);
 
 
+                                 //jesli zadluzenie w pauzie
+                              if(docSnap.data().debt){          
+                               console.log("uzytkownik zadluzony")
+                              setStopDate(dzisData);
+                               setFinalDebt(docSnap.data().debt)  
+                              }
+                          } 
+                            //jesli mamy due 
+                           if(docSnap.data().due){ 
+                            setDueDate(docSnap.data().due)
 
+                      if((paymentDateIndex !== null) && dzisIndex){
+                             
+
+                              if(dzisIndex > paymentDateIndex){
+                                setFinalDebt(dzisIndex - paymentDateIndex)
+                                setStopDate(dzisData)
+                              }  
+                              if(dzisIndex < paymentDateIndex){
+                                setStopDate(dueDate)
+
+                              }
+                              // const temp = paymentDateIndex - dzisIndex
+                              // const newDI = dzisIndex + temp;
+                              //  setModIndFin(newDI)
+                              // }  
+                       }
+
+                }  
 
      }
         
+    } else {
+      console.log("brak polaczenia z baza")
     }
 }
-     const dataToActivityArchive = {
+  }
+
+//console.log("stopDateFromBase",stopDateFromBase, stopReported)
+  
+// useEffect(()=>{
+//   if (isToday(dueDate)) {
+//     console.log("To jest dzisiaj!");
+//   } else {
+//     // Porównaj daty
+//     const comparisonResult = compareAsc(dueDate?.toDate(), new Date());
+//     console.log("comparisonResult",comparisonResult)
+//     if (comparisonResult === 1) {
+//       console.log("To będzie później");
+//     } else if (comparisonResult === -1) {
+//       console.log("To było wcześniej");
+//     } 
+//       else {
+//       console.log("To jest dokładnie teraz!");
+//     }
+//   }
+
+
+//   //console.log("porownujemy", compareAsc(new Date(2024, 0, 6), new Date()))
+  
+// },[getAddfromBase])
+
+  
+  
+  const dataToActivityArchive = {
        created_at: serverTimestamp(),
         stopData: stopDate,
         userUid: chosenUserId,
@@ -222,42 +265,98 @@ useEffect(()=>{
         .then(()=>  setStopDate(null))
         .then(()=>   setisSent(true))
        
-         
-        const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-        .then(()=> console.log("archive"))
-     
-         } 
+         }
 
+         if(isMulti){
+          await updateDoc(paymentDataRef, {
+            pause: null,  
+            add: null,
+            stop: stopDate,  
+            restart: null,
+            debt: finalDebt     
+          })
+          .then(()=>console.log("stop date for multiuser update succesful"))
+          .then(()=>  setStopDate(null))
+          .then(()=>   setisSent(true))
+          .then(()=>   setFinalDebt(null))
+        }
+       // console.log("czy tu jest isPass",isPass)   false
+        if(isPass){
+          if(finalDebt){
+              await updateDoc(paymentDataRef, {
+                 pause: null,  
+                 add: null,
+                 stop: stopDate,  
+                 restart: null,
+                 debt: finalDebt,
+                 due: null  
+              })
+              .then(()=>console.log("stop date for passuser update succesful"))
+              .then(()=>  setStopDate(null))
+              .then(()=>   setisSent(true))
+              .then(()=>   setFinalDebt(null))
     
-     if(!currentUserPausaDate && !stopReported){ 
-        await updateDoc(paymentDataRef, {
-           stop: stopDate,
-           due: null,
-           restart: null
-         })
-         .then(()=>console.log("debt modified. update succesful"))
-         .then(()=>  setStopDate(null))
-         .then(()=>   setisSent(true))
-
-         const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-         .then(()=> console.log("archive"))
+          }
+         
+             if(compareAsc(dueDate?.toDate(), new Date()) === 1){
+                await updateDoc(paymentDataRef, {
+                 pause: null,  
+                 add: null,
+                 stop: dueDate,  
+                 restart: null,
+                 debt: null,
+                 due: null  
+               })
+                .then(()=>console.log("stop date for passuser update succesful"))
+                .then(()=>  setStopDate(null))
+                .then(()=>   setisSent(true))
+                .then(()=>   setFinalDebt(null))
+    
+                }
+    
+    
         }
 
-    if(finalDebt){
-       await updateDoc(paymentDataRef, {
-          debt: finalDebt
-        })
-        .then(()=>console.log("debt modified. update succesful"))
-        .then(()=>{setFinalDebt(null)})
-       }
+    
+              const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+            .then(()=> console.log("archive"))  
+
+
+       }   
+
+
+    //  if(!currentUserPausaDate && !stopReported){ 
+    //     await updateDoc(paymentDataRef, {
+    //        stop: stopDate,
+    //        due: null,
+    //        restart: null
+    //      })
+    //      .then(()=>console.log("debt modified. update succesful"))
+    //      .then(()=>  setStopDate(null))
+    //      .then(()=>   setisSent(true))
+
+    //      const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+    //      .then(()=> console.log("archive"))
+    //     }
+
+    //    if(finalDebt){
+    //       await updateDoc(paymentDataRef, {
+    //       debt: finalDebt
+    //     })
+    //     .then(()=>console.log("debt modified. update succesful"))
+    //     .then(()=>{setFinalDebt(null)})
+    //    }
      
 
-  }
+ 
 
 
+  //const dateSzukana = useSearchDatesByIndex(modIndFin)  
+  //console.log("stopdatee", stopDate?.toDate())
+  //console.log("duedate", dueDate?.toDate())
 
 return(<>
-StopMembershipAdmin
+Zatrzymaj członkostwo wybranego użytkownika 
 <Select
       closeMenuOnSelect={true}  
       options={newUsersList}
@@ -270,16 +369,47 @@ StopMembershipAdmin
         setName(null);
         setSurname(null);
         setFinalDebt(null);
+        setCurrentUserPausaDate(null);
+        setIsMoved(false)
+        setDueDate(null)
         }}   
     />
     <p>{chosenUserByIdLabel}</p>
 
-    {<button onClick={getAddfromBase}>Skalkuluj date zakonczenia</button>}
+    {<button onClick={getAddfromBase} className='btn'>Skalkuluj date zakonczenia</button>}
  
- {stopReported && <p>juz zastopowane</p>}
- {stopDate &&  <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>}
- {finalDebt && <p>istniejące zadłużenie: {finalDebt} treningów</p>}
- {!stopReported  && <button onClick={sendStopToBase}>Potwierdż</button>}
+ 
+   
+
+
+ {currentUserPausaDate && <p>Pauzujacy użytkownik rezygnuje dzis z członkostwa</p>}
+ {/* {!stopReported && isMoved &&
+     <div className="archive">    
+     <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+        <p><DateFnsFormat element={dzisData}/></p>
+     </div>}
+     {(dzisIndex < paymentDateIndex) && !stopReported && stopDate && isMoved &&
+       <div className="archive">    
+       <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+         <p><DateFnsFormat element={dueDate}/></p>
+            </div>}  */}
+
+{/* { isMoved && <> */}
+      { compareAsc(dueDate?.toDate(), new Date()) === 1 ? <div className="archive">    
+                                                            <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+                                                            <p><DateFnsFormat element={dueDate}/></p>
+                                                          </div>
+                                                       : isMoved ? <div className="archive">    
+                                                           <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+                                                           <p><DateFnsFormat element={dzisData}/></p>
+                                                         </div>  :  <p></p>
+       }
+       {/* </>} */}
+ 
+
+ {/* {stopDate &&  <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>} */}
+  {finalDebt && <p>istniejące zadłużenie: {finalDebt} treningów</p>}
+ {!stopReported  && <button onClick={sendStopToBase} className='btn'>Potwierdż</button>}
  {isSent &&<p>wyslano</p>}
 
 

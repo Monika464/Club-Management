@@ -21,7 +21,7 @@ export const RestoreMembershipUser: React.FunctionComponent =() => {
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);
     const navigate = useNavigate();
-    
+    const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
     const [rendered, setRendered] = useState(false);
 
 useEffect(() => {
@@ -44,6 +44,7 @@ useEffect(() => {
             if (docSnap.exists()) {
                  if(docSnap.data().stop){
                   setIsStop(true);
+                  setStopDateFromBase(docSnap.data().stop)
 
                   setName(docSnap.data().name);
                   setSurname(docSnap.data().surname);
@@ -180,17 +181,24 @@ const sendToBase =async()=>{
   }
 
 
-
+//console.log("stopDateFromBase",stopDateFromBase)
 
 return(<div>
 
+
+{stopDateFromBase && <div className="archive">    
+         <p>Treningi zatrzymane od:  </p>
+        <p><DateFnsFormat element={stopDateFromBase}/></p>
+        </div>
+     }
  {/* {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>} */}
  {isStop && 
    <div className="archive">
-      <p>Planujesz powrót</p>
-     <p><DateFnsFormat element={dzisData}/></p>
+      <p>Czy planujesz powrót w najbliższym terminie </p>
+     <p><DateFnsFormat element={dzisData}/> ?</p>
      </div>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
+<br></br>
     {isStop &&<button onClick={sendToBase} className='btn'>akceptuj</button>}    
     {isSent && <p>wyslano</p>}
     </div>)

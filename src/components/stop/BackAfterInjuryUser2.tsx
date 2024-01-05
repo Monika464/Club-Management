@@ -158,14 +158,14 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
            }    
 
 
-    
+    console.log("newPaymentDate ",newPaymentDate?.toDate() )
 
     return(<> 
     {newPaymentDate && 
     
     <div className="archive">
     <p>Jeśli chcesz wrócic do treningów: </p>
-       <p><DateFnsFormat element={newPaymentDate}/> zatwierdź</p>
+       <p><DateFnsFormat element={dzisData}/> zatwierdź</p>
        </div>}
     {currentUserPausaDate&&<button onClick={pushToBaseNewDueDay} className="btn">Zatwierdz powrot</button>}
     {isSent&&<p>wyslano</p>} 

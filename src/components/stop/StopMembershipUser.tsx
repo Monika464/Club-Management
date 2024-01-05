@@ -8,7 +8,8 @@ import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useSearchIndexAnyDate } from "../../hooks/useSearchIndexAnyDate";
 import { useNavigate } from "react-router-dom";
 import DateFnsFormat from "../DateFnsFormat";
-
+import { compareAsc, isToday } from "date-fns";
+//const { compareAsc, parse, isToday } = require('date-fns');
 
 
 const StopMembershipUser: React.FunctionComponent =() => {
@@ -29,11 +30,14 @@ const [isPass, setIsPass] = useState<boolean>(false)
 const [modIndFin, setModIndFin] = useState<number | null>(null) 
 const [modDatFin, setModDatFin] = useState<Date | null>(null) 
 const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
+//const [rendered, setRendered] = useState(false);
+const [dataDue, setDataDue] = useState<Date | null>()
+
 const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const navigate = useNavigate();
-
+//const dateSzukana = useSearchDatesByIndex(modIndFin) 
 
 //console.log("paymentDateIndex", paymentDateIndex, surname)
 //ustawienie podstawowych danych
@@ -73,7 +77,7 @@ const settingName = useCallback( async ()=>{
                   setFinalDebt(docSnap.data().debt)
                  }
 
-               //jezeli mamy pauze w 
+               //jezeli mamy pauze w multi
                  if(docSnap.data().pause){
                   setCurrentUserPausaDate(docSnap.data().pause);
                  // console.log("uzytkownik pauzujacy")
@@ -105,20 +109,28 @@ const settingName = useCallback( async ()=>{
                      }
         } 
        //jesli mamy due
-         if(docSnap.data().due){     
-          
+       // porownamy z dzis !!!
+         if(docSnap.data().due){  
+          setDataDue(docSnap.data().due);  
+   
               if((paymentDateIndex !== null) && dzisIndex){
                  setStopDate(dzisData)
                  if(dzisIndex > paymentDateIndex){
                  setFinalDebt(dzisIndex - paymentDateIndex)
                    }  
-                 if(dzisIndex < paymentDateIndex){
-                  const temp = paymentDateIndex - dzisIndex
-                  const newDI = dzisIndex + temp;
-                  setModIndFin(newDI)
-                  //setStopDate(dateSzukana)
-                 
-                    }   
+
+
+
+
+                   //temu sie przyjrzec czemy nie liczy
+                //  if(dzisIndex < paymentDateIndex){
+                //   const temp = paymentDateIndex - dzisIndex
+                //   const newDI = dzisIndex + temp;
+                //   console.log("newDI",newDI)
+                //   setModIndFin(newDI)
+                //   console.log("modIndFin",modIndFin)
+                //   setStopDate(dateSzukana) 
+                //  }   
                       
                }
                
@@ -131,20 +143,35 @@ const settingName = useCallback( async ()=>{
 
     console.log("brak polaczenia z baza")
    }
+
+
+  // Sprawdź, czy jest dzisiaj
+if (isToday(dueDate)) {
+  console.log("To jest dzisiaj!");
+} else {
+  // Porównaj daty
+  const comparisonResult = compareAsc(dueDate, new Date());
+  if (comparisonResult === 1) {
+    console.log("To będzie później");
+  } else if (comparisonResult === -1) {
+    console.log("To było wcześniej");
+  } else {
+    console.log("To jest dokładnie teraz!");
+  }
+}
           
    }
-   
-
-
-      },[])
-  const dateSzukana = useSearchDatesByIndex(modIndFin)   
+   },[currentUser,db,dzisData])
+ 
+  //console.log("modDatFin1",modDatFin) 
           
 useEffect(()=>{
     
       settingName()  
-      setModDatFin(dateSzukana);
-     // console.log('dateSzukana',dateSzukana?.toDate())
-     // console.log('modDatFin',modDatFin)
+     // setModDatFin(dateSzukana);
+      // console.log('dateSzukana',dateSzukana?.toDate())
+      // console.log('modDatFin2',modDatFin)
+      // console.log('modIndFin',modIndFin)
     // console.log("uzytkownik pauzujacy")
    
  },[currentUser,dzisIndex,settingName])
@@ -239,7 +266,10 @@ useEffect(()=>{
      
 
   }
-
+  
+console.log("porownanie na user",compareAsc(stopDate?.toDate(), new Date()) === 1)
+console.log("poro ile na user",compareAsc(stopDate?.toDate(), new Date()))
+console.log("jaka stopdte",stopDateFromBase?.toDate() )
 
 return (<div>
 
@@ -248,18 +278,38 @@ return (<div>
   {/* {stopReported && <p>uczestnictwo w klubie będzie zatrzymane od {stopDateFromBase?.toDate().toString()}</p>} */}
   {/* {!stopReported && <p>uczestnictwo w klubie będzie zatrzymane od 
     {stopDateFromBase?.toDate().toString()}</p>} */}
+   {/* {stopReported && <p>juz zastopowane</p>} */}
+
+{/* {stopDateFromBase && <div className="archive">    
+         <p>Treningi zatrzymane od:  </p>
+        <p><DateFnsFormat element={stopDateFromBase}/></p>
+        </div>
+} */}
+          
+    
+
+
+
   {currentUserPausaDate && <p>Pauzujacy użytkownik rezygnuje dzis z członkostwa</p>}
     {!stopReported && 
      <div className="archive">    
      <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
         <p><DateFnsFormat element={dzisData}/></p>
-     </div>}
+        </div>}
+     {(dzisIndex < paymentDateIndex) && !stopReported && dataDue &&
+       <div className="archive">    
+       <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+         <p><DateFnsFormat element={dataDue}/></p>
+            </div>} 
+        
+        
+     
   {finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
   {!stopReported && <button onClick={sendStopToBase} className="btn">Potwierdż</button>}
   {isSent &&<p>wyslano</p>}
 
     
-    </div>)
+    </div>) 
 }
 
 export default StopMembershipUser;

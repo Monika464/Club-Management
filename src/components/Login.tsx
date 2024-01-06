@@ -21,7 +21,7 @@ export interface IApplicationProps {};
 const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
   const { currentUser} = useContext(UserContext);
 
-  console.log('currentUser',currentUser)
+  //console.log('currentUser',currentUser)
 
     //const auth = getAuth();
     const navigate = useNavigate();

@@ -52,7 +52,7 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = (props) =>
 
   return (
     <div>
-      Zadłużeni użytkownicy
+     <p className="title"> Zadłużeni użytkownicy</p>
       {/* Render your debtors list here */}
       {deptorsList.map((deptor) => (
         <div key={deptor.id}>

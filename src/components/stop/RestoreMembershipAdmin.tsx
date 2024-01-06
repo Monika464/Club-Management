@@ -196,7 +196,6 @@ const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArc
 return(<>
 
 
-Przywróć członkostwo wybranego uzytkownika
 <Select
       closeMenuOnSelect={true}  
       options={newUsersList}

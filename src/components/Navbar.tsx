@@ -8,6 +8,8 @@ import { UserContext } from '../context/UserContext';
   import './navbar.css';  
   import AdminRoute from '../components/AdminRoute.tsx';
 import { useRegisteringUsers } from '../hooks/useIsUserRegistered.tsx';
+import { useIsAdmin } from '../hooks/useIsAdmin.tsx';
+
 
 export interface INavbarProps {};
 
@@ -15,13 +17,14 @@ export interface INavbarProps {};
 const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const auth = getAuth();
     const [authing, setAuthing] = useState(false);
-    const [isAdmin,setIsAdmin] = useState(false);
+    //const [isAdmin,setIsAdmin] = useState(false);
 
     const isUserRegistered = useRegisteringUsers()
     
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);
     const [rendered, setRendered] = useState(false);
+    const isAdmin = useIsAdmin(currentUser?.uid)
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -33,6 +36,8 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
       };
     }, [isUserRegistered]);
 
+
+    
 
     // useEffect(()=>{
     //   if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
@@ -53,6 +58,11 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
 
         }
 
+        const redirectToAdminPanel =()=>{
+          navigate('/adminpanel');
+
+        }
+
      //console.log("isss", isUserRegistered)
 
 
@@ -63,9 +73,14 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     //   //redirect("/login");
     //  }
 
+    
+   // console.log("czy admin",czyAdmin)
+
     return (
       
             <nav className="navbar">
+
+
    
    <ul>
    <li className="logo">
@@ -84,6 +99,10 @@ const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     <li>
     {!currentUser &&    <NavLink to="/login" className="navlink">Login</NavLink>} 
     </li>
+
+    <li> 
+    {currentUser && isAdmin && <button className="btn" onClick={redirectToAdminPanel}>Admin</button>}
+    </li> 
     <li> 
    {currentUser && <button className="btn" onClick={redirectToPanel}>Panel</button>}
     </li> 

@@ -13,17 +13,15 @@ const PaymentAdminPage: React.FunctionComponent =() => {
            <br></br>
             <UsersPayments/>
             <br></br> <br></br><br></br>
-
+Przełącz użytkownika z multi na karnet
 <SwitchMultiToPass/>
 <br></br> <br></br>
+
+Przełącz użytkownika na karnetu na multi
 <SwithPassToMulti/>
 <br></br> <br></br>
 
-<div className="siteLink"> 
-              <ul>
-                <li> <Link to="/adminpanel" className="userpanel">adminpanel</Link></li>
-              </ul>
-            </div>
+
 
     </div>
     )

@@ -53,12 +53,12 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
     };
   }, []);
 
-  useEffect(()=>{
-    if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
-      setIsAdmin(true);
-    }
+  // useEffect(()=>{
+  //   if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
+  //     setIsAdmin(true);
+  //   }
 
-  },[currentUser,rendered])
+  //},[currentUser,rendered])
 
   const handleEditInjury =()=>{
     setIsEditedInjury(!isEditedInjury)
@@ -129,11 +129,18 @@ return (
           
               </NavLink>
               </li>
+
+
+              <li>
+              <NavLink  to="/instruction">Instrukcja 
+          
+              </NavLink>
+              </li>
              
+              </ul>     
             
-            
-         <br></br>   
-               <li>
+         
+               {/* <li>
               <NavLink  to="/test" >test
             
                   </NavLink>
@@ -142,17 +149,15 @@ return (
               <NavLink  to="/test2" >test
             
                   </NavLink>
-              </li>
+              </li> */}
 
-
+{/* 
               <li>
               {isAdmin &&<Link to="/adminpanel">Administracja</Link>}
-              </li>
-            </ul>
+              </li> */}
+            
          
-              <br></br><br></br>
-            <br></br><br></br>
-            {/* <MailToAdminSend/>      */}
+             
 </div>
 <div className='glowna'>
            <DisplayNextTrainings

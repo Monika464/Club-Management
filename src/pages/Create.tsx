@@ -165,8 +165,8 @@ console.log('assignedUsers',assignedUsers );
     return (
 
         <div className='create-form'>
-             <h2 className='page-title'>Create a new project</h2>
-    
+        <h2 className='page-title'>Create a new project</h2>
+    <br></br><br></br>
 
 
              <form onSubmit={handleSubmit}>

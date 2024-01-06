@@ -83,7 +83,7 @@ useEffect(() => {
     
         fetchData();
     
-        console.log('newUsersList',newUsersList)
+       // console.log('newUsersList',newUsersList)
     
     }, [db,useModUsersForSelect,dzisData]);
 
@@ -264,7 +264,7 @@ const getAddfromBase =async ()=>{
     />
 
 
-<button onClick={getAddfromBase}>Wylicz pauze </button>
+<button onClick={getAddfromBase} className="btn">Wylicz pauze </button>
 <br></br>
 
 
@@ -289,7 +289,7 @@ const getAddfromBase =async ()=>{
     placeholder="Co się stało?"
     required
   />
-  <button onClick={sendStopToBase}>Potwierdż</button>
+  <button onClick={sendStopToBase} className="btn">Potwierdż</button>
   </div>}
   {isSent &&<p>wyslano</p>} 
     

@@ -48,6 +48,7 @@ import { Test2 } from './components/Test2.tsx';
 import DisplayUserDataAdmin from './components/displayDetails/DisplayUserDataAdmin.tsx';
 import { RaportUsersPage } from './pages/RaportUserspage.tsx';
 import StopActivityPage from './pages/StopActivitypage.tsx';
+import Instruction from './pages/Instruction.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -233,7 +234,14 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                       //  </AuthRoute>
                     }
             />
-
+<Route 
+             path="/instruction" 
+             element={
+                      // <AuthRoute>
+                       <Instruction/>                                     
+                      //  </AuthRoute>
+                    }
+            />
 
 <Route 
              path="/test" 

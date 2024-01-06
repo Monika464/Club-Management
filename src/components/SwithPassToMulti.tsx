@@ -179,7 +179,7 @@ useEffect(()=>{
     //jak i update czyli zmiana z pass na multi
 
     return(<div>
-        SwithPassToMulti
+
         <Select
       closeMenuOnSelect={true}  
       options={newUsersList}

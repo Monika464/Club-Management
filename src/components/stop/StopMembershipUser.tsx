@@ -48,70 +48,64 @@ const navigate = useNavigate();
 const settingName = useCallback( async ()=>{
 
   if(currentUser){ 
+
     const userRef = doc(db, "usersData",currentUser?.uid);
     const docSnap = await getDoc(userRef);
+
+
+
 
         if (docSnap.exists()) {  
           setName(docSnap.data().name);
           setSurname(docSnap.data().surname);
         
-          //jesli mamy stop
-          const temp = [];
-           if(docSnap.data().stop){
-           setStopReported(true)
-           setStopDateFromBase(docSnap.data().stop)
-           //console.log("stop date from base", docSnap.data().stop);
+                   //jesli mamy stop
+                    const temp = [];
+                   if(docSnap.data().stop){
+                     setStopReported(true)
+                     setStopDateFromBase(docSnap.data().stop)
+                    }
          
-           //console.log("stop date from base",stopDateFromBase?.toDate())
-          }
-         
-           //jesli mamy multi
-         if(docSnap.data().optionMulti === true){  
+                  //jesli mamy multi
+                if(docSnap.data().optionMulti === true){  
 
-           setIsMulti(true);
-           setStopDate(dzisData);
+                      setIsMulti(true);
+                      setStopDate(dzisData);
 
-                //jezeli jest debt w multi
-                if(docSnap.data().debt){
-                 // console.log("uzytkownik zadluzony")        
-                  setFinalDebt(docSnap.data().debt)
-                 }
+                     //jezeli jest debt w multi
+                      if(docSnap.data().debt){
+                    // console.log("uzytkownik zadluzony")        
+                      setFinalDebt(docSnap.data().debt)
+                      }
 
-               //jezeli mamy pauze w multi
-                 if(docSnap.data().pause){
-                  setCurrentUserPausaDate(docSnap.data().pause);
-                 // console.log("uzytkownik pauzujacy")
-                 }
-      }
+                    //jezeli mamy pauze w multi
+                      if(docSnap.data().pause){
+                      setCurrentUserPausaDate(docSnap.data().pause);
+                      // console.log("uzytkownik pauzujacy")
+                     }
+                   }
 
-      if(docSnap.data().optionPass === true){  
-        setIsPass(docSnap.data().optionPass);
+              if(docSnap.data().optionPass === true){  
+                 setIsPass(docSnap.data().optionPass);
 
-             //jesli mamy pauze
-             if(docSnap.data().pause){
-            setCurrentUserPausaDate(docSnap.data().pause);
-             console.log("currentUserPausaDate",currentUserPausaDate)
-             setStopDate(dzisData);
-                 //jezeli w pauzie sa do dodania 
-                    // if(docSnap.data().add){          
-                      //  console.log("uzytkownik majacy treningi do dodania")
-                      //  const pausaIndex = useSearchIndexAnyDate(currentUserPausaDate);
-                      //  const convertToStopInd = pausaIndex + docSnap.data().add;
-                      //  const dateSzukana = useSearchDatesByIndex(convertToStopInd)
-                      //  setStopDate(dateSzukana);
-                    // }
-   
-                     //jezeli w pauzie jest zadluzenie
+                 //jesli mamy pauze
+                     if(docSnap.data().pause){
+                      setCurrentUserPausaDate(docSnap.data().pause);
+                     console.log("currentUserPausaDate",currentUserPausaDate)
+                     setStopDate(dzisData);
+            
                      if(docSnap.data().debt){          
                        //console.log("uzytkownik zadluzony")
                        setStopDate(dzisData);
                        setFinalDebt(docSnap.data().debt)
                      }
-        } 
-       //jesli mamy due
-       // porownamy z dzis !!!
-         if(docSnap.data().due){  
-          setDataDue(docSnap.data().due);  
+                      } 
+
+              //jesli mamy due
+             // porownamy z dzis !!!
+               if(docSnap.data().due){  
+                   setDataDue(docSnap.data().due);  
+      
    
               if((paymentDateIndex !== null) && dzisIndex){
                  setStopDate(dzisData)
@@ -155,9 +149,10 @@ if (isToday(dueDate)) {
     console.log("To będzie później");
   } else if (comparisonResult === -1) {
     console.log("To było wcześniej");
-  } else {
-    console.log("To jest dokładnie teraz!");
-  }
+  } 
+  // else {
+  //   console.log("To jest dokładnie teraz!");
+  // }
 }
           
    }
@@ -267,9 +262,21 @@ useEffect(()=>{
 
   }
   
-console.log("porownanie na user",compareAsc(stopDate?.toDate(), new Date()) === 1)
-console.log("poro ile na user",compareAsc(stopDate?.toDate(), new Date()))
-console.log("jaka stopdte",stopDateFromBase?.toDate() )
+// console.log("porownanie na user",compareAsc(stopDate?.toDate(), new Date()) === 1)
+// console.log("poro ile na user",compareAsc(stopDate?.toDate(), new Date()))
+// console.log("jaka stopdte",stopDateFromBase?.toDate() )
+
+// const cot = dzisIndex >= paymentDateIndex
+// console.log("dzis indeks wiekszy lub rowny od platnosci jest nalaznosc",cot)
+// const acot = dzisIndex < paymentDateIndex
+// console.log("dzis dzis indeks mniejszy od platnosci, jest nadpłata ",acot)
+// const xacot = (dzisIndex >= paymentDateIndex) || !dueDate 
+// console.log("zaleglosc albo nie ma due date ",xacot)
+// //ktore prewdziwe
+// console.log("rownanie", dzisIndex >= paymentDateIndex)
+// console.log("brak due", !dueDate)
+
+// console.log("brak due inaczej", paymentDateIndex === (null || undefined))
 
 return (<div>
 
@@ -291,7 +298,7 @@ return (<div>
 
 
   {currentUserPausaDate && <p>Pauzujacy użytkownik rezygnuje dzis z członkostwa</p>}
-    {!stopReported && 
+    {!stopReported && ((dzisIndex >= paymentDateIndex) || paymentDateIndex === (null || undefined) ) &&
      <div className="archive">    
      <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
         <p><DateFnsFormat element={dzisData}/></p>

@@ -9,21 +9,17 @@ const Membershipage: React.FunctionComponent =() => {
     return(
 
         <div>
-            
+            <p className="title">Zatrzymaj członkostwo wybranego użytkownika</p>
             <StopMembershipAdmin2/>
 
             <br></br><br></br><br></br>
 
-           
+            <p className="title">Przywróć członkostwo wybranego uzytkownika</p>
             <RestoreMembershipAdmin/>
             <br></br>
 
 
-            <div className="siteLink"> 
-              <ul>
-                <li> <Link to="/adminpanel" className="userpanel">adminpanel</Link></li>
-              </ul>
-            </div>
+        
 
         </div>
     )

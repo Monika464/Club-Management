@@ -356,7 +356,7 @@ useEffect(()=>{
   //console.log("duedate", dueDate?.toDate())
 
 return(<>
-Zatrzymaj członkostwo wybranego użytkownika 
+
 <Select
       closeMenuOnSelect={true}  
       options={newUsersList}

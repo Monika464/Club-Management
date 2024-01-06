@@ -10,6 +10,7 @@ import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../App";
 import Select from 'react-select'
+import DateFnsFormat from "./DateFnsFormat";
 
 //data do zatwierdzenia cofke sie o sume tych debt wzgledem daty wybranej rozpoczecia
 export interface US {
@@ -162,7 +163,7 @@ if(calcDatOfNewPay && chosenUserId){
 
 
     return(<div>
-        SwitchMultiToPass
+  
         <Select
       closeMenuOnSelect={true}  
       options={newUsersList}
@@ -177,9 +178,12 @@ if(calcDatOfNewPay && chosenUserId){
     {/*<p>{chosenUserByIdLabel}</p>*/}
     <button onClick={getAddfromBase} className="btn">skalkuluj sytuacje usera </button>  
    <br></br>
-    {/*{calcDatOfNewPay?.toDate().toString()}*/}
-    {newPaymentDate && isCalculating &&<p>{newPaymentDate?.toDate().toString()}</p>}
-
+   
+    {newPaymentDate && isCalculating && 
+   <div className="archive">
+      <p>nalezność od</p>
+     <p><DateFnsFormat element={newPaymentDate}/></p>
+     </div>}
 
     <button onClick={handleSwitchToPass} className="btn">przelacz usera na pass</button>  
       {isSent && <p>uzytkownik teraz pass</p>}

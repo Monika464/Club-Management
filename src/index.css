@@ -164,3 +164,8 @@ textarea {
 .form{
   padding: 20px 12px;
 }
+
+.title{
+  font-weight: bold;
+  color: #555252;
+}

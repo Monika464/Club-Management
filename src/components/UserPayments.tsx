@@ -43,30 +43,55 @@ const checkingFunction =async ()=>{
             setName(docSnap.data().name)
             setSurname(docSnap.data().surname)
 
+            ///
+            if(docSnap.data().optionMulti === true){
+               setIsMulti(true)
+             }
 
-             if(docSnap.data().pause || docSnap.data().stop){
-               console.log("ma pauze albo stop")                   
-               if(docSnap.data().debt){
-                      setHasDebt(docSnap.data().debt)
-                     }
-                    if(docSnap.data().add){
-                    setHasAdd(docSnap.data().add)
-                   }
+             if(docSnap.data().optionPass === true){
+               
+               if(docSnap.data().pause || docSnap.data().stop){
 
-                } else if(docSnap.data().optionMulti === true){
-                  setIsMulti(true)
-                }
-                
-                else {
-                  console.log("nie ma pauzy ani stopu") 
-                  setOldDueDate(docSnap.data().due)
-                  setNewDueDate(newDate)
-                 //przelicz normalnie date
+                  console.log("czy to się uruchamiahasDebt")
+                 
+                      if(docSnap.data().add){
+                         setHasAdd(calculatedIndexOfNewDue + docSnap.data().add  )
+                       } else  if(docSnap.data().debt){
+                         setHasDebt(docSnap.data().debt )
+                         //jak debt mniejszy niz 8 to 
+                         if(docSnap.data().debt < 8 ){
+                           setModifyAdd(calculatedIndexOfNewDue - hasDebt) 
+                         }
+                         if(docSnap.data().debt >= 8 ){
+                           setModifyDebt(hasDebt - 8) 
+                         }
+                    
+                       } else {
+                        console.log("nie ma debt ani add")
+                        setModifyAdd(8);
+                       }
+                  // jak nie ma debt ani add  to
 
-                }
+                       //jak w stopie mamy add to dodajemy to do 
+                       //calculatedIndexOfNewDue
+                       //jak debt to od niego odejmujemy
+                  } 
+                  if(docSnap.data().due){
+                     setOldDueDate(docSnap.data().due)
+                     setNewDueDate(newDate)
+                  }
+              
+              
+              
+              
+               }
+
+
+             }
+          
          } 
       }
- }
+ 
 
 useEffect( ()=>{
 console.log("newDueDate",newDueDate)
@@ -166,7 +191,8 @@ useEffect(()=>{
     />
 
     <button onClick={checkingFunction} className="btn">Edytuj uzytkownika</button>
-    {isMulti && <p>użytkownik Multi</p>}
+    {isMulti && <p>użytkowników Multi ta metoda płatności nie obejmuje</p>}
+    {}
     {/* {newDueDate && !isMulti && <div>
     <p>Poprzednia data naleznosci: {oldDueDate?.toDate()?.toString()}</p>
     <p>Nowa data: {newDueDate?.toDate()?.toString()}</p>

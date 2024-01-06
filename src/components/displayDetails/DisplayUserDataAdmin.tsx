@@ -140,7 +140,7 @@ const getUserDatafromBase = useCallback(async () => {
 ///
 
 return (<div>
-    DisplayUserDataAdmin
+   <p className='title'> Informacje o użytkownikach</p>
 
 
    <Select

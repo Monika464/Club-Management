@@ -196,7 +196,7 @@ const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArc
 return(<>
 
 
-RestoreMembershipAdmin
+Przywróć członkostwo wybranego uzytkownika
 <Select
       closeMenuOnSelect={true}  
       options={newUsersList}
@@ -225,6 +225,6 @@ RestoreMembershipAdmin
      <p><DateFnsFormat element={dzisData}/> ?</p>
      </div>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
-    <button onClick={sendToBase}>akceptuj</button>   
+    <button onClick={sendToBase} className='btn'>Potwierdzasz powrót</button>   
 </>)
 }

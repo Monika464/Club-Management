@@ -9,12 +9,12 @@ const Membershipage: React.FunctionComponent =() => {
     return(
 
         <div>
-             StopMembershipAdmin2 
+            
             <StopMembershipAdmin2/>
 
-            <br></br>
+            <br></br><br></br><br></br>
 
-            RestoreMembershipAdmin
+           
             <RestoreMembershipAdmin/>
             <br></br>
 

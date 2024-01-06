@@ -199,7 +199,7 @@ return(<div>
      </div>}
 {debt && <p>Masz do spłaty zadłużenie wysokosci: {debt} treningów</p>}
 <br></br>
-    {isStop &&<button onClick={sendToBase} className='btn'>akceptuj</button>}    
+    {isStop &&<button onClick={sendToBase} className='btn'>Potwierdzam powrót</button>}    
     {isSent && <p>wyslano</p>}
     </div>)
 

@@ -5,6 +5,7 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "fir
 import { db } from "../App";
 import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN";
 import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
+import DateFnsFormat from "./DateFnsFormat";
 
 export interface Itest{}
 export const UsersPayments : React.FunctionComponent<Itest> =(props) => { 
@@ -166,17 +167,28 @@ useEffect(()=>{
 
     <button onClick={checkingFunction} className="btn">Edytuj uzytkownika</button>
     {isMulti && <p>użytkownik Multi</p>}
-    {newDueDate && !isMulti && <div>
-    <p>Data naleznosci stara: {oldDueDate?.toDate()?.toString()}</p>
-    <p>Data naleznosci nowa: {newDueDate?.toDate()?.toString()}</p>
+    {/* {newDueDate && !isMulti && <div>
+    <p>Poprzednia data naleznosci: {oldDueDate?.toDate()?.toString()}</p>
+    <p>Nowa data: {newDueDate?.toDate()?.toString()}</p>
     </div>
-    }
-    {modifyDebt && <p>Nowa wartość debt: {modifyDebt}</p>}
-    {modifyAdd && <p>Nowa wartość add:{modifyAdd}</p>}
+    } */}
+    {newDueDate && !isMulti && <>
+               <div className="archive"> 
+                  <p>Poprzednia data naleznosci: </p>
+                  <p><DateFnsFormat element={oldDueDate}/></p>   
+               </div>
+    
+               <div className="archive"> 
+                   <p>Nowa data naleznosci</p>
+                  <p><DateFnsFormat element={newDueDate}/></p>
+               </div>
+      </>}
+    {modifyDebt && <p>Nowa wartość zadłużenia wyniesie {modifyDebt}</p>}
+    {modifyAdd && <p>Po wpłaceniu będą {modifyAdd} treningi do dodania</p>}
     <button onClick={handleAccept} className="btn">Zaakceptuj i wyslij</button>
-    {debtSent && <p>dług zmodyfikowany</p>}
-    {addSent && <p>dodane zmodyfikowane</p>}
-    {dateSent && <p>data zmodyfikowana</p>}
+    {debtSent && <p>Zadłużenie zmodyfikowane</p>}
+    {addSent && <p>Nadpłata zmodyfikowana</p>}
+    {dateSent && <p>Data zmodyfikowana</p>}
     
     </>)
 

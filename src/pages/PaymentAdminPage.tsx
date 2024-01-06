@@ -9,9 +9,10 @@ const PaymentAdminPage: React.FunctionComponent =() => {
     return(
 
         <div>
-           UsersPayments
+           Płatności
+           <br></br>
             <UsersPayments/>
-            <br></br> <br></br>
+            <br></br> <br></br><br></br>
 
 <SwitchMultiToPass/>
 <br></br> <br></br>

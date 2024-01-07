@@ -11,18 +11,11 @@ const ArchiveAdminpage: React.FunctionComponent<IArchiveAdminpage> =(props) => {
 
     return(
         <div>
+          <p className="title">Historia aktywności</p>
             <div> <ArchiveViewAdmin/></div>
-                <div><ArchiveAdminPayment/></div>
             
-
-          
-            <div className="siteLink"> 
-              <ul>
-                <li> <Link to="/adminpanel" className="userpanel">adminpanel</Link></li>
-              </ul>
-            </div>   
-      
-
+            <p className="title">Historia płatności</p>
+           <div><ArchiveAdminPayment/></div>
        </div>
 
 

@@ -311,7 +311,7 @@ return (<div>
         
         
      
-  {finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
+  {!stopReported && finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
   {!stopReported && <button onClick={sendStopToBase} className="btn">Potwierdż</button>}
   {isSent &&<p>wyslano</p>}
 

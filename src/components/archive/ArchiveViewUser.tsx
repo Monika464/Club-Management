@@ -226,7 +226,7 @@ const getfromBase3 =async()=>{
    
     return (<>
 <br></br><br></br>
-HISTORIA AKTYWNOŚCI
+<p className="title">Historia aktywności</p>
 <ol>
     {timestampArr1 &&
      timestampArr1.map((elem)=>(

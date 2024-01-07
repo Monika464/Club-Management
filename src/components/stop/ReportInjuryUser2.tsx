@@ -199,8 +199,8 @@ return (
 
 {/*<button onClick={getAddfromBase}>Wylicz pauze </button>*/}
 
-{stopReported && <p>Twoje treningi są juz zakończone</p>}
-{pausaReported && <p>Treningi sa zawieszone z powodu kontuzji</p>}
+
+
 
   {/* {pausaDate && !pausaReported && !stopReported && <p>Treningi zostana zawieszone: {pausaDate?.toDate()?.toString()}</p>} */}
   {pausaDate && !pausaReported && !stopReported && 
@@ -212,6 +212,7 @@ return (
   {pausaAdd && !pausaReported && !stopReported && <p>pozostało opłaconych: {pausaAdd} treningów</p>}
   {pausaDate && !pausaReported && !stopReported && <div>
                  Uzupelnij formularz wspisując powód zawieszenia
+                 <br></br><br></br>
                    {/* <input */}
                    <textarea
                      type='text'

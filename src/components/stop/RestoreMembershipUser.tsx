@@ -185,13 +185,11 @@ const sendToBase =async()=>{
 
 return(<div>
 
-
 {stopDateFromBase && <div className="archive">    
          <p>Treningi zatrzymane od:  </p>
         <p><DateFnsFormat element={stopDateFromBase}/></p>
         </div>
      }
- {/* {isStop && <p>Powrót {dzisData?.toDate()?.toString()}</p>} */}
  {isStop && 
    <div className="archive">
       <p>Czy planujesz powrót w najbliższym terminie </p>

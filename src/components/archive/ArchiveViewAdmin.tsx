@@ -213,10 +213,9 @@ const getfromBase4 =async()=>{
         setChosenUserByIdLabel(choice.label); 
       }} 
       />
-      {chosenUserByIdLabel}
-<br></br><br></br>
-HISTORIA AKTYWNOŚCI
-<br></br><br></br>
+      <br></br>
+      Wybrany uzytkownik: {chosenUserByIdLabel}
+
 
 <ol>
 

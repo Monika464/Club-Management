@@ -35,29 +35,6 @@ const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     const { email, password } = formFields
 
-    //console.log("formFields",email,password )
-
-    const signInWithGoogle = async()=>{
-        setAuthing(true);
-
-        const googleProvider = new GoogleAuthProvider();
-        signInWithPopup(auth, googleProvider)
-        .then((response) =>{
-            navigate('/userpanel');
-            console.log("hej");
-              //console.log(response.user.uid);
-             // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
-        }).catch(error =>{
-            console.log(error);
-            setAuthing(false);
-            //console.log("ho");
-         })
-    }
-   
-    
-   // console.log("dane wpisane do forma",email,password );
-
- 
 
 const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
   const { name, value } = event.target
@@ -127,13 +104,11 @@ const resetFormFields = () => {
            
               {/*<input id='recaptcha' type="submit" />*/}
          
-          <button className="btn" disabled={authing} >Save </button>
+          <button className="btn" disabled={authing} >Zaloguj </button>
           </form>
        
-   
-            <p>Google</p>
-            <button onClick={signInWithGoogle} disabled={authing}>signInWithGoogle</button>
-        </div>
+
+    </div>
     )
 }
 

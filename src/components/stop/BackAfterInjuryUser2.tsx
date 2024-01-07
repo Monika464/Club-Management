@@ -158,7 +158,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
            }    
 
 
-    console.log("newPaymentDate ",newPaymentDate?.toDate() )
+    //console.log("newPaymentDate ",newPaymentDate?.toDate() )
 
     return(<> 
     {newPaymentDate && 

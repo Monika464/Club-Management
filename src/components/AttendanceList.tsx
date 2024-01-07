@@ -204,7 +204,8 @@ if(onToOffList){
     return (<div>  
 
       
-        Multi/medic Users
+        <p className="title">Użytkownicy multi</p>
+        <br></br>
                {multiUsers && multiUsers.map((user)=> (
                   <div key={user.id}>
                   <p>{user.name} {user.surname}</p>

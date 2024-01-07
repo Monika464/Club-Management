@@ -86,7 +86,6 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
 
     return(
         <div>
-          <br></br>  <br></br>
                <Select
       closeMenuOnSelect={true}  
       options={userModForSelect}
@@ -95,10 +94,9 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
         setChosenUserByIdLabel(choice.label); 
       }} 
       />
-      {chosenUserByIdLabel}
+      <br></br>
+      Wybrany uzytkownik: {chosenUserByIdLabel}
             <br></br><br></br>
-            HISTORIA PŁATNOŚCI 
-            <br></br>
        <ol>
             {paymentsArr &&
      paymentsArr.map((elem)=>(

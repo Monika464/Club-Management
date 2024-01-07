@@ -169,3 +169,8 @@ textarea {
   font-weight: bold;
   color: #555252;
 }
+
+.titleAlert{
+  font-weight: bold;
+  color: var(--highlight-color);
+}

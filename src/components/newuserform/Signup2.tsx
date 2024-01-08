@@ -32,6 +32,9 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     const [thumbnailError, setThumbnailError] = useState<string | null>(null)
     const [pictureURL, setPictureURL] = useState<string | null>(null)
 
+    //console.log("typ thumbnail",thumbnail)
+    //console.log("pictureURLSign",pictureURL)
+
     const [authing, setAuthing] = useState(false);
     const auth = getAuth();
 const navigate = useNavigate();
@@ -39,7 +42,7 @@ const navigate = useNavigate();
   const displayStartDay = startDay?.toDate() 
    //console.log(format(sssartDay, 'dd.MM.yyyy'))
    if(displayStartDay){
-   console.log(format(displayStartDay, 'PPP', {locale: pl}))
+  // console.log(format(displayStartDay, 'PPP', {locale: pl}))
   }
 
     const {steps,currentStepIndex,step,isFirstStep,isLastStep,back, next} = useMultistepForm([
@@ -84,7 +87,7 @@ option={option}
 startDay ={startDay}
 email ={email}
 password={password}
-
+// pictureURL ={pictureURL}
 />
 
 //const handleCreateUser =(e)=>{

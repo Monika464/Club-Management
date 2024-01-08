@@ -28,8 +28,9 @@ export function UserForm(props: IUserFormProps){
       };
 
     return(<>
-    <FormWrapper title="User Detials">
-    <label>First Name</label>
+    <FormWrapper title="Podstawowe dane">
+      <br/>
+    <label>Imię</label>
     <input 
     autoFocus 
     required 
@@ -37,14 +38,14 @@ export function UserForm(props: IUserFormProps){
     onChange={(e) => props.setName(e.target.value)}
     value={props?.name}
     ></input>
-    <label>Second Name</label>
+    <label>Nazwisko</label>
     <input 
     required 
     type="text"
     onChange={(e) => props.setSurname(e.target.value)}
     value={props?.surname}
     ></input>
-    <label>date of birth</label>
+    <label>Data urodzenia</label>
     <input 
     required 
     type="date"

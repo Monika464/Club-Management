@@ -5,7 +5,7 @@ export interface ISetAvatar {
   setThumbnailError: React.Dispatch<React.SetStateAction<string | null>>
   pictureURL: string | null | any
   setPictureURL: React.Dispatch<React.SetStateAction<string | null>>
-  uploadFile: any
+  // uploadFile: any
 };
 
 //https://www.youtube.com/watch?v=YOAeBSCkArA
@@ -55,14 +55,14 @@ const SetAvatar = (props: ISetAvatar) => {
           alert('Image file size must be less than 100kb. e.g. 170px : 170px res. 70 px/in')
           return
         }
-        console.log("selected2", selected)  
+        //console.log("selected2", selected)  
         setThumbnailError(null)
         setThumbnail(selected)
         console.log("thumbnailFin", thumbnail)
-        console.log('thumbnail updated')
-        console.log('thumbnailError', thumbnailError)
+        //console.log('thumbnail updated')
+        //console.log('thumbnailError', thumbnailError)
       }
-      console.log("thumbnail2", thumbnail)
+      //console.log("thumbnail2", thumbnail)
 
 
       const uploadFile = async () => { 
@@ -92,7 +92,7 @@ const SetAvatar = (props: ISetAvatar) => {
         }
       };
 
-      console.log('PictureURL',pictureURL ); 
+     // console.log('PictureURL',pictureURL ); 
 
 useEffect(()=>{
   uploadFile()
@@ -120,7 +120,7 @@ console.log(error);
 });
 }
 
-},[thumbnail,uploadFile])
+},[uploadFile,pictureURL])
       
 //tego jeszcze nie ma
 // useEffect(()=>{

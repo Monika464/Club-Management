@@ -98,8 +98,8 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
   const { name, value } = event.target
   
   setFormFields({...formFields, [name]: value })
-  console.log("formFields",formFields);
-  console.log("displayName",displayName);
+  //console.log("formFields",formFields);
+  //console.log("displayName",displayName);
  // console.log("thumbnail-gora",thumbnail);
 }
 
@@ -129,7 +129,7 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
    })
 
    //uploadFile();
-   console.log('pictureURL',pictureURL)
+   //console.log('pictureURL',pictureURL)
 
    updateProfile(currentUser, {
     displayName: displayName, 
@@ -167,12 +167,14 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
 //   //console.log('thumbnail updated')
 //   //console.log('thumbnailError', thumbnailError)
 // }
-console.log("thumbnail2", thumbnail)
+//console.log("thumbnail2", thumbnail)
+
     return (  
       
 
      <div id="main" className="login-form"> 
-        <div>Signup a new user</div>
+        <div className='title'>Stwórz nowego usera</div>
+        <br/>
       
          <div id="fields">
          </div>
@@ -222,8 +224,8 @@ console.log("thumbnail2", thumbnail)
 /> */}
            
               {/*<input id='recaptcha' type="submit" />*/}
-         
-          <button className="btn" disabled={authing} >Save </button>
+              <br/>
+          <button className="btn" disabled={authing} >Załóż konto </button>
           </form>
        
    

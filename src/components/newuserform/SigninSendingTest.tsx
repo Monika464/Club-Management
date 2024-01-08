@@ -14,7 +14,8 @@ interface ISigninSending {
     startDay: Date | null,
     option: string | null,
     email: string | null,
-    password: string | null   
+    password: string | null 
+    pictureURL: string | null  
 
 }
 
@@ -23,33 +24,37 @@ export function SigninSendingTest(props: ISigninSending){
 
          const navigate = useNavigate();
          const { currentUser} = useContext(UserContext);
-         console.log('currentUser',currentUser)
+         //console.log('currentUser',currentUser)
 
     const [optionMulti, setOptionMulti] = useState<boolean>(false);
     const [optionPass, setOptionPass] = useState<boolean>(false);
     const [isSent, setIsSent] = useState<boolean>(false);
 
     useEffect(()=>{
-        console.log('optionoption',props.option)
+        //console.log('optionoption',props.option)
         if(props.option === "multi"){
         setOptionMulti(true)
         setOptionPass(false)
         console.log('optionMulti  true')
          }
         if(props.option === "pass"){
-        console.log('optionPass true')
+        //console.log('optionPass true')
         setOptionPass(true)
         setOptionMulti(false)
     }
+
+
     },[props.option])
    
-    const dataToPaymentArchive = {
+    const dataToUsersArchive = {
         created_at: serverTimestamp(),
         userUid: currentUser?.uid,
         kto: `${props.name} ${props.surname}`,
-        trenings: 8,
-        amount: 120  
+        ur:  props.dob,
+        startDay: props.startDay,
+
       }
+      console.log("pictureURLu",props)
 
     const WriteUserInfo = async() =>{ 
         //console.log("przycisk wcisniety")  
@@ -71,7 +76,8 @@ export function SigninSendingTest(props: ISigninSending){
                     start: props.startDay,
                     due: null,
                     optionPass: false,
-                    optionMulti: true
+                    optionMulti: true,
+                    // avatar: props.pictureURL
                     })
                     .then(()=>console.log("multi user. update succesful"))
                     .then(()=>  setIsSent(true))
@@ -90,21 +96,22 @@ export function SigninSendingTest(props: ISigninSending){
                                  start: props.startDay,
                                  due: props.startDay,
                                  optionPass: optionPass,
-                                 optionMulti: false
+                                 optionMulti: false,
+                                //  avatar: props.pictureURL
                             })
                   .then(()=>console.log("pass user. update succesful"))
                   .then(()=>  setIsSent(true))
                   .then(()=> navigate('/userpanel'))
                   .catch((err)=> console.error(err))
    
-                  //dodaj do archive
-                    const docArchive = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
-                    .then(()=> console.log("payment set to archive"))
+                
                  }
     
          }
 
-         
+           //dodaj do archive
+           const docArchive = await addDoc(collection(db, "newUsersArchive"), dataToUsersArchive)
+           .then(()=> console.log("new user data sent to archive"))
         } 
 
          //dolozmy updatowannie imienia automatyczne na writeusersinfo
@@ -156,6 +163,8 @@ export function SigninSendingTest(props: ISigninSending){
 
         },[WriteUserInfo]) 
 
+       
+
 //po zakonczeniu dorobic przekierowanie na userprofile
         
 
@@ -167,9 +176,9 @@ export function SigninSendingTest(props: ISigninSending){
    // },[props.name])
 
 return(<div>
-    
-    <button onClick={WriteUserInfo}>accept and send</button>
-    {isSent && <p>uzytkownik zapisany w bazie</p>}
+    <br/>
+    <button onClick={WriteUserInfo} className="btnsmall">Zarejestruj uzywkownika w bazie</button>
+    {isSent && <p>użytkownik zapisany w bazie</p>}
 
 
 </div>)

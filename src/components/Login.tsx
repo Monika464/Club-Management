@@ -76,9 +76,10 @@ const resetFormFields = () => {
       
 
         <div id="main" className="login-form"> 
-        <div>Login</div>
+        <div className='title'>Login</div>
       
          <div id="fields">
+          <br/>
          </div>
          
          
@@ -103,7 +104,7 @@ const resetFormFields = () => {
               />
            
               {/*<input id='recaptcha' type="submit" />*/}
-         
+              <br/>
           <button className="btn" disabled={authing} >Zaloguj </button>
           </form>
        

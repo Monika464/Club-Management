@@ -150,9 +150,9 @@ function onSubmit(e: FormEvent) {
             </div>
             </form>
             {/* {isLastStep && <button onClick={handleCreateUser}>Create User</button>} */}
-            <div>imię: {name} nazwisko: {surname} <br></br>ur.{dob.toDateString()}</div>
-            {startDay && <div>start: {startDay?.toDate().toDateString()} </div>}
-            {option && <div>typ: {option}</div>}
+            <div><span className='decript'>imię: </span><span> {name} </span><span className='decript'>nazwisko: </span> <span>{surname} </span><br></br><span className='decript'>ur.</span><span>{dob.toDateString()}</span></div>
+            {startDay && <div><span className='decript'>start: </span> <span>{startDay?.toDate().toDateString()} </span></div>}
+            {option && <div><span className='decript'>typ: </span> <span>{option}</span></div>}
        
             {/* {isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>} */}
             {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}

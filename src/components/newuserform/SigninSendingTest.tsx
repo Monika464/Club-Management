@@ -15,7 +15,7 @@ interface ISigninSending {
     option: string | null,
     email: string | null,
     password: string | null 
-    pictureURL: string | null  
+    // pictureURL: string | null  
 
 }
 

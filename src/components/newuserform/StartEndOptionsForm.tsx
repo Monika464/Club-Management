@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useModDatesForSelect } from "../../hooks/useModDatesForSelect";
 import { FormWrapper } from "./FormWrapper";
 import Select from 'react-select';
@@ -6,6 +6,7 @@ import { useSearchIndexToday } from "../../hooks/useSearchIndexToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
+import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 
 interface IStartAndOptionForm {
 option: string | null;
@@ -22,38 +23,39 @@ interface INewDatesArray {
 export function StartAndOptionForm(props: IStartAndOptionForm){
 
     const[userChoice, setUserChoice] = useState({});
+    const [thisIndex, setThisindex] = useState({});
     //const[passMultiChoice, setPassMultiChoice] = useState<string | null >("pass");
     const datesModForSelect = useModDatesForSelect();
-
+    const dzisIndex = useSearchIndexCloseToday();
+    const [modDatesForSelect, setModdatesForSelect] = useState<INewDatesArray[] | null>([])
    
   // Nowa tablica obiektów
 const noweDatesForSelect: INewDatesArray[] = [];
 
+useEffect(() => {
+  if (dzisIndex != null && datesModForSelect) {
+    // Określenie zakresu indeksów do wycięcia
+    const startIndex = Math.max(0, dzisIndex - 3);
+    const endIndex = Math.min(datesModForSelect.length - 1, dzisIndex + 3);
 
-datesModForSelect?.forEach(element => {
-  // Tworzenie nowego obiektu z takimi samymi wartościami dla value i label
-  //const formatt = format(element.label.ToDate(), 'PPP', {locale: pl})
+    // Wycięcie podzbioru tablicy
+    const slicedDates = datesModForSelect.slice(startIndex, endIndex + 1);
+
+    // Przekształcenie elementów i utworzenie nowej tablicy
+    setModdatesForSelect(slicedDates.map((element) => ({
+      value: element.value,
+      label: format(element.value?.toDate(), 'PPP', { locale: pl }),
+    })))
+
+    // Wykorzystanie nowej tablicy
+  
+  }
+}, [dzisIndex, datesModForSelect]);
+
+    //const todaysIndex = useSearchIndexToday()
+    const closeTodayDay = useSearchDatesByIndex(dzisIndex)
  
-
-  const nowyElement = {
-    value: element.value,
-    label:  format(element.value?.toDate(),'PPP', {locale: pl}),
-  };
-   
-
-  // Dodanie nowego obiektu do nowej tablicy
-  noweDatesForSelect.push(nowyElement);
-});
-
-//console.log("noweDatesForSelect",noweDatesForSelect)
- 
-// noweDatesForSelect.forEach(element=>{
-//   console.log("element",format(element.value?.toDate(),'PPP', {locale: pl}))
-// })
-    
-
-    const todaysIndex = useSearchIndexToday()
-    const closeTodayDay = useSearchDatesByIndex(todaysIndex)
+    //console.log("modDatesForSelect", modDatesForSelect); 
 
     return(<>
     <FormWrapper title="Uczestnictwo">
@@ -63,7 +65,7 @@ datesModForSelect?.forEach(element => {
         <Select
       closeMenuOnSelect={true} 
       /*components={animatedComponents}  */
-      options={noweDatesForSelect}
+      options={modDatesForSelect}
       defaultValue={closeTodayDay}
       onChange={(choice) => {     
       if (choice) {

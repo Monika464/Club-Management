@@ -29,43 +29,42 @@ const ReadDatesFirebase: React.FunctionComponent<IDatesFirebaseProps> =(props) =
    const [dataFromBase, setDataFromBase] = useState<Date[]>();   
    const [loading, setLoading] = useState<boolean>(false) 
         
-      const getData = async()=>{    
+            const getData = async()=>{    
       
-      if (db) {
+                        if (db) {
    
-       const q =  query(collection(db, collectionName),orderBy(column1Name,"desc"),  orderBy(column2Name),limit(limitNum)) 
+                         const q =  query(collection(db, collectionName),orderBy(column1Name,"desc"),  orderBy(column2Name),limit(limitNum)) 
    
-         const unsub = onSnapshot(q, (querySnapshot) => {
+                             const unsub = onSnapshot(q, (querySnapshot) => {
 
-             let tempContainer: any[] = [];
+                                  let tempContainer: any[] = [];
+                                     querySnapshot.forEach((doc) => {
+                                    tempContainer.push({ ...doc.data(), id: doc.id });
+                                    //console.log("nasz nowy doc",doc.data()) 
+                                     });
 
-             querySnapshot.forEach((doc) => {
-                 tempContainer.push({ ...doc.data(), id: doc.id });
-                 //console.log("nasz nowy doc",doc.data()) 
-             });
+                             tempContainer.sort((a, b) => {
+                                const monthA = a.datesSet[0]?.toDate().getMonth();
+                                const monthB = b.datesSet[0]?.toDate().getMonth();
 
-             tempContainer.sort((a, b) => {
-                 const monthA = a.datesSet[0]?.toDate().getMonth();
-                 const monthB = b.datesSet[0]?.toDate().getMonth();
+                                    if (monthA < monthB) {
+                                        return -1;
+                                     } else if (monthA > monthB) {
+                                        return 1;
+                                     } else {
+                                        return 0;
+                                     }
+                             });
 
-                 if (monthA < monthB) {
-                     return -1;
-                 } else if (monthA > monthB) {
-                     return 1;
-                 } else {
-                     return 0;
-                 }
-             });
-
-             setDataFromBase(tempContainer);
-         })                             	
-     return() => unsub() 
+                             setDataFromBase(tempContainer);
+                             })                             	
+                             return() => unsub() 
      
-      }
+                            }
       
-   
+                        }
     
-     };
+    
      
    
      
@@ -73,7 +72,7 @@ const ReadDatesFirebase: React.FunctionComponent<IDatesFirebaseProps> =(props) =
        getData();
           // dataFromBase?.forEach((el,index)=>{console.log("a tu tu",el.datesSet[0].toDate(),"ind",index)})
       },[db])
-      
+    }
 
     return(<>a</>)
 

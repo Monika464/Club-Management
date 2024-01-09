@@ -37,7 +37,7 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
       const usersWithAvatars = useModAvatUsers()
       const navigate = useNavigate();
 
-      console.log("usersWithAvatars",usersWithAvatars)
+      //console.log("usersWithAvatars",usersWithAvatars)
 
       const categories  = [
         {value: 'zawody', label: 'Zawody'},
@@ -81,17 +81,17 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
         console.log("selected2", selected)  
         setThumbnailError(null)
         setThumbnail(selected)
-        console.log("thumbnailFin", thumbnail)
+        //console.log("thumbnailFin", thumbnail)
         //console.log('thumbnail updated')
-        console.log('thumbnailError', thumbnailError)
+        //console.log('thumbnailError', thumbnailError)
       }
-      console.log("thumbnail2", thumbnail)
+      //console.log("thumbnail2", thumbnail)
 
 
 
       
 
-      console.log('PictureURLzeew',pictureURL ); 
+     // console.log('PictureURLzeew',pictureURL ); 
 
 
     const handleSubmit = async (e) => {
@@ -106,7 +106,7 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
           const snapshot = await uploadBytes(imageRef, thumbnail);
           const url = await getDownloadURL(snapshot.ref);
        
-          console.log("urlLLL", url);
+         // console.log("urlLLL", url);
      
 
         
@@ -125,7 +125,7 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
 
 
           const moddate = new Date(eventDate)
-          console.log("modddate",moddate )
+         // console.log("modddate",moddate )
         const docRef = await addDoc(collection(db, "projects"), {
          name: name,
       details: details,
@@ -149,16 +149,16 @@ import { uploadBytes,ref as storageRef, getDownloadURL } from 'firebase/storage'
     
   
    
-        console.log(name, details,'eventDate', eventDate, category.value, assignedUsersList,visibility.value)
+       // console.log(name, details,'eventDate', eventDate, category.value, assignedUsersList,visibility.value)
    
 
-      console.log("formError",formError)
+     // console.log("formError",formError)
 
 
 }
 
    
-console.log('assignedUsers',assignedUsers );
+//console.log('assignedUsers',assignedUsers );
 
 
 
@@ -171,7 +171,7 @@ console.log('assignedUsers',assignedUsers );
 
              <form onSubmit={handleSubmit}>
         <label>
-          <span>Project name:</span>
+          <span>Tytuł projektu:</span>
           <input
             // required 
             type="text" 
@@ -180,7 +180,7 @@ console.log('assignedUsers',assignedUsers );
           />
         </label>
         <label>
-          <span>Project Details:</span>
+          <span>Szczegóły:</span>
           <textarea 
           required
             onChange={(e) => setDetails(e.target.value)}
@@ -188,7 +188,7 @@ console.log('assignedUsers',assignedUsers );
           ></textarea>
         </label>
         <label>
-          <span>Set time of event :</span>
+          <span>Data wydarzenia :</span>
           {/* <input
           required
           type="datetime-local"
@@ -203,7 +203,7 @@ console.log('assignedUsers',assignedUsers );
           />
         </label>
         <label>
-          <span>Project category:</span>
+          <span>Kategoria:</span>
           <Select
         required 
             onChange={(option) => setCategory(option)}
@@ -211,7 +211,7 @@ console.log('assignedUsers',assignedUsers );
           />
         </label>
         <label>
-          <span>Visibility:</span>
+          <span>Widoczność:</span>
           <Select
           //required 
             onChange={(option) => setVisibility(option)}
@@ -219,7 +219,7 @@ console.log('assignedUsers',assignedUsers );
           />
         </label>
         <label>
-          <span>Assign to:</span>
+          <span>Przypisz do:</span>
           <Select
             onChange={(option) => 
               
@@ -232,8 +232,9 @@ console.log('assignedUsers',assignedUsers );
             isMulti
           />
        </label>
-
+      
         <label>
+        <span>Wgraj zdjęcie:</span>
               <input
                   // label="Image"
                   placeholder="Choose image"
@@ -244,10 +245,11 @@ console.log('assignedUsers',assignedUsers );
               //console.log(e.target.files[0])
             // setThumbnail(e.target.files[0]);
                    }}
+                 
                 />
                 {/* <button onClick={uploadFile}>Upload</button> */}
                 </label>
-
+<br/>
         <button className="btn">Add Project</button>
       
         

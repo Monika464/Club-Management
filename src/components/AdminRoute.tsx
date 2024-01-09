@@ -15,7 +15,7 @@ const AdminRoute: React.FunctionComponent<IAdminRouteProps> =(props) => {
      useEffect(()=>{
         
      const AuthCheckAdmin = onAuthStateChanged (auth, (user)=>{
-         if(user?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
+         if(user?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82" || user?.uid === "QQnLoM9alXNiJDcO5NYioj5YrE32"){
             setLoading(false)
             console.log("jest admin",user.displayName, user.email);
             navigate('/adminpanel');

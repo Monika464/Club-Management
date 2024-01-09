@@ -16,10 +16,11 @@ export interface INavbarProps {};
 
 const Navbar: React.FunctionComponent<INavbarProps> =(props) => {
     const auth = getAuth();
-    const [authing, setAuthing] = useState(false);
+   // const [authing, setAuthing] = useState(false);
     //const [isAdmin,setIsAdmin] = useState(false);
 
     const isUserRegistered = useRegisteringUsers()
+    //console.log("isRegistered",isUserRegistered)
     
     const navigate = useNavigate();
     const { currentUser} = useContext(UserContext);

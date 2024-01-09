@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../App";
 import Switch from "react-switch";
@@ -20,8 +20,8 @@ const AttendanceList: React.FunctionComponent =() => {
     const [multiUsers,setMultiusers ] = useState([]);
 const [activeUsersList, setActiveUserList] = useState([]);
 const [notActiveUsersList, setNotActiveUserList] = useState([]);
-const [onToOffList, setOnToOffList]= useState([]);
-const [usersIdsToBase, setUsersIdsToBase] = useState("");
+const [onToOffList, setOnToOffList]= useState<any[]>([]);
+//const [usersIdsToBase, setUsersIdsToBase] = useState("");
 const [rendered, setRendered] = useState(false);
 const [isSend, setisSend] = useState(false);
 
@@ -55,7 +55,7 @@ useEffect(() => {
                     const userData = doc.data();
                        
                     tempList.push({ ...userData, checked: true }); 
-                   // console.log("name", doc.data().name,doc.data().surname );
+                    console.log("tempList", tempList);
 
                       //if(doc.data().due){
                        // tempActiveList.push(doc.data()) 
@@ -122,22 +122,22 @@ useEffect(() => {
  // console.log('onToOffList',onToOffList)
   //jak liczba parzysta uzytkownika to usun a jak nieparzysta
 
-  useEffect(()=>{
-    const justUsersIds = ()=>{
+//   useEffect(()=>{
+//     const justUsersIds = ()=>{
 
-      const tempUserIds = []
-      onToOffList.map((user)=>{
-          //console.log("in oftoOn", user.id)
-          tempUserIds.push(user.id) 
-      })
-          return setUsersIdsToBase(tempUserIds)
+//       const tempUserIds = []
+//       onToOffList.map((user)=>{
+//           //console.log("in oftoOn", user.id)
+//           tempUserIds.push(user.id) 
+//       })
+//           return setUsersIdsToBase(tempUserIds)
   
-    }
-    justUsersIds();  
+//     }
+//     justUsersIds();  
 
-//console.log('usersIdsToBase',usersIdsToBase)
+// //console.log('usersIdsToBase',usersIdsToBase)
 
-  },[onToOffList])
+//   },[onToOffList])
 
 
 

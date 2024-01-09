@@ -46,7 +46,7 @@ export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin
         const usersSelect = userModForSelect;
       },[rendered,chosenUserId])
 
-      console.log("chosenUserByIdLabel",chosenUserByIdLabel);
+      //console.log("chosenUserByIdLabel",chosenUserByIdLabel);
 
 ///
 

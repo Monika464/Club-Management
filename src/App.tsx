@@ -17,15 +17,15 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import Signup2 from './components/newuserform/Signup2.tsx';
 import Create from './pages/Create.tsx';
-import Project from './pages/Project.tsx';
-import Sidebar from './components/Sidebar.tsx';
+// import Project from './pages/Project.tsx';
+//import Sidebar from './components/Sidebar.tsx';
 import { getStorage } from "firebase/storage";
 
-import { useContext } from 'react'
-import { UserContext } from './context/UserContext';
-import StopMembershipAdmin from './components/StopMembershipAdmin.tsx';
+//import { useContext } from 'react'
+//import { UserContext } from './context/UserContext';
+//import StopMembershipAdmin from './components/StopMembershipAdmin.tsx';
 import Membershipage from './pages/Membershippage.tsx';
-import { UsersPayments } from './components/UserPayments.tsx';
+//import { UsersPayments } from './components/UserPayments.tsx';
 import Injurypage from './pages/Injurypage.tsx';
 //import Switchmultipass from './pages/Switchmultipass.tsx';
 import MembershiUserpage from './pages/MembershipUserpage.tsx';
@@ -33,21 +33,21 @@ import InjuryUserpage from './pages/InjuryUserpage.tsx';
 import ProjectSingle from './components/project/ProjectSingle.tsx';
 import DatePickerpages from './pages/DatePickerpage.tsx';
 import Attendancepage from './pages/AttendanceListpage.tsx';
-import  ArchiveViewAdmin  from './components/archive/ArchiveViewAdmin.tsx';
-import ArchiveViewUser from './components/archive/ArchiveViewUser.tsx';
+//import  ArchiveViewAdmin  from './components/archive/ArchiveViewAdmin.tsx';
+//import ArchiveViewUser from './components/archive/ArchiveViewUser.tsx';
 import ArchiveUserpage from './pages/ArchiveUserpage.tsx';
 import ArchiveAdminpage from './pages/ArchiveAdminpage.tsx';
 import { Test } from './components/Test.tsx';
 import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 import RaportPage from './pages/RaportPage.tsx';
-import Profilepage from './pages/Profilepage.tsx';
-import Footer from './components/Footer.tsx';
+//import Profilepage from './pages/Profilepage.tsx';
+//import Footer from './components/Footer.tsx';
 import UserMailbox from './pages/UserMailbox.tsx';
 import AdminMailbox from './pages/AdminMailbox.tsx';
 import { Test2 } from './components/Test2.tsx';
-import DisplayUserDataAdmin from './components/displayDetails/DisplayUserDataAdmin.tsx';
+//import DisplayUserDataAdmin from './components/displayDetails/DisplayUserDataAdmin.tsx';
 import { RaportUsersPage } from './pages/RaportUserspage.tsx';
-import StopActivityPage from './pages/StopActivitypage.tsx';
+//import StopActivityPage from './pages/StopActivitypage.tsx';
 import Instruction from './pages/Instruction.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
@@ -67,8 +67,8 @@ export interface IApplicationProps {}
 
 
 
-const Application: React.FunctionComponent<IApplicationProps> = (props) => {
-  const { currentUser} = useContext(UserContext);
+const Application: React.FunctionComponent<IApplicationProps> = () => {
+ // const { currentUser} = useContext(UserContext);
 //const [isUser, setIsUser] = useContext(false)
   
   return (
@@ -115,36 +115,36 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
           <Route 
              path="/membershipadmin" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                        <Membershipage/>                                     
-                      //  </AuthRoute>
+                </AdminRoute>
                     }
             />
 
         <Route 
              path="/paymentadmin" 
              element={
-                      //  <AuthRoute>
+                  <AdminRoute>
                        <PaymentAdminPage/>                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             />
 
          <Route 
              path="/injuryadmin" 
              element={
-                      //  <AuthRoute>
+                     <AdminRoute>
                        <Injurypage/>                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             />
 
 <Route 
              path="/report" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                       <RaportPage/>                                  
-                      //  </AuthRoute>
+                      </AdminRoute>
                     }
             />
 
@@ -220,26 +220,26 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
 <Route 
              path="/mailboxuser" 
              element={
-                      //  <AuthRoute>
+              <AuthRoute>
                        <UserMailbox/>                                     
-                      //  </AuthRoute>
+                       </AuthRoute>
                     }
             />
 
 <Route 
              path="/mailboxadmin" 
              element={
-                      //  <AuthRoute>
+              <AdminRoute>
                        <AdminMailbox/>                                     
-                      //  </AuthRoute>
+                       </AdminRoute>
                     }
             />
 <Route 
              path="/instruction" 
              element={
-                      // <AuthRoute>
+              <AuthRoute>
                        <Instruction/>                                     
-                      //  </AuthRoute>
+                       </AuthRoute>
                     }
             />
 

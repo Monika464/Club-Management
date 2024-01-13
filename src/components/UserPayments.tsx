@@ -8,7 +8,7 @@ import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
 import DateFnsFormat from "./DateFnsFormat";
 
 export interface Itest{}
-export const UsersPayments : React.FunctionComponent<Itest> =(props) => { 
+export const UsersPayments : React.FunctionComponent<Itest> =() => { 
 
     const usersModForSelect =  useModUsersForSelect(); 
 
@@ -52,7 +52,7 @@ const checkingFunction =async ()=>{
                
                if(docSnap.data().pause || docSnap.data().stop){
 
-                  console.log("czy to się uruchamiahasDebt")
+           
                  
                       if(docSnap.data().add){
                          setHasAdd(calculatedIndexOfNewDue + docSnap.data().add  )
@@ -60,14 +60,18 @@ const checkingFunction =async ()=>{
                          setHasDebt(docSnap.data().debt )
                          //jak debt mniejszy niz 8 to 
                          if(docSnap.data().debt < 8 ){
+                           if(calculatedIndexOfNewDue && hasDebt){
                            setModifyAdd(calculatedIndexOfNewDue - hasDebt) 
+                           }
                          }
                          if(docSnap.data().debt >= 8 ){
+                           if(hasDebt){
                            setModifyDebt(hasDebt - 8) 
+                        }
                          }
                     
                        } else {
-                        console.log("nie ma debt ani add")
+                      
                         setModifyAdd(8);
                        }
                   // jak nie ma debt ani add  to
@@ -94,7 +98,7 @@ const checkingFunction =async ()=>{
  
 
 useEffect( ()=>{
-console.log("newDueDate",newDueDate)
+
 
 },[newDueDate])
 
@@ -125,7 +129,7 @@ useEffect(()=>{
 
  const handleAccept =async ()=>{
 
-   const paymentDataRef = doc(db, "usersData", chosenUserById);
+   const paymentDataRef = doc(db, "usersData", chosenUserById!);
 
    if(modifyDebt){
       await updateDoc(paymentDataRef, {
@@ -165,7 +169,7 @@ useEffect(()=>{
       
    }
  //dodaj do archive
- const docRef = await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
+ await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
  .then(()=> console.log("payment set to archive"))
  }
 

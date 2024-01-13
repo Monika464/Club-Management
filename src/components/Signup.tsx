@@ -1,56 +1,30 @@
 
-import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import './Login.css';
 import { 
   createUserWithEmailAndPassword, 
   getAuth,
-   GoogleAuthProvider,
-   sendPasswordResetEmail,
-   signInWithEmailAndPassword,signInWithPopup, 
-   signOut, 
-   updateProfile, 
-   UserCredential 
+   signOut
   } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { connectStorageEmulator, getStorage, ref } from 'firebase/storage';
-import { Input } from 'react-select/animated';
-import {
-  getDownloadURL,
-  ref as storageRef,
-  uploadBytes,
-} from "firebase/storage";
-import { storage } from '../App.tsx';
-import { useContext } from 'react'
-import { UserContext } from '../context/UserContext';
+//import { useContext } from 'react'
+//import { UserContext } from '../context/UserContext';
 
 
 export interface IApplicationProps {};
-interface URL {
-  hash: string;
-  host: string;
-  hostname: string;
-  href: string;
-  readonly origin: string;
-  password: string;
-  pathname: string;
-  port: string;
-  protocol: string;
-  search: string;
-  username: string;
-  toString(): string;
-}
+//interface URL {}
 
 
-const SignupPage: React.FunctionComponent<IApplicationProps> =(props) => {
+const SignupPage: React.FunctionComponent<IApplicationProps> =() => {
     const auth = getAuth();
     const navigate = useNavigate();
     const [authing, setAuthing] = useState(false);
-    const [displayName, setDisplayName] = useState< string | null>('')
-    const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
+    //const [displayName, setDisplayName] = useState< string | null>('')
+   // const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
     //const [imageUpload, setImageUpload] = useState(null);
-    const [thumbnailError, setThumbnailError] = useState<string | null>(null)
-    const [pictureURL, setPictureURL] = useState<string | null>(null)
-    const { currentUser} = useContext(UserContext); 
+    //const [thumbnailError, setThumbnailError] = useState<string | null>(null)
+    //const [pictureURL, setPictureURL] = useState<string | null>(null)
+    //const { currentUser} = useContext(UserContext); 
 
     const defaultFormFields = {
       email: '',
@@ -131,15 +105,15 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
    //uploadFile();
    //console.log('pictureURL',pictureURL)
 
-   updateProfile(currentUser, {
-    displayName: displayName, 
-    photoURL: pictureURL
-  }).then((response) => {
-    //console.log("response",response);
-    console.log("Profile updated!");
-  }).catch((error) => {
-    console.log(error);
-    });
+  //  updateProfile(currentUser, {
+  //   displayName: displayName, 
+  //   photoURL: pictureURL
+  // }).then((response) => {
+  //   //console.log("response",response);
+  //   console.log("Profile updated!");
+  // }).catch((error) => {
+  //   console.log(error);
+  //   });
 
 };
 
@@ -239,7 +213,7 @@ const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
 export default SignupPage;
 
 
-//https://blog.logrocket.com/using-react-toastify-style-toast-messages/
+
 
 
 

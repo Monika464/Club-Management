@@ -1,4 +1,6 @@
-export interface IAvatarProps {};
+export interface IAvatarProps {
+    src: string; 
+};
 import './avatar.css'
 
     const Avatar: React.FunctionComponent<IAvatarProps> =(props) => {
@@ -6,7 +8,6 @@ import './avatar.css'
         return(
         <div className="avatar">
             <img src={props.src} alt={"user avatar"}/>
-
         </div>)
 
 

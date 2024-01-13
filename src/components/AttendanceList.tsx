@@ -5,19 +5,25 @@ import Switch from "react-switch";
 //dopisz timera ktory powoduje ze strona odswieza sie po 3 sekundach
 
 export interface US {
-    name: string | null
-    surname: string | null
-    dob: Date | null
-    due: Date | null
-    pause: Date | null
-    stop: Date | null
-
+add: number | null;
+checked: boolean;
+debt: number | null;
+dob: Date | null;
+id: string | null;
+name: string | null;
+optionMulti: boolean;
+optionPass: boolean;
+pause: Date | null;
+return: Date | null;
+start: Date | null;
+stop: Date | null;
+surname: string | null;
 }
 
 const AttendanceList: React.FunctionComponent =() => {
 
 
-    const [multiUsers,setMultiusers ] = useState([]);
+    const [multiUsers,setMultiusers ] = useState<any>([]);
 const [activeUsersList, setActiveUserList] = useState([]);
 const [notActiveUsersList, setNotActiveUserList] = useState([]);
 const [onToOffList, setOnToOffList]= useState<any[]>([]);
@@ -55,7 +61,7 @@ useEffect(() => {
                     const userData = doc.data();
                        
                     tempList.push({ ...userData, checked: true }); 
-                    console.log("tempList", tempList);
+                   // console.log("tempList", tempList);
 
                       //if(doc.data().due){
                        // tempActiveList.push(doc.data()) 
@@ -74,8 +80,8 @@ useEffect(() => {
 
 
               // Zaktualizuj 'checked' dla użytkowników w notActiveUsersList
-  const notActiveUserIds = notActiveUsersList.map((user) => user.id);
-  const updatedUsers = tempList.map((user) => {
+  const notActiveUserIds = notActiveUsersList.map((user: any) => user.id);
+  const updatedUsers = tempList.map((user: any) => {
     if (notActiveUserIds.includes(user.id)) {
       return { ...user, checked: false }; 
     }
@@ -99,11 +105,11 @@ useEffect(() => {
 
 
   const handleUserButtonClick = (userId: string) => { 
-    const updatedUsers = multiUsers.map((user) => {
+    const updatedUsers = multiUsers.map((user: any) => {
       if (user.id === userId) {
         const updatedUser = { ...user, checked: !user.checked };
         // Sprawdź, czy użytkownik jest z activeUsersList i czy przycisk zmienia się z "on" na "off"
-            if (activeUsersList.some((activeUser) => activeUser.id === userId) && user.checked) {
+            if (activeUsersList.some((activeUser: any) => activeUser.id === userId) && user.checked) {
             setOnToOffList((prevList) => [...prevList, updatedUser]);
              } else {
              // Przełącz z "off" na "on" i usuń z onToOffList
@@ -119,25 +125,7 @@ useEffect(() => {
     setMultiusers(updatedUsers); 
   };
   
- // console.log('onToOffList',onToOffList)
-  //jak liczba parzysta uzytkownika to usun a jak nieparzysta
 
-//   useEffect(()=>{
-//     const justUsersIds = ()=>{
-
-//       const tempUserIds = []
-//       onToOffList.map((user)=>{
-//           //console.log("in oftoOn", user.id)
-//           tempUserIds.push(user.id) 
-//       })
-//           return setUsersIdsToBase(tempUserIds)
-  
-//     }
-//     justUsersIds();  
-
-// //console.log('usersIdsToBase',usersIdsToBase)
-
-//   },[onToOffList])
 
 
 
@@ -180,13 +168,15 @@ if(onToOffList){
  
          } else{  
           const userRef = doc(db, "usersData",user.id);
-          updateDoc(userRef, {  
-           debt: debt + 1
-         })
-         .then(()=>{
-          //console.log("zadluzenie zapisano2")
-          setisSend(true);
-        })
+          if(debt){
+            updateDoc(userRef, {  
+             debt: debt + 1
+             })
+            .then(()=>{
+             //console.log("zadluzenie zapisano2")
+            setisSend(true);
+            })
+          }
          }
 
        
@@ -206,7 +196,7 @@ if(onToOffList){
       
         <p className="title">Użytkownicy multi</p>
         <br></br>
-               {multiUsers && multiUsers.map((user)=> (
+               {multiUsers && multiUsers.map((user: any)=> (
                   <div key={user.id}>
                   <p>{user.name} {user.surname}</p>
     

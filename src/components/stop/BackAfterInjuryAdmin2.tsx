@@ -115,7 +115,7 @@ const userModForSelect  =  useModUsersForSelect();
                           
                  if(docSnap.data().optionMulti=== true){
                   setIsMulti(true)   
-                  console.log("czy tu cos jest", isMulti)  
+                 // console.log("czy tu cos jest", isMulti)  
                  }
                  if(docSnap.data().optionPass === true){
                   setIsPass(true)     
@@ -156,22 +156,22 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
       } 
 
       if(isPass){
-        console.log("czy uruchomiona pass")
+       // console.log("czy uruchomiona pass")
 
         if(debtsToSubstract && dzisIndex){
           setNewPaymentDateIndex(dzisIndex - debtsToSubstract)
-          console.log("czy mamay substract")
+         // console.log("czy mamay substract")
         }
-        console.log("czy tu mamy trening to add",treningsToAdd)
+       // console.log("czy tu mamy trening to add",treningsToAdd)
         if(treningsToAdd && dzisIndex){
           setNewPaymentDateIndex(dzisIndex + treningsToAdd)
          }  
-         console.log("dzisIndex","treningsToAdd",dzisIndex,treningsToAdd)
-         console.log("newPaymentDateIndex",newPaymentDateIndex)
+         //console.log("dzisIndex","treningsToAdd",dzisIndex,treningsToAdd)
+        // console.log("newPaymentDateIndex",newPaymentDateIndex)
         setNewPaymentDate(calcDatOfNewPay )
-        console.log("calcDatOfNewPay",calcDatOfNewPay)
+       // console.log("calcDatOfNewPay",calcDatOfNewPay)
         }
-        console.log('newPaymentDate', newPaymentDate?.toDate() )
+        //console.log('newPaymentDate', newPaymentDate?.toDate() )
 
       }
       
@@ -181,7 +181,7 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
 
  
   
- console.log("czy jest multi czy pas?", isMulti,isPass)
+ //console.log("czy jest multi czy pas?", isMulti,isPass)
 
   const pushToBaseNewDueDay =async ()=>{
 

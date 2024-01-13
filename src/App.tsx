@@ -1,5 +1,4 @@
-//https://www.youtube.com/watch?v=2aumoR0-jmQ react router ts
-//https://www.youtube.com/watch?v=b_52NmIfDr8  authen
+
 import './App.css'
 import Userpanel from "./pages/Userpanel.tsx";
 import Adminpanel from "./pages/Adminpanel.tsx";
@@ -37,14 +36,14 @@ import Attendancepage from './pages/AttendanceListpage.tsx';
 //import ArchiveViewUser from './components/archive/ArchiveViewUser.tsx';
 import ArchiveUserpage from './pages/ArchiveUserpage.tsx';
 import ArchiveAdminpage from './pages/ArchiveAdminpage.tsx';
-import { Test } from './components/Test.tsx';
+//import { Test } from './components/Test.tsx';
 import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 import RaportPage from './pages/RaportPage.tsx';
 //import Profilepage from './pages/Profilepage.tsx';
 //import Footer from './components/Footer.tsx';
 import UserMailbox from './pages/UserMailbox.tsx';
 import AdminMailbox from './pages/AdminMailbox.tsx';
-import { Test2 } from './components/Test2.tsx';
+//import { Test2 } from './components/Test2.tsx';
 //import DisplayUserDataAdmin from './components/displayDetails/DisplayUserDataAdmin.tsx';
 import { RaportUsersPage } from './pages/RaportUserspage.tsx';
 //import StopActivityPage from './pages/StopActivitypage.tsx';
@@ -59,9 +58,7 @@ import Instruction from './pages/Instruction.tsx';
  export const db = getFirestore(app);
  export const storage = getStorage();
 
-//https://www.youtube.com/watch?v=b_52NmIfDr8  5: 31
-//aktualne
-//customhokk https://www.youtube.com/watch?v=tMpn7oUsNGA
+
 
 export interface IApplicationProps {}
 
@@ -243,7 +240,7 @@ const Application: React.FunctionComponent<IApplicationProps> = () => {
                     }
             />
 
-<Route 
+{/* <Route 
              path="/test" 
              element={
                         <AuthRoute>
@@ -258,7 +255,7 @@ const Application: React.FunctionComponent<IApplicationProps> = () => {
                        <Test2/>                                     
                       //  </AuthRoute>
                     }
-            />
+            /> */}
 
           <Route 
              path="/projects/:id" 
@@ -296,7 +293,6 @@ const Application: React.FunctionComponent<IApplicationProps> = () => {
               }/>
 
     </Routes>
-    {/* <Footer/> */}
     </UserContextProvider>
     </div>
 </BrowserRouter>

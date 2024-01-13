@@ -8,16 +8,15 @@ export interface ISetAvatar {
   // uploadFile: any
 };
 
-//https://www.youtube.com/watch?v=YOAeBSCkArA
 
-import { useEffect, useState } from "react"
-import { db } from "../../App.tsx";
+import { useEffect} from "react"
+//import { db } from "../../App.tsx";
 import { storage } from '../../App.tsx';
 import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage";
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext.tsx';
 import { updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+//import { doc, updateDoc } from "firebase/firestore";
 
 
 const SetAvatar = (props: ISetAvatar) => {
@@ -27,7 +26,7 @@ const SetAvatar = (props: ISetAvatar) => {
 
     const thumbnail = props.thumbnail
     const setThumbnail = props.setThumbnail
-    const thumbnailError = props.thumbnail
+    //const thumbnailError = props.thumbnail
     const setThumbnailError = props.setThumbnailError
     const pictureURL = props.pictureURL
     const setPictureURL = props.setPictureURL
@@ -38,7 +37,7 @@ const SetAvatar = (props: ISetAvatar) => {
 
         setThumbnail(null)
         let selected = e.target.files[0]
-        console.log("selected1", selected)
+       // console.log("selected1", selected)
       
         if (!selected) {
           setThumbnailError('Please select a file')
@@ -58,7 +57,7 @@ const SetAvatar = (props: ISetAvatar) => {
         //console.log("selected2", selected)  
         setThumbnailError(null)
         setThumbnail(selected)
-        console.log("thumbnailFin", thumbnail)
+        //console.log("thumbnailFin", thumbnail)
         //console.log('thumbnail updated')
         //console.log('thumbnailError', thumbnailError)
       }
@@ -107,11 +106,11 @@ useEffect(()=>{
   updateProfile(currentUser, {
     photoURL: pictureURL 
 })
-.then((response) => {
+.then(() => {
 //console.log("response",response);
 console.log("Profile updated!");
 })
-.then((response) => {
+.then(() => {
   //console.log("response",response);
  // alert("Profile updated!");
   })

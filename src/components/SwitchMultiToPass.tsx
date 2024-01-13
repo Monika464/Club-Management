@@ -14,20 +14,20 @@ import DateFnsFormat from "./DateFnsFormat";
 
 //data do zatwierdzenia cofke sie o sume tych debt wzgledem daty wybranej rozpoczecia
 export interface US {
-    value: string | null
-    label: string | null
+    value: string 
+    label: string 
 }
 
 const SwitchMultiToPass: React.FunctionComponent =() => {
 
-    const [newUsersList, setNewUsersList] = useState<US[]>([]);
+    const [newUsersList, setNewUsersList] = useState<US[] >([]);
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
+    // const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
 const [surname, setSurname] = useState<string | null>(null);
-
-const [stopReported, setStopReported] = useState<boolean>(false)
-const [pausaReported, setPausaReported] = useState<boolean>(false)
+//console.log("newUserList",newUsersList)
+//const [stopReported, setStopReported] = useState<boolean>(false)
+//const [pausaReported, setPausaReported] = useState<boolean>(false)
 const [multiReported, setMultiReported] = useState<boolean>(false);
 const [hasDebt, setHasDebt] = useState<number | null>(null);
 const [newPaymentDateIndex, setNewPaymentDateIndex] = useState<number | null>(null);
@@ -49,12 +49,12 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
                 const userRef = doc(db, "usersData", userModForSelect[i].value);
                 const docSnap = await getDoc(userRef);  
                 
-                if (docSnap.data().optionMulti) {
+                if (docSnap.exists() && docSnap.data()?.optionMulti) {
                     // Dodawanie użytkownika do listy w formie obiektu
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                 }
 
-                setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
+                setNewUsersList(usersToAdd); 
             }
 
             
@@ -73,14 +73,17 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
              const userRef = doc(db, "usersData",chosenUserId);
              const docSnap = await getDoc(userRef);
                   if (docSnap.exists()) {
+
+                    setName(docSnap.data().name)
+                    setSurname(docSnap.data().surname)
     
                     //jesli mamy stop
-                      if(docSnap.data().stop){
-                      setStopReported(true)
-                       }
-                       if(docSnap.data().pause){
-                        setPausaReported(true)
-                       }
+                     // if(docSnap.data().stop){
+                      //setStopReported(true)
+                      // }
+                      // if(docSnap.data().pause){
+                       // setPausaReported(true)
+                       //}
     
                        if(docSnap.data().optionMulti){
                         setMultiReported(true)
@@ -123,6 +126,7 @@ if(calcDatOfNewPay && chosenUserId){
     },[chosenUserId,multiReported,calcDatOfNewPay]) 
 
 
+
     //console.log("calcDatOfNewPay",calcDatOfNewPay?.toDate());
 
     const dataToActivityArchive = {
@@ -135,7 +139,7 @@ if(calcDatOfNewPay && chosenUserId){
 
     const handleSwitchToPass =async ()=>{
 
-        const paymentDataRef = doc(db, "usersData", chosenUserId);
+        const paymentDataRef = doc(db, "usersData", chosenUserId!);
      
         
           await updateDoc(paymentDataRef, {
@@ -149,7 +153,7 @@ if(calcDatOfNewPay && chosenUserId){
           .then(()=>   setIsSent(true))
          
            
-          const docRef = await addDoc(collection(db, "optionsArchive"), dataToActivityArchive)
+          await addDoc(collection(db, "optionsArchive"), dataToActivityArchive)
           .then(()=> console.log("archive"))
        
            
@@ -168,8 +172,10 @@ if(calcDatOfNewPay && chosenUserId){
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
+        if(choice && choice.value){
         setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label); 
+      }
+        //setChosenUserByIdLabel(choice.label); 
         //setIsPausa(false);  
         setNewPaymentDate(null);
         setIsCalculating(false); 

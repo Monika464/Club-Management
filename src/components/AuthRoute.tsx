@@ -1,9 +1,11 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export interface IAuthRouteProps {};
+export interface IAuthRouteProps {
+   children: ReactNode
+};
 //zrob nowy authcontext z currentuser https://codingpr.com/react-firebase-auth-tutorial/
 
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> =(props) => {

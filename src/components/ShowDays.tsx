@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
-import { useFetchDates } from "../hooks/useFetchDates";
-import { useFetchMonths } from "../hooks/useFetchMonths";
+import { IDateObject, useFetchDates } from "../hooks/useFetchDates";
+import { pl } from "date-fns/locale";
+import { format } from "date-fns";
+import Trisc from '../assets/triskelion.png'
+
 
 export interface IShowdaysProps {};
 
 
-export const ShowDays: React.FunctionComponent<IShowdaysProps> =(props) => {
+export const ShowDays: React.FunctionComponent<IShowdaysProps> =() => {
 
   const data =  useFetchDates();
+  //console.log("data co tu mamy", data)
   
-  const [duplicates,setDuplicates] = useState<Date[] | null>()
+  const [duplicates,setDuplicates] = useState<IDateObject[] | null>()
 
-  const dataMonths = useFetchMonths()
-
- const [isShowAllDays, setIsShowAllDays] = useState(false);
+  const [isShowAllDays, setIsShowAllDays] = useState(false);
 // const manageShowAllDaysButton =()=>{
 //   setIsShowAllDays(!isShowAllDays)
 //}
@@ -22,67 +24,90 @@ const manageShowAllDaysButton =()=>{
   //navigate('/userpanel')
 } 
   
-    const dateMap: { [key: string]: Date[] } = {};
+    const dateMap: { [key: string]: IDateObject[] } = {};
 // Grupowanie dat według miesięcy
 data?.forEach((elem) => {
-         const monthYearKey = ` ${elem.toDate().getMonth()}-${elem.toDate().getFullYear()}`;
-        if (!dateMap[monthYearKey]) {
+        // const monthYearKey = ` ${elem.toDate().getMonth()}-${elem.toDate().getFullYear()}`;
+         //const monthYearKey = `${elem.seconds}-${elem.nanoseconds}`; // Modyfikacja klucza
+         const monthYearKey =  `${(new Date(elem.toMillis() as Date)).getMonth()}-${(new Date(elem.toMillis() as Date) ).getFullYear()}`
+         if (!dateMap[monthYearKey]) {
         dateMap[monthYearKey] = [];
           }
        dateMap[monthYearKey].push(elem);
+       //console.log("milielems",(new Date(elem.toMillis()) ).getMonth())
     });
 
-    console.log('data',data)
-    data?.map((dat)=>{
-  console.log(dat.toDate().toString())
-    })
+
 
 useEffect(()=>{
-  const duplicates: any[] = [];
+  const duplicates: IDateObject[] = [];
 
   data?.forEach((elem, indexA) => {
 
-     const timestampA = elem.toDate().getTime();
-     
+    // const timestampA = elem.toDate().getTime();
+    const timestampA = elem.toMillis();
+     //console.log('elem',elem)
      // Porównaj aktualny element z pozostałymi
      for (let i = indexA + 1; i < data.length; i++) {
 
-       const timestampB = data[i].toDate().getTime();
+       const timestampB = data[i].toMillis();
        
        if ((timestampA === timestampB) ) {
-         // Znaleziono duplikat
-         console.log("Znaleziono duplikat","timestampA",timestampA,"timestampB",timestampB)
          duplicates.push(elem);
-        // break; // Jeśli znaleziono duplikat, można przerwać pętlę, aby nie szukać dalej
        }
      }
    });
 
 setDuplicates(duplicates);
 
-console.log("cow duplicates",duplicates)
+//console.log("cow duplicates",duplicates)
 },[data])
     
      
     return(
-    <>
+
+        <>
+
+
       {isShowAllDays && <div>
 <div className="datelist">
 
+{Object.keys(dateMap).map((monthYearKey) => (
+  <div key={monthYearKey}>
+
+<h5>
+  {/* Display the month and year as the section header */}
+  <img src={Trisc} alt="Trisc" style={{ marginRight: '5px', marginLeft: '5px' ,height: '15px'}} />
+  {format(dateMap[monthYearKey][0].toMillis() as Date, "MMM yyyy", {
+    locale: pl,
+  })}
+  {/* <img src={Trisc} alt="Trisc" style={{ marginLeft: '5px' }} /> */}
+</h5>
+
+   
+    {dateMap[monthYearKey].map((elem, index) => (
+      <p key={index}>
+        {/* Display the day of the month and short weekday */}
+        {`${format(elem.toMillis()as Date , "d", {
+          locale: pl,
+        })} ${format(elem.toMillis() as Date, "EEE", { locale: pl })}`}
+      </p>
+    ))}
+  </div>
+))}
+
+
 
 {/* Iteruj po grupach dat i wyświetl daty w sekcjach */}
-{Object.keys(dateMap).map((monthYearKey) => (
+{/* {Object.keys(dateMap).map((monthYearKey) => (
           <div key={monthYearKey}>
-            <h5>
-              {/* Wyświetl nazwę miesiąca i rok jako nagłówek sekcji */}
+             <h5>        
               {"|" +" " +new Date(dateMap[monthYearKey][0].toDate()).toLocaleString('default', {
                 month: 'long',
                 year: 'numeric',
-              })+" "+"|"}
-              
-             
-              
-            </h5>
+              })+" "+"|"}    
+             </h5>
+
             {dateMap[monthYearKey].map((elem, index) => (
               <p key={index}>
                 {`${elem.toDate().getDate()} ${elem.toDate().toLocaleDateString('default', {
@@ -91,25 +116,20 @@ console.log("cow duplicates",duplicates)
               </p>
             ))}
           </div>
-        ))}
+        ))} */}
+
+
+
 </div>
 </div>}
 
 
-{/* {isShowAllDays ? <button onClick={manageShowAllDaysButton} className="btn">hide all dates </button>  
-: <button onClick={manageShowAllDaysButton} className="btn">show all dates </button> 
-} */}
 <button onClick={manageShowAllDaysButton} className="btnsmall">
          {isShowAllDays? 'Zamknij' : 'Wyświetl daty'}
           </button>
     
-    {/* 
-    dates form database
-    <div className="datelist">
-   {data && data.map((elem, index) => <p key ={index}>{`${elem.toDate().getDate()} ${elem.toDate().toLocaleString('default', { month: 'short' })} ${elem.toDate().toLocaleDateString('default', { weekday: 'short' })}`}</p>)}
-   </div>
-   */}
-    {duplicates &&  duplicates.map((dup, index )=><p key={index} style={{color: 'red'}}>Duplikat: {dup.toDate().toString()}</p>)}
+
+    {duplicates &&  duplicates.map((dup, index )=><p key={index} style={{color: 'red'}}>Duplikat: {format(dup?.toMillis()  as Date, 'PPP', {locale: pl})}</p>)}
     
     </>)
 }

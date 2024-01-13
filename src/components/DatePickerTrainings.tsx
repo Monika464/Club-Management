@@ -1,8 +1,7 @@
 
-  //https://xerosource.com/how-to-use-react-datepicker-in-typescript/#google_vignette
-  //https://xerosource.com/how-to-use-react-datepicker-in-typescript/#google_vignette
+ 
   import React from 'react';
-import { SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 //import { db } from "../App";
 import DatePicker from "react-datepicker"; 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,11 +14,11 @@ import { db } from '../App';
 interface PossibleTrainingDate {
   value: Date;
   label: Date | string;
-  possibleTrainingDate: Date | null;
+  //possibleTrainingDate: Date | string;
 }
 
 
-export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[] > =(props) => {
+export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[] > =() => {
 
   const animatedComponents = makeAnimated();
 
@@ -27,15 +26,8 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
   const [startDate, setStartDate] = useState<Date>(new Date());   
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [dayRange, setDayRange] = useState<Date[]>([]);
-  //const [closeMenu, setCloseMenu] = useState(false); // Dodaj stan closeMenu 
-  //const [selectedDate, setSelectedDate] = useState([]); 
    const[userChoice, setUserChoice] = useState<Date[]>([])
-   const [isReset, setIsReset] = useState<boolean>(false);
-  
 
-//console.log('dayRange',dayRange);
-//console.log('userChoice',userChoice)
-//console.log('selectedDates',selectedDates)
 
   const getDatesBetween = (startDate: Date, endDate: Date) => { 
     const datess = [];
@@ -52,38 +44,47 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
          currentDate = new Date(
          currentDate.getFullYear(),
          currentDate.getMonth(),
-         currentDate.getDate() + 1, // Will increase month if over range
+         currentDate.getDate() + 1, 
       ); }
 
  return datess; 
 };
 
 
-const onChange = async (dates: [any, any]) => {       
+const onChange = async (dates: [Date, Date]) => {       
   const [start, end] = dates;  
   setStartDate(start);
   setEndDate(end);
   setDayRange(getDatesBetween(start,end).filter(el=>el.getDay() === 1 || el.getDay() === 4 )) 
- // setDayRange(getDatesBetween(start,end)) 
+
 
 };
 
-useEffect(()=>{
- //console.log("u",day)
-if(dayRange){
-  dayRange.map((day)=>{
- //console.log("u",day)
+useEffect(() => {
+  if (dayRange) {
+    const newDates = dayRange.map((day) => ({
+      value: day,
+      label: day.toLocaleDateString('default', { month: 'short', day: 'numeric' }),
+    }));
+    setSelectedDates((prevSelectedDates) => [...prevSelectedDates, ...newDates]);
+  }
+}, [dayRange]);
 
-     let possibleTrainingDate: PossibleTrainingDate ={    
-    value: day,
-    label: day.toLocaleDateString('default', { month: 'short', day: 'numeric' }) 
-     } 
-     setSelectedDates((prevSelectedDates: SetStateAction<null[] | null>) => [...prevSelectedDates, possibleTrainingDate])    
+// useEffect(()=>{
+// if(dayRange){
+//   dayRange.map((day)=>{
+//  //console.log("u",day)
+
+//      let possibleTrainingDate: PossibleTrainingDate ={    
+//     value: day,
+//     label: day.toLocaleDateString('default', { month: 'short', day: 'numeric' }) 
+//      } 
+//      setSelectedDates((prevSelectedDates: SetStateAction<null[] | null>) => [...prevSelectedDates, possibleTrainingDate])    
   
- })
-}
+//  })
+// }
 
- },[dayRange])   
+//  },[dayRange])   
  
  //wrzuc tutaj zawartosc komponentu SenddatesTobase
 
@@ -92,18 +93,18 @@ if(dayRange){
   setSelectedDates([]);
   setStartDate(new Date());
   setEndDate(null);
-  //setCloseMenu(true);
-  setIsReset(true);
+ 
 };
 
  const sendToFirebase =async() =>{
-  console.log("wyswietl co chcesz wysłac",userChoice) 
+ // console.log("wyswietl co chcesz wysłac",userChoice) 
  // setStartDate(new Date()); // Resetuj startDate do wartości domyślnej
   //setEndDate(null); // Resetuj endDate do wartości domyślnej
 
-console.log(userChoice,"userchoceprops")
+//console.log(userChoice,"userchoceprops")
  
- const docRef = await addDoc(collection(db, "trainingDays"), {
+ //const docRef = await addDoc(collection(db, "trainingDays"), {
+        await addDoc(collection(db, "trainingDays"), {
                       datesSet: userChoice?.map((dat)=> new Date(dat)),
                        created_at: serverTimestamp()  
                          })
@@ -141,7 +142,8 @@ console.log(userChoice,"userchoceprops")
       isMulti
       options={selectedDates}
       onChange={(choice) => {     
-     const selectedValues = choice.map(option => option.value); 
+    // const selectedValues = choice.map(option => option.value); 
+    const selectedValues = choice?.map((option) => (option as PossibleTrainingDate).value) || [];
       setUserChoice(selectedValues)
       
       }}
@@ -157,7 +159,7 @@ console.log(userChoice,"userchoceprops")
     setCloseMenu={setCloseMenu} 
     />
     */}
-  <button className={"btn"} onClick={sendToFirebase}  >send to base</button>
+  <button className={"btn"} onClick={sendToFirebase}  >Zapisz w bazie</button>
 
 </>
 

@@ -1,25 +1,17 @@
 
-import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent,useState } from 'react';
 import './Login.css';
-import { 
-  createUserWithEmailAndPassword, 
-  getAuth,
-   GoogleAuthProvider,
-   sendPasswordResetEmail,
-   signInWithEmailAndPassword,signInWithPopup, 
-   UserCredential 
-  } from 'firebase/auth';
+import {   signInWithEmailAndPassword} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-//https://codingpr.com/react-firebase-auth-tutorial/
-import { useContext } from 'react'
-import { UserContext } from '../context/UserContext';
+
+
 import { auth } from "../App";
 
 export interface IApplicationProps {};
 
 
-const LoginPage: React.FunctionComponent<IApplicationProps> =(props) => {
-  const { currentUser} = useContext(UserContext);
+const LoginPage: React.FunctionComponent<IApplicationProps> =() => {
+  //const { currentUser} = useContext(UserContext);
 
   //console.log('currentUser',currentUser)
 
@@ -40,7 +32,7 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
   const { name, value } = event.target
   
   setFormFields({...formFields, [name]: value })
-  console.log("formFields",formFields);
+  //console.log("formFields",formFields);
 }
 
 const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -51,23 +43,23 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((response) =>{
       navigate('/userpanel');
-      console.log("hej");
-        console.log(response.user.uid);
-        //nie tak zrob osobny authAdminRouthe ten nizej nie bedzie dzialac ok
+      
+       // console.log(response.user.uid);
+        
        response.user.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82" ? navigate('/adminpanel'): navigate('/')
   }).catch(error =>{
       console.log(error);
       setAuthing(false);
-      console.log("ho");
+      
    })
 
    
 };
-const resetFormFields = () => {
-  return (
-    setFormFields(defaultFormFields)
-  );
-}
+// const resetFormFields = () => {
+//   return (
+//     setFormFields(defaultFormFields)
+//   );
+// }
 
 
 

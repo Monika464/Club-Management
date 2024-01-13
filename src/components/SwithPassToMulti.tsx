@@ -17,14 +17,14 @@ const SwithPassToMulti: React.FunctionComponent =() => {
     const userModForSelect  =  useModUsersForSelect(); 
 
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
+    //const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null);
 const [newUsersList, setNewUsersList] = useState<US[]>([]);
 
 const [stopReported, setStopReported] = useState<boolean>(false)
 const [pausaReported, setPausaReported] = useState<boolean>(false)
-const [pausaDate, setPausaDate] = useState<Date | null>();
+//const [pausaDate, setPausaDate] = useState<Date | null>();
 const [switchDebt, setSwitchDebt] = useState<number | null>(null) 
 const [switchAdd, setSwitchAdd] = useState<number | null>(null) 
 const [isSent, setIsSent] = useState<boolean>(false) ;
@@ -45,7 +45,7 @@ useEffect(() => {
           const docSnap = await getDoc(userRef);  
           
 
- 
+   if(docSnap.exists()){
           if ((docSnap.data().optionPass) === true) {
               // Dodawanie użytkownika do listy w formie obiektu
               usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
@@ -56,7 +56,7 @@ useEffect(() => {
 
       
   };
-
+  }
   fetchData();
 
   //console.log('newUsersList',newUsersList)
@@ -120,7 +120,7 @@ useEffect(()=>{
                   if(docSnap.data().due){   
                        if(paymentDateIndex !== null && dzisIndex){
                           //console.log("odpalonypaymentDateIndex")
-                          setPausaDate(dzisData);
+                          //setPausaDate(dzisData);
                           if(paymentDateIndex >= dzisIndex ){
                             setSwitchAdd(paymentDateIndex - dzisIndex)
                           }
@@ -141,7 +141,7 @@ useEffect(()=>{
 
     const handleSwitchToMulti =async ()=>{
 
-      const paymentDataRef = doc(db, "usersData", chosenUserId);
+      const paymentDataRef = doc(db, "usersData", chosenUserId!);
    
       
         await updateDoc(paymentDataRef, {
@@ -156,7 +156,7 @@ useEffect(()=>{
         .then(()=>   setIsSent(true))
        
          
-        const docRef = await addDoc(collection(db, "optionsArchive"), dataToActivityArchive)
+        await addDoc(collection(db, "optionsArchive"), dataToActivityArchive)
         .then(()=> console.log("archive"))
      
          
@@ -184,8 +184,10 @@ useEffect(()=>{
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
-        setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label);  
+        if(choice && choice.value){
+        setChosenUserId(choice.value);
+        }   
+        //setChosenUserByIdLabel(choice.label);  
         setSwitchDebt(null);
         setSwitchAdd(null);
         setPausaReported(false);

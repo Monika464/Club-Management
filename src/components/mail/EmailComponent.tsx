@@ -1,13 +1,24 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../App";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import mail from '../../assets/mail.png'
 import mailblurred from '../../assets/mailblurred.png'
-import { useNavigate } from "react-router-dom";
-import { isModuleNamespaceObject } from "util/types";
+//import { useNavigate } from "react-router-dom";
+//import { isModuleNamespaceObject } from "util/types";
 
-
+export interface IDateObj{
+  seconds: number,
+  nanoseconds: number
+}
+export interface IMessage {
+    
+  created_at: IDateObj;
+  message: string;
+  fresh: boolean,
+  userUid: string
+  id: string
+}
 
 export interface IEmailprops {
   
@@ -18,25 +29,22 @@ export interface IEmailprops {
     isMO: boolean;
 }
 
-export interface IFreshMessageToTrainer {
+export interface IFreshMessage {
    id: string;
    fresh: boolean  
 }
-export interface IFreshMessageToUser {
-    id: string;
-    receivers: string[];
-    fresh: boolean  
- }
+
 
 export const EmailComponent: React.FunctionComponent<IEmailprops> = (props) => {
     const { currentUser} = useContext(UserContext); 
-    const [freshMessagestoTrainer, setFreshMessagestoTrainer] = useState<IFreshMessageToTrainer [] | null>(null);
-    const [freshMessagestoUser, setFreshMessagestoUser] = useState<IFreshMessageToUser[] | null>(null);
+    const [freshMessagestoTrainer, setFreshMessagestoTrainer] = useState<IFreshMessage[] | null>(null);
+    const [freshMessagestoUser, setFreshMessagestoUser] = useState<IFreshMessage[] | null>(null);
 const [isShaking, setIsShaking] = useState<boolean>(false)
-    const navigate = useNavigate();
-    // pierwszy
+    //const navigate = useNavigate();
+    
+    // pierwszy czyli wiadomósci do trenera
 
-    //console.log("mailblurred", mailblurred)
+   // console.log("jaki etu props", props)
 
     if(props.collectionName ===  "usersmessages"){
     
@@ -87,54 +95,77 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
          }, [checkAndLogTrain,freshMessagestoTrainer]);
 
   }
-//drugi
+//drugi czyli wiadomóści do userówto co nie dziala
 
-if(props.collectionName === "adminmessages"){
+if(props.collectionName === "usersmails"){
 
- const getDataToUser = useCallback(async () => {   
 
-    if (currentUser) {
-        console.log("currentId",props.currentId ) 
-        const messageRef = collection(db, props.collectionName);    
-        const querySnapshot = await getDocs(messageRef );
-        //console.log("props.collectionName", props.collectionName)
- 
-            const temp = [];
-             const unsub = querySnapshot.forEach((doc) => {    
-                    if(doc.data()){
-                        const obiekt = {
-                        id: doc.id,
-                        fresh: doc.data().fresh,
-                        receivers: doc.data().receivers
-                        }
-                     temp.push(obiekt)   
-                     };
-            setFreshMessagestoUser(temp)
-            })
+  if(currentUser){}
+  const readingFromFire =async()=>{
     
-            return  unsub; 
-    }      
- },[db, currentUser,props])  
+    const q = query(collection(db, "usersmails"), where("userUid", "==", currentUser.uid));
+     const unsubscribe = onSnapshot(q, (querySnapshot) => { 
+         const temp: IMessage[] = querySnapshot.docs.map((doc) => {
+            const data = {...doc.data(),id: doc.id};
+           return data
+          })
+          setFreshMessagestoUser(temp) 
+         // console.log("temp",temp)
+     })
+     
+     return () => unsubscribe();
+
+}
+
+//  const getDataToUser = useCallback(async () => {   
+
+//     if (currentUser) {
+//         console.log("currentId",props.currentId ) 
+//         const messageRef = collection(db, props.collectionName);    
+//         const querySnapshot = await getDocs(messageRef);
+//         console.log("querySnapshot", querySnapshot)
+ 
+//             const temp = [];
+//              const unsub = querySnapshot.forEach((doc) => {    
+//                     if(doc.data()){
+//                       console.log("tutaj",doc.data())
+                      
+//                     //     const obiekt = {
+//                     //     id: doc.id,
+//                     //     fresh: doc.data().fresh,
+//                     //     }
+//                     //  temp.push(obiekt)   
+//                      };
+//             setFreshMessagestoUser(temp)
+//             })
+    
+//             return  unsub; 
+//     }      
+//  },[db, currentUser,props])  
 
  useEffect(() => {
-     getDataToUser();
+  readingFromFire();
   // console.log('drugiWQiadmosciusera',freshMessagestoUser)
 
-  }, [db, currentUser, getDataToUser, props.currentId]);
+  }, [db, currentUser, readingFromFire, props.currentId]);
  // console.log('wiadUsera',freshMessagestoUser)
 
   const checkAndLogUser = useCallback(() => {
       if (freshMessagestoUser) {
           freshMessagestoUser.forEach((fressMes)=>{
-          if (fressMes.receivers.includes(props.currentId) || fressMes.receivers.includes("all")){
-            if (fressMes.fresh) {
-              setIsShaking(true)
-               // console.log("trzesiemy usera");
-                return;
-            }
-            
-         
-           }
+            if ( fressMes.fresh === true) {
+              // console.log("trzesiemy trenera");
+               setIsShaking(true)
+            return;
+           } 
+            //console.log("fressMes",fressMes)
+          // if (fressMes.receivers.includes(props.currentId) || fressMes.receivers.includes("all")){
+          //   if (fressMes.fresh) {
+          //     setIsShaking(true)
+          //      // console.log("trzesiemy usera");
+          //       return;
+          //   }        
+          //  }
          }) 
     }
   }, [freshMessagestoUser, props.currentId]);

@@ -13,7 +13,7 @@ export const UsersPayments : React.FunctionComponent<Itest> =() => {
     const usersModForSelect =  useModUsersForSelect(); 
 
     const [chosenUserById, setChosenUserById] = useState<string | null>(null)
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
+    //const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
     const [oldDueDate, setOldDueDate] = useState<Date | null>(null) 
     const [newDueDate, setNewDueDate] = useState<Date | null>(null)
     const [hasDebt, setHasDebt] = useState<number | null>(null);
@@ -27,7 +27,7 @@ const [isMulti, setIsMulti] = useState<boolean>(false)
 const [name,setName] = useState<string | null>(null)
 const [surname,setSurname] = useState<string | null>(null)
 
-    console.log(chosenUserById,chosenUserByIdLabel)
+    //console.log(chosenUserById,chosenUserByIdLabel)
 
 
 const  calculatedIndexOfNewDue= useSearchDatesPlusN(8, chosenUserById);
@@ -180,7 +180,7 @@ useEffect(()=>{
       onChange={(choice) => {
        // console.log("choice", choice) 
         setChosenUserById(choice.value);   
-        setChosenUserByIdLabel(choice.label); 
+        //setChosenUserByIdLabel(choice.label); 
         setHasDebt(null);
         setHasAdd(null);
         setOldDueDate(null);

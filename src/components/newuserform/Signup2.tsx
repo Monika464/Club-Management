@@ -1,19 +1,14 @@
 export interface IApplicationProps {};
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useMultistepForm } from '../../hooks/useMultiStepForm';
-import { AccountForm } from '../AccountForm';
 import './Signup2.css'
 import { StartAndOptionForm } from './StartEndOptionsForm';
 import { UserForm } from './UserForm';
 //import { useSingnInToBase } from '../hooks/useSigninToBase';
 import {SigninSendingTest}  from './SigninSendingTest';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import SetAvatar from './SetAvatar';
-import { format } from "date-fns";
-import { pl } from 'date-fns/locale';
-//https://www.youtube.com/watch?v=uDCBSnWkuH0
-//18
+
+
 
 
 
@@ -24,8 +19,8 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     const [dob, setDob] = useState<Date>(new Date());
     const [option, setOption] = useState<string|null>("");
     const [startDay, setStartDay] = useState<Date | null>(null);
-    const [email, setEmail] = useState<string|null>("");
-    const [password, setPassword] = useState<string|null>("");
+    //const [email, setEmail] = useState<string|null>("");
+   // const [password, setPassword] = useState<string|null>("");
 
     //// zrob props do set avatar
     const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
@@ -35,9 +30,9 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
     //console.log("typ thumbnail",thumbnail)
     //console.log("pictureURLSign",pictureURL)
 
-    const [authing, setAuthing] = useState(false);
-    const auth = getAuth();
-const navigate = useNavigate();
+    //const [authing, setAuthing] = useState(false);
+   //// const auth = getAuth();
+//const navigate = useNavigate();
 
   const displayStartDay = startDay?.toDate() 
    //console.log(format(sssartDay, 'dd.MM.yyyy'))
@@ -85,8 +80,8 @@ surname={surname}
 dob={dob}
 option={option}
 startDay ={startDay}
-email ={email}
-password={password}
+//email ={email}
+//password={password}
 // pictureURL ={pictureURL}
 />
 
@@ -96,28 +91,7 @@ password={password}
 //}
 
 
-const checkFormVisib =()=>{
 
-
-}
-
-//https://www.youtube.com/watch?v=VvcBqPua2DI 3: 35
-/*
-const handleCreateUser =()=>{
-  createUserWithEmailAndPassword(auth, email, password)
-  .then((response) =>{
-    navigate('/');
-    console.log("hej");
-      //console.log(response.user.uid);
-     // response.user.uid === "2kyaZZ40UMc1nLaIexUoFKyfVtJ3" ? navigate('/signup'): navigate('/')
-}).catch(error =>{
-    console.log(error);
-    setAuthing(false);
-    console.log("ho");
- })
-
-};
-*/
 
 
 
@@ -155,8 +129,8 @@ function onSubmit(e: FormEvent) {
             {option && <div><span className='decript'>typ: </span> <span>{option}</span></div>}
        
             {/* {isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>} */}
-            {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>}
-         
+            {/* {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} email={email} password={password}/>} */}
+               {isLastStep && <SigninSendingTest name={name} surname={surname} dob={dob} startDay={startDay} option={option} />} 
         </div>
     
          

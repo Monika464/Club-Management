@@ -1,7 +1,3 @@
-//wybieranie z select users i dat jak w starym zglaszaniu injury Admina 
-// multi na false
-//wpisanie updatem nowej duedate
-//jesli bebt pass i lub debtmulti to sie sumuja
 
 import { useEffect, useState } from "react";
 import { useModUsersForSelect } from "../hooks/useModUsersForSelect ";
@@ -16,6 +12,11 @@ import DateFnsFormat from "./DateFnsFormat";
 export interface US {
     value: string 
     label: string 
+}
+
+export interface IDateObject{
+  seconds: number;
+  nanoseconds: number;
 }
 
 const SwitchMultiToPass: React.FunctionComponent =() => {
@@ -33,7 +34,7 @@ const [hasDebt, setHasDebt] = useState<number | null>(null);
 const [newPaymentDateIndex, setNewPaymentDateIndex] = useState<number | null>(null);
 const [isSent, setIsSent] = useState<boolean>(false);
 const [isCalculating, setIsCalculating] = useState<boolean>(false);
-const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
+const [newPaymentDate, setNewPaymentDate] = useState<IDateObject | null>(null);
 
     const userModForSelect  =  useModUsersForSelect(); 
     const dzisIndex = useSearchIndexCloseToday();
@@ -109,16 +110,16 @@ const [newPaymentDate, setNewPaymentDate] = useState<Date | null>(null);
       useEffect(()=>{
     
         if( chosenUserId){
-   
-            if(!hasDebt && dzisIndex){
+  
+            if(!hasDebt && dzisIndex !== null){
             setNewPaymentDateIndex(dzisIndex)
           }
               
-          if(hasDebt && dzisIndex){
+          if(hasDebt && dzisIndex !== null){
             setNewPaymentDateIndex(dzisIndex - hasDebt)
           }
 
-if(calcDatOfNewPay && chosenUserId){
+if(calcDatOfNewPay !== null && chosenUserId){
   setNewPaymentDate(calcDatOfNewPay);
 }
          
@@ -127,7 +128,7 @@ if(calcDatOfNewPay && chosenUserId){
 
 
 
-    //console.log("calcDatOfNewPay",calcDatOfNewPay?.toDate());
+    //console.log("newPaymentDate",newPaymentDate);
 
     const dataToActivityArchive = {
       timestamp: serverTimestamp(),

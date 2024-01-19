@@ -1,7 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useModUsersForSelect } from "../../hooks/useModUsersForSelect ";
 import Select from 'react-select'
-import { UserContext } from "../../context/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../App";
 import DateFnsFormat from "../DateFnsFormat";
@@ -32,16 +31,17 @@ export interface ItimestampArr1{
     restartData: Date
   }
 
-const ArchiveViewAdmin : React.FunctionComponent<IArchiveViewAdmin> =(props) => {
+const ArchiveViewAdmin : React.FunctionComponent<IArchiveViewAdmin> =() => {
 
     const userModForSelect  =  useModUsersForSelect(); 
 
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
-    const [timestampArr1, setTimestampsArr1] = useState< ItimestampArr1 | null>(null);
-const [timestampArr2, setTimestampsArr2] = useState< ItimestampArr2 | null>(null);
-const [timestampArr3, setTimestampsArr3] = useState< ItimestampArr3 | null>(null);
-const [timestampArr4, setTimestampsArr4] = useState< ItimestampArr4 | null>(null);
+    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string>('')
+    const [timestampArr1, setTimestampsArr1] = useState< ItimestampArr1[]>([]);
+const [timestampArr2, setTimestampsArr2] = useState< ItimestampArr2[]>([]);
+const [timestampArr3, setTimestampsArr3] = useState< ItimestampArr3[]>([]);;
+const [timestampArr4, setTimestampsArr4] = useState< ItimestampArr4[]>([]);
+
 const [rendered, setRendered] = useState(false);
 useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,9 +52,11 @@ useEffect(() => {
       clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
     };
   }, []);
+
+  console.log(rendered);
 const getArchiveDatafromBase = useCallback(async() => {
 
-console.log("chosenUserId",chosenUserId)
+//console.log("chosenUserId",chosenUserId)
 
     const getfromBase1 =async()=>{         
       if(chosenUserId){
@@ -65,7 +67,7 @@ console.log("chosenUserId",chosenUserId)
       const unsubscribe = onSnapshot(q1, (querySnapshot) => { 
         const temp1 = querySnapshot.docs.map((doc) => {
           
-         console.log("tuuu", doc.id, " => ", doc.data());
+        // console.log( doc.id, " => ", doc.data());
        
           if(doc.data().pausaData){
             return {
@@ -74,8 +76,9 @@ console.log("chosenUserId",chosenUserId)
               pausaData: doc.data().pausaData,
               reason: doc.data().reason
             };
-          }            
-          });
+          }  return null;          
+          })
+          .filter((item) => item !== null) as ItimestampArr1[];
          // console.log("temp1",temp1)
           setTimestampsArr1([...temp1])
          
@@ -105,8 +108,9 @@ if(chosenUserId){
          time: doc.data().created_at,
          endPauseData: doc.data().endPauseData
        };
-     }            
-     });
+     }    return null;           
+     })
+     .filter((item) => item !== null) as ItimestampArr2[];
      //console.log("temp2",temp2)
      setTimestampsArr2([...temp2])
     // console.log("timestampArr2",timestampArr2)
@@ -135,8 +139,9 @@ if(chosenUserId){
            time: doc.data().created_at,
            stopData: doc.data().stopData
          };
-       }            
-       });
+       }  return null;           
+       })
+       .filter((item) => item !== null) as ItimestampArr3[];
        //console.log("temp3",temp3)
        setTimestampsArr3([...temp3])
        //console.log("timestampArr3",timestampArr3)
@@ -165,8 +170,9 @@ const getfromBase4 =async()=>{
              time: doc.data().created_at,
              restartData: doc.data().restartData
            };
-         }            
-         });
+         }   return null;          
+         })
+         .filter((item) => item !== null) as ItimestampArr4[];
          //console.log("temp4",temp4)
          setTimestampsArr4([...temp4])
          //console.log("timestampArr4",timestampArr4)

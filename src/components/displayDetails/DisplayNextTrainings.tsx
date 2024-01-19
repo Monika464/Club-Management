@@ -9,23 +9,27 @@ import { pl } from "date-fns/locale";
 import './displayNextTrainings.css'
 
 export interface IDisplayNextTrainings{
- userid: string | null
+ userid: string 
 }
- 
+export interface Inajblizszyindexwbaziedat {
+  najblizszyindexwbaziedat: number
+}
 
 export const DisplayNextTrainings : React.FunctionComponent<IDisplayNextTrainings> =(props) => {
 
 
 const najblizszyindexwbaziedat = useSearchIndexCloseToday();
 
-const data0napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 0)
-const data1napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 1)
-const data2napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 2)
-const data3napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 3)
-const [isMulti, setIsMulti] = useState<boolean>(false);
-const [isPause, setIsPause] = useState<boolean>(false);
-const [isStop, setisStop] = useState<boolean>(false);
-const [rendered, setRendered] =   useState(false);
+
+    const data0napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 0)
+    const data1napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 1)
+    const data2napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 2)
+    const data3napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 3)
+ 
+    const [isMulti, setIsMulti] = useState<boolean>(false);
+    const [isPause, setIsPause] = useState<boolean>(false);
+    const [isStop, setisStop] = useState<boolean>(false);
+    const [rendered, setRendered] =   useState(false);
 
 const indexnajblizszejnaleznejplatnosci = useSearchDatesPlusN(null, props.userid);
 //console.log('indexnajblizszejnaleznejplatnosci',indexnajblizszejnaleznejplatnosci);

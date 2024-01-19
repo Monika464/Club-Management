@@ -1,13 +1,13 @@
-import { add, format, setHours, startOfDay } from "date-fns";
+import { add, startOfDay } from "date-fns";
 import { useFetchDates } from "./useFetchDates";
 import { useEffect, useState } from "react";
-import { enUS } from "date-fns/locale";
 
-export const useSearchIndexCloseToday = (): number | null => {
+
+export const useSearchIndexCloseToday = (): number => {
 
     const dataFromBase = useFetchDates();
 
-  //  console.log("usehookwczytany")
+  // console.log("usehookwczytany")
 
     const [closeTodaysIndex, setCloseTodaysIndex] =  useState<number | null>(null);
 

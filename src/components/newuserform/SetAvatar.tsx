@@ -11,11 +11,12 @@ export interface ISetAvatar {
 
 import { useEffect} from "react"
 //import { db } from "../../App.tsx";
-import { storage } from '../../App.tsx';
+import { db, storage } from '../../App.tsx';
 import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage";
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext.tsx';
 import { updateProfile } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 //import { doc, updateDoc } from "firebase/firestore";
 
 
@@ -99,38 +100,41 @@ useEffect(()=>{
 },[thumbnail])
 
 
-useEffect(()=>{
-
+const updatingProfile = async()=>{
   if(currentUser){
 
-  updateProfile(currentUser, {
-    photoURL: pictureURL 
-})
-.then(() => {
-//console.log("response",response);
-console.log("Profile updated!");
-})
-.then(() => {
-  //console.log("response",response);
- // alert("Profile updated!");
+   await updateProfile(currentUser, {
+      photoURL: pictureURL 
   })
-.catch((error) => {
-console.log(error);
-});
+  .then(() => {
+  //console.log("response",response);
+  console.log("Profile updated!");
+  })
+  .catch((error) => {
+  console.log(error);
+  });
+   }
+  }
+const updateAvatarBase =async ()=>{
+  if(currentUser){  
+    const userRef = doc(db, "usersData",currentUser?.uid);
+    await updateDoc(userRef, {
+      avatar: pictureURL
+      })
+      .then(()=> {console.log("new avatar set")})
+    }
 }
 
-},[uploadFile,pictureURL])
+useEffect(()=>{
+
+  updatingProfile();
+  updateAvatarBase();
+//console.log("picture", )
+},[uploadFile,pictureURL,updateAvatarBase])
       
 //tego jeszcze nie ma
 // useEffect(()=>{
-//   const updateAvatar2 =async ()=>{
-//   if(currentUser){  
-//     const userRef = doc(db, "usersData",currentUser?.uid);
-//     await updateDoc(userRef, {
-//       avatar: pictureURL
-//       })
-//       .then(()=> {console.log("new avatar set")})
-//     }
+//   
 //   }
 //   updateAvatar2()
 //   },[thumbnail,uploadFile])

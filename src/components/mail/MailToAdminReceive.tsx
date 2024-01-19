@@ -5,6 +5,7 @@ import { db } from "../../App";
 import notread from '../../assets/notread.png'
 import read from '../../assets/read.png'
 import './email.css'
+import { format } from "date-fns";
 export interface IMailToAdminReceive {}
 export interface IMessage {
     created_at: Date;
@@ -13,6 +14,7 @@ export interface IMessage {
     fresh: boolean;
     name: string;
     surname: string;
+    id: string
   }
 
 export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = (props) => {
@@ -45,7 +47,7 @@ export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = 
 
     useEffect(() => {
         getUserData();
-        console.log('messages',messages)
+        //console.log('messages',messages)
     
       }, [db, currentUser, getUserData]);
 
@@ -75,11 +77,11 @@ export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = 
 ///
 const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id]);
   const filteredMessages = messages ? messages.filter((elem) => readMessagesIds.includes(elem.id)) : [];
-  console.log("messages do zmiany statutu", filteredMessages)
+  //console.log("messages do zmiany statutu", filteredMessages)
 
   const checkedMessagesIds = Object.keys(checkedMessages).filter((id) => checkedMessages[id]);
   const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMessagesIds.includes(elem.id)) : [];
-  console.log("messages do usuniecia", filteredCheckedMessages)
+  //console.log("messages do usuniecia", filteredCheckedMessages)
 
    useEffect(()=>{
     if(filteredMessages){
@@ -100,7 +102,7 @@ const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id
 
    const deletingMessage = async () => {
 
-    if (filteredCheckedMessages) {
+    if (filteredCheckedMessages && messages) {
       const updatedMessages = messages.filter((message) => !filteredCheckedMessages.includes(message));
   
       try {
@@ -126,7 +128,7 @@ const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id
 return(<div>
     <div>
       <div className="checkboxFlex">
-        Trainer mailbox 
+        Skrzynka trenera 
         {messages &&
           messages.map((elem) => {
            // const labelStyle = isReadMessages[elem.id] ? { color: 'gray' } : {};
@@ -147,14 +149,15 @@ return(<div>
                     />
                   </div>
                   {elem.message}
+                  <p className="comment-date">{`${format(new Date(elem.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
                   {/* {elem.created_at.toDate().toString()} */}
-                  <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL',{
+                  {/* <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL',{
               year: 'numeric',
               month: 'numeric',
               day: 'numeric',
               hour: '2-digit',
               minute: '2-digit',
-             })}`}</p>
+             })}`}</p> */}
                      <div className="comment-author mail">
                   <p>wiadomośc od: {elem.name}{elem.surname}</p>
                   </div>

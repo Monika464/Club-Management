@@ -3,6 +3,7 @@ import mail from '../assets/mail.png'
 import { useNavigate } from "react-router-dom";
 import MailToAdminSend from "../components/mail/MailToAdminSend";
 import { useState } from "react";
+import MailboxToUserReceive2 from "../components/mail/MailboxToUserReceive2";
 
 
 export interface IUserMailbox {
@@ -20,7 +21,8 @@ const UserMailbox: React.FunctionComponent<IUserMailbox > =(props) => {
 
     return(<div>
          {/* <img src={mail} onClick={() => navigate('/userpanel')}/> */}
-        <MailboxToUserReceive/>
+        {/* <MailboxToUserReceive/> */}
+        <MailboxToUserReceive2/>
 
 
         <br></br>

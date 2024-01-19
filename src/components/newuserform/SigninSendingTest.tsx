@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../context/UserContext'; 
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { db, storage } from '../../App';
+import { db} from '../../App';
 import { useNavigate } from 'react-router-dom';
-import { getDownloadURL, uploadBytes,ref as storageRef } from 'firebase/storage';
+//import { getDownloadURL, uploadBytes,ref as storageRef } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 
 
@@ -13,8 +13,8 @@ interface ISigninSending {
     dob: Date | null,
     startDay: Date | null,
     option: string | null,
-    email: string | null,
-    password: string | null 
+    //email: string | null,
+    //password: string | null 
     // pictureURL: string | null  
 
 }
@@ -54,7 +54,7 @@ export function SigninSendingTest(props: ISigninSending){
         startDay: props.startDay,
 
       }
-      console.log("pictureURLu",props)
+      //console.log("pictureURLu",props)
 
     const WriteUserInfo = async() =>{ 
         //console.log("przycisk wcisniety")  
@@ -107,7 +107,15 @@ export function SigninSendingTest(props: ISigninSending){
                 
                  }
     
+
+          //stworz skrzynke mailowa tego usera
+           const docRef = doc(db, "usersMailbox", currentUser.uid);
+           await setDoc(docRef, {
+            mailbox: true
+           })
+
          }
+    
 
            //dodaj do archive
            const docArchive = await addDoc(collection(db, "newUsersArchive"), dataToUsersArchive)
@@ -152,7 +160,7 @@ export function SigninSendingTest(props: ISigninSending){
                 updateProfile(currentUser, {
                   displayName: props.name
               })
-              .then((response) => {
+              .then(() => {
               //console.log("response",response);
               console.log("Profile name updated!");
               })

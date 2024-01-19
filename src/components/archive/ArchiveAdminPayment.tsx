@@ -5,12 +5,21 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../App';
 import DateFnsFormat from '../DateFnsFormat';
 
-export interface IArchiveAdminPayment{}
+export interface IArchiveAdminPayment{
+
+}
 export interface ItimestampArr{
   created_at: Date
   kto: string
-  trenings: 8
+  trenings: number
   userUid: string
+  }
+
+  export interface IPaymentItem{
+    id: string,
+    time: Date,
+    kto: string,
+    trenings: number  
   }
 
 const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() => {
@@ -19,7 +28,7 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
    
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
     const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null) 
-    const [paymentsArr, setPaymentsArr] = useState< ItimestampArr | null>(null);
+    const [paymentsArr, setPaymentsArr] = useState< IPaymentItem[]>([]);
     const [rendered, setRendered] = useState(false);
 
     useEffect(() => {
@@ -31,7 +40,7 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
           clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
         };
       }, []);
-
+console.log(rendered)
 
       const getArchivePayfromBase = useCallback(async() => {
 
@@ -45,19 +54,17 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
             const unsubscribe = onSnapshot(q, (querySnapshot) => { 
                 //console.log("querySnapshot",querySnapshot.docs)  
                 const temp = querySnapshot.docs.map((doc) => {
-                
-              // console.log("payArch", doc.id, " => ", doc.data());
-             
                 if(doc.data()){
                   return {
                     id: doc.id,
                     time: doc.data().created_at,
                     kto: doc.data().kto,
                     trenings: doc.data().trenings   
-                  };
-                }            
-                });
-               // console.log("temp1",temp1)
+                  } as IPaymentItem;
+                } return null;            
+                })
+                .filter((item) => item !== null) as IPaymentItem[]; 
+               
                 setPaymentsArr([...temp])
                
              });
@@ -78,7 +85,7 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
       
       useEffect(()=>{
 
-      console.log("paymentsArr",paymentsArr )
+      //console.log("paymentsArr",paymentsArr )
 
             },[getArchivePayfromBase, paymentsArr])
 
@@ -98,8 +105,8 @@ const ArchiveAdminPayment : React.FunctionComponent<IArchiveAdminPayment> =() =>
       Wybrany uzytkownik: {chosenUserByIdLabel}
             <br></br><br></br>
        <ol>
-            {paymentsArr &&
-     paymentsArr.map((elem)=>(
+            {paymentsArr && paymentsArr &&
+     paymentsArr.map((elem:IPaymentItem)=>(
         <li key={elem.id}>
           <div className="archive">
         <p>płatność dnia: </p>

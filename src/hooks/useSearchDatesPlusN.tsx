@@ -1,21 +1,17 @@
 import { useFetchDates } from "./useFetchDates";
 import { db } from "../App.js";
-import { Timestamp, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 
-//ile dodac do daty platnosci i dla jakiego id
+
 export const useSearchDatesPlusN = (howMany: number | null, id: string | null | undefined) => {
 
-
-  //const id= "Y19J2pywqfd2YKN3zVVGlzYEWR82";
   const [userDueDate, setuserDueDate] = useState<Date | null>(null);
   const [wantedIndex, setWantedIndex] = useState<number | null>(null);
   const [isDb, setIsDb] = useState<boolean>(false); 
-  //console.log("how many z usehook", howMany,"userDueDate",userDueDate )
   const dataFromBase = useFetchDates();
-  ///console.log("dataFromBase",dataFromBase);
-  //console.log("iiiid",id);
+
 
   useEffect(() => {
     const getUserDueDate = async () => {

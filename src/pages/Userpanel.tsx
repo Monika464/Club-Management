@@ -3,27 +3,27 @@ import { Link, NavLink } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
 import { UserProfile } from "../components/UserProfile";
-import { ManagingUsers } from "../components/ManagingUsers";
-import { WriteUsersInfo } from "../components/WriteUsersInfo";
-import { Test } from "../components/Test";
-import { TestingFnsLib } from "../components/testingFnsLib";
-import { ReportInjuryUser } from "../components/ReportInjuryUser";
-import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
-import { ReportInjuryUser2 } from "../components/stop/ReportInjuryUser2";
-import  StopMembershipUser  from "../components/stop/StopMembershipUser";
-import { RestoreMembershipUser } from "../components/stop/RestoreMembershipUser";
-import { DisplayUserDataUser, DisplayUserTrainings } from "../components/displayDetails/DisplayUserDataUser";
-import Sidebar from "../components/Sidebar";
-import ShowAvatar from "../components/ShowAvatar";
-import ChoosingAvatar from "../components/ChoosingAvatar";
-import Project from "./Project";
-import AddIcon from '../assets/add_icon.svg';
-import ArchiveUserPayment from "../components/archive/ArchiveUserPayment";
-import MailboxToUserSend from "../components/mail/MailBoxToUserSend";
-import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive";
-import mail from '../assets/mail.png'
+// import { ManagingUsers } from "../components/ManagingUsers";
+// import { WriteUsersInfo } from "../components/WriteUsersInfo";
+// import { Test } from "../components/Test";
+// import { TestingFnsLib } from "../components/testingFnsLib";
+// import { ReportInjuryUser } from "../components/ReportInjuryUser";
+// import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
+// import { ReportInjuryUser2 } from "../components/stop/ReportInjuryUser2";
+// import  StopMembershipUser  from "../components/stop/StopMembershipUser";
+// import { RestoreMembershipUser } from "../components/stop/RestoreMembershipUser";
+import { DisplayUserDataUser} from "../components/displayDetails/DisplayUserDataUser";
+// import Sidebar from "../components/Sidebar";
+// import ShowAvatar from "../components/ShowAvatar";
+// import ChoosingAvatar from "../components/ChoosingAvatar";
+// import Project from "./Project";
+// import AddIcon from '../assets/add_icon.svg';
+// import ArchiveUserPayment from "../components/archive/ArchiveUserPayment";
+// import MailboxToUserSend from "../components/mail/MailBoxToUserSend";
+// import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive";
+// import mail from '../assets/mail.png'
 import { useNavigate } from "react-router-dom";
-import MailToAdminSend from "../components/mail/MailToAdminSend";
+//import MailToAdminSend from "../components/mail/MailToAdminSend";
 import EmailComponent from "../components/mail/EmailComponent";
 export interface IUserProps {};     
 import './userpanel.css'
@@ -97,7 +97,7 @@ return (
                {/* <img src={mail} onClick={() => navigate('/mailboxuser')}/>  */}
               <div className="mail">
               <EmailComponent 
-              collectionName={"adminmessages"} 
+              collectionName={"usersmails"} 
               currentId = {currentUser?.uid}   
               onClick={() => navigate('/mailboxuser')}
               onmouseover={()=> handelonmouseover()}

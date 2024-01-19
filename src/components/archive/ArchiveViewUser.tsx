@@ -1,9 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { collection,onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../App";
-import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
-import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import DateFnsFormat from "../DateFnsFormat";
 
 export interface IArchiveViewUser{}
@@ -32,31 +30,31 @@ export interface ItimestampArr4{
   restartData: Date
 }
 
-export const ArchiveViewUser : React.FunctionComponent<IArchiveViewUser> =(props) => {
+export const ArchiveViewUser : React.FunctionComponent<IArchiveViewUser> =() => {
 
-    const [debt, setDebt] = useState<number | null>(null); 
-    const [add, setAdd] = useState<number | null>(null); 
-const [name, setName] = useState<string | null>(null);
-const [surname, setSurname] = useState<string | null>(null);
-const [isMulti, setIsMulti] = useState<boolean>(false);
-const [isPass, setIsPass] = useState<boolean>(false);
-const [isPause, setIsPause] = useState<boolean>(false);
-const [isStop, setisStop] = useState<boolean>(false);
-const [due, setDue] = useState<Date | null>(null);
-const [rendered, setRendered] =   useState(false);
+//     const [debt, setDebt] = useState<number | null>(null); 
+//     const [add, setAdd] = useState<number | null>(null); 
+// const [name, setName] = useState<string | null>(null);
+// const [surname, setSurname] = useState<string | null>(null);
+// const [isMulti, setIsMulti] = useState<boolean>(false);
+// const [isPass, setIsPass] = useState<boolean>(false);
+// const [isPause, setIsPause] = useState<boolean>(false);
+// const [isStop, setisStop] = useState<boolean>(false);
+// const [due, setDue] = useState<Date | null>(null);
+//const [rendered, setRendered] =   useState(false);
 //const [archiveName, setArchiveName] = useState<string | null>(null);
-const [timestampArr1, setTimestampsArr1] = useState< ItimestampArr1 | null>(null);
-const [timestampArr2, setTimestampsArr2] = useState< ItimestampArr2 | null>(null);
-const [timestampArr3, setTimestampsArr3] = useState< ItimestampArr3 | null>(null);
-const [timestampArr4, setTimestampsArr4] = useState< ItimestampArr4 | null>(null);
-const [timestampAllArr, setTimestampsAllArr] = useState<Date[] | null>(null);
+const [timestampArr1, setTimestampsArr1] = useState< ItimestampArr1[]>([]);
+const [timestampArr2, setTimestampsArr2] = useState< ItimestampArr2[]>([])
+const [timestampArr3, setTimestampsArr3] = useState< ItimestampArr3[]>([])
+const [timestampArr4, setTimestampsArr4] = useState< ItimestampArr4[]>([])
+//const [timestampAllArr, setTimestampsAllArr] = useState<Date[] | null>(null);
    
 //archive
-const [reportArchiveDate, setReportArchiveDate] = useState<Date | null>(null);
-const [pausaData, setPausaDate]= useState<Date | null>(null);
-const [endPauseData, setEndPauseData]= useState<Date | null>(null);
-const [stopData, setStopData]= useState<Date | null>(null);
-const [restartData, setRestartData]= useState<Date | null>(null);
+// const [reportArchiveDate, setReportArchiveDate] = useState<Date | null>(null);
+// const [pausaData, setPausaDate]= useState<Date | null>(null);
+// const [endPauseData, setEndPauseData]= useState<Date | null>(null);
+// const [stopData, setStopData]= useState<Date | null>(null);
+// const [restartData, setRestartData]= useState<Date | null>(null);
 
 
 const { currentUser} = useContext(UserContext); 
@@ -74,7 +72,6 @@ const { currentUser} = useContext(UserContext);
         const unsubscribe = onSnapshot(q1, (querySnapshot) => { 
           const temp1 = querySnapshot.docs.map((doc) => {
             
-           // console.log("tuuu", doc.id, " => ", doc.data());
          
             if(doc.data().pausaData){
               return {
@@ -83,8 +80,9 @@ const { currentUser} = useContext(UserContext);
                 pausaData: doc.data().pausaData,
                 reason: doc.data().reason
               };
-            }            
-            });
+            }  return null;          
+            })
+            .filter((item) => item !== null) as ItimestampArr1[];
            // console.log("temp1",temp1)
             setTimestampsArr1([...temp1])
            
@@ -105,8 +103,7 @@ if(currentUser){
         
    const unsubscribe = onSnapshot(q2, (querySnapshot) => { 
      const temp2 = querySnapshot.docs.map((doc) => {
-       
-       //console.log("tu2", doc.id, " => ", doc.data());
+
     
        if(doc.data().endPauseData){
          return {
@@ -114,8 +111,9 @@ if(currentUser){
            time: doc.data().created_at,
            endPauseData: doc.data().endPauseData
          };
-       }            
-       });
+       }  return null;           
+       })
+       .filter((item) => item !== null) as ItimestampArr2[];
        //console.log("temp2",temp2)
        setTimestampsArr2([...temp2])
       // console.log("timestampArr2",timestampArr2)
@@ -144,8 +142,9 @@ const getfromBase3 =async()=>{
              time: doc.data().created_at,
              stopData: doc.data().stopData
            };
-         }            
-         });
+         }  return null;           
+         })
+         .filter((item) => item !== null) as ItimestampArr3[];
          //console.log("temp3",temp3)
          setTimestampsArr3([...temp3])
          //console.log("timestampArr3",timestampArr3)
@@ -174,8 +173,9 @@ const getfromBase3 =async()=>{
                time: doc.data().created_at,
                restartData: doc.data().restartData
              };
-           }            
-           });
+           }   return null;          
+           })
+           .filter((item) => item !== null) as ItimestampArr4[];
            //console.log("temp4",temp4)
            setTimestampsArr4([...temp4])
            //console.log("timestampArr4",timestampArr4)
@@ -207,22 +207,8 @@ const getfromBase3 =async()=>{
      
         getArchiveDatafromBase();
 
-      },[rendered,db,currentUser, getArchiveDatafromBase]) 
-      //,getArchiveDatafromBase i ta druga tez do memo podobnie jak w ktoryms komponencie ?
+      },[db,currentUser, getArchiveDatafromBase]) 
 
-      // useEffect(()=>{
-      //   //console.log("timestampArr",timestampArr1,timestampArr2,timestampArr3,timestampArr4);
-
-      //  // timestampArr?.map((ele)=>{
-      //   //  console.log("ele",(ele.endPauseData)?.toDate(), "timestamp",ele.endPauseData)
-      //   //})
-
-      // },[rendered])
-
-      // useEffect(() => {
-      //  // console.log("timestampArr1.length", timestampArr1?.length);
-      //   // timestampArr1.map((elem) => console.log("element 1", elem));
-      // }, [timestampArr1]);
    
     return (<>
 <br></br><br></br>

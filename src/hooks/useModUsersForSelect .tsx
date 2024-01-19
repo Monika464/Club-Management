@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+
 import { useFetchUsers } from "./useFetchUsers";
 
-interface users {}
+interface users {
+  value: string;
+  label: string
+}
 
 export const useModUsersForSelect = () => {  
   const {usersInfo} = useFetchUsers();
@@ -9,7 +12,7 @@ export const useModUsersForSelect = () => {
 
   
 
-     const temp: any[] = [];   
+     const temp: users[] = [];   
     
       usersInfo?.map((el: { dob: string | number | Date; name: string; surname: string; id: any; })=>{  
         const today= new Date();

@@ -2,22 +2,26 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { db } from "../../App";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { Link } from "react-router-dom";
 import DateFnsFormat from "../DateFnsFormat";
 
 export interface IArchiveUserPayment{}
 export interface ItimestampArr{
 created_at: Date
 kto: string
-trenings: 8
+trenings: number
 userUid: string
 }
-
+export interface IPaymentItem{
+  id: string,
+  time: Date,
+  kto: string,
+  trenings: number  
+}
 
 
 const ArchiveUserPayment : React.FunctionComponent<IArchiveUserPayment> =() => {
     const { currentUser} = useContext(UserContext); 
-    const [paymentsArr, setPaymentsArr] = useState< ItimestampArr | null>(null);
+    const [paymentsArr, setPaymentsArr] = useState< IPaymentItem[]>([]);
 
 
     const getArchivePayfromBase = useCallback(async() => {
@@ -41,10 +45,10 @@ const ArchiveUserPayment : React.FunctionComponent<IArchiveUserPayment> =() => {
                     time: doc.data().created_at,
                     kto: doc.data().kto,
                     trenings: doc.data().trenings   
-                  };
-                }            
-                });
-               // console.log("temp1",temp1)
+                  } as IPaymentItem;
+                } return null;            
+                })
+                .filter((item) => item !== null) as IPaymentItem[]; 
                 setPaymentsArr([...temp])
                
              });

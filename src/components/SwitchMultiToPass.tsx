@@ -105,28 +105,33 @@ const [newPaymentDate, setNewPaymentDate] = useState<IDateObject | null>(null);
     
       }
 
-      const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex)
 
-      useEffect(()=>{
     
-        if( chosenUserId){
+
+          const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex)
+    
+          //const calcDatOfNewPay = newPaymentDateIndex !== null ? useSearchDatesByIndex(newPaymentDateIndex) : null;
+
+            useEffect(()=>{
+    
+            if( chosenUserId){
   
-            if(!hasDebt && dzisIndex !== null){
-            setNewPaymentDateIndex(dzisIndex)
-          }
+             if(!hasDebt && dzisIndex !== null){
+             setNewPaymentDateIndex(dzisIndex)
+           }
               
-          if(hasDebt && dzisIndex !== null){
+           if(hasDebt && dzisIndex !== null){
             setNewPaymentDateIndex(dzisIndex - hasDebt)
-          }
+                }
 
-if(calcDatOfNewPay !== null && chosenUserId){
-  setNewPaymentDate(calcDatOfNewPay);
-}
+          if(calcDatOfNewPay !== null && chosenUserId){
+            setNewPaymentDate(calcDatOfNewPay);
+           }       
          
-        }
-    },[chosenUserId,multiReported,calcDatOfNewPay]) 
+           }
+             },[chosenUserId,multiReported,calcDatOfNewPay]) 
 
-
+            
 
     //console.log("newPaymentDate",newPaymentDate);
 
@@ -137,7 +142,7 @@ if(calcDatOfNewPay !== null && chosenUserId){
       kto: `${name} ${surname}`,          
     } 
     
-
+  
     const handleSwitchToPass =async ()=>{
 
         const paymentDataRef = doc(db, "usersData", chosenUserId!);

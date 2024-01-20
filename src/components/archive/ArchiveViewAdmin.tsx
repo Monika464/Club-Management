@@ -215,8 +215,10 @@ const getfromBase4 =async()=>{
       closeMenuOnSelect={true}  
       options={userModForSelect}
       onChange={(choice) => {
+        if(choice){
         setChosenUserId(choice.value);   
         setChosenUserByIdLabel(choice.label); 
+      }
       }} 
       />
       <br></br>

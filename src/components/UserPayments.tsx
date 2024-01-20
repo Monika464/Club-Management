@@ -8,14 +8,20 @@ import { useSearchDatesByIndex } from "../hooks/useSearchDatesByIndex";
 import DateFnsFormat from "./DateFnsFormat";
 
 export interface Itest{}
+
+export interface ITimestampObject {    
+   seconds: number;
+   nanoseconds: number;     
+} 
+
 export const UsersPayments : React.FunctionComponent<Itest> =() => { 
 
     const usersModForSelect =  useModUsersForSelect(); 
 
     const [chosenUserById, setChosenUserById] = useState<string | null>(null)
     //const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
-    const [oldDueDate, setOldDueDate] = useState<Date | null>(null) 
-    const [newDueDate, setNewDueDate] = useState<Date | null>(null)
+    const [oldDueDate, setOldDueDate] = useState<ITimestampObject | null>(null) 
+    const [newDueDate, setNewDueDate] = useState<ITimestampObject | null>(null)
     const [hasDebt, setHasDebt] = useState<number | null>(null);
     const [modifyDebt, setModifyDebt] = useState<number | null>(null);
     const [hasAdd, setHasAdd] = useState<number | null>(null)
@@ -179,7 +185,9 @@ useEffect(()=>{
       options={usersModForSelect}
       onChange={(choice) => {
        // console.log("choice", choice) 
+       if(choice){
         setChosenUserById(choice.value);   
+       }
         //setChosenUserByIdLabel(choice.label); 
         setHasDebt(null);
         setHasAdd(null);

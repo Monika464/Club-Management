@@ -29,6 +29,7 @@ export const MailboxToUserSend2 : React.FunctionComponent =() => {
     const[userChoice, setUserChoice] = useState<string[]>([])
     const [newmessage, setNewMessage] = useState('')
     const [isEditedmailToUsers, setIsEditedmailToUsers] = useState<boolean>(false)
+    
     //const chosenUserById = "QQnLoM9alXNiJDcO5NYioj5YrE32";
    // const message = "cooo taam";
 
@@ -61,7 +62,8 @@ export const MailboxToUserSend2 : React.FunctionComponent =() => {
               } 
             //console.log("el",el.value)
             addDoc(collection(db, "usersmails"), messageToAll)
-            .then(()=> console.log("message added"))       
+            .then(()=> console.log("message added"))    
+            .then(()=> setMessageSent(true))    
         })
     }
    
@@ -79,6 +81,7 @@ export const MailboxToUserSend2 : React.FunctionComponent =() => {
               } 
               addDoc(collection(db, "usersmails"), messageToAdd)
               .then(()=> console.log("message added"))  
+              .then(()=> setMessageSent(true))    
 
         })
     }
@@ -95,8 +98,8 @@ export const MailboxToUserSend2 : React.FunctionComponent =() => {
          {isEditedmailToUsers ? 'Zamknij' : 'Edytuj mailing do userów'}
           </button>
 {isEditedmailToUsers &&   <div>       
-<button onClick={addingToBase}>send</button>
-<button onClick={addingToAll}>all</button>
+{/* <button onClick={addingToBase}>send</button>
+<button onClick={addingToAll}>all</button> */}
 
 
 <form className="add-message" onSubmit={handleSubmitForm}>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday"
-import { doc, getDoc } from "firebase/firestore";
+import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
@@ -31,9 +31,9 @@ const najblizszyindexwbaziedat = useSearchIndexCloseToday();
     const [isStop, setisStop] = useState<boolean>(false);
     const [rendered, setRendered] =   useState(false);
 
-const indexnajblizszejnaleznejplatnosci = useSearchDatesPlusN(null, props.userid);
-//console.log('indexnajblizszejnaleznejplatnosci',indexnajblizszejnaleznejplatnosci);
-
+const indexnajblizszejnaleznejplatnosci = useSearchDatesPlusN(0, props.userid);
+console.log('indexnajblizszejnaleznejplatnosci',indexnajblizszejnaleznejplatnosci);
+//console.log('props',props);
 useEffect(() => {
   const timer = setTimeout(() => {
     setRendered(true);
@@ -45,8 +45,7 @@ useEffect(() => {
 }, []);
 
 
-const getUserDatafromBase = useCallback(async () => {
-      
+const getUserDatafromBase = useCallback(async () => {  
   
   if(props.userid){  
           
@@ -69,7 +68,7 @@ const getUserDatafromBase = useCallback(async () => {
         }       
     }
 
-  }, [props.userid],rendered);
+  }, [props.userid,rendered]);
 
 
   useEffect(()=>{
@@ -114,7 +113,8 @@ if((najblizszyindexwbaziedat + i) >  indexnajblizszejnaleznejplatnosci){
       <div className="trenings">
         {data0napodtsawieindex ? (
           <div className={`trening 0`} style={{ color: getColor(najblizszyindexwbaziedat + 0)  }}>
-            {format(data0napodtsawieindex.toDate(), 'do MMM', { locale: pl })}   
+            {/* {format(data0napodtsawieindex.toDate(), 'do MMM', { locale: pl })}    */}
+            {format((data0napodtsawieindex as Timestamp).toDate(), 'do MMM', { locale: pl })}  
           </div>
         ) : (
           <div className={`trening 0`} style={{ color: getColor(najblizszyindexwbaziedat + 0) }}>
@@ -123,7 +123,8 @@ if((najblizszyindexwbaziedat + i) >  indexnajblizszejnaleznejplatnosci){
         )}
         {data1napodtsawieindex ? (
           <div className={`trening 1`} style={{ color: getColor(najblizszyindexwbaziedat + 1) }}>
-            {format(data1napodtsawieindex.toDate(), 'do MMM', { locale: pl })}
+            {/* {format(data1napodtsawieindex.toDate(), 'do MMM', { locale: pl })} */}
+            {format((data1napodtsawieindex as Timestamp).toDate(), 'do MMM', { locale: pl })}  
           </div>
         ) : (
           <div className={`trening 1`} style={{ color: getColor(najblizszyindexwbaziedat + 1) }}>
@@ -132,7 +133,8 @@ if((najblizszyindexwbaziedat + i) >  indexnajblizszejnaleznejplatnosci){
         )}
         {data2napodtsawieindex ? (
           <div className={`trening 2`} style={{ color: getColor(najblizszyindexwbaziedat + 2) }}>
-            {format(data2napodtsawieindex.toDate(), 'do MMM', { locale: pl })}
+            {/* {format(data2napodtsawieindex.toDate(), 'do MMM', { locale: pl })} */}
+            {format((data2napodtsawieindex as Timestamp).toDate(), 'do MMM', { locale: pl })}   
           </div>
         ) : (
           <div className={`trening 2`} style={{ color: getColor(najblizszyindexwbaziedat + 2) }}>
@@ -141,7 +143,8 @@ if((najblizszyindexwbaziedat + i) >  indexnajblizszejnaleznejplatnosci){
         )}
         {data3napodtsawieindex ? (
           <div className={`trening 3`} style={{ color: getColor(najblizszyindexwbaziedat + 3) }}>
-            {format(data3napodtsawieindex.toDate(), 'do MMM', { locale: pl })}
+            {/* {format(data3napodtsawieindex.toDate(), 'do MMM', { locale: pl })} */}
+            {format((data3napodtsawieindex as Timestamp).toDate(), 'do MMM', { locale: pl })}  
           </div>
         ) : (
           <div className={`trening 3`} style={{ color: getColor(najblizszyindexwbaziedat + 3) }}>

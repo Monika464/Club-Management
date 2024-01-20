@@ -1,5 +1,5 @@
 
-import { Firestore, collection,CollectionReference, onSnapshot } from "firebase/firestore";
+import { CollectionReference, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../App.js";
 import { SetStateAction, useEffect, useState } from "react";
 
@@ -11,8 +11,13 @@ import { SetStateAction, useEffect, useState } from "react";
 //     data: IDateObject | null
 //     setData: React.Dispatch<SetStateAction<IDateObject | null>>
 // };
+
+export interface ITimestObj {
+    seconds: number;
+    nanoseconds: number;
+}
 export interface IDateObject {
-    toMillis(): unknown;
+    toMillis(): number;
     seconds: number;
     nanoseconds: number;
 }
@@ -33,7 +38,7 @@ export interface IDataItem {
 export const useFetchDates = (): IDateObject  [] | null => {
 
     const [data, setData] = useState<SetStateAction<IDateObject[] | null>>(null);
-             const daysCollection = collection(db, "trainingDays");
+             const daysCollection: CollectionReference<T> = collection(db, "trainingDays");
    
 
     useEffect(()=>{
@@ -67,7 +72,7 @@ export const useFetchDates = (): IDateObject  [] | null => {
                        tempContainer2.sort((a, b) => {
                        //const timestampA = a.toDate().getTime();
                        const timestampA = a.toMillis();
-                       //console.log("zmodyfik",a.toMillis())
+                      // console.log("timestampA",a.toMillis())
                        //const timestampB = b.toDate().getTime();
                        const timestampB = b.toMillis();
           

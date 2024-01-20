@@ -70,11 +70,11 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
               })  
             return  unsub; 
       
-         },[db, currentUser,props])  
+         },[db, props])  
 
         useEffect(() => {
             getDataToTrainer();
-        }, [db, currentUser, getDataToTrainer, props.currentId]);
+        }, [db, getDataToTrainer, props.currentId]);
 
        // console.log('messagetoTrain',freshMessagestoTrainer)
 

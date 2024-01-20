@@ -9,12 +9,16 @@ import { format } from 'date-fns';
 
 export interface IDisplayUserDataAdmin{
 }
- 
+export interface ITimestampObject {
+  toMillis(): number | Date;    
+  seconds: number;
+  nanoseconds: number;     
+} 
 
 export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin> =(props) => {
     
     const [chosenUserId, setChosenUserId] = useState<string | null>(null);
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
+   // const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
     const [rendered, setRendered] =   useState(false);
 
     const [debt, setDebt] = useState<number | null>(null); 
@@ -23,7 +27,7 @@ export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin
   const [isPass, setIsPass] = useState<boolean | null>(false);
   const [isPause, setIsPause] = useState<boolean>(false);
   const [isStop, setisStop] = useState<boolean>(false);
-  const [due, setDue] = useState<Date | null>(null);
+  const [due, setDue] = useState<ITimestampObject | null>(null);
   const [name, setName] = useState<string | null>("");
   const [surname, setSurname] = useState<string | null>("");
   
@@ -119,7 +123,7 @@ const getUserDatafromBase = useCallback(async () => {
    
    useEffect(()=>{
        getUserDatafromBase();
-       console.log( "name","multi",isMulti, isPause,"add",add)
+      // console.log( "name","multi",isMulti, isPause,"add",add)
        return reset;
   
      },[getUserDatafromBase,chosenUserId])
@@ -147,9 +151,10 @@ return (<div>
       closeMenuOnSelect={true}  
       options={userModForSelect}
       onChange={(choice) => {
+        if(choice){
         setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label);
-       
+        //setChosenUserByIdLabel(choice.label);
+      }
        // reset()
       }}
     />   
@@ -184,7 +189,8 @@ return (<div>
      <br></br> 
    
      {chosenUserId && name && <div>{name} {surname}</div> }
-   {chosenUserId && due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>}
+   {/* {chosenUserId && due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>} */}
+   {chosenUserId && due && <p>należna płatność {format(due.toMillis(), 'dd.MM.yyyy')}</p>}
    {chosenUserId && !isStop && !isPause && <div>status aktywny</div>}
    {chosenUserId && isStop && <p>członkostwo zatrzymane</p>}
    {chosenUserId && isPause && <p>zgłoszona kontuzja</p>}

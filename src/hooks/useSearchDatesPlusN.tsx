@@ -1,6 +1,6 @@
 import { useFetchDates } from "./useFetchDates";
 import { db } from "../App.js";
-import { Timestamp, collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
+import {  doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export interface ITimestampObject {

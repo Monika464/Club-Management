@@ -7,17 +7,26 @@ import read from '../../assets/read.png'
 import './email.css'
 import { format } from "date-fns";
 export interface IMailToAdminReceive {}
+
 export interface IMessage {
-    created_at: Date;
+ 
+    created_at: ITimeObj;
     message: string;
     userid: string;
     fresh: boolean;
     name: string;
     surname: string;
-    id: string
+   id: string;
   }
 
-export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = (props) => {
+  export interface ITimeObj {
+    toMillis(): string | number | Date;
+    seconds: number,
+    nanoseconds: number
+  }
+
+
+export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = () => {
     
     const { currentUser } = useContext(UserContext);
     const [messages, setMessages] = useState<IMessage[] | null>(null);
@@ -29,14 +38,15 @@ export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = 
         if (currentUser) {
             const messageRef = collection(db, "usersmessages");
             const querySnapshot = await getDocs(messageRef );
+            console.log("messageRef", messageRef)
 
-            const temp = [];
+            const temp: IMessage[] = [];
 
             const unsub = querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
              // console.log("czytanie messages", doc.id, " => ", doc.data());
-              temp.push({...doc.data(),id:doc.id} );
-              
+              temp.push({...doc.data(),id:doc.id} as IMessage );
+              console.log("...doc.data(),id:doc.id", doc.data(),doc.id)
               
             });
 

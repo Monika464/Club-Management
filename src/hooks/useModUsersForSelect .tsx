@@ -1,25 +1,47 @@
 
 import { useFetchUsers } from "./useFetchUsers";
 
-interface users {
+interface Iusers {
   value: string;
   label: string
 }
+// export interface Iuser{
+//   surname: string,
+//   name: string,
+//   add: number | null,
+//   debt: number | null,
+//   dob: ITimeObj, 
+//   due: ITimeObj | null,
+//   pause: ITimeObj | null,
+//   stop: ITimeObj | null,
+//   start:ITimeObj, 
+//   restart: ITimeObj  | null,
+//   optionMulti: false,
+//   optionPass: false,
+//   avatar: URL | null
+//   }
+
+  export interface ITimeObj {
+    seconds: number,
+    nanoseconds: number
+  }
 
 export const useModUsersForSelect = () => {  
-  const {usersInfo} = useFetchUsers();
+  const usersInfo = useFetchUsers();
 
-
+//console.log("usersForSel",usersInfo)
   
 
-     const temp: users[] = [];   
+     const temp: Iusers[] = [];   
     
-      usersInfo?.map((el: { dob: string | number | Date; name: string; surname: string; id: any; })=>{  
-        const today= new Date();
+      //usersInfo?.map((el: { dob: string | number | Date; name: string; surname: string; id: any; })=>{  
+        usersInfo?.map((el)=>{    
+      const today= new Date();
        // console.log("el", el)
         //console.log("el", el.dob.toDate())
        const todayUTimestamp = (today.getTime());
-       const elementDobUTimestamp = el.dob?.toDate().getTime();
+      // const elementDobUTimestamp = el.dob?.toDate().getTime();
+      const elementDobUTimestamp = el.dob?.toMillis();
       //console.log("timestamp urodzenia", el.dob?.toDate().getTime(),"timastamp dzis",todayUTimestamp)
       const diffTime: number = Math.abs(todayUTimestamp - elementDobUTimestamp);  
  

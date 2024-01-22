@@ -15,7 +15,7 @@ export interface ITimestampObject {
   nanoseconds: number;     
 } 
 
-export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin> =(props) => {
+export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin> =() => {
     
     const [chosenUserId, setChosenUserId] = useState<string | null>(null);
    // const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
@@ -46,9 +46,9 @@ export const DisplayUserDataAdmin: React.FunctionComponent<IDisplayUserDataAdmin
           clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
         };
       }, []);
-      useEffect(()=>{
-        const usersSelect = userModForSelect;
-      },[rendered,chosenUserId])
+     // useEffect(()=>{
+        //const usersSelect = userModForSelect;
+     // },[rendered,chosenUserId])
 
       //console.log("chosenUserByIdLabel",chosenUserByIdLabel);
 

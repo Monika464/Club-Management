@@ -1,20 +1,23 @@
 
-import React, { ChangeEvent, FormEvent,useState } from 'react';
+import React, { ChangeEvent, FormEvent,useContext,useState } from 'react';
 import './Login.css';
 import {   signInWithEmailAndPassword} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 
 import { auth } from "../App";
+import { useIsAdmin } from '../hooks/useIsAdmin';
+import { UserContext } from '../context/UserContext';
 
 export interface IApplicationProps {};
 
 
 const LoginPage: React.FunctionComponent<IApplicationProps> =() => {
-  //const { currentUser} = useContext(UserContext);
+  const { currentUser} = useContext(UserContext);
 
   //console.log('currentUser',currentUser)
-
+const isAdmin = useIsAdmin(currentUser?.uid);
+console.log("czy jest admin?",isAdmin)
     //const auth = getAuth();
     const navigate = useNavigate();
     const [authing, setAuthing] = useState(false);
@@ -41,13 +44,11 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
   
     // Send the email and password to firebase
     signInWithEmailAndPassword(auth, email, password)
-    .then((response) =>{
-      navigate('/userpanel');
-      
-       // console.log(response.user.uid);
-        
-       response.user.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82" ? navigate('/adminpanel'): navigate('/')
-  }).catch(error =>{
+    .then((res) =>{
+      useIsAdmin(res.user.uid) ? navigate('/adminpanel') : navigate('/userpanel')   
+      setAuthing(true)
+    })
+     .catch(error =>{
       console.log(error);
       setAuthing(false);
       

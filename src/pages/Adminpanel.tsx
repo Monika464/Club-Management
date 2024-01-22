@@ -3,7 +3,7 @@
 //https://www.youtube.com/watch?v=4-GAobpDyXU
 
 import React, { useState } from "react";
-import {Link, NavLink, Outlet, RouterProvider, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 //import AuthRoute from "../components/AuthRoute"; 
 import {useFetchDates} from "../hooks/useFetchDates.tsx";
 // import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
@@ -48,16 +48,16 @@ export interface IAdminProps {};
 
 const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {  
 
- const {usersInfo} = useFetchUsers();
+ //const {usersInfo} = useFetchUsers();
  //console.log("usersInfoAdmin",usersInfo)
  const navigate = useNavigate();
  
   const [isEdited, setIsEdited] = useState<boolean>(false);
   const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
   const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
-  const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
+  //const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
   const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
-  const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
+  //const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
   const [isEditedMultiPass, setIsEditedMultiPass] = useState<boolean>(false);
   const [isEditedAttendance, setIsEditedAttendance] = useState<boolean>(false);
   const [isMouseOver, setIsMouseOver] = useState(false);

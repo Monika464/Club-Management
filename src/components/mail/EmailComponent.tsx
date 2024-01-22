@@ -22,7 +22,7 @@ export interface IMessage {
 
 export interface IEmailprops {
   
-    collectionName: string | undefined;
+    collectionName: string;
     currentId: string | undefined;
     onClick: () => any;
     onmouseover: () => any;
@@ -34,6 +34,9 @@ export interface IFreshMessage {
    fresh: boolean  
 }
 
+export interface Iid{
+  id: string
+}
 
 export const EmailComponent: React.FunctionComponent<IEmailprops> = (props) => {
     const { currentUser} = useContext(UserContext); 
@@ -54,7 +57,7 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
                 const querySnapshot = await getDocs(messageRef );
               //console.log("props.collectionName", props.collectionName)
   
-                const temp = [];
+                const temp: IFreshMessage[] = [];
                 const unsub = querySnapshot.forEach((doc) => {    
                 // console.log("obiekt", doc.data().fresh, doc.id,doc.data().userid)
          
@@ -95,27 +98,29 @@ const [isShaking, setIsShaking] = useState<boolean>(false)
          }, [checkAndLogTrain,freshMessagestoTrainer]);
 
   }
-//drugi czyli wiadomóści do userówto co nie dziala
+//drugi czyli wiadomóści do userów
 
 if(props.collectionName === "usersmails"){
 
 
-  if(currentUser){}
-  const readingFromFire =async()=>{
+ 
+  
+  const readingFromFire = useCallback(async () => {   
+        if(currentUser){
+          const q = query(collection(db, "usersmails"), where("userUid", "==", currentUser.uid));
+              const unsubscribe = onSnapshot(q, (querySnapshot) => { 
+                   const temp: IMessage[] = querySnapshot.docs.map((doc) => {
+                          const data = {...doc.data(),id: doc.id,created_at: { seconds: 0, nanoseconds: 0 }, message: '', fresh: false, userUid: '' };
+                          return data
+                   })
+                   //console.log("temp",temp)
+               setFreshMessagestoUser(temp)        
+                       })
     
-    const q = query(collection(db, "usersmails"), where("userUid", "==", currentUser.uid));
-     const unsubscribe = onSnapshot(q, (querySnapshot) => { 
-         const temp: IMessage[] = querySnapshot.docs.map((doc) => {
-            const data = {...doc.data(),id: doc.id};
-           return data
-          })
-          setFreshMessagestoUser(temp) 
-         // console.log("temp",temp)
-     })
-     
      return () => unsubscribe();
+      }
 
-}
+}, [db, currentUser, props]);
 
 //  const getDataToUser = useCallback(async () => {   
 
@@ -145,9 +150,9 @@ if(props.collectionName === "usersmails"){
 
  useEffect(() => {
   readingFromFire();
-  // console.log('drugiWQiadmosciusera',freshMessagestoUser)
+   //console.log('freshMessagestoUser',freshMessagestoUser)
 
-  }, [db, currentUser, readingFromFire, props.currentId]);
+ }, [db, currentUser, props]);
  // console.log('wiadUsera',freshMessagestoUser)
 
   const checkAndLogUser = useCallback(() => {

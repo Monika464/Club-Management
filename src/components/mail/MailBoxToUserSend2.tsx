@@ -12,6 +12,9 @@ export interface DateObject {
     nanoseconds: number
 }
 
+
+  
+
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../App";
 import { useModUsersForSelect } from "../../hooks/useModUsersForSelect ";
@@ -120,11 +123,16 @@ value={newmessage}
       closeMenuOnSelect={false} 
       isMulti
       options={usersModForSelectwithAll}
-      onChange={(choice) => {     
-     const selectedValues = choice.map(option => option.value); 
-     //console.log("selectedValues",selectedValues)
-      setUserChoice(selectedValues)   
+      onChange={(newValue: any) => {
+        const selectedValues = (newValue as any[]).map((option) => option.value);
+        setUserChoice(selectedValues);
       }}
+    //   onChange={(choice: any[]) => {     
+    //  //const selectedValues = choice.map(option => option.value); 
+    //  //console.log("selectedValues",selectedValues)
+    //  const selectedValues = choice.map((option: { value: string }) => option.value)
+    //  setUserChoice(selectedValues)   
+    //   }}
     />
 
 

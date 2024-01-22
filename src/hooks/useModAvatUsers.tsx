@@ -1,19 +1,38 @@
-import { useEffect, useState } from "react";
 import { useFetchUsers } from "./useFetchUsers";
 
-interface users {}
 
-export const useModAvatUsers = () => {  
+
+export interface ITimeObj {
+  toMillis(): unknown;
+  seconds: number,
+  nanoseconds: number
+}
+
+
+interface IforSel {
+  value: Ivalue;
+  label: string
+}
+
+interface Ivalue{
+  dob:ITimeObj,
+  name: string,
+  surname: string,
+  id: string,
+  
+}
+export const useModAvatUsers = ():IforSel[] => {  
+
   const {usersInfo} = useFetchUsers();
 
 
   
 
-     const temp: any[] = [];   
+     const temp: IforSel[] = [];   
     
-      usersInfo?.map((el: { dob: string | number | Date; name: string; surname: string; id: any; })=>{  
+      usersInfo?.map((el: Ivalue)=>{  
         const today= new Date();
-       // console.log("el", el)
+        //console.log("el", el)
         //console.log("el", el.dob.toDate())
        const todayUTimestamp = (today.getTime());
        const elementDobUTimestamp = el.dob?.toDate().getTime();

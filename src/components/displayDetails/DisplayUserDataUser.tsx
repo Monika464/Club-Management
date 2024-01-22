@@ -1,12 +1,12 @@
-import { useFetchDates } from "../../hooks/useFetchDates";
-import { useFetchUsers } from "../../hooks/useFetchUsers";
+//import { useFetchDates } from "../../hooks/useFetchDates";
+//import { useFetchUsers } from "../../hooks/useFetchUsers";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../context/UserContext';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
-import { toNamespacedPath } from "path/win32";
-import is from "date-fns/esm/locale/is/index.js";
+//import { toNamespacedPath } from "path/win32";
+//import is from "date-fns/esm/locale/is/index.js";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import './displayUserDataUser.css'
 import { format } from "date-fns";
@@ -14,8 +14,13 @@ export interface IDisplayUserDataUser{
 
 }
  
+export interface ITimestampObject {
+  toMillis(): number | Date;    
+  seconds: number;
+  nanoseconds: number;     
+} 
 
-export const DisplayUserDataUser : React.FunctionComponent<IDisplayUserDataUser> =(props) => {
+export const DisplayUserDataUser : React.FunctionComponent<IDisplayUserDataUser> =() => {
    
   const [debt, setDebt] = useState<number | null>(null); 
   const [add, setAdd] = useState<number | null>(null); 
@@ -23,7 +28,7 @@ const [isMulti, setIsMulti] = useState<boolean>(false);
 const [isPass, setIsPass] = useState<boolean>(false);
 const [isPause, setIsPause] = useState<boolean>(false);
 const [isStop, setisStop] = useState<boolean>(false);
-const [due, setDue] = useState<Date | null>(null);
+const [due, setDue] = useState<ITimestampObject | null>(null);
 const [rendered, setRendered] =   useState(false);
 const [isEdited, setIsEdited] = useState<boolean>(false)
 
@@ -143,7 +148,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
          {isEdited ? 'Zamknij' : 'Edytuj szczegóły'}
           </button>
 {isEdited && <>
-      {due && <p>należna płatność {format(due.toDate(), 'dd.MM.yyyy')}</p>}
+      {due && <p>należna płatność {format(new Date (due.toMillis()), 'dd.MM.yyyy')}</p>}
       {!isStop && !isPause && <div>status aktywny</div>}
       {isStop && <p>członkostwo zatrzymane</p>}
       {isPause && <p>zgłoszona kontuzja</p>}

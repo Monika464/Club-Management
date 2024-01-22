@@ -29,7 +29,7 @@ const manageShowAllDaysButton =()=>{
 data?.forEach((elem) => {
         // const monthYearKey = ` ${elem.toDate().getMonth()}-${elem.toDate().getFullYear()}`;
          //const monthYearKey = `${elem.seconds}-${elem.nanoseconds}`; // Modyfikacja klucza
-         const monthYearKey =  `${(new Date(elem.toMillis() as Date)).getMonth()}-${(new Date(elem.toMillis() as Date) ).getFullYear()}`
+         const monthYearKey =  `${(new Date(elem.toMillis())).getMonth()}-${(new Date(elem.toMillis()) ).getFullYear()}`
          if (!dateMap[monthYearKey]) {
         dateMap[monthYearKey] = [];
           }
@@ -78,7 +78,7 @@ setDuplicates(duplicates);
 <h5>
   {/* Display the month and year as the section header */}
   <img src={Trisc} alt="Trisc" style={{ marginRight: '5px', marginLeft: '5px' ,height: '15px'}} />
-  {format(dateMap[monthYearKey][0].toMillis() as Date, "MMM yyyy", {
+  {format(dateMap[monthYearKey][0].toMillis(), "MMM yyyy", {
     locale: pl,
   })}
   {/* <img src={Trisc} alt="Trisc" style={{ marginLeft: '5px' }} /> */}
@@ -88,9 +88,9 @@ setDuplicates(duplicates);
     {dateMap[monthYearKey].map((elem, index) => (
       <p key={index}>
         {/* Display the day of the month and short weekday */}
-        {`${format(elem.toMillis()as Date , "d", {
+        {`${format(elem.toMillis(), "d", {
           locale: pl,
-        })} ${format(elem.toMillis() as Date, "EEE", { locale: pl })}`}
+        })} ${format(elem.toMillis(), "EEE", { locale: pl })}`}
       </p>
     ))}
   </div>
@@ -129,7 +129,7 @@ setDuplicates(duplicates);
           </button>
     
 
-    {duplicates &&  duplicates.map((dup, index )=><p key={index} style={{color: 'red'}}>Duplikat: {format(dup?.toMillis()  as Date, 'PPP', {locale: pl})}</p>)}
+    {duplicates &&  duplicates.map((dup, index )=><p key={index} style={{color: 'red'}}>Duplikat: {format(dup?.toMillis(), 'PPP', {locale: pl})}</p>)}
     
     </>)
 }

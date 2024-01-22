@@ -9,10 +9,10 @@ export interface IDateObj{
   }
   export interface IMessage {
     
-    created_at: IDateObj;
+   created_at: IDateObj;
     message: string;
     fresh: boolean,
-    userUid: string
+    userUid: string,
     id: string
   }
 
@@ -37,11 +37,13 @@ export const MailboxToUserReceive2: React.FunctionComponent = () => {
 
     
   const readingFromFire =async()=>{
+
+    if(currentUser){
     
     const q = query(collection(db, "usersmails"), where("userUid", "==", currentUser.uid));
      const unsubscribe = onSnapshot(q, (querySnapshot) => { 
          const temp: IMessage[] = querySnapshot.docs.map((doc) => {
-            const data = {...doc.data(),id: doc.id};
+            const data = {...doc.data(),id: doc.id} as IMessage;;
            return data
           })
           setMessages(temp) 
@@ -49,14 +51,14 @@ export const MailboxToUserReceive2: React.FunctionComponent = () => {
      })
      
      return () => unsubscribe();
-
+    }
 }
  
 useEffect(()=>{
 
     if(currentUser){
     readingFromFire()
-    console.log('messages',messages)
+   // console.log('messages',messages)
     }
 },[db,currentUser])
 

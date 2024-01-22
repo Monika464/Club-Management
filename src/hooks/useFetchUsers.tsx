@@ -1,7 +1,7 @@
-import { Firestore, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { Firestore, collection, onSnapshot,query } from "firebase/firestore";
 import { SetStateAction, useEffect, useState } from "react";
 import { db } from "../App.js";
-import { doc, updateDoc, serverTimestamp  } from "firebase/firestore";
+
 
 
 export interface IFetchDates {
@@ -13,11 +13,34 @@ export interface IFetchDates {
 
 };
 
-export const useFetchUsers  = ():any | null => { 
+export interface Iuser{
+surname: string,
+name: string,
+add: number | null,
+debt: number | null,
+dob: ITimeObj, 
+due: ITimeObj | null,
+pause: ITimeObj | null,
+stop: ITimeObj | null,
+start:ITimeObj, 
+restart: ITimeObj  | null,
+optionMulti: false,
+optionPass: false,
+avatar: URL | null,
+id: string
+}
 
-    const [usersInfo, setUsersInfo ] =useState<String[] | null>(null)
-    const [loadingUsers, setLoadingusers] =useState<boolean>(false)
-    const [loadingDB, setLoadingDB] =useState<boolean>(false)
+export interface ITimeObj {
+  toMillis(): unknown;
+  seconds: number,
+  nanoseconds: number
+}
+
+export const useFetchUsers  = ():Iuser[] => { 
+
+    const [usersInfo, setUsersInfo ] =useState<Iuser[]>(null!)
+    //const [loadingUsers, setLoadingusers] =useState<boolean>(false)
+   // const [loadingDB, setLoadingDB] =useState<boolean>(false)
 
     
 
@@ -26,40 +49,43 @@ export const useFetchUsers  = ():any | null => {
       const getUsersData = ()=>{     
         if (!db) {
        console.error('Firebase Firestore is not ready yet');
-       setLoadingDB(true)       
-       } else { setLoadingDB(false)}              
+       //setLoadingDB(true)       
+      } else { 
+        //setLoadingDB(false)}              
      // const q =  query(collection(db, "usersData"), orderBy ("surname"));
      const q =  query(collection(db, "usersData"))
-   const temp = []; 
+   const temp: Iuser[] = []; 
          const unsubscribe =  onSnapshot(q, (querySnapshot) => { 
            //setLoadingusers(true) 
-           querySnapshot.forEach((doc) => {   
+              querySnapshot.forEach((doc) => {   
             
              //cities.push(doc.data().name);
-              temp.push(doc.data()); 
+              temp.push(doc.data()  as Iuser); 
+             // console.log("docdate",doc.data())
               
              // setLoadingusers(false)
              //setUsersFromBase((prev) => [...prev,doc.data()])
-           });  
-          
-         
+               });      
           });
-          setUsersInfo (temp); 
+          //console.log("temp", temp)
+          setUsersInfo (temp);
+          //setLoadingDB(false);
         return unsubscribe;
      }
-  getUsersData()
 
- // console.log('setUsersReady');
+    }
+    getUsersData()
+  //console.log('usersInfo', usersInfo);
 
     },[db])
 
 	
-return {usersInfo,loadingUsers,loadingDB }
+return usersInfo
 }
 
 
 
-export const useUserForUpdate =()=>{
+//export const useUserForUpdate =()=>{
 
 
  // const docRef = doc(db, 'usersaData', 'Y19J2pywqfd2YKN3zVVGlzYEWR82');
@@ -77,7 +103,7 @@ export const useUserForUpdate =()=>{
     });
 */
 
-  }
+  //}
 
   
 

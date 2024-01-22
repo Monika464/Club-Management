@@ -5,7 +5,7 @@ import { db } from "../../App";
 
 export interface IMailToAdminSend{}
 
-export const MailToAdminSend : React.FunctionComponent<IMailToAdminSend> =(props) => {
+export const MailToAdminSend : React.FunctionComponent<IMailToAdminSend> =() => {
     const [newmessage, setNewMessage] = useState('')
     const [name, setName] = useState<string | null>(null);
     const [surname, setSurname] = useState<string | null>(null);
@@ -30,26 +30,31 @@ export const MailToAdminSend : React.FunctionComponent<IMailToAdminSend> =(props
        
     },[currentUser,db])
 
-    const handleSubmitForm =async (e)=>{
-        e.preventDefault();
+    const handleSubmitForm =async (e: { preventDefault: () => void; })=>{
+        
+      e.preventDefault();
        // console.log("tu tu tu",newmessage,userChoice)
 
-    const messageToAdd ={
-           message: newmessage,
-          created_at: serverTimestamp(),
-          fresh: true,
-          name: name,
-          surname: surname,
-          userid: currentUser.uid
-        }
+       if(currentUser){
+              const messageToAdd ={
+                             message: newmessage,
+                             created_at: serverTimestamp(),
+                             fresh: true,
+                            name: name,
+                           surname: surname,
+                          userid: currentUser.uid
+                         }
 
-  if(messageToAdd){
+               if(messageToAdd){
 
-  const docRef = await addDoc(collection(db, "usersmessages"), messageToAdd)
-  .then(()=> console.log("user message added"))
-  .then(()=> setMessageSent(true))
-    //.then(()=> navigate('/userpanel'))
-  } 
+                 await addDoc(collection(db, "usersmessages"), messageToAdd)
+                  .then(()=> console.log("user message added"))
+                   .then(()=> setMessageSent(true))
+                  //.then(()=> navigate('/userpanel'))
+                 } 
+
+      }
+ 
 }
 
 

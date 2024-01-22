@@ -13,8 +13,8 @@ interface Deptor {
   who: string;
 }
 
-export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = (props) => {
-  const [isDebt, setIsDebt] = useState<boolean>(false);
+export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = () => {
+ // const [isDebt, setIsDebt] = useState<boolean>(false);
   const [deptorsList, setDeptorsList] = useState<Deptor[]>([]);
   
   const najblizszyindexwbaziedat = useSearchIndexCloseToday();
@@ -30,12 +30,14 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = (props) =>
         const who = `${doc.data().name} ${doc.data().surname}`;
         
         if (doc.data().debt) {
-          setIsDebt(true);
+          //setIsDebt(true);
           deptors.push({ id: doc.id, who });
-        }
+        } 
+
+        
 
         if (doc.data().due && najblizszadatawbazie < doc.data().due) {
-          setIsDebt(true);
+          //setIsDebt(true);
           deptors.push({ id: doc.id, who });
         }
       });

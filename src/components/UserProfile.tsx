@@ -18,7 +18,7 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =() => {
 
   const [name, setName] = useState<string | null>('');
   const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
-  const [thumbnailError, setThumbnailError] = useState<string | null>(null)
+  const [thumbnailError, setThumbnailError] = useState<string>('')
   const [pictureURL, setPictureURL] = useState<string | null>(null)
     const [isEdited, setIsEdited] = useState<boolean>(false)
     const [email, setEmail] = useState("")
@@ -106,7 +106,7 @@ const handleName = () =>{
       {isEdited && 
     <ul>  
 <li>
-  Wgraj własny avatar i przeaładuj stronę
+  Wgraj własny avatar 
      <SetAvatar
         thumbnail={thumbnail}
         setThumbnail={setThumbnail}
@@ -115,6 +115,7 @@ const handleName = () =>{
         pictureURL ={pictureURL}
         setPictureURL={setPictureURL}
         />
+        <p>{thumbnailError}</p>
         <br></br>
       Albo wybierz jeden z dostępnych
         <ChoosingAvatar/>

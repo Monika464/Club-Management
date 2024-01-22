@@ -32,7 +32,7 @@ const najblizszyindexwbaziedat = useSearchIndexCloseToday();
     const [rendered, setRendered] =   useState(false);
 
 const indexnajblizszejnaleznejplatnosci = useSearchDatesPlusN(0, props.userid);
-console.log('indexnajblizszejnaleznejplatnosci',indexnajblizszejnaleznejplatnosci);
+//console.log('indexnajblizszejnaleznejplatnosci',indexnajblizszejnaleznejplatnosci);
 //console.log('props',props);
 useEffect(() => {
   const timer = setTimeout(() => {

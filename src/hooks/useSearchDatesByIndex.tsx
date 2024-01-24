@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import { useFetchDates } from "./useFetchDates";
 
-export interface ITimestampObject {    
-        seconds: number;
-        nanoseconds: number;     
-} 
+// export interface ITimestampObject {
+//   value: IdateObj | null;
+//   //value(value: any): unknown;
+//     toMillis(): string | number | Date;
+//     seconds: number;
+//         nanoseconds: number;     
+// } 
+export interface IdateObj {
+  [x: string]: any;
+    seconds: number;
+        nanoseconds: number;   
+        toMillis():  number | Date;   
+}
 
-export const useSearchDatesByIndex= (givenIndex: number | null):ITimestampObject  => {  
+
+export const useSearchDatesByIndex= (givenIndex: number | null ) => {  
     
-    const [newDate, setNewDate] = useState<ITimestampObject>(null!)
+    const [newDate, setNewDate] = useState<IdateObj>(null!)
 
     const data =  useFetchDates();
     //console.log("czy data", data)

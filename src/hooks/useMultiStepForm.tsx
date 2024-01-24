@@ -11,7 +11,7 @@ export function useMultistepForm(steps: ReactElement[]){
             return i+1
         })
 
-        console.log('currentStepIndex usehook', currentStepIndex)
+        //console.log('currentStepIndex usehook', currentStepIndex)
 
     }
 

@@ -16,6 +16,6 @@ export function FormWrapper({title, children}: FormWrapperProps){
     gridTemplateColumns: "auto minmax (auto, 400px)"
 
      }}>{children}</div>
-    
+  
     </>
 }

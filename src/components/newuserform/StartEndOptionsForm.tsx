@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useModDatesForSelect } from "../../hooks/useModDatesForSelect";
 import { FormWrapper } from "./FormWrapper";
 import Select from 'react-select';
-import { useSearchIndexToday } from "../../hooks/useSearchIndexToday";
+//import { useSearchIndexToday } from "../../hooks/useSearchIndexToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
@@ -10,27 +10,44 @@ import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 
 interface IStartAndOptionForm {
 option: string | null;
-setOption: (value: string) => void;
-startDay: Date |null;
-setStartDay: (value: Date) => void;
+//setOption: (value: string) => void;
+setOption:React.Dispatch<string>
+startDay: IdateObj |null;
+//setStartDay: (IdateObj | null) => void;
+setStartDay:React.Dispatch<IdateObj |null>
 }
 
-interface INewDatesArray {
-  value: Date
-  label: Date
+// interface INewDatesArray {
+//   value: Date
+//   label: Date
+// }
+
+export interface IdateObj{
+  toMillis(): number | Date;
+  seconds: number;
+  nanoseconds: number;
 }
+
+export interface IdatesForSel {
+  value: IdateObj;
+  label: string;
+}
+// interface GroupBase<Option> {
+//   readonly options: readonly Option[];
+//   readonly label?: string;
+// }
 
 export function StartAndOptionForm(props: IStartAndOptionForm){
 
-    const[userChoice, setUserChoice] = useState({});
-    const [thisIndex, setThisindex] = useState({});
+    //const[userChoice, setUserChoice] = useState({});
+    //const [thisIndex, setThisindex] = useState({});
     //const[passMultiChoice, setPassMultiChoice] = useState<string | null >("pass");
     const datesModForSelect = useModDatesForSelect();
     const dzisIndex = useSearchIndexCloseToday();
-    const [modDatesForSelect, setModdatesForSelect] = useState<INewDatesArray[] | null>([])
+    const [modDatesForSelect, setModdatesForSelect] = useState<IdatesForSel[] | any[]>([])
    
   // Nowa tablica obiektów
-const noweDatesForSelect: INewDatesArray[] = [];
+//const noweDatesForSelect: INewDatesArray[] = [];
 
 useEffect(() => {
   if (dzisIndex != null && datesModForSelect) {
@@ -44,7 +61,7 @@ useEffect(() => {
     // Przekształcenie elementów i utworzenie nowej tablicy
     setModdatesForSelect(slicedDates.map((element) => ({
       value: element.value,
-      label: format(element.value?.toDate(), 'PPP', { locale: pl }),
+      label: format(element.value?.toMillis(), 'PPP', { locale: pl }),
     })))
 
     // Wykorzystanie nowej tablicy
@@ -65,13 +82,15 @@ useEffect(() => {
         <Select
       closeMenuOnSelect={true} 
       /*components={animatedComponents}  */
-      options={modDatesForSelect}
+      options ={modDatesForSelect}
+     
       defaultValue={closeTodayDay}
       onChange={(choice) => {     
       if (choice) {
-          const selectedValue = choice.value;
-         // console.log("choice.value",choice.value)
-          props.setStartDay(choice.value)
+          //const selectedValue = choice.value;
+        // console.log("choice.value",choice)
+         const wybor = choice.value
+          props.setStartDay(wybor)
           //setUserChoice(selectedValue);
         } else {
           props.setStartDay(closeTodayDay)

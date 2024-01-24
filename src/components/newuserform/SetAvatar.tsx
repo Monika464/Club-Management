@@ -2,7 +2,7 @@ export interface ISetAvatar {
   thumbnail: File | null;
   setThumbnail: React.Dispatch<File | null>
   thumbnailError: string 
-  setThumbnailError: React.Dispatch<React.SetStateAction<string>>
+  setThumbnailError: React.Dispatch<string>
   pictureURL: string | null | any
   setPictureURL: React.Dispatch<React.SetStateAction<string | null>>
   // uploadFile: any
@@ -17,7 +17,7 @@ import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext.tsx';
 import { updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 //import { doc, updateDoc } from "firebase/firestore";
 
 
@@ -35,7 +35,7 @@ const SetAvatar = (props: ISetAvatar) => {
  
 
     const { currentUser} = useContext(UserContext); 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
          const handleFileChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -147,9 +147,9 @@ const updateAvatarBase = useCallback(async()=>{
                   .then(() => {
                   console.log("Profile updated!");
                   })
-                  .then(() => {
-                    navigate('/userpanel', { replace: true });
-                  }) 
+                  //.then(() => {
+                   // navigate('/userpanel', { replace: true });
+                  //}) 
                   .catch((error) => {
                   console.log(error);
                   });

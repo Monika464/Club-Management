@@ -6,12 +6,16 @@ import { useNavigate } from 'react-router-dom';
 //import { getDownloadURL, uploadBytes,ref as storageRef } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
 
+export interface IdateObj{
+    seconds: number,
+    nanoseconds: number
+  }
 
 interface ISigninSending {
     name: string | null,
     surname: string | null,
-    dob: Date | null,
-    startDay: Date | null,
+    dob: Date | IdateObj | null,
+    startDay: IdateObj | null,
     option: string | null,
     //email: string | null,
     //password: string | null 
@@ -20,8 +24,7 @@ interface ISigninSending {
 }
 
 export function SigninSendingTest(props: ISigninSending){
-    //console.log("czy ten komponent zostaje uruchomiony?")
-
+   
          const navigate = useNavigate();
          const { currentUser} = useContext(UserContext);
          //console.log('currentUser',currentUser)
@@ -118,7 +121,7 @@ export function SigninSendingTest(props: ISigninSending){
     
 
            //dodaj do archive
-           const docArchive = await addDoc(collection(db, "newUsersArchive"), dataToUsersArchive)
+            await addDoc(collection(db, "newUsersArchive"), dataToUsersArchive)
            .then(()=> console.log("new user data sent to archive"))
         } 
 

@@ -8,23 +8,28 @@ import { UserForm } from './UserForm';
 import {SigninSendingTest}  from './SigninSendingTest';
 import SetAvatar from './SetAvatar';
 
+export interface IdateObj{
+  toMillis(): number | Date;
+  seconds: number,
+  nanoseconds: number
+}
 
 
 
-
-const Signup2: React.FunctionComponent<IApplicationProps> =(props) => { 
+const Signup2: React.FunctionComponent<IApplicationProps> =() => { 
 
     const [name, setName] = useState<string>("");
     const [surname, setSurname] = useState<string>("");
     const [dob, setDob] = useState<Date>(new Date());
     const [option, setOption] = useState<string|null>("");
-    const [startDay, setStartDay] = useState<Date | null>(null);
+    //const [startDay, setStartDay] = useState<IdateObj | null>(null);
+    const [startDay, setStartDay] = useState<IdateObj | null>(null);
     //const [email, setEmail] = useState<string|null>("");
    // const [password, setPassword] = useState<string|null>("");
 
     //// zrob props do set avatar
-    const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
-    const [thumbnailError, setThumbnailError] = useState<string | null>(null)
+    const [thumbnail, setThumbnail] = useState<File | null >(null)
+    const [thumbnailError, setThumbnailError] = useState<string>('')
     const [pictureURL, setPictureURL] = useState<string | null>(null)
 
     //console.log("typ thumbnail",thumbnail)
@@ -34,11 +39,11 @@ const Signup2: React.FunctionComponent<IApplicationProps> =(props) => {
    //// const auth = getAuth();
 //const navigate = useNavigate();
 
-  const displayStartDay = startDay?.toDate() 
+  //const displayStartDay = startDay?.toDate() 
    //console.log(format(sssartDay, 'dd.MM.yyyy'))
-   if(displayStartDay){
+   //if(displayStartDay){
   // console.log(format(displayStartDay, 'PPP', {locale: pl}))
-  }
+  //}
 
     const {steps,currentStepIndex,step,isFirstStep,isLastStep,back, next} = useMultistepForm([
         <UserForm 
@@ -125,7 +130,8 @@ function onSubmit(e: FormEvent) {
             </form>
             {/* {isLastStep && <button onClick={handleCreateUser}>Create User</button>} */}
             <div><span className='decript'>imię: </span><span> {name} </span><span className='decript'>nazwisko: </span> <span>{surname} </span><br></br><span className='decript'>ur.</span><span>{dob.toDateString()}</span></div>
-            {startDay && <div><span className='decript'>start: </span> <span>{startDay?.toDate().toDateString()} </span></div>}
+            {/* {startDay && <div><span className='decript'>start: </span> <span>{startDay?.toDate().toDateString()} </span></div>} */}
+            {startDay && <div><span className='decript'>start: </span> <span>{ new Date(startDay?.toMillis()).toDateString()} </span></div>}
             {option && <div><span className='decript'>typ: </span> <span>{option}</span></div>}
        
             {/* {isLastStep && <SigninSendingTest name={null} surname={null} dob={undefined} startDay={undefined} option={''} email={email} password={password}/>} */}

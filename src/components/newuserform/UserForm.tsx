@@ -6,19 +6,20 @@ interface IUserFormProps {
     name: string;
     surname: string;
     setDob: (value: Date) => void;
-    dob: Date;
+    dob: Date | any;
   }
   
 
 
 export function UserForm(props: IUserFormProps){
 
-    const [dobInput, setDobInput] = React.useState(
-        props.dob?.toISOString().split("T")[0]
-      );
+    //const [dobInput, setDobInput] = React.useState(
+       // props.dob?.toISOString().split("T")[0]
+     // );
 
+  
       const handleDobChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDobInput(e.target.value);
+        //setDobInput(e.target.value);
         const dateParts = e.target.value.split("-");
         const year = parseInt(dateParts[0]);
         const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
@@ -26,7 +27,7 @@ export function UserForm(props: IUserFormProps){
         const newDate = new Date(year, month, day);
         props.setDob(newDate);
       };
-
+      
     return(<>
     <FormWrapper title="Podstawowe dane">
       <br/>

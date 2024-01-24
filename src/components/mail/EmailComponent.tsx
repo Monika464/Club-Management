@@ -15,9 +15,13 @@ export interface IMessage {
     
   created_at: IDateObj;
   message: string;
-  fresh: boolean,
-  userUid: string
+  fresh: boolean;
+  userUid: string;
+  id: string;
+}
+export interface IId {
   id: string
+  fresh: boolean  
 }
 
 export interface IEmailprops {
@@ -34,9 +38,7 @@ export interface IFreshMessage {
    fresh: boolean  
 }
 
-export interface Iid{
-  id: string
-}
+
 
 export const EmailComponent: React.FunctionComponent<IEmailprops> = (props) => {
     const { currentUser} = useContext(UserContext); 
@@ -109,10 +111,13 @@ if(props.collectionName === "usersmails"){
         if(currentUser){
           const q = query(collection(db, "usersmails"), where("userUid", "==", currentUser.uid));
               const unsubscribe = onSnapshot(q, (querySnapshot) => { 
-                   const temp: IMessage[] = querySnapshot.docs.map((doc) => {
-                          const data = {...doc.data(),id: doc.id,created_at: { seconds: 0, nanoseconds: 0 }, message: '', fresh: false, userUid: '' };
-                          return data
+                   const temp: IId[] = querySnapshot.docs.map((doc) => {
+                         // const data = {...doc.data(),id: doc.id,created_at: { seconds: 0, nanoseconds: 0 }, message: '', fresh: false, userUid: '' };
+                         const data = {...doc.data(),id: doc.id,fresh: doc.data().fresh};
+                         return data
                    })
+               
+
                    //console.log("temp",temp)
                setFreshMessagestoUser(temp)        
                        })

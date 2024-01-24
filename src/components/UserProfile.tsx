@@ -129,7 +129,7 @@ const handleName = () =>{
 
        <li>
           
-          <p>Change name</p>
+          <p>Zmień imię</p>
             <input
             type="text"
     onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,18 +138,17 @@ const handleName = () =>{
         }  
    />
     </li>
-<button onClick ={handleName}>Update of name</button>
+<button onClick ={handleName}>Uaktualnij</button>
 <br></br>
    
 
      {/* nowy */}
      <br></br>
 
-  
 
 
    <li>
-   <p>Change email</p>
+   <p>Zmień email</p>
    <input 
       type="email"  
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,11 +157,12 @@ const handleName = () =>{
 
        />
 
-<button onClick={updatingEmail}>Update your email</button>
+<button onClick={updatingEmail}>Uaktualnij</button>
 
    </li>
    <li>
-   <p>Change password</p>
+   <br></br>
+   <p>Zmień hasło</p>
    <input 
       type="password"  
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +170,7 @@ const handleName = () =>{
       }}  
        />
 
-<button onClick={updatingPassword}>Update password</button>
+<button onClick={updatingPassword}>Uaktualnij</button>
    </li>
    </ul>
   

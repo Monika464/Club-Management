@@ -1,6 +1,6 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from '../../context/UserContext';
-import { Timestamp, doc, serverTimestamp, updateDoc} from "firebase/firestore";
+import { Timestamp, doc,  updateDoc} from "firebase/firestore";
 import { db } from "../../App";
 import Avatar from "../Avatar";
 
@@ -18,15 +18,17 @@ export interface IProjectComments {
            id: string
     } | null;
 }
+// Date zamien na obj
 
 
-const ProjectComments: React.FunctionComponent<IProjectComments> =(props) => {
+  const ProjectComments: React.FunctionComponent<IProjectComments> =(props) => {
     
     const { currentUser} = useContext(UserContext);
     const [newComment, setNewComment] = useState('')
 
-    //console.log('serverTimestamp()',serverTimestamp())
-const handleSubmit =async(e)=>{
+    console.log('props',props)
+
+const handleSubmit =async(e: { preventDefault: () => void; })=>{
     e.preventDefault()
 
      const commentToAdd = {
@@ -37,8 +39,8 @@ const handleSubmit =async(e)=>{
         id: Math.random()
        }
 
-     // console.log("commentToAdd",commentToAdd)
-    // console.log("proooops",props?.project?.comments[0])
+  
+    console.log("proooops",props?.project?.comments[0])
 
     if(props.project){
            const updateComment = async(id: string)=>{

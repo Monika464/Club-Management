@@ -1,5 +1,5 @@
 export interface IAvatarProps {
-    src: string; 
+    src:  string; 
 };
 import './avatar.css'
 

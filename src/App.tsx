@@ -16,13 +16,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import Signup2 from './components/newuserform/Signup2.tsx';
 import Create from './pages/Create.tsx';
-// import Project from './pages/Project.tsx';
-//import Sidebar from './components/Sidebar.tsx';
 import { getStorage } from "firebase/storage";
-
-//import { useContext } from 'react'
-//import { UserContext } from './context/UserContext';
-//import StopMembershipAdmin from './components/StopMembershipAdmin.tsx';
 import Membershipage from './pages/Membershippage.tsx';
 //import { UsersPayments } from './components/UserPayments.tsx';
 import Injurypage from './pages/Injurypage.tsx';
@@ -38,7 +32,7 @@ import ArchiveUserpage from './pages/ArchiveUserpage.tsx';
 import ArchiveAdminpage from './pages/ArchiveAdminpage.tsx';
 //import { Test } from './components/Test.tsx';
 import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
-import RaportPage from './pages/RaportPage.tsx';
+//import RaportPage from './pages/RaportPage.tsx';
 //import Profilepage from './pages/Profilepage.tsx';
 //import Footer from './components/Footer.tsx';
 import UserMailbox from './pages/UserMailbox.tsx';
@@ -136,14 +130,14 @@ const Application: React.FunctionComponent<IApplicationProps> = () => {
                     }
             />
 
-<Route 
+{/* <Route 
              path="/report" 
              element={
               <AdminRoute>
                       <RaportPage/>                                  
                       </AdminRoute>
                     }
-            />
+            /> */}
 
 
 

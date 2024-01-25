@@ -1,25 +1,46 @@
 import { Link } from 'react-router-dom';
 import Avatar from '../Avatar';
-import ProjectComments from './ProjectComments';
+//import ProjectComments from './ProjectComments';
 import './project.css'
+import { format } from 'date-fns';
+import pl from 'date-fns/locale/pl';
+export interface IDocument {
+    toMillis(): string | number | Date;
+    assignedUsers: IAssignedUser[] | null;
+    category: string ;
+   comments: IComment[] | null;
+    created_at: IDateObj;
+    details: string | null;
+    eventdate: IDateObj;
+    name: string;
+    photo: string;
+    visibility: string;
+    id: string;
 
-export interface IProjectSummaryProps {
-    project: {
-        assignedUsers: string[] | null
-        category: string 
-           comments: string[] | null
-           created_at: Date
-           details: string | null
-           eventdate: Date
-           name: string
-           photo: URL
-           visibility: string
-           id: string
-    } | null;
 }
 
+export interface IAssignedUser{
+name: string;
+id: string;
+avatar: string
+}
+export interface IDateObj{
+    seconds: number;
+    nanoseconds: number;
+    toMillis(): string | number | Date;
+    }
 
-    const ProjectSummary: React.FunctionComponent<IProjectSummaryProps> =(props) => {
+    export interface IComment{
+        content: string;
+        created_at: IDateObj;
+        displayName: string;
+        photoURL: string;
+        id: string; 
+    }
+interface ProjectSummaryProps {
+        project: IDocument | null;
+ }
+    const ProjectSummary: React.FunctionComponent<ProjectSummaryProps> =(props) => {
 
        // console.log("props.project",props?.project?.name)
         
@@ -30,8 +51,9 @@ export interface IProjectSummaryProps {
 
             <h1 className="page-title">{props?.project?.name}</h1>
 
-            <p className='due-date'>{`${props?.project?.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
-
+           
+            {/* <p className='due-date'>{`${props?.project?.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p> */}
+            <p className='due-date'>{props.project && <>{format(new Date(props.project?.eventdate.toMillis()), 'PP-EEEE', {locale: pl})}</>}</p>
             <p className='details'>{props?.project?.details}</p>
 
             <img src={props?.project?.photo} className='photo' />

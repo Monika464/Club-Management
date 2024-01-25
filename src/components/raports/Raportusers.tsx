@@ -1,10 +1,10 @@
-export interface IRaportusers {}
+// export interface IRaportusers {}
 
 
-const Raportusers: React.FunctionComponent<IRaportpayments> =(props) => {
+// const Raportusers: React.FunctionComponent<IRaportpayments> =(props) => {
 
 
-return(<div>Raportusers</div>)
-}
+// return(<div>Raportusers</div>)
+// }
 
-export default Raportusers;
+// export default Raportusers;

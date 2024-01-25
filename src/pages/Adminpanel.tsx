@@ -167,11 +167,11 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
                   
                     </NavLink>
                 </li>
-                <li>              
+                {/* <li>              
                     <NavLink  to="/report"  >Księgowość
              
                     </NavLink>
-                </li>
+                </li> */}
                 <li>              
                     <NavLink  to="/usersreport"  >Użytkownicy
              

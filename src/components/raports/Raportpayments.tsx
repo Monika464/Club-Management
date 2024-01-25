@@ -1,86 +1,85 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useCallback, useEffect, useState } from "react";
-import { db } from "../../App";
+// import { collection, onSnapshot, query} from "firebase/firestore";
+// import { useCallback, useEffect, useState } from "react";
+// import { db } from "../../App";
 
 
-export interface IRaportpayments {}
-export interface paymentArr {
-    id: string,
-    time: Date,
-    kto: string,
-    trenings: number,
-    amount: number   
-}
+// export interface IRaportpayments {}
+// export interface paymentArr {
+//     id: string,
+//     time: Date,
+//     kto: string,
+//     trenings: number,
+//     amount: number   
+// }
 
-const Raportpayments: React.FunctionComponent<IRaportpayments> =(props) => {
-
-
-const [paymentsArr, setPaymentArr] = useState<paymentArr | null>(null)
+// const Raportpayments: React.FunctionComponent<IRaportpayments> =(props) => {
 
 
-    const getArchiveDatafromBase = useCallback(async() => {
+// const [paymentsArr, setPaymentArr] = useState<paymentArr | null>(null)
 
-        const getfromBase =async()=>{        
+
+//     const getArchiveDatafromBase = useCallback(async() => {
+
+//         const getfromBase =async()=>{        
           
-            //wczesniej trzeba by pobrac wszystkie
+//             //wczesniej trzeba by pobrac wszystkie
             
      
       
-          const q = query(collection(db, "paymentArchive"));
+//           const q = query(collection(db, "paymentArchive"));
           
-          const unsubscribe = onSnapshot(q, (querySnapshot) => { 
-            const temp = querySnapshot.docs.map((doc) => {
+//           const unsubscribe = onSnapshot(q, (querySnapshot) => { 
+//             const temp = querySnapshot.docs.map((doc) => {
               
-              console.log("tuuu", doc.id, " => ", doc.data());
+//               console.log("tuuu", doc.id, " => ", doc.data());
            
-              if(doc.data().userUid){
-                return {
-                    id:doc.id,
-                  uid: doc.data().userUid,
-                  time: doc.data().created_at,
-                  kto: doc.data().kto,
-                  trenings: doc.data().trenings,
-                  amount: doc.data().amount
-                };
-              }            
-              });
-             // console.log("temp1",temp1)
-              setPaymentArr([...temp])
+//               if(doc.data().userUid){
+//                 return {
+//                     id:doc.id,
+//                   uid: doc.data().userUid,
+//                   time: doc.data().created_at,
+//                   kto: doc.data().kto,
+//                   trenings: doc.data().trenings,
+//                   amount: doc.data().amount
+//                 };
+//               }            
+//               });
+//              // console.log("temp1",temp1)
+//               setPaymentArr([...temp])
              
-           });
+//            });
   
     
-      return () => unsubscribe();
-    }
+//       return () => unsubscribe();
+//     }
   
   
 
-  getfromBase();
+//   getfromBase();
 
 
-}, [db]); 
+// }, [db]); 
 
 
-useEffect(()=>{
+// useEffect(()=>{
 
-    getArchiveDatafromBase()
+//     getArchiveDatafromBase()
     
-},[getArchiveDatafromBase])
+// },[getArchiveDatafromBase])
 
 
-useEffect(()=>{
-console.log("paymentsArr",paymentsArr)
+// useEffect(()=>{
+// console.log("paymentsArr",paymentsArr)
 
-//do tego select z wyborem miesiac i pokaż płatnosci za wybrany miesiac
-},[paymentsArr])
-
-
+// },[paymentsArr])
 
 
 
 
-    return(<div>Raportpayments</div>)
 
-}
 
-export default Raportpayments
+//     return(<div>Raportpayments</div>)
+
+// }
+
+// export default Raportpayments

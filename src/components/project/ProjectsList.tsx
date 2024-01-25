@@ -1,58 +1,72 @@
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import './projectList.css'
-import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import pl from "date-fns/locale/pl";
 
-export interface IProjectListProps {};
 
+//export interface IProjectListProps {};
+export interface IDocument {
+
+  assignedUsers: IAssignedUser[] | null;
+  category: string ;
+ comments: IComment[] | null;
+  created_at: IDateObj;
+  details: string | null;
+  eventdate: IDateObj;
+  name: string;
+  photo: string;
+  visibility: string;
+  id: string;
+
+}
+
+export interface IAssignedUser{
+  name: string;
+  id: string;
+  avatar: string
+  }
+
+export interface IDateObj{
+  toMillis():number;
+  seconds: number;
+  nanoseconds: number;
+}
+interface IProjectListProps {
+  projects: IDocument[] | null;
+}
+export interface IComment{
+  content: string;
+  created_at: IDateObj;
+  displayName: string;
+  photoURL: string;
+  id: string; 
+  uid: string;
+}
 
     const ProjectList: React.FunctionComponent<IProjectListProps> =(props) => {
 
      // const [catDetailAr, setCutDetailsAr] = useState<string[]>("")
      if(props.projects){
-         props.projects.forEach((el)=>{
+        //  props.projects.forEach((el)=>{
 
-          //const a1 = 
-          //console.log(console.log("projectsEl",el.created_at.toDate().getTime()))
-        })
+        //   //const a1 = 
+       console.log(console.log("projects",props.projects))
 
-        const projectesMod = props.projects.sort((a, b) => {
-          const projectA = a.created_at.toDate().getTime();
-         // console.log(console.log("timestampA",projectA))
-          const projectB = b.created_at.toDate().getTime();
-         // console.log(console.log("timestampB",projectB));
-          
-          return projectB - projectA;
-        })
-
-        //console.log("projectesMod",projectesMod)
-        // props.projects.sort((a, b) => {
-        //   const timestampA = a.toDate().getTime();
-        //   console.log(console.log("timestampA",timestampA))
-        //   const timestampB = b.toDate().getTime();
-        //   console.log(console.log("timestampB",timestampB))
-
-        //   return timestampA - timestampB;
-        // });
-
-      }
-        //sortedProjects.sort((a, b) => b.created_at - a.created_at);
-
-        // useEffect(()=>{
-        //   const temp =[]
-        //   props.projects.forEach((project) => {
-        //     console.log('project',project.details.slice(0, 180))
-        //     temp.push(project.details.slice(0, 150))
-        //     setCutDetailsAr(temp)
         //   })
 
-        // },[props.projects])
+                props.projects.sort((a, b) => {
+                  const projectA = a.created_at.toMillis();
+                   // console.log(console.log("timestampA",projectA))
+                  const projectB = b.created_at.toMillis();
+                // console.log(console.log("timestampB",projectB));
+          
+                return projectB - projectA;
+             })
 
-       //tutaj zmodyfikowac liste projektow tak jak w datach jest !!!!!!!!!
+   
 
-        
-
-        return (
+     return (
           <div className="project-list">
             {props.projects.length === 0 ? (
               <p>brak wydarzeń</p>
@@ -67,12 +81,13 @@ export interface IProjectListProps {};
                       <Link to={`/projects/${project.id}`}>
                                            
                             <h4>{project.name}</h4>
-                            <p>{`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
+                            {/* <p>{`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p> */}
+                            <p>{`${format(new Date(project.eventdate?.toMillis()), 'PPP',{locale: pl})}`}</p>
                        </Link> 
                             <div className="details">
                               {/* <p>{project.details}</p>  */}
                               {/* <p>{catDetail}</p> */}
-                              <p>{project.details.slice(0, 180)}</p> 
+                              <p>{ project.details &&  project.details.slice(0, 180)}</p> 
                               <Link to={`/projects/${project.id}`} style={{ fontSize: 'small' }}>{'czytaj dalej >>>'}</Link>
                           </div>
                           <Link to={`/projects/${project.id}`}>
@@ -81,7 +96,7 @@ export interface IProjectListProps {};
                       </Link>
                       <div className="assigned-to">
                         <ul>
-                          {project.assignedUsers.map((user) => (
+                          {  project.assignedUsers && project.assignedUsers.map((user) => (
                             <li key={user.id}>
                               <Avatar src={user.avatar} />
                             </li>
@@ -96,61 +111,7 @@ export interface IProjectListProps {};
           </div>
         );
       
+ }
+    }
 
-
-// return (
-//             <div className="project-list">
-
-//       {props.projects.length === 0 ? <p>brak wydarzeń</p> : 
-
-//       props.projects.map(project =>(
-
-    
-//         <div className="petla"  key={project.id}>
-//              <ul>
-//              <li> 
-//              <Link to={`/projects/${project.id}`}>
-//                 <h4>{project.name}</h4>   
-//                  <p>{`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p>
-//                  <br></br>
-                 
-//                  {/* <img src={project.photo} style= {{width: 80 }} alt="photo" className="photo"/> */}
-//                  <img src={project.photo} alt="photo" className="photo"/>
-//               </Link>
-//               <div className="details">
-//                 <p>{project.details}</p>
-//               </div>
-
-//               <div className="assigned-to">
-//                  <ul>
-//                    {project.assignedUsers.map(user =>(
-//                     <li key={user.id}>
-//                     <Avatar src={user.avatar}/>    
-//                     </li>
-//                    ))}
-//                    </ul>
-//               </div>
-//              </li>
-//             </ul>
-
-//      </div>
-
-//     // <div key={project.uid}>
-//     // {project.name}
-//     // {`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}
-//     // <img src={project.photo} style= {{width: 80 }} alt="photo" />
-//     // {project.details}  
-//     // </div>
-
-// ))
-// }
-
-
-
-//             </div>
-//             )
-
-        }
-
-
-export default ProjectList;
+export default ProjectList

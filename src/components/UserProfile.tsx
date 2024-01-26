@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 //import { UserContext } from '../context/UserContext';
 //import Temple from './../assets/temple.svg'
 //import Avatar from './../assets/avatar.png'
@@ -9,7 +9,8 @@ import { getAuth, updateEmail, updatePassword, updateProfile } from 'firebase/au
 import { auth } from '../App';
 import SetAvatar from './newuserform/SetAvatar';
 import ChoosingAvatar from './ChoosingAvatar';
-//import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export interface IUserProfile {};   
@@ -22,7 +23,8 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =() => {
   const [pictureURL, setPictureURL] = useState<string>('');
     const [isEdited, setIsEdited] = useState<boolean>(false);
     const [email, setEmail] = useState("");
-
+    const { currentUser} = useContext(UserContext);
+ const navigate = useNavigate();
 
 const handleName = () =>{  
   const auth = getAuth();
@@ -32,7 +34,11 @@ const handleName = () =>{
     updateProfile(user, {displayName: name})
       .then(() => {
         console.log("Your name was updated")
-       }).catch((error) => {    
+       })
+       .then(() => {
+        navigate('/userpanel', { replace: true });
+       }) 
+       .catch((error) => {    
         console.error(error)
        });
 
@@ -81,7 +87,24 @@ const handleName = () =>{
       //navigate('/userpanel')
     }
 
+    const updatingProfile  = async()=>{
 
+      if(currentUser && pictureURL){  
+    
+             await updateProfile(currentUser, {
+                   photoURL: pictureURL 
+               })
+               .then(() => {
+               console.log("Profile updated!");
+               })
+               .then(() => {
+                navigate('/userpanel', { replace: true });
+               }) 
+               .catch((error) => {
+               console.log(error);
+               });
+         }
+        }
 
 
     return(<>
@@ -114,6 +137,7 @@ const handleName = () =>{
         setThumbnailError = {setThumbnailError}
         pictureURL ={pictureURL}
         setPictureURL={setPictureURL}
+        updatingProfile={updatingProfile}
         />
         <p>{thumbnailError}</p>
         <br></br>

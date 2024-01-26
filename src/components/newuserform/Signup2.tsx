@@ -1,5 +1,5 @@
 export interface IApplicationProps {};
-import { FormEvent, useState } from 'react';
+import { FormEvent, useCallback, useContext, useState } from 'react';
 import { useMultistepForm } from '../../hooks/useMultiStepForm';
 import './Signup2.css'
 import { StartAndOptionForm } from './StartEndOptionsForm';
@@ -7,6 +7,8 @@ import { UserForm } from './UserForm';
 //import { useSingnInToBase } from '../hooks/useSigninToBase';
 import {SigninSendingTest}  from './SigninSendingTest';
 import SetAvatar from './SetAvatar';
+import { UserContext } from '../../context/UserContext';
+import { updateProfile } from 'firebase/auth';
 
 export interface IdateObj{
   toMillis(): number | Date;
@@ -31,7 +33,7 @@ const Signup2: React.FunctionComponent<IApplicationProps> =() => {
     const [thumbnail, setThumbnail] = useState<File | null >(null);
     const [thumbnailError, setThumbnailError] = useState<string>('');
     const [pictureURL, setPictureURL] = useState<string>('');
-
+    const { currentUser} = useContext(UserContext); 
     //console.log("typ thumbnail",thumbnail)
     //console.log("pictureURLSign",pictureURL)
 
@@ -44,6 +46,28 @@ const Signup2: React.FunctionComponent<IApplicationProps> =() => {
    //if(displayStartDay){
   // console.log(format(displayStartDay, 'PPP', {locale: pl}))
   //}
+
+  const updatingProfile  = async()=>{
+
+    if(currentUser){  
+  
+           await updateProfile(currentUser, {
+                 photoURL: pictureURL 
+             })
+             .then(() => {
+             console.log("Profile updated!");
+             })
+             //.then(() => {
+              // navigate('/userpanel', { replace: true });
+             //}) 
+             .catch((error) => {
+             console.log(error);
+             });
+       }
+      }
+
+
+  
 
     const {steps,currentStepIndex,step,isFirstStep,isLastStep,back, next} = useMultistepForm([
         <UserForm 
@@ -73,6 +97,7 @@ const Signup2: React.FunctionComponent<IApplicationProps> =() => {
         setThumbnailError = {setThumbnailError}
         pictureURL ={pictureURL}
         setPictureURL={setPictureURL}
+        updatingProfile={updatingProfile}
         />
 ]);
 

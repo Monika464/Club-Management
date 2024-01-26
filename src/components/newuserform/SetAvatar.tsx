@@ -6,6 +6,7 @@ export interface ISetAvatar {
   pictureURL: string 
   setPictureURL: React.Dispatch<React.SetStateAction<string>>
   // uploadFile: any
+  updatingProfile: () => Promise<void>;
 };
 
 
@@ -26,13 +27,13 @@ const SetAvatar = (props: ISetAvatar) => {
     //const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
     //const [thumbnailError, setThumbnailError] = useState<string | null>(null)
 
-    const thumbnail = props.thumbnail
-    const setThumbnail = props.setThumbnail
-    const thumbnailError = props.thumbnailError
-    const setThumbnailError = props.setThumbnailError
-    const pictureURL = props.pictureURL
-    const setPictureURL = props.setPictureURL
- 
+    const thumbnail = props.thumbnail;
+    const setThumbnail = props.setThumbnail;
+    const thumbnailError = props.thumbnailError;
+    const setThumbnailError = props.setThumbnailError;
+    const pictureURL = props.pictureURL;
+    const setPictureURL = props.setPictureURL;
+    const updatingProfile = props.updatingProfile;
 
     const { currentUser} = useContext(UserContext); 
     //const navigate = useNavigate();
@@ -100,25 +101,25 @@ useEffect(()=>{
   uploadFile()
 },[thumbnail,uploadFile])
 
-const updatingProfile  = useCallback(async()=>{
+// const updatingProfile  = useCallback(async()=>{
 
-  if(currentUser && pictureURL){  
+//   if(currentUser && pictureURL){  
 
-         await updateProfile(currentUser, {
-               photoURL: pictureURL 
-           })
-           .then(() => {
-           console.log("Profile updated!");
-           })
-           //.then(() => {
-            // navigate('/userpanel', { replace: true });
-           //}) 
-           .catch((error) => {
-           console.log(error);
-           });
-     }
+//          await updateProfile(currentUser, {
+//                photoURL: pictureURL 
+//            })
+//            .then(() => {
+//            console.log("Profile updated!");
+//            })
+//            //.then(() => {
+//             // navigate('/userpanel', { replace: true });
+//            //}) 
+//            .catch((error) => {
+//            console.log(error);
+//            });
+//      }
 
-},[pictureURL])
+// },[pictureURL])
 
 const updateAvatarBase = useCallback(async () => {
   //console.log("jaki tu ", pictureURL === '');
@@ -185,7 +186,7 @@ const updateAvatarBase = useCallback(async () => {
 
 useEffect(()=>{
  
-    updatingProfile();
+     updatingProfile();
      updateAvatarBase();  
 
   thumbnailError ? console.log(thumbnailError): console.log('')

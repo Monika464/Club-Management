@@ -80,7 +80,7 @@ export function SigninSendingTest(props: ISigninSending){
                     due: null,
                     optionPass: false,
                     optionMulti: true,
-                    // avatar: props.pictureURL
+                    avatar: currentUser.photoURL
                     })
                     .then(()=>console.log("multi user. update succesful"))
                     .then(()=>  setIsSent(true))
@@ -100,7 +100,7 @@ export function SigninSendingTest(props: ISigninSending){
                                  due: props.startDay,
                                  optionPass: optionPass,
                                  optionMulti: false,
-                                //  avatar: props.pictureURL
+                                 avatar: currentUser.photoURL
                             })
                   .then(()=>console.log("pass user. update succesful"))
                   .then(()=>  setIsSent(true))

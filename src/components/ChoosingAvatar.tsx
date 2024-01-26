@@ -3,7 +3,7 @@ export interface IChoosingAvatar {}
 
  
 import { db, storage } from '../App.tsx';
-import {  useContext, useEffect, useState } from 'react'
+import {  useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext';
 import { updateProfile } from "firebase/auth";
 import { ref as storageRef, getDownloadURL } from 'firebase/storage'
@@ -38,7 +38,7 @@ const ChoosingAvatar = () => {
     const [thumbnail, setThumbnail] = useState<null | string >(null)
    // const [thumbnailError, setThumbnailError] = useState<string | null>(null)
    // const [pictureURL, setPictureURL] = useState<string | null>(null)
-    const [url,setUrl] =  useState<string | null>(null)
+    const [url,setUrl] =  useState<string>('')
     //const [avatarChanged, setAvatarChanged] = useState(false);
    // const [isClicked, setIsClicked] = useState(false);
     const { currentUser} = useContext(UserContext); 
@@ -55,28 +55,42 @@ const ChoosingAvatar = () => {
 
    // console.log("thumb",thumbnail)
 
-        const uploadFile = async () => {
-if(thumbnail){
-         await getDownloadURL(storageRef(storage, `avatars2/${thumbnail}`))
-          .then((url) => {
-         setUrl(url)
-           })
-          .catch((error) => {
-          console.log(error);
-           });       
-          }
-        }
+   const uploadFile = useCallback( async () => {
+             if(thumbnail){
+               await getDownloadURL(storageRef(storage, `avatars2/${thumbnail}`))
+                .then((url) => {
+                 setUrl(url)
+                 })
+                .catch((error) => {
+                 console.log(error);
+                });       
+            }
+        },[thumbnail])
+    
+      
+
+        // const uploadFile = async () => {
+        //      if(thumbnail){
+        //        await getDownloadURL(storageRef(storage, `avatars2/${thumbnail}`))
+        //         .then((url) => {
+        //          setUrl(url)
+        //          })
+        //         .catch((error) => {
+        //          console.log(error);
+        //         });       
+        //     }
+        // }
 
           useEffect(()=>{
             uploadFile();
-
-
           },[thumbnail])
 
   useEffect(()=>{
 
     const updateAvatar =async ()=>{
-       if(currentUser){
+
+       if(currentUser && thumbnail){
+        console.log("czy jest thumbnail",thumbnail)
           updateProfile(currentUser, {
           photoURL: url 
           })
@@ -100,9 +114,11 @@ if(thumbnail){
 
 useEffect(()=>{
 
-  
+  //robi update awatara w bazie
+
   const updateAvatar2 =async ()=>{
-    if(currentUser){
+
+    if(currentUser && thumbnail){
     const userRef = doc(db, "usersData",currentUser?.uid);
     await updateDoc(userRef, {
       avatar: url

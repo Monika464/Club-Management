@@ -28,9 +28,9 @@ const Signup2: React.FunctionComponent<IApplicationProps> =() => {
    // const [password, setPassword] = useState<string|null>("");
 
     //// zrob props do set avatar
-    const [thumbnail, setThumbnail] = useState<File | null >(null)
-    const [thumbnailError, setThumbnailError] = useState<string>('')
-    const [pictureURL, setPictureURL] = useState<string | null>(null)
+    const [thumbnail, setThumbnail] = useState<File | null >(null);
+    const [thumbnailError, setThumbnailError] = useState<string>('');
+    const [pictureURL, setPictureURL] = useState<string>('');
 
     //console.log("typ thumbnail",thumbnail)
     //console.log("pictureURLSign",pictureURL)

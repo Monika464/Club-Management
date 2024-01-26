@@ -5,25 +5,25 @@ import { db } from "../App";
 
 export interface IsUserRegistered {}
 
-export const useRegisteringUsers  = ():any | null => { 
+export const useRegisteringUsers  = ():boolean => { 
 
     const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false);
     
     const { currentUser} = useContext(UserContext); 
     if(currentUser){
-    const checkingRegister =async()=>{      
+    const checkingRegister =async() =>{      
         
                     const userRef = doc(db, "usersData",currentUser.uid);
                     const docSnap = await getDoc(userRef);
                        if (docSnap.exists()) {
                         if(docSnap.data()?.name){
-                            setIsUserRegistered(true)
+                           return  setIsUserRegistered(true)
                         }
                       
                        }
 
                     }
-                    checkingRegister()
+        checkingRegister()
        }
 
 

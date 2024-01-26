@@ -29,7 +29,7 @@ const [pausaDebt, setPausaDebt] = useState<number | null>(null)
 const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
 const [isSent, setisSent] = useState<boolean>(false) ;
 const [injuryDescription, setInjuryDescripton] = useState<string | null>("");
-const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
+//const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
 const [debt, setDebt] = useState<number | null>(null)
@@ -136,7 +136,7 @@ if(isMulti){
   .then(()=>setisSent(true))
 
 
-  const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
   .then(()=> console.log("archive"))
   .then(()=> navigate('/userpanel'))
 } 
@@ -157,23 +157,13 @@ if(isPass){
     }
 
 
-  const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
   .then(()=> console.log("archive tu"))
   .then(()=> navigate('/userpanel'))
 
 
 }
 
-
-// if(pausaDebt){
-//    await updateDoc(paymentDataRef, {
-//       debt: pausaDebt
-//     })
-//     .then(()=>console.log("debt modified. update succesful"))
-//     .then(()=>{setPausaDebt(null)})
-//    }
- 
- // }
 
 }
 
@@ -183,12 +173,7 @@ setInjuryDescripton(value);
  }
 
 
-const handlePrzenies =()=>{
-    console.log("czy wciska sie")
-      navigate('/userpanel');
-    //   //redirect("/login");
-   }
- 
+
 
 
 return (

@@ -3,8 +3,8 @@ export interface ISetAvatar {
   setThumbnail: React.Dispatch<File | null>
   thumbnailError: string 
   setThumbnailError: React.Dispatch<string>
-  pictureURL: string | null | any
-  setPictureURL: React.Dispatch<React.SetStateAction<string | null>>
+  pictureURL: string 
+  setPictureURL: React.Dispatch<React.SetStateAction<string>>
   // uploadFile: any
 };
 
@@ -16,8 +16,8 @@ import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext.tsx';
 import { updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
-//import { useNavigate } from "react-router-dom";
+import { doc, getDoc,  updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 //import { doc, updateDoc } from "firebase/firestore";
 
 
@@ -67,6 +67,7 @@ const SetAvatar = (props: ISetAvatar) => {
                 
                 
             const uploadFile = useCallback(async() => {
+
               if(currentUser && thumbnail){
                const uploadPath = `thumbnails/${currentUser.uid}/${thumbnail.name}`
               //  if (thumbnail === null) {
@@ -90,32 +91,6 @@ const SetAvatar = (props: ISetAvatar) => {
                }   
               }, [thumbnail]);         
 
-  // const uploadFile = async () => { 
-
-  //   if(currentUser && thumbnail){
-  //   const uploadPath = `thumbnails/${currentUser.uid}/${thumbnail.name}`
-  //   if (thumbnail === null) {
-  //     console.log("Please select an image");
-  //     return;
-  //   }    
-  //   const imageRef = storageRef(storage, uploadPath);
-
-  //   await uploadBytes(imageRef, thumbnail)
-  //     .then((snapshot) => {
-  //       getDownloadURL(snapshot.ref)
-  //         .then((url) => {
-  //           setPictureURL(url);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error.message);
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-
-  //   }
-  // };
 
       
 
@@ -123,72 +98,96 @@ const SetAvatar = (props: ISetAvatar) => {
 
 useEffect(()=>{
   uploadFile()
-
 },[thumbnail,uploadFile])
 
-const updateAvatarBase = useCallback(async()=>{
-  if(currentUser){  
-     const userRef = doc(db, "usersData",currentUser?.uid);
-     await updateDoc(userRef, {
-       avatar: pictureURL
-       })
-       .then(()=> {console.log("new avatar set")})
+const updatingProfile  = useCallback(async()=>{
+
+  if(currentUser && pictureURL){  
+
+         await updateProfile(currentUser, {
+               photoURL: pictureURL 
+           })
+           .then(() => {
+           console.log("Profile updated!");
+           })
+           //.then(() => {
+            // navigate('/userpanel', { replace: true });
+           //}) 
+           .catch((error) => {
+           console.log(error);
+           });
      }
-  
+
+},[pictureURL])
+
+const updateAvatarBase = useCallback(async () => {
+  //console.log("jaki tu ", pictureURL === '');
+  if (currentUser && (pictureURL !== '')) {
+    const userRef = doc(db, "usersData", currentUser.uid);
+
+    const docSnapshot = await getDoc(userRef);
+     if (docSnapshot.exists()) {
+      await updateDoc(userRef, {
+               avatar: pictureURL
+             })
+               .then(()=> {console.log("new avatar set in base")})
+          //       .then(() => {
+          //   navigate('/userpanel', { replace: true });
+          //  })
+        } else {
+          console.log("dokument czeka na rejestrację")
+        }
+     }
+    
+
   },[pictureURL])
- 
- const updatingProfile  = useCallback(async()=>{
- 
-         if(currentUser){  
-
-                await updateProfile(currentUser, {
-                      photoURL: pictureURL 
-                  })
-                  .then(() => {
-                  console.log("Profile updated!");
-                  })
-                  //.then(() => {
-                   // navigate('/userpanel', { replace: true });
-                  //}) 
-                  .catch((error) => {
-                  console.log(error);
-                  });
-            }
- 
- },[pictureURL])
-
-// const updatingProfile = async()=>{
-//   if(currentUser){
-
-//    await updateProfile(currentUser, {
-//       photoURL: pictureURL 
-//   })
-//   .then(() => {
-//   console.log("Profile updated!");
-//   })
-//   .then(() => {
-//     navigate('/userpanel', { replace: true });
-//   }) 
-//   .catch((error) => {
-//   console.log(error);
-//   });
-//    }
-//   }
-
-// const updateAvatarBase =async ()=>{
-//   if(currentUser){  
-//     const userRef = doc(db, "usersData",currentUser?.uid);
-//     await updateDoc(userRef, {
-//       avatar: pictureURL
+//       // Jeśli dokument istnieje, zaktualizuj go
+//       await updateDoc(userRef, {
+//         avatar: pictureURL,
 //       })
-//       .then(()=> {console.log("new avatar set")})
+//         .then(() => {
+//           console.log("Existing avatar updated in the base");
+//         })
+//         .catch((error) => {
+//           console.error("Error updating avatar:", error);
+//         });
+//     } else {
+//       // Jeśli dokument nie istnieje, utwórz go
+//       await setDoc(userRef, {
+//         avatar: pictureURL,
+//       })
+//         .then(() => {
+//           console.log("New avatar set in the base");
+//         })
+//         .catch((error) => {
+//           console.error("Error setting avatar:", error);
+//         });
 //     }
-// }
+//   }
+// }, [pictureURL, currentUser]);
+
+
+// const updateAvatarBase = useCallback(async()=>{
+
+// console.log("funkcja sie wykonuje",currentUser?.uid )
+//   if(currentUser){  
+//      const userRef = doc(db, "usersData",currentUser.uid);
+//      await updateDoc(userRef, {
+//        avatar: pictureURL
+//        })
+//        .then(()=> {console.log("new avatar set in base")})
+//      }
+  
+//   },[pictureURL])
+
+ // przeciez w bazie ni ema takiego dokumenty jeszcze 
+ 
 
 useEffect(()=>{
+ 
+    updatingProfile();
+     updateAvatarBase();  
 
-  updatingProfile();
-  updateAvatarBase();
   thumbnailError ? console.log(thumbnailError): console.log('')
 },[pictureURL])
       

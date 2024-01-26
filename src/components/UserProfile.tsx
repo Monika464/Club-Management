@@ -17,11 +17,11 @@ export interface IUserProfile {};
 export const UserProfile : React.FunctionComponent<IUserProfile > =() => {
 
   const [name, setName] = useState<string | null>('');
-  const [thumbnail, setThumbnail] = useState<File | null | string | any>(null)
-  const [thumbnailError, setThumbnailError] = useState<string>('')
-  const [pictureURL, setPictureURL] = useState<string | null>(null)
-    const [isEdited, setIsEdited] = useState<boolean>(false)
-    const [email, setEmail] = useState("")
+  const [thumbnail, setThumbnail] = useState<File | null | string | any>(null);
+  const [thumbnailError, setThumbnailError] = useState<string>('');
+  const [pictureURL, setPictureURL] = useState<string>('');
+    const [isEdited, setIsEdited] = useState<boolean>(false);
+    const [email, setEmail] = useState("");
 
 
 const handleName = () =>{  

@@ -14,6 +14,16 @@ export interface US {
     label: string | null
   }
 
+  export interface IusersForSelect {
+    value: string; 
+    label: string; 
+}
+
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
+}
+
 const ReportInjuryAdmin2: React.FunctionComponent =() => {
 
     const [newUsersList, setNewUsersList] = useState<US[]>([])
@@ -22,34 +32,34 @@ const ReportInjuryAdmin2: React.FunctionComponent =() => {
 
     const userModForSelect  =  useModUsersForSelect(); 
     const [chosenUserId, setChosenUserId] = useState<string | null>(null)
-    const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
-    const [name, setName] = useState("")
-    const [surname, setSurname] = useState("");
+    //const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
+    //const [name, setName] = useState("")
+    //const [surname, setSurname] = useState("");
     const [stopReported, setStopReported] = useState<boolean>(false)
     const [pausaReported, setPausaReported] = useState<boolean>(false)
-    const [pausaDate, setPausaDate] = useState<Date | null>();
+    const [pausaDate, setPausaDate] = useState<IdateObj | null>();
     const [pausaDebt, setPausaDebt] = useState<number | null>(null) 
     const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
     const [isSent, setisSent] = useState<boolean>(false) ;
-    const [injuryDescription, setInjuryDescripton] = useState<string | null>("")
+    const [injuryDescription, setInjuryDescripton] = useState<string | undefined>("")
     const [archiveName, setArchiveName] = useState<string | null>("")
     const [isMulti, setIsMulti] = useState<boolean>(false)
-    const [rendered, setRendered] = useState(false);
+    //const [rendered, setRendered] = useState(false);
   
 
     const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setRendered(true);
-  }, 1000); // 1000 milisekund = 1 sekunda
+// useEffect(() => {
+//   const timer = setTimeout(() => {
+//     setRendered(true);
+//   }, 1000); // 1000 milisekund = 1 sekunda
 
-  return () => {
-    clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
-  };
-}, []);
+//   return () => {
+//     clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+//   };
+// }, []);
 
     useEffect(() => {
 
@@ -60,7 +70,7 @@ useEffect(() => {
                 const docSnap = await getDoc(userRef);  
               // wykluczyc tych z pauza i stopem
 
-                if ( docSnap.data()) {
+                if ( docSnap.exists()) {
                   if(docSnap.data().pause ||docSnap.data().stop ){
                      continue
                   } else{
@@ -224,7 +234,7 @@ const getAddfromBase =async ()=>{
                 .then(()=>  setPausaDate(null))
                 .then(()=>   setisSent(true))
   
-             const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+             await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
              .then(()=> console.log("pausa sent to archive"))
             }
   
@@ -251,9 +261,12 @@ const getAddfromBase =async ()=>{
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
-        setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label);   
-        setArchiveName(choice.label)
+        if(choice){
+        setChosenUserId(choice.value);  
+        setArchiveName(choice.label) 
+      }
+        //setChosenUserByIdLabel(choice.label);   
+        
         setPausaReported(false);
         setisSent(false);
         setPausaDate(null);

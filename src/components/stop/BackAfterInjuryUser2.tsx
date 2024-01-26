@@ -7,17 +7,21 @@ import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useNavigate } from "react-router-dom";
 import DateFnsFormat from "../DateFnsFormat";
 
-export interface Itest {};         
+export interface Itest {};  
 
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
+}
 
-export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => { 
+export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => { 
   const { currentUser} = useContext(UserContext); 
 
     const [treningsToAdd, setTreningsToAdd] = useState<number | null>(null) ;
     const [debtsToSubstract, setDebtsToSubstract] = useState<number | null>(null) ;
-  const [currentUserPausaDate, setCurrentUserPausaDate] = useState<Date | null>()
+  const [currentUserPausaDate, setCurrentUserPausaDate] = useState<IdateObj | null>()
   const [newPaymentDateIndex, setNewPaymentDateIndex] = useState<number | null>(null);
-  const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
+  const [newPaymentDate, setNewPaymentDate] = useState<IdateObj | null>();
   const [name, setName] = useState<string | null>(null)
   const [surname, setSurname] = useState<string | null>(null)
   const [isMulti, setIsMulti] = useState<boolean>(false);
@@ -28,19 +32,19 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
   const dzisIndex = useSearchIndexCloseToday();
   const dzisData = useSearchDatesByIndex(dzisIndex);
  
-  const [rendered, setRendered] = useState(false);
+  //const [rendered, setRendered] = useState(false);
   
   const navigate = useNavigate();
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setRendered(true);
-      }, 1000); // 1000 milisekund = 1 sekunda
+    // useEffect(() => {
+    //   const timer = setTimeout(() => {
+    //     setRendered(true);
+    //   }, 1000); // 1000 milisekund = 1 sekunda
     
-      return () => {
-        clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
-      };
-    }, []);
+    //   return () => {
+    //     clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    //   };
+    // }, []);
 
     const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex)
 
@@ -122,6 +126,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
             kto: `${name} ${surname}`,          
             }  
 
+            if(currentUser){
             const userDataRef = doc(db, "usersData", currentUser.uid);
               
             if(isMulti){
@@ -132,7 +137,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
                 .then(()=>console.log("you are back. update succesful"))
                  .then(()=>setisSent(true))
                 
-                 const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+                 await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
                     .then(()=> console.log("archive"))
                     .then(()=> navigate('/userpanel'))
                 }
@@ -149,12 +154,12 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =(props) => {
                   .then(()=>{setisSent(true)})
                   
                   //kopia do archive
-                  const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+                  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
                   .then(()=> console.log("archive"))
                   .then(()=> navigate('/userpanel'))
                   } 
                     
-                  
+                }    
            }    
 
 

@@ -2,10 +2,10 @@ import { useParams } from "react-router-dom"
 //import useFetchCollectionData from "../../hooks/useFetchCollections"
 import { doc, onSnapshot} from "firebase/firestore";
 import { db } from "../../App";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectSummary from "./ProjectSummary";
 import ProjectComments from "./ProjectComments";
-import { UserContext } from "../../context/UserContext";
+//import { UserContext } from "../../context/UserContext";
 
 
 export interface IDocument {

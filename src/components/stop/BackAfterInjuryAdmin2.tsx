@@ -1,52 +1,56 @@
 import Select from 'react-select'
 import { useModUsersForSelect } from "../../hooks/useModUsersForSelect ";
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../../App';
-import { format } from 'date-fns';
-import { pl } from 'date-fns/locale';
+//import { format } from 'date-fns';
+// import { pl } from 'date-fns/locale';
 import DateFnsFormat from '../DateFnsFormat';
 
 export interface Itest{}
-export interface US {
-    value: string | null
-    label: string | null
+
+export interface IusersForSelect {
+    value: string; 
+    label: string; 
+}
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
 }
 
+export const BackAfterInjuryAdmin2 : React.FunctionComponent<Itest> =() => { 
 
-export const BackAfterInjuryAdmin2 : React.FunctionComponent<Itest> =(props) => { 
 
-
-  const [chosenUserId, setChosenUserId] = useState<string | null>(null)
+  const [chosenUserId, setChosenUserId] = useState<string>('');
   const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null);
-  const [newUsersList, setNewUsersList] = useState<US[]>([]);
+  const [newUsersList, setNewUsersList] = useState<IusersForSelect[]>([]);
   const [treningsToAdd, setTreningsToAdd] = useState<number | null>(null) ;
   const [debtsToSubstract, setDebtsToSubstract] = useState<number | null>(null) ;
-const [currentUserPausaDate, setCurrentUserPausaDate] = useState<Date | null>()
-const [name, setName] = useState<string | null>(null)
-const [surname, setSurname] = useState<string | null>(null)
-const [debt, setDebt] = useState<number | null>(null)
-const [add, setAdd] = useState<number | null>(null)
-const [isPausa, setIsPausa] = useState<boolean>(false)
-const [backDateIndex, setBackDateIndex] = useState<number | null>(null);
+const [currentUserPausaDate, setCurrentUserPausaDate] = useState<IdateObj | null>()
+//const [name, setName] = useState<string | null>(null)
+//const [surname, setSurname] = useState<string | null>(null)
+//const [debt, setDebt] = useState<number | null>(null)
+//const [add, setAdd] = useState<number | null>(null)
+//const [isPausa, setIsPausa] = useState<boolean>(false)
+//const [backDateIndex, setBackDateIndex] = useState<number | null>(null);
 const [newPaymentDateIndex, setNewPaymentDateIndex] = useState<number | null>(null);
-const [newPaymentDate, setNewPaymentDate] = useState<Date | null>();
+const [newPaymentDate, setNewPaymentDate] = useState<IdateObj| null>();
 const [isMulti, setIsMulti] = useState<boolean>(false);
 const [isPass, setIsPass] = useState<boolean>(false);
 const [isSent, setisSent] = useState<boolean>(false) ;
 //const [todayDisplay, setTodayDisplay] = useState<Date | null>();
 const [archiveName, setArchiveName] = useState<string | null>("")
-const [rendered, setRendered] = useState(false);
-const [chosen, setChosen] = useState(false);
+//const [rendered, setRendered] = useState(false);
+//const [chosen, setChosen] = useState(false);
    
 
 const userModForSelect  =  useModUsersForSelect(); 
     const dzisIndex = useSearchIndexCloseToday();
     const dzisData = useSearchDatesByIndex(dzisIndex);
     
- console.log('dzisData',dzisData?.toDate().toLocaleDateString())
+ //console.log('dzisData',dzisData?.toDate().toLocaleDateString())
 
     //modyfikowanie listy userów
 
@@ -58,12 +62,14 @@ const userModForSelect  =  useModUsersForSelect();
                 const userRef = doc(db, "usersData", userModForSelect[i].value);
                 const docSnap = await getDoc(userRef);  
                 
+                if(docSnap.exists()){
                 if (docSnap.data().pause) {
                     // Dodawanie użytkownika do listy w formie obiektu
                     usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                 }
                        
                 setNewUsersList(usersToAdd); // Aktualizuj stan tablicy
+              }
             }
 
             
@@ -77,17 +83,17 @@ const userModForSelect  =  useModUsersForSelect();
     //kalkulowanie daty powrotu
 
   
-    const now = new Date()
+    //const now = new Date()
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setRendered(true);
-      }, 1000); // 1000 milisekund = 1 sekunda
+    // useEffect(() => {
+    //   const timer = setTimeout(() => {
+    //     setRendered(true);
+    //   }, 1000); // 1000 milisekund = 1 sekunda
     
-      return () => {
-        clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
-      };
-    }, []);
+    //   return () => {
+    //     clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+    //   };
+    // }, []);
 
 
 
@@ -98,7 +104,7 @@ const userModForSelect  =  useModUsersForSelect();
 
   //setTodayDisplay(now)
 
-  const getBasicInfo =async(chosenUserId)=>{
+  const getBasicInfo =async(chosenUserId: string)=>{
   
 
     if(chosenUserId){ 
@@ -108,10 +114,10 @@ const userModForSelect  =  useModUsersForSelect();
           if (docSnap.exists()) {  
         
                if(docSnap.data().pause){
-                setIsPausa(true);
+                //setIsPausa(true);
              
-                 setName(docSnap.data().name);
-                 setSurname(docSnap.data().surname);
+                 //setName(docSnap.data().name);
+                 //setSurname(docSnap.data().surname);
                           
                  if(docSnap.data().optionMulti=== true){
                   setIsMulti(true)   
@@ -148,11 +154,11 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
     useEffect(() => { 
 
     if( chosenUserId){
-      console.log("uruchomiony useeffect2")
+     // console.log("uruchomiony useeffect2")
 
       if(isMulti){
         setNewPaymentDate(null)
-        console.log("czy tu jest multi",isMulti)
+        //console.log("czy tu jest multi",isMulti)
       } 
 
       if(isPass){
@@ -202,7 +208,7 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
       .then(()=>{console.log("powrot do treningów użytkownika multisport")})
       .then(()=>   setisSent(true))
      
-      const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+      await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
      .then(()=> console.log("sent to archive"))
 
     } 
@@ -220,13 +226,19 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
     .then(()=>   setisSent(true))
   }
 
-    const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+    await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
 .then(()=> console.log("sent to archive"))
 
 
 }
     //kopia do archive dorobic 
-
+const  resetChoice =() =>{
+  setisSent(false);
+  setNewPaymentDate(null);
+  setNewPaymentDateIndex(null)
+  setIsMulti(false)
+  setIsPass(false)
+}
 
    return (<>
 
@@ -235,15 +247,19 @@ const calcDatOfNewPay =  useSearchDatesByIndex(newPaymentDateIndex);
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
-        getBasicInfo(choice.value)
-        setChosen(true)
-        setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label); 
-        setIsPausa(false);  
-        setArchiveName(choice.label);
-        setisSent(false);
-        setNewPaymentDate(null);
-        setNewPaymentDateIndex(null)
+        if(choice){
+          getBasicInfo(choice.value);
+          setChosenUserId(choice.value);   
+          setChosenUserByIdLabel(choice.label); 
+          setArchiveName(choice.label);
+        }
+          resetChoice();
+        //setChosen(true) 
+        //setIsPausa(false);   
+        //setisSent(false);
+        //setNewPaymentDate(null);
+        //setNewPaymentDateIndex(null)
+      
         }}   
     />
     <p>{chosenUserByIdLabel}</p>

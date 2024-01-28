@@ -139,7 +139,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => {
                 
                  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
                     .then(()=> console.log("archive"))
-                    .then(()=> navigate('/userpanel'))
+                    .then(()=> navigate('/injuryuser'))
                 }
 
                 if(isPass){ 
@@ -156,7 +156,7 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => {
                   //kopia do archive
                   await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
                   .then(()=> console.log("archive"))
-                  .then(()=> navigate('/userpanel'))
+                  .then(()=> navigate('/injuryuser'))
                   } 
                     
                 }    
@@ -172,7 +172,8 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => {
     <p>Jeśli chcesz wrócic do treningów: </p>
        <p><DateFnsFormat element={dzisData}/> zatwierdź</p>
        </div>}
-    {currentUserPausaDate&&<button onClick={pushToBaseNewDueDay} className="btn">Zatwierdz powrot</button>}
+       <br></br>
+    {!isSent && currentUserPausaDate&&<button onClick={pushToBaseNewDueDay} className="btn">Zatwierdz powrot</button>}
     {isSent&&<p>wyslano</p>} 
     {/* <button onClick={calculate}>caculate</button> */}
     </>)

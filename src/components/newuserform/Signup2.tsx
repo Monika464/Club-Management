@@ -1,5 +1,5 @@
 export interface IApplicationProps {};
-import { FormEvent, useCallback, useContext, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useMultistepForm } from '../../hooks/useMultiStepForm';
 import './Signup2.css'
 import { StartAndOptionForm } from './StartEndOptionsForm';

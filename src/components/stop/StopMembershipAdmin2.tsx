@@ -6,26 +6,37 @@ import { useSearchIndexCloseToday } from '../../hooks/useSearchIndexCloseToday';
 import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../../App';
-import { useSearchIndexAnyDate } from '../../hooks/useSearchIndexAnyDate';
+//import { useSearchIndexAnyDate } from '../../hooks/useSearchIndexAnyDate';
 import DateFnsFormat from '../DateFnsFormat';
-import { compareAsc, isToday } from 'date-fns';
+import { compareAsc} from 'date-fns';
 
 export interface US {
-  value: string | null
-  label: string | null
+  value: string; 
+  label: string; 
+}
+
+export interface IusersForSelect {
+  value: string; 
+  label: string; 
+}
+
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
+  toMillis(): number | Date; 
 }
 
 const StopMembershipAdmin2: React.FunctionComponent =() => {
 
 
-    const [chosenUserId, setChosenUserId] = useState<string | null>(null)
+    const [chosenUserId, setChosenUserId] = useState<string>('')
     const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
 
     const [isSent, setisSent] = useState<boolean>(false) ;
     const [currentUserPausaDate, setCurrentUserPausaDate] = useState<Date | null>();
-const [dueDate, setDueDate] = useState<Date | null>()
+const [dueDate, setDueDate] = useState<IdateObj | null>(null)
 const [stopReported, setStopReported] = useState<boolean>(false)
-const [stopDate, setStopDate] = useState<Date | null>()
+const [stopDate, setStopDate] = useState<IdateObj | null>()
 const [finalDebt, setFinalDebt] = useState<number | null>(null) 
 const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null)
@@ -36,10 +47,10 @@ const paymentDateIndex  = useSearchDatesPlusN(0, chosenUserId);
 const dzisIndex = useSearchIndexCloseToday();
 const dzisData = useSearchDatesByIndex(dzisIndex);
 const [newUsersList, setNewUsersList] = useState<US[]>([])  
-const [modIndFin, setModIndFin] = useState<number | null>(null) 
-const [modDatFin, setModDatFin] = useState<Date | null>(null) 
-const [dataDue, setDataDue] = useState<Date | null>()
-const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
+//const [modIndFin, setModIndFin] = useState<number | null>(null) 
+//const [modDatFin, setModDatFin] = useState<Date | null>(null) 
+//const [dataDue, setDataDue] = useState<Date | null>()
+//const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
 
 const userModForSelect  =  useModUsersForSelect();  
 
@@ -66,9 +77,10 @@ useEffect(() => {
 
         for (let i = 0; i < userModForSelect.length; i++) {
             const userRef = doc(db, "usersData", userModForSelect[i].value);
+            
             const docSnap = await getDoc(userRef); 
              
-            if (docSnap.data()) {
+            if (docSnap.exists()) {
  
                 // Dodawanie użytkownika do listy w formie obiektu
                 //usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
@@ -141,7 +153,7 @@ useEffect(()=>{
                       //jesli mamy stop
                       if(docSnap.data().stop){
                       setStopReported(true)
-                      setStopDateFromBase(docSnap.data().stop)
+                      //setStopDateFromBase(docSnap.data().stop)
                     
                       }
 
@@ -246,6 +258,9 @@ useEffect(()=>{
         kto: `${name} ${surname}`,          
       } 
 
+
+      //console.log("dueDate jest w przyszlosci",compareAsc(dueDate?.toMillis(), new Date()) === 1)
+
     //MODYFIKOWANIE ZAPISU DANEGO USERA W BAZIE
       //funkcja zapisujaca w bazie
 
@@ -282,6 +297,7 @@ useEffect(()=>{
         }
        // console.log("czy tu jest isPass",isPass)   false
         if(isPass){
+
           if(finalDebt){
               await updateDoc(paymentDataRef, {
                  pause: null,  
@@ -297,8 +313,8 @@ useEffect(()=>{
               .then(()=>   setFinalDebt(null))
     
           }
-         
-             if(compareAsc(dueDate?.toDate(), new Date()) === 1){
+         if(dueDate){
+             if(compareAsc(dueDate.toMillis(), new Date()) === 1){
                 await updateDoc(paymentDataRef, {
                  pause: null,  
                  add: null,
@@ -307,18 +323,18 @@ useEffect(()=>{
                  debt: null,
                  due: null  
                })
-                .then(()=>console.log("stop date for passuser update succesful"))
+                .then(()=>console.log("stop date for passa user update succesful"))
                 .then(()=>  setStopDate(null))
                 .then(()=>   setisSent(true))
                 .then(()=>   setFinalDebt(null))
     
                 }
-    
+              }
     
         }
 
     
-              const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+             await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
             .then(()=> console.log("archive"))  
 
 
@@ -361,8 +377,10 @@ return(<>
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
+        if(choice){
         setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label);   
+        setChosenUserByIdLabel(choice.label);  
+        } 
         setStopReported(false);
         setisSent(false);
         setStopDate(null);
@@ -394,8 +412,8 @@ return(<>
          <p><DateFnsFormat element={dueDate}/></p>
             </div>}  */}
 
-{/* { isMoved && <> */}
-      { compareAsc(dueDate?.toDate(), new Date()) === 1 ? <div className="archive">    
+ {dueDate && <>
+      { compareAsc(dueDate?.toMillis(), new Date()) === 1 ? <div className="archive">    
                                                             <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
                                                             <p><DateFnsFormat element={dueDate}/></p>
                                                           </div>
@@ -404,7 +422,7 @@ return(<>
                                                            <p><DateFnsFormat element={dzisData}/></p>
                                                          </div>  :  <p></p>
        }
-       {/* </>} */}
+      </>}
  
 
  {/* {stopDate &&  <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>} */}

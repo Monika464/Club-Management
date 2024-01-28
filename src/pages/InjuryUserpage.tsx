@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser"
+//import { Link } from "react-router-dom"
+//import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser"
 import BackAfterInjuryUser2 from "../components/stop/BackAfterInjuryUser2"
 import { ReportInjuryUser2 } from "../components/stop/ReportInjuryUser2"
 import { useContext, useEffect, useState } from "react"

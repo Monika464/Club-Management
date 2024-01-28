@@ -5,11 +5,17 @@ import { UserContext } from '../../context/UserContext';
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
-import { useSearchIndexAnyDate } from "../../hooks/useSearchIndexAnyDate";
+//import { useSearchIndexAnyDate } from "../../hooks/useSearchIndexAnyDate";
 import { useNavigate } from "react-router-dom";
 import DateFnsFormat from "../DateFnsFormat";
 import { compareAsc, isToday } from "date-fns";
 //const { compareAsc, parse, isToday } = require('date-fns');
+
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
+  toMillis(): number | Date; 
+}
 
 
 const StopMembershipUser: React.FunctionComponent =() => {
@@ -17,21 +23,21 @@ const StopMembershipUser: React.FunctionComponent =() => {
     const { currentUser} = useContext(UserContext); 
     const [isSent, setisSent] = useState<boolean>(false) ;
     //const [treningsDebt, setTreningsDebt] = useState<number | null>(null) ;
-const [currentUserPausaDate, setCurrentUserPausaDate] = useState<Date | null>();
-const [dueDate, setDueDate] = useState<Date | null>()
+const [currentUserPausaDate, setCurrentUserPausaDate] = useState<IdateObj | null>();
+const [dueDate, setDueDate] = useState<IdateObj | null>()
 const [stopReported, setStopReported] = useState<boolean>(false)
-const [stopDate, setStopDate] = useState<Date | null>()
+const [stopDate, setStopDate] = useState<IdateObj | null>()
 //const [stopDateIndex, setStopDateIndex] = useState<number | null>(null) 
 const [finalDebt, setFinalDebt] = useState<number | null>(null) 
 const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null)
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
-const [modIndFin, setModIndFin] = useState<number | null>(null) 
-const [modDatFin, setModDatFin] = useState<Date | null>(null) 
-const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
+//const [modIndFin, setModIndFin] = useState<number | null>(null) 
+//const [modDatFin, setModDatFin] = useState<Date | null>(null) 
+//const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
 //const [rendered, setRendered] = useState(false);
-const [dataDue, setDataDue] = useState<Date | null>()
+//const [dataDue, setDataDue] = useState<IdateObj | null>()
 
 const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 const dzisIndex = useSearchIndexCloseToday();
@@ -47,37 +53,29 @@ const navigate = useNavigate();
 
 const settingName = useCallback( async ()=>{
 
-  if(currentUser){ 
+       if(currentUser){ 
 
-    const userRef = doc(db, "usersData",currentUser?.uid);
-    const docSnap = await getDoc(userRef);
-
-
-
+               const userRef = doc(db, "usersData",currentUser?.uid);
+               const docSnap = await getDoc(userRef);
 
         if (docSnap.exists()) {  
           setName(docSnap.data().name);
           setSurname(docSnap.data().surname);
         
                    //jesli mamy stop
-                    const temp = [];
                    if(docSnap.data().stop){
                      setStopReported(true)
-                     setStopDateFromBase(docSnap.data().stop)
                     }
          
                   //jesli mamy multi
                 if(docSnap.data().optionMulti === true){  
-
                       setIsMulti(true);
                       setStopDate(dzisData);
-
                      //jezeli jest debt w multi
                       if(docSnap.data().debt){
                     // console.log("uzytkownik zadluzony")        
                       setFinalDebt(docSnap.data().debt)
                       }
-
                     //jezeli mamy pauze w multi
                       if(docSnap.data().pause){
                       setCurrentUserPausaDate(docSnap.data().pause);
@@ -88,32 +86,29 @@ const settingName = useCallback( async ()=>{
               if(docSnap.data().optionPass === true){  
                  setIsPass(docSnap.data().optionPass);
 
-                 //jesli mamy pauze
-                     if(docSnap.data().pause){
-                      setCurrentUserPausaDate(docSnap.data().pause);
-                     console.log("currentUserPausaDate",currentUserPausaDate)
-                     setStopDate(dzisData);
+                        //jesli mamy pauze
+                        if(docSnap.data().pause){
+                          setCurrentUserPausaDate(docSnap.data().pause);
+                          //console.log("currentUserPausaDate",currentUserPausaDate)
+                          setStopDate(dzisData);
             
-                     if(docSnap.data().debt){          
-                       //console.log("uzytkownik zadluzony")
-                       setStopDate(dzisData);
-                       setFinalDebt(docSnap.data().debt)
-                     }
+                         if(docSnap.data().debt){          
+                         setStopDate(dzisData);
+                         setFinalDebt(docSnap.data().debt)
+                         }
                       } 
 
-              //jesli mamy due
-             // porownamy z dzis !!!
-               if(docSnap.data().due){  
-                   setDataDue(docSnap.data().due);  
-      
+                      //jesli mamy due
+                     if(docSnap.data().due){  
+                       setDueDate(docSnap.data().due);  
+                       }
    
               if((paymentDateIndex !== null) && dzisIndex){
                  setStopDate(dzisData)
-                 if(dzisIndex > paymentDateIndex){
-                 setFinalDebt(dzisIndex - paymentDateIndex)
-                   }  
-
-
+                    if(dzisIndex > paymentDateIndex){
+                      setFinalDebt(dzisIndex - paymentDateIndex)
+                    }  
+              }
 
 
                    //temu sie przyjrzec czemy nie liczy
@@ -126,33 +121,29 @@ const settingName = useCallback( async ()=>{
                 //   setStopDate(dateSzukana) 
                 //  }   
                       
-               }
+               
                
              
           
           }
-     }
-      
-   } else {
+     } else {
 
     console.log("brak polaczenia z baza")
    }
 
-
+if(dueDate){
   // Sprawdź, czy jest dzisiaj
-if (isToday(dueDate)) {
-  console.log("To jest dzisiaj!");
-} else {
-  // Porównaj daty
-  const comparisonResult = compareAsc(dueDate, new Date());
-  if (comparisonResult === 1) {
-    console.log("To będzie później");
+      if (isToday(dueDate.toMillis())) {
+         console.log("To jest dzisiaj!");
+        } else {
+      // Porównaj daty
+    const comparisonResult = compareAsc(dueDate.toMillis(), new Date());
+       if (comparisonResult === 1) {
+     console.log("To będzie później");
   } else if (comparisonResult === -1) {
     console.log("To było wcześniej");
   } 
-  // else {
-  //   console.log("To jest dokładnie teraz!");
-  // }
+}
 }
           
    }
@@ -183,7 +174,7 @@ useEffect(()=>{
       //funkcja zapisujaca w bazie
 //console.log("z funkcji zapisującej w bazie",'stopDate',stopDate,'finalDebt',finalDebt,'name',name)
      const sendStopToBase =async()=>{
-
+if(currentUser) {
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
     
     if(currentUserPausaDate){    
@@ -230,21 +221,21 @@ useEffect(()=>{
 
       }
      
-         if(modDatFin){
-            await updateDoc(paymentDataRef, {
-             pause: null,  
-             add: null,
-             stop: modDatFin,  
-             restart: null,
-             debt: null,
-             due: null  
-           })
-            .then(()=>console.log("stop date for passuser update succesful"))
-            .then(()=>  setStopDate(null))
-            .then(()=>   setisSent(true))
-            .then(()=>   setFinalDebt(null))
+        //  if(modDatFin){
+        //     await updateDoc(paymentDataRef, {
+        //      pause: null,  
+        //      add: null,
+        //      stop: modDatFin,  
+        //      restart: null,
+        //      debt: null,
+        //      due: null  
+        //    })
+        //     .then(()=>console.log("stop date for passuser update succesful"))
+        //     .then(()=>  setStopDate(null))
+        //     .then(()=>   setisSent(true))
+        //     .then(()=>   setFinalDebt(null))
 
-            }
+        //     }
 
 
     }
@@ -252,15 +243,12 @@ useEffect(()=>{
 
 
 
-          const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+         await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
         .then(()=> console.log("archive"))  
-        .then(()=> navigate('/userpanel'))
-         
-
-
-     
+        .then(()=> navigate('/membershipuser'))
 
   }
+}
   
 // console.log("porownanie na user",compareAsc(stopDate?.toDate(), new Date()) === 1)
 // console.log("poro ile na user",compareAsc(stopDate?.toDate(), new Date()))
@@ -303,15 +291,16 @@ return (<div>
      <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
         <p><DateFnsFormat element={dzisData}/></p>
         </div>}
-     {(dzisIndex < paymentDateIndex) && !stopReported && dataDue &&
+     {(dzisIndex < paymentDateIndex) && !stopReported && dueDate &&
        <div className="archive">    
        <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
-         <p><DateFnsFormat element={dataDue}/></p>
+         <p><DateFnsFormat element={dueDate}/></p>
             </div>} 
         
         
      
   {!stopReported && finalDebt &&<p>istniejące zadłużenie: {finalDebt} treningów</p>}
+  <br></br>
   {!stopReported && <button onClick={sendStopToBase} className="btn">Potwierdż</button>}
   {isSent &&<p>wyslano</p>}
 

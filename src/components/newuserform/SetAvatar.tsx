@@ -16,9 +16,9 @@ import { db, storage } from '../../App.tsx';
 import { getDownloadURL, uploadBytes, ref as storageRef } from "firebase/storage";
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext.tsx';
-import { updateProfile } from "firebase/auth";
+//import { updateProfile } from "firebase/auth";
 import { doc, getDoc,  updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 //import { doc, updateDoc } from "firebase/firestore";
 
 

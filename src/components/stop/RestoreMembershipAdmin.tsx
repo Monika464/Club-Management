@@ -44,7 +44,7 @@ useEffect(() => {
   
 useEffect(() => {
 
-  console.log("czy mamy restore",userModForSelect)   
+ // console.log("czy mamy restore",userModForSelect)   
 
     const fetchData = async () => {  
         const usersToAdd = [];
@@ -56,7 +56,7 @@ useEffect(() => {
             const docSnap = await getDoc(userRef); 
              
             if (docSnap.data()) {
-                console.log("say yes", )
+               // console.log("say yes", )
                 // Dodawanie użytkownika do listy w formie obiektu
                 //usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
                     if((docSnap.data().stop) && (docSnap.data().id === userModForSelect[i].value)){
@@ -75,7 +75,7 @@ useEffect(() => {
 
     fetchData();
 
-    console.log('newUsersListRestore',newUsersList)
+   // console.log('newUsersListRestore',newUsersList)
 
 }, [db,dzisData,dzisIndex,rendered]);
 

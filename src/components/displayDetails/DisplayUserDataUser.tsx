@@ -143,7 +143,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
         <p className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} wejśc</p> 
          }
         </div>}
-        <br></br> 
+        <br></br> <br></br>
         <button onClick={handleEditDetails} className="btnsmall">
          {isEdited ? 'Zamknij' : 'Edytuj szczegóły'}
           </button>

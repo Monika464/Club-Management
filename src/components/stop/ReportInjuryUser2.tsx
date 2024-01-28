@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from '../../context/UserContext';
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
@@ -8,7 +8,10 @@ import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "fir
 import { useNavigate } from "react-router-dom";
 import DateFnsFormat from "../DateFnsFormat";
 
-
+export interface IdateObj{
+  seconds: number;
+  nanoseconds: number;
+}
 
 export const ReportInjuryUser2: React.FunctionComponent =() => {
 
@@ -24,11 +27,11 @@ const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null);
 const [stopReported, setStopReported] = useState<boolean>(false)
 const [pausaReported, setPausaReported] = useState<boolean>(false)
-const [pausaDate, setPausaDate] = useState<Date | null>();
+const [pausaDate, setPausaDate] = useState<IdateObj | null>();
 const [pausaDebt, setPausaDebt] = useState<number | null>(null) 
 const [pausaAdd, setPausaAdd] = useState<number | null>(null) 
 const [isSent, setisSent] = useState<boolean>(false) ;
-const [injuryDescription, setInjuryDescripton] = useState<string | null>("");
+const [injuryDescription, setInjuryDescripton] = useState<string>('');
 //const [injuryIsEdited, setInjuryIsEdited] = useState<boolean>(false);
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
@@ -74,6 +77,7 @@ const [debt, setDebt] = useState<number | null>(null)
      }
 
     }
+
 useEffect(()=>{
      settingName();
   
@@ -124,53 +128,55 @@ const dataToActivityArchive = {
 
 const sendStopToBase =async()=>{
 
-  const paymentDataRef = doc(db, "usersData", currentUser.uid);
+if(currentUser){
 
-if(isMulti){
-  await updateDoc(paymentDataRef, {  
-    pause: pausaDate,
-    debt: debt,
-    add: null
-  })
-  .then(()=>console.log("debt modified. update succesful"))
-  .then(()=>setisSent(true))
+        const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
-
-  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-  .then(()=> console.log("archive"))
-  .then(()=> navigate('/userpanel'))
-} 
-
-if(isPass){
+      if(isMulti){
+        await updateDoc(paymentDataRef, {  
+          pause: pausaDate,
+          debt: debt,
+          add: null
+        })
+        .then(()=>console.log("debt modified. update succesful"))
+        .then(()=>setisSent(true))
       
-  if(!pausaReported && !stopReported){
-    await updateDoc(paymentDataRef, {
-       pause: pausaDate,
-       due: null,
-       add: pausaAdd,
-       debt: pausaDebt
-     })
-     .then(()=>console.log("debt modified. update succesful"))
-     .then(()=>  setPausaDate(null))
-     .then(()=>   setisSent(true))
-     .then(()=>   setPausaAdd(null))  
-    }
+      
+        await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+        .then(()=> console.log("archive"))
+        .then(()=> navigate('/userpanel'))
+      } 
+
+        if(isPass){
+              
+          if(!pausaReported && !stopReported){
+            await updateDoc(paymentDataRef, {
+               pause: pausaDate,
+               due: null,
+               add: pausaAdd,
+               debt: pausaDebt
+             })
+            .then(()=>console.log("debt modified. update succesful"))
+             .then(()=>  setPausaDate(null))
+            .then(()=>   setisSent(true))
+            .then(()=>   setPausaAdd(null))  
+           }
+         
+
+          await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+         //.then(()=> console.log("archive tu"))
+          .then(()=> navigate('/injuryuser'))
+          }
 
 
-  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-  .then(()=> console.log("archive tu"))
-  .then(()=> navigate('/userpanel'))
+       }
 
+   }
 
-}
-
-
-}
-
-const handleDescriptInj =(event: ChangeEvent<HTMLInputElement>)=>{
-  const { value } = event.target
-setInjuryDescripton(value);
- }
+         const handleDescriptInj =(event: { target: { value: any; }; })=>{
+        const { value } = event.target
+        setInjuryDescripton(value);
+       }
 
 
 
@@ -200,7 +206,7 @@ return (
                  <br></br><br></br>
                    {/* <input */}
                    <textarea
-                     type='text'
+                    //  type='text'
                      name='text'
                      value={injuryDescription}
                      onChange={handleDescriptInj}

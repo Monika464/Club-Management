@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+//import { Link } from "react-router-dom"
 import ArchiveAdminPayment from "../components/archive/ArchiveAdminPayment"
 import ArchiveViewAdmin from "../components/archive/ArchiveViewAdmin"
 
@@ -6,7 +6,7 @@ export interface IArchiveAdminpage {
 
 }
 
-const ArchiveAdminpage: React.FunctionComponent<IArchiveAdminpage> =(props) => {
+const ArchiveAdminpage: React.FunctionComponent<IArchiveAdminpage> =() => {
 
 
     return(

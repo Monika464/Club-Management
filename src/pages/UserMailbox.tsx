@@ -1,17 +1,14 @@
-import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive"
-import mail from '../assets/mail.png'
-import { useNavigate } from "react-router-dom";
+//import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive"
+//import mail from '../assets/mail.png'
+//import { useNavigate } from "react-router-dom";
 import MailToAdminSend from "../components/mail/MailToAdminSend";
 import { useState } from "react";
 import MailboxToUserReceive2 from "../components/mail/MailboxToUserReceive2";
 
 
-export interface IUserMailbox {
 
-}
-
-const UserMailbox: React.FunctionComponent<IUserMailbox > =(props) => {
-    const navigate = useNavigate();
+const UserMailbox: React.FunctionComponent=() => {
+    //const navigate = useNavigate();
     const [isEditedmailToAdmin, setIsEditedmailToAdmin] = useState<boolean>(false)
 
     const handleEditMailToAdmin =()=>{

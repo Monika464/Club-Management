@@ -8,7 +8,7 @@ import pl from "date-fns/locale/pl";
 //export interface IProjectListProps {};
 export interface IDocument {
 
-  assignedUsers: IAssignedUser[] | null;
+  assignedUsers: IforSel[] | null;
   category: string ;
  comments: IComment[] | null;
   created_at: IDateObj;
@@ -21,14 +21,21 @@ export interface IDocument {
 
 }
 
+export interface IforSel{
+  value: IAssignedUser;
+  label: string
+}
+
 export interface IAssignedUser{
+  dob:IDateObj;
   name: string;
+  surname: string;
   id: string;
-  avatar: string
+  avatar:  string
   }
 
 export interface IDateObj{
-  toMillis():number;
+  toMillis():number | string | any;
   seconds: number;
   nanoseconds: number;
 }
@@ -51,7 +58,7 @@ export interface IComment{
         //  props.projects.forEach((el)=>{
 
         //   //const a1 = 
-       console.log(console.log("projects",props.projects))
+       //console.log(console.log("projects",props.projects))
 
         //   })
 
@@ -64,7 +71,13 @@ export interface IComment{
                 return projectB - projectA;
              })
 
-   
+   props.projects?.map((el)=>{
+    console.log("pro",el.assignedUsers)
+    //el to IDocument
+    el.assignedUsers?.map((el2)=>{
+      console.log("props.projects",el2.value.name)
+    })
+  })
 
      return (
           <div className="project-list">
@@ -96,11 +109,17 @@ export interface IComment{
                       </Link>
                       <div className="assigned-to">
                         <ul>
-                          {  project.assignedUsers && project.assignedUsers.map((user) => (
-                            <li key={user.id}>
-                              <Avatar src={user.avatar} />
+                          {  project.assignedUsers && 
+                            <>
+                          {project.assignedUsers.map((user) => (
+                           
+                                <li key={user.value.id}>
+                              <Avatar src={user.value.avatar} />
+                              <p>{user.value.name} {user.value.surname}</p>
                             </li>
                           ))}
+                            </>
+                          }
                         </ul>
                       </div>
                     </li>

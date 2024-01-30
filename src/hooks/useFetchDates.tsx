@@ -1,7 +1,7 @@
 
 import { CollectionReference, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../App.js";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // export interface IFetchDates {
@@ -23,11 +23,15 @@ export interface IDateObject {
 }
 
 export interface IDataItem {
-    toDate(): unknown;
     created_at: IDateObject;
     datesSet: IDateObject[];
   }
 
+export interface IArrayTimestObj {
+    arrOfObj: ITimestObj[]
+    
+  }
+  
 // const createCollection = (collectionName: string) => {
 //  return collection(Firestore, collectionName) as CollectionReference<T>
 //   }
@@ -35,22 +39,25 @@ export interface IDataItem {
 //export const usersCol = createCollection<User>('users');
 
 
-export const useFetchDates = (): IDateObject  [] | null => {
+export const useFetchDates = (): IDateObject[] => {
 
-    const [data, setData] = useState<SetStateAction<IDateObject[] | null>>(null);
-             const daysCollection: CollectionReference<T> = collection(db, "trainingDays");
+    const [data, setData] = useState<IDateObject[]>([]);
+            
+    const daysCollection: CollectionReference<any> = collection(db, "trainingDays");
    
 
     useEffect(()=>{
 
         let tempContainer: IDateObject[][] =[]; 
+        //let tempContainer: IArrayTimestObj = []
         let tempContainer2: IDateObject[] =[];
 
         const getingDates = async () =>{
     
         const unsub =  onSnapshot(
             daysCollection, 
-            (snapshot: { docs: { data: () => IDataItem }[]; })=>{
+            //(snapshot: { docs: { data: () => IDataItem }[]; })=>{
+                (snapshot)=>{
                 if(snapshot){
    
                       snapshot.docs.map((doc)=> {        
@@ -61,10 +68,12 @@ export const useFetchDates = (): IDateObject  [] | null => {
                        //tempContainer to tablica tablic z Iobsect
 
                         tempContainer.map((elem: IDateObject[])=>{
-                           // console.log('elem', elem);
+                            
                              elem.map((elem2: IDateObject )=>{
+                               // console.log('elem2', elem2);
                             // tempContainer2.push(elem2.toDate().getTime())
                             tempContainer2.push(elem2)
+                            // console.log('tempContainer2', tempContainer2);
                             })                   
                         })
                        // console.log("tempContainer2 przedsort ",tempContainer2)
@@ -80,13 +89,16 @@ export const useFetchDates = (): IDateObject  [] | null => {
                         });
                        
                      // Teraz tempContainer3 będzie zawierać elementy posortowane od najstarszej daty do najświeższej
-                     const tempContainer3: IDateObject[]  = [...tempContainer2];
+                     const tempContainer3: IDateObject[] = [...tempContainer2];
                      //console.log("tempContainer3 posort ",tempContainer3)
                      //tempContainer3.map((elem, index) => {
-                    // console.log('elem3', elem.toDate());
-                   // });      
+                     //console.log('tempContainer3', tempContainer3);
+                   // });  
+                   
+                   //ponizej usywam
                      setData(tempContainer3);
-                 //  console.log('data',data)
+                   // setData((prevState: any) => tempContainer3);
+               
                    
                
             
@@ -104,7 +116,7 @@ export const useFetchDates = (): IDateObject  [] | null => {
     
    
 
-    return data
+    return data ;
 }
 
 

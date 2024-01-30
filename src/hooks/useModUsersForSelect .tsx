@@ -5,25 +5,26 @@ interface Iusers {
   value: string;
   label: string
 }
-// export interface Iuser{
-//   surname: string,
-//   name: string,
-//   add: number | null,
-//   debt: number | null,
-//   dob: ITimeObj, 
-//   due: ITimeObj | null,
-//   pause: ITimeObj | null,
-//   stop: ITimeObj | null,
-//   start:ITimeObj, 
-//   restart: ITimeObj  | null,
-//   optionMulti: false,
-//   optionPass: false,
-//   avatar: URL | null
-//   }
+export interface Iuser{
+  surname: string;
+  name: string;
+  add: number | null;
+  debt: number | null;
+  dob: ITimeObj; 
+  due: ITimeObj | null;
+  pause: ITimeObj | null;
+  stop: ITimeObj | null;
+  start:ITimeObj; 
+  restart: ITimeObj  | null;
+  optionMulti: false;
+  optionPass: false;
+  avatar: URL | null;
+  }
 
   export interface ITimeObj {
-    seconds: number,
-    nanoseconds: number
+    seconds: number;
+    nanoseconds: number;
+    toMillis(): number | Date;
   }
 
 export const useModUsersForSelect = () => {  
@@ -41,8 +42,9 @@ export const useModUsersForSelect = () => {
         //console.log("el", el.dob.toDate())
        const todayUTimestamp = (today.getTime());
       // const elementDobUTimestamp = el.dob?.toDate().getTime();
-      const elementDobUTimestamp = el.dob?.toMillis();
-      //console.log("timestamp urodzenia", el.dob?.toDate().getTime(),"timastamp dzis",todayUTimestamp)
+      const elementDobUTimestamp: number = (el.dob).toMillis() as number;
+     // console.log("elementDobUTimestamp ", elementDobUTimestamp )
+     // console.log("el ", el )
       const diffTime: number = Math.abs(todayUTimestamp - elementDobUTimestamp);  
  
     const age = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25));   

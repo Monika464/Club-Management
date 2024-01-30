@@ -5,19 +5,19 @@
 import React, { useState } from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 //import AuthRoute from "../components/AuthRoute"; 
-import {useFetchDates} from "../hooks/useFetchDates.tsx";
+//import {useFetchDates} from "../hooks/useFetchDates.tsx";
 // import { DatePickerTrainings } from "../components/DatePickerTrainings.tsx";
 // import { collection } from "firebase/firestore";
 // import { db } from "../App.tsx";
 //import { useSearchDates } from "../hooks/useSearchDatesPlusN.tsx";
 //import { ShowDays } from "../components/ShowDays.tsx";
-import { useSearchIndexToday } from "../hooks/useSearchIndexToday.tsx";
+//import { useSearchIndexToday } from "../hooks/useSearchIndexToday.tsx";
 // import { WriteUsersInfo } from "../components/WriteUsersInfo.tsx";
 // import { ManagingUsers } from "../components/ManagingUsers.tsx";
 // import { ChooseStartDate } from "../components/ChooseStartDate";
 // import { SelectDatePicker } from "../components/SelectDatePicker.tsx";
 // import { useSearchDatesPlusN } from "../hooks/useSearchDatesPlusN.tsx";
-import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
+//import { useFetchUsers } from "../hooks/useFetchUsers.tsx";
 // import { Test } from "../components/Test.tsx";
 // import { Test2 } from "../components/Test2.tsx";
 // import { ReportInjury} from "../components/ReportInjuryAdmin.tsx";
@@ -43,32 +43,32 @@ import './userpanel.css'
 // import { MailToAdminReceive } from "../components/mail/MailToAdminReceive.tsx";
 // import mail from '../assets/mail.png'
 import EmailComponent from "../components/mail/EmailComponent.tsx";
-export interface IAdminProps {};         
+     
 
 
-const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {  
+const Adminpanel: React.FunctionComponent =() => {  
 
  //const {usersInfo} = useFetchUsers();
  //console.log("usersInfoAdmin",usersInfo)
  const navigate = useNavigate();
  
-  const [isEdited, setIsEdited] = useState<boolean>(false);
-  const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
-  const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
+  //const [isEdited, setIsEdited] = useState<boolean>(false);
+  //const [isEditedPayment, setIsEditedPayment] = useState<boolean>(false);
+  //const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
   //const [isEditedBackAfterInjury, setIsEditedBackAfterInjury] = useState<boolean>(false);
-  const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
+  //const [isEditedStopMembership, setIsEditedStopMembership] = useState<boolean>(false);
   //const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
-  const [isEditedMultiPass, setIsEditedMultiPass] = useState<boolean>(false);
-  const [isEditedAttendance, setIsEditedAttendance] = useState<boolean>(false);
+ // const [isEditedMultiPass, setIsEditedMultiPass] = useState<boolean>(false);
+  //const [isEditedAttendance, setIsEditedAttendance] = useState<boolean>(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
   //console.log('isEdited',isEdited) 
-  const handleEdit =()=>{
-    setIsEdited(!isEdited)
-  }
+  // const handleEdit =()=>{
+  //   setIsEdited(!isEdited)
+  // }
 
-  const handleEditPayment =()=>{
-    setIsEditedPayment(!isEditedPayment)
-  }
+  // const handleEditPayment =()=>{
+  //   setIsEditedPayment(!isEditedPayment)
+  // }
   //const handleEditInjury =()=>{
     //setIsEditedInjury(!isEditedInjury)
   //}
@@ -77,43 +77,43 @@ const Adminpanel: React.FunctionComponent<IAdminProps> =(props) => {
    // setIsEditedBackAfterInjury(!isEditedBackAfterInjury)
   //}
 
-  const handleEditStopMembership=()=>{
-    setIsEditedStopMembership(!isEditedStopMembership)
-  }
+  // const handleEditStopMembership=()=>{
+  //   setIsEditedStopMembership(!isEditedStopMembership)
+  // }
 
 
   //const handleEditmembership =()=>{
   //  setIsEditedMembership(!isEditedMembership)
  //  }
 
-   const handlemanageInjury =()=>{
-    setIsEditedInjury(!isEditedInjury)
+  //  const handlemanageInjury =()=>{
+  //   setIsEditedInjury(!isEditedInjury)
 
-   }
+  //  }
 
-   const handlemanageMultiPass =()=>{
-    setIsEditedMultiPass(!isEditedMultiPass)
+  //  const handlemanageMultiPass =()=>{
+  //   setIsEditedMultiPass(!isEditedMultiPass)
 
-   }
+  //  }
 
 
-   const handlemanageAttendance =()=>{
-    setIsEditedAttendance(!isEditedAttendance)
+  //  const handlemanageAttendance =()=>{
+  //   setIsEditedAttendance(!isEditedAttendance)
 
-   }
+  //  }
 
   //const wynik = useSearchDatesPlusN(3); 
   //console.log("wynik",wynik)
 
-    const dataFromBase = useFetchDates();
+    //const dataFromBase = useFetchDates();
 
     //useSearchDates(0);
 
-    const dzisIndex = useSearchIndexToday()
+    //const dzisIndex = useSearchIndexToday()
     
-   dataFromBase?.map((el,ind)=>{
-   // console.log("dzisIndex ",dzisIndex )
-   })
+  //  dataFromBase?.map((el,ind)=>{
+  //  // console.log("dzisIndex ",dzisIndex )
+  //  })
 
    const handelonmouseover =()=>{
     setIsMouseOver(!isMouseOver);

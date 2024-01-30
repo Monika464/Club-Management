@@ -8,7 +8,7 @@ import dot from '../../assets/elements/dot.svg'
 
 export interface IDocument {
   toMillis(): string | number | Date;
-  assignedUsers: IAssignedUser[] | null;
+  assignedUsers: IforSel[] | null;
   category: string ;
  comments: IComment[] | null;
   created_at: IDateObj;
@@ -22,9 +22,11 @@ export interface IDocument {
 }
 
 export interface IAssignedUser{
-  name: string;
-  id: string;
-  avatar: string
+  dob:IDateObj;
+    name: string;
+    surname: string;
+    id: string;
+    avatar:  string
   }
 
 export interface IDateObj{
@@ -42,6 +44,10 @@ export interface IComment{
   photoURL: string;
   id: string; 
   uid: string;
+}
+export interface IforSel{
+  value: IAssignedUser;
+  label: string
 }
 
   const ProjectComments: React.FunctionComponent<ProjectCommentsProps> =(props) => {

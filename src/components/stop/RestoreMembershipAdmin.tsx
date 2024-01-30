@@ -8,13 +8,13 @@ import { useSearchDatesByIndex } from '../../hooks/useSearchDatesByIndex';
 import DateFnsFormat from '../DateFnsFormat';
 
 export interface US {
-    value: string | null
-    label: string | null  
+    value: string
+    label: string
 }
 
 export const RestoreMembershipAdmin: React.FunctionComponent =() => {
 
-    const [chosenUserId, setChosenUserId] = useState<string | null>(null)
+    const [chosenUserId, setChosenUserId] = useState<string>('')
     const [chosenUserByIdLabel, setChosenUserByIdLabel] = useState<string | null>(null)
 
     const userModForSelect  =  useModUsersForSelect(); 
@@ -55,7 +55,7 @@ useEffect(() => {
             const userRef = doc(db, "usersData", userModForSelect[i].value);
             const docSnap = await getDoc(userRef); 
              
-            if (docSnap.data()) {
+            if (docSnap.exists()) {
                // console.log("say yes", )
                 // Dodawanie użytkownika do listy w formie obiektu
                 //usersToAdd.push({ value: userModForSelect[i].value, label: userModForSelect[i].label });
@@ -145,7 +145,12 @@ useEffect(()=>{
 const calculateRestart =()=>{
 
   if(dzisIndex || debt){
-    setRestartDateIndex(dzisIndex - debt);
+    if(debt){
+      setRestartDateIndex(dzisIndex - debt);
+    } else {
+      setRestartDateIndex(dzisIndex);
+    }
+    
    }
 }
 calculateRestart();
@@ -178,7 +183,7 @@ debt: null
 .then(()=>console.log("restart succesful"))
 
      
-const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
 .then(()=> console.log("archive"))
 
 } 
@@ -200,8 +205,10 @@ return(<>
       closeMenuOnSelect={true}  
       options={newUsersList}
       onChange={(choice) => {
-        setChosenUserId(choice.value);   
-        setChosenUserByIdLabel(choice.label);  
+        if(choice){
+          setChosenUserId(choice.value);   
+          setChosenUserByIdLabel(choice.label); 
+        }
         setIsStop(false);
         setDebt(null);
      

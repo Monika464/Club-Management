@@ -9,7 +9,7 @@ import { pl } from "date-fns/locale";
 import './displayNextTrainings.css'
 
 export interface IDisplayNextTrainings{
- userid: string 
+ userid: string | undefined
 }
 export interface Inajblizszyindexwbaziedat {
   najblizszyindexwbaziedat: number
@@ -19,6 +19,7 @@ export const DisplayNextTrainings : React.FunctionComponent<IDisplayNextTraining
 
 
 const najblizszyindexwbaziedat = useSearchIndexCloseToday();
+
 
 
     const data0napodtsawieindex = useSearchDatesByIndex(najblizszyindexwbaziedat + 0)

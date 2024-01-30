@@ -1,19 +1,62 @@
 import { useEffect } from 'react';
 import useFetchCollectionData from '../hooks/useFetchCollections.tsx';
 import ProjectList from '../components/project/ProjectsList.tsx';
-import useFetchRealTimeCall from '../hooks/useFetchRealTimeColl.tsx';
-import Project from './Project.tsx';
+//import useFetchRealTimeCall from '../hooks/useFetchRealTimeColl.tsx';
+//import Project from './Project.tsx';
 import ProjectSingle from '../components/project/ProjectSingle.tsx';
-import { Link, NavLink } from 'react-router-dom';
-import AddIcon from '../assets/add_icon.svg';
+//import { Link, NavLink } from 'react-router-dom';
+//import AddIcon from '../assets/add_icon.svg';
 
-export interface HomeProps {};
-//console.log("auth",auth)
+export interface IDocument {
 
-    const HomePage: React.FunctionComponent<HomeProps> =(props) => {
+    assignedUsers: IforSel | null;
+    category: string ;
+   comments: IComment[] | null;
+    created_at: IDateObj;
+    details: string | null;
+    eventdate: IDateObj;
+    name: string;
+    photo: string;
+    visibility: string;
+    id: string;
+  
+  }
+  export interface IAssignedUser{
+    dob:IDateObj;
+  name: string;
+  surname: string;
+  id: string;
+  avatar:  string
+    }
+  export interface IProject{
+    project: IDocument | null;
+  }
+  
+  export interface IDateObj{
+  seconds: number;
+  nanoseconds: number;
+  toMillis(): string | number;
+  }
+  
+  export interface IComment{
+    content: string;
+    created_at: IDateObj;
+    displayName: string;
+    photoURL: string;
+    id: string; 
+    uid: string;
+  }
+
+  export interface IforSel{
+    value: IAssignedUser;
+    label: string
+  }
+  
+
+    const HomePage: React.FunctionComponent =() => {
 
         const {dataFromCollection, error} = useFetchCollectionData("projects")
-        const {dataFromCollection: userData, error: userError} = useFetchCollectionData("usersData")
+        //const {dataFromCollection: userData, error: userError} = useFetchCollectionData("usersData")
        
         useEffect(()=>{
     

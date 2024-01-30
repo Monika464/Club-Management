@@ -5,7 +5,7 @@ export interface IAttendancepage {
 
 }
 
-const Attendancepage: React.FunctionComponent<IAttendancepage> =(props) => {
+const Attendancepage: React.FunctionComponent<IAttendancepage> =() => {
 
 
     return(

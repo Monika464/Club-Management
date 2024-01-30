@@ -11,10 +11,10 @@ import StopMembershipUser from "../components/stop/StopMembershipUser";
 const MembershiUserpage: React.FunctionComponent = () => {
     const { currentUser } = useContext(UserContext);
     const [stopReported, setStopReported] = useState<boolean>(false);
-    const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+    //const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
 
     const [isReportMemBlur, setIsReportMemBlur] = useState(true);
-    const [isBackAfterMemBlur, setIsBackAfterMemBlur] = useState(false);
+    //const [isBackAfterMemBlur, setIsBackAfterMemBlur] = useState(false);
   
     const checkingFunc = async () => {
         if (currentUser) {

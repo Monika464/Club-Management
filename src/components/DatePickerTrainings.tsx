@@ -11,14 +11,18 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../App';
 
 
-interface PossibleTrainingDate {
+export interface PossibleTrainingDate {
   value: Date;
-  label: Date | string;
-  //possibleTrainingDate: Date | string;
+  label: string;
 }
 
+// export interface ISelectedDates{
+//   selecteddDates: Date[]
+// }
 
-export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[] > =() => {
+
+export const DatePickerTrainings: React.FunctionComponent=() => {
+  //export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[] > =() => {
 
   const animatedComponents = makeAnimated();
 
@@ -28,9 +32,11 @@ export const DatePickerTrainings: React.FunctionComponent<PossibleTrainingDate[]
   const [dayRange, setDayRange] = useState<Date[]>([]);
    const[userChoice, setUserChoice] = useState<Date[]>([])
 
+   //console.log("sel",selectedDates,"rezta",startDate,endDate,dayRange)
+   //console.log("userChoice tablica Date",userChoice)
 
   const getDatesBetween = (startDate: Date, endDate: Date) => { 
-    const datess = [];
+    const datess: Date[] = [];
      // Strip hours minutes seconds etc.
  let currentDate = new Date(
      startDate.getFullYear(),
@@ -110,7 +116,7 @@ useEffect(() => {
                          })
 
                          .then(()=>{                       
-                          console.log("susceess!! Data sent")
+                          console.log("succsess!! Data sent")
                          resetState();
                           //setIsReset(true);
                       })
@@ -136,16 +142,15 @@ useEffect(() => {
 />
 
 <Select
-      /*closeMenuOnSelect={closeMenu}  */
+  
       components={animatedComponents} 
       closeMenuOnSelect={false} 
       isMulti
       options={selectedDates}
       onChange={(choice) => {     
-    // const selectedValues = choice.map(option => option.value); 
-    const selectedValues = choice?.map((option) => (option as PossibleTrainingDate).value) || [];
-      setUserChoice(selectedValues)
-      
+    
+   const selectedValues:Date[] = choice?.map((option: any) => (option.value));
+   setUserChoice(selectedValues)
       }}
     />
 

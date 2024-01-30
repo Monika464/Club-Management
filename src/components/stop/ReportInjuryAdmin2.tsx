@@ -174,7 +174,7 @@ const getAddfromBase =async ()=>{
                 //jesli mamy due
                   if(docSnap.data().due){   
                        if(paymentDateIndex !== null && dzisIndex){
-                          console.log("odpalonypaymentDateIndex")
+                         // console.log("odpalonypaymentDateIndex")
                           setPausaDate(dzisData);
                           if(paymentDateIndex >= dzisIndex ){
                             setPausaAdd(paymentDateIndex - dzisIndex)

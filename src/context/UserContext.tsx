@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useState, ReactNode } from "react";
-import { NextOrObserver, User, getAuth, onAuthStateChanged } from "firebase/auth";
+import { createContext, useEffect, useState, ReactNode } from "react";
+import { NextOrObserver, User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../App";
 
 interface Props {

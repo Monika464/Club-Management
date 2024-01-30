@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { BackAfterInjury } from "../components/stop/BackAfterInjuryAdmin"
+//import { Link } from "react-router-dom"
+//import { BackAfterInjury } from "../components/stop/BackAfterInjuryAdmin"
 import { BackAfterInjuryAdmin2 } from "../components/stop/BackAfterInjuryAdmin2"
 import ReportInjuryAdmin2 from "../components/stop/ReportInjuryAdmin2"
 import './adminBlurredpages.css'

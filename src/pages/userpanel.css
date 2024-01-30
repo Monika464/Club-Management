@@ -1,6 +1,7 @@
 .main {
     display: flex;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
+    background-color: var(--prof-color);
     max-width: 960px;
   }
   
@@ -50,7 +51,8 @@
 }
 
   .linkowisko{
-    background-color: lightgrey;
+    /* background-color: lightgrey; */
+    background-color:#bcd6d3;
     display: flex;
     flex-basis: calc(30% / 2 - 5px); /* Przykładowa wartość, możesz dostosować według potrzeb */
     /* flex-grow: 1; */

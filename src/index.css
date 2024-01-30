@@ -4,10 +4,17 @@
 :root {
   --heading-color: #444;
   --text-color: #999;
-  --primary-color: #8d69f1;
-  --primary-color: #8a3eacfc;
+  /* --primary-color: #8d69f1; */
+  /* --primary-color: #8a3eacfc; */
   --highlight-color: #d13267;
-  --bg-color: #f4f4f4;
+  --bg-color: #201e21; 
+  --primary-color: #193e1d;
+  /* --prof-color: #eee4b4; */
+  /* --prof-color:#f7f1da; */
+  --prof-color:#F3F2DC;
+
+  --bg-color:#eac66e;
+  /* --bg-color: #f4f4f4; */
     /* background-image: url(" https://firebasestorage.googleapis.com/v0/b/club-ts-407c6.appspot.com/o/pages-photos%2Ftemple2.png?alt=media&token=4802134b-412d-4c70-81bd-a009b371c08b"); */
 }
 
@@ -45,7 +52,7 @@ ul {
   display: inline-block;
 }
 .btn {
-  background: #fff;
+  /* background: #fff; */
   padding: 8px 12px;
   border-radius: 4px;
   color: var(--primary-color);

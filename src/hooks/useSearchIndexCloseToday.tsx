@@ -3,13 +3,13 @@ import { useFetchDates } from "./useFetchDates";
 import { useEffect, useState } from "react";
 
 
-export const useSearchIndexCloseToday = (): number => {
+export const useSearchIndexCloseToday = (): number=> {
 
     const dataFromBase = useFetchDates();
 
   // console.log("usehookwczytany")
 
-    const [closeTodaysIndex, setCloseTodaysIndex] =  useState<number | null>(null);
+    const [closeTodaysIndex, setCloseTodaysIndex] =  useState<number>(null!);
 
     
  useEffect(()=>{
@@ -53,31 +53,31 @@ if(dataFromBase){
       //console.log('dataFromBaseind',dataFromBase[ind].toDate().getTime())
      // console.log('result2',result2.getTime())
       
-          if(result0.getTime() === dataFromBase[ind].toDate().getTime()){
+          if(result0.getTime() === dataFromBase[ind].toMillis()){
                   // console.log("jest wynik0")
                    setCloseTodaysIndex(ind)
                    break;
-          } else if(result1.getTime() === dataFromBase[ind].toDate().getTime()){
+          } else if(result1.getTime() === dataFromBase[ind].toMillis()){
                  // console.log("jest wynik1")
                   setCloseTodaysIndex(ind)
                   break;
-          } else if(result2.getTime() === dataFromBase[ind].toDate().getTime()){
+          } else if(result2.getTime() === dataFromBase[ind].toMillis()){
          // console.log("jest wynik2")
           setCloseTodaysIndex(ind)
                 break;
-           } else if(result3.getTime() === dataFromBase[ind].toDate().getTime()){
+           } else if(result3.getTime() === dataFromBase[ind].toMillis()){
              //  console.log("jest wynik3")
                setCloseTodaysIndex(ind)
                   break;
-           }  else if(result4.getTime() === dataFromBase[ind].toDate().getTime()){
+           }  else if(result4.getTime() === dataFromBase[ind].toMillis()){
               //console.log("jest wynik4")
               setCloseTodaysIndex(ind)
                  break;
-          } else if(result5.getTime() === dataFromBase[ind].toDate().getTime()){
+          } else if(result5.getTime() === dataFromBase[ind].toMillis()){
            // console.log("jest wynik5")
             setCloseTodaysIndex(ind)
                break;
-        } else if(result6.getTime() === dataFromBase[ind].toDate().getTime()){
+        } else if(result6.getTime() === dataFromBase[ind].toMillis()){
          //console.log("jest wynik5")
          setCloseTodaysIndex(ind)
             break;

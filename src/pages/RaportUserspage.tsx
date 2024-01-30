@@ -5,7 +5,7 @@ export interface IRaportUsersPage{
 }
  
 
-export const RaportUsersPage : React.FunctionComponent<IRaportUsersPage> =(props) => {
+export const RaportUsersPage : React.FunctionComponent<IRaportUsersPage> =() => {
 
 
     return(<div>

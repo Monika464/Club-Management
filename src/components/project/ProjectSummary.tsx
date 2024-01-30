@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import pl from 'date-fns/locale/pl';
 export interface IDocument {
     toMillis(): string | number | Date;
-    assignedUsers: IAssignedUser[] | null;
+    assignedUsers: IforSel[] | null;
     category: string ;
    comments: IComment[] | null;
     created_at: IDateObj;
@@ -19,11 +19,20 @@ export interface IDocument {
 
 }
 
-export interface IAssignedUser{
-name: string;
-id: string;
-avatar: string
-}
+
+export interface IforSel{
+    value: IAssignedUser;
+    label: string
+  }
+  
+  export interface IAssignedUser{
+    dob:IDateObj;
+    name: string;
+    surname: string;
+    id: string;
+    avatar:  string
+    }
+
 export interface IDateObj{
     seconds: number;
     nanoseconds: number;
@@ -38,15 +47,18 @@ export interface IDateObj{
         id: string; 
     }
 interface ProjectSummaryProps {
-        project: IDocument | null;
+         project: IDocument | null;
  }
     const ProjectSummary: React.FunctionComponent<ProjectSummaryProps> =(props) => {
 
-       // console.log("props.project",props?.project?.name)
+       props?.project?.assignedUsers?.map((el)=>{
+        console.log("props.project",el.value.name)
+       })
         
         
         return(<div>
 {props.project && 
+
     <div className="project-summary"> 
 
             <h1 className="page-title">{props?.project?.name}</h1>
@@ -64,10 +76,10 @@ interface ProjectSummaryProps {
         <div className="assigned-users">
         <ul>
           {props?.project?.assignedUsers?.map(user =>(
-           <li key={user.id}>
+           <li key={user.value.id}>
           <div className='wyrownaj'>
-           <Avatar src={user.avatar} /> 
-           <p>{user.name}</p>  
+           <Avatar src={user.value.avatar} /> 
+           <p>{user.value.name} {user.value.surname}</p>  
            </div>
            </li>
           ))}

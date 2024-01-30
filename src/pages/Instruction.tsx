@@ -2,7 +2,7 @@ export interface IInstruction{
 
 }
 
-const Instruction: React.FunctionComponent<IInstruction> =(props) => {
+const Instruction: React.FunctionComponent<IInstruction> =() => {
 
 
     return(

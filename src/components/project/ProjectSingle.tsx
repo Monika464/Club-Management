@@ -11,7 +11,7 @@ import ProjectComments from "./ProjectComments";
 export interface IDocument {
 
     toMillis(): string | number | Date;
-    assignedUsers: IAssignedUser[] | null;
+    assignedUsers: IforSel[] | null;
     category: string ;
    comments: IComment[] | null;
     created_at: IDateObj;
@@ -24,7 +24,9 @@ export interface IDocument {
 
 }
 export interface IAssignedUser{
+    dob:IDateObj;
     name: string;
+    surname: string;
     id: string;
     avatar:  string
     }
@@ -47,6 +49,10 @@ export interface IComment{
     uid: string;
 }
 
+export interface IforSel{
+    value: IAssignedUser;
+    label: string
+  }
     const ProjectSingle: React.FunctionComponent =() => {
 
         const [document, setDocument] = useState<IDocument | null>(null)
@@ -64,6 +70,8 @@ export interface IComment{
                     const unsub = onSnapshot(projectRef, (doc) => {
                         if (doc.exists()) {
                             setDocument({ ...doc.data(), id: doc.id } as IDocument);
+                            //console.log("doc.data()",doc.data().assignedUsers[0].value.id)
+                            // jesli id to zapisz
                         } else {
                             setError("No such document exists");
                             console.error(error)

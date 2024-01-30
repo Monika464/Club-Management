@@ -14,24 +14,24 @@ export interface IFetchDates {
 };
 
 export interface Iuser{
-surname: string,
-name: string,
-add: number | null,
-debt: number | null,
-dob: ITimeObj, 
-due: ITimeObj | null,
-pause: ITimeObj | null,
-stop: ITimeObj | null,
-start:ITimeObj, 
-restart: ITimeObj  | null,
-optionMulti: false,
-optionPass: false,
-avatar: URL | null,
-id: string
-}
+  surname: string;
+  name: string;
+  add: number | null;
+  debt: number | null;
+  dob: ITimeObj; 
+  due: ITimeObj | null;
+  pause: ITimeObj | null;
+  stop: ITimeObj | null;
+  start:ITimeObj; 
+  restart: ITimeObj  | null;
+  optionMulti: false;
+  optionPass: false;
+  avatar: string | null
+  id: string;
+  }
 
 export interface ITimeObj {
-  toMillis(): unknown;
+  toMillis(): number | string;
   seconds: number,
   nanoseconds: number
 }

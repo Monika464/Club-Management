@@ -2,12 +2,10 @@
 import { DatePickerTrainings } from "../components/DatePickerTrainings"
 import { ShowDays } from "../components/ShowDays"
 
-export interface IDatePickerpages {
 
-}
 
-const DatePickerpages: React.FunctionComponent<IDatePickerpages> =(props) => {
-
+//const DatePickerpages: React.FunctionComponent<PossibleTrainingDate[] >  =() => {
+    const DatePickerpages =() => {
 
     return(
         <div>

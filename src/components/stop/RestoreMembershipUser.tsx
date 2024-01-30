@@ -119,7 +119,11 @@ useEffect(() => {
       }
       if(isPass){
         if(dzisIndex || debt){
+          if(debt){
           setRestartDateIndex(dzisIndex - debt);
+        } else {
+          setRestartDateIndex(dzisIndex);
+        }
          }
       }
          // console.log('UUUUrestartNewData',restartNewData?.toDate())
@@ -142,7 +146,7 @@ const dataToActivityArchive = {
 const sendToBase =async()=>{
   //console.log("wcisnieto przycisk",isPass,restartNewData)
 
-  //if(currentUser){
+  if(currentUser){
 
     const paymentDataRef = doc(db, "usersData", currentUser.uid);
 
@@ -156,7 +160,7 @@ const sendToBase =async()=>{
         .then(()=>console.log("restart succesful"))
         .then(()=> setisSent(true))
        
-       const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+       await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
       .then(()=> console.log("archive"))
       .then(()=> navigate('/userpanel'))
     }
@@ -172,14 +176,14 @@ const sendToBase =async()=>{
         .then(()=>console.log("restart succesful"))
         .then(()=> setisSent(true))
          
-        const docRef = await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
+        await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
         .then(()=> console.log("archive"))   
         .then(()=> navigate('/userpanel'))
        } 
      }
 
   }
-
+}
 
 //console.log("stopDateFromBase",stopDateFromBase)
 

@@ -1,19 +1,4 @@
 
- import { initializeApp } from "firebase/app";
-import {useFirebaseApi} from "./useFirebaseApi.tsx";
- import { getFirestore} from "firebase/firestore";
- import { Timestamp } from 'firebase/firestore'
-import { getStorage } from "firebase/storage";   
-import {  
-	getAuth,
-	createUserWithEmailAndPassword,   
-	signInWithEmailAndPassword,  
-	signInWithPopup,
-	GoogleAuthProvider,   
-	signOut 
-} from "firebase/auth";
-import { useEffect, useState } from "react";
-
 
 
 

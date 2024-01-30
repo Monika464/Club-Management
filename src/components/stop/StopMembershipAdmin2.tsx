@@ -54,6 +54,8 @@ const [newUsersList, setNewUsersList] = useState<US[]>([])
 
 const userModForSelect  =  useModUsersForSelect();  
 
+//console.log("userModForSelect",userModForSelect)
+
 const [rendered, setRendered] = useState(false);
 
 useEffect(() => {
@@ -148,8 +150,6 @@ useEffect(()=>{
                   
                   //ustaw ze wczytuje
                   setIsMoved(true)
-                  
-
                       //jesli mamy stop
                       if(docSnap.data().stop){
                       setStopReported(true)
@@ -160,9 +160,11 @@ useEffect(()=>{
                        //jesli mamy multi
                       if(docSnap.data().optionMulti === true){  
                         console.log("uzytkownik z multi")
-            
                            setIsMulti(true);
-                            setStopDate(dzisData);
+                          setStopDate(dzisData);
+                          console.log("isMulti",isMulti);
+                          console.log("StopDate",stopDate);
+                            
                         
                             //jezeli jest debt w multi
                               if(docSnap.data().debt){
@@ -174,8 +176,10 @@ useEffect(()=>{
                             setCurrentUserPausaDate(docSnap.data().pause);
                             // console.log("uzytkownik pauzujacy")
                             } 
+
+                           
                           }
-                     
+                       
                       //jesli mamy pass
                        if(docSnap.data().optionPass === true){  
                           setIsPass(docSnap.data().optionPass);
@@ -215,9 +219,9 @@ useEffect(()=>{
                               // }  
                        }
 
-                }  
+                      }  
 
-     }
+                     }
         
     } else {
       console.log("brak polaczenia z baza")
@@ -422,7 +426,11 @@ return(<>
                                                            <p><DateFnsFormat element={dzisData}/></p>
                                                          </div>  :  <p></p>
        }
-      </>}
+</>}
+
+{isMulti && <div>  <p>Czy na pewno chcesz zakończyć uczestnictwo w treningach? Treningi zostana zakonczone:  </p>
+                                                            <p><DateFnsFormat element={stopDate}/></p>
+                                                            </div>}
  
 
  {/* {stopDate &&  <p>Treningi zostana zakonczone: {stopDate?.toDate()?.toString()}</p>} */}

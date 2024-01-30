@@ -26,7 +26,7 @@ export const useSearchDatesByIndex= (givenIndex: number | null ) => {
 
     useEffect(()=>{
 
-        if(givenIndex && data){
+        if((data.length !==0) && givenIndex ){
                     if(givenIndex > (data?.length -1)){
                         alert("bład brak dat")
                         }   

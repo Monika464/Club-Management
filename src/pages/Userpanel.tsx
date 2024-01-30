@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext';
 import { UserProfile } from "../components/UserProfile";
-// import { ManagingUsers } from "../components/ManagingUsers";
-// import { WriteUsersInfo } from "../components/WriteUsersInfo";
-// import { Test } from "../components/Test";
-// import { TestingFnsLib } from "../components/testingFnsLib";
-// import { ReportInjuryUser } from "../components/ReportInjuryUser";
-// import { BackAfterInjuryUser } from "../components/BackAfterInjuryUser";
-// import { ReportInjuryUser2 } from "../components/stop/ReportInjuryUser2";
-// import  StopMembershipUser  from "../components/stop/StopMembershipUser";
-// import { RestoreMembershipUser } from "../components/stop/RestoreMembershipUser";
 import { DisplayUserDataUser} from "../components/displayDetails/DisplayUserDataUser";
-// import Sidebar from "../components/Sidebar";
-// import ShowAvatar from "../components/ShowAvatar";
-// import ChoosingAvatar from "../components/ChoosingAvatar";
-// import Project from "./Project";
-// import AddIcon from '../assets/add_icon.svg';
-// import ArchiveUserPayment from "../components/archive/ArchiveUserPayment";
-// import MailboxToUserSend from "../components/mail/MailBoxToUserSend";
-// import MailboxToUserReceive from "../components/mail/MailBoxToUserReceive";
-// import mail from '../assets/mail.png'
 import { useNavigate } from "react-router-dom";
-//import MailToAdminSend from "../components/mail/MailToAdminSend";
 import EmailComponent from "../components/mail/EmailComponent";
 export interface IUserProps {};     
 import './userpanel.css'
 import { DisplayNextTrainings } from "../components/displayDetails/DisplayNextTrainings";
 
-const Userpanel: React.FunctionComponent<IUserProps> =(props) => {  
+const Userpanel: React.FunctionComponent<IUserProps> =() => {  
   
-  const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
-  const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
-  const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
-  const [rendered, setRendered] =   useState(false);
-  const [isAdmin,setIsAdmin] = useState(false);
+  // const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
+  // const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
+  // const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
+  // const [rendered, setRendered] =   useState(false);
+  // const [isAdmin,setIsAdmin] = useState(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   const { currentUser} = useContext(UserContext); 
@@ -43,43 +24,12 @@ const Userpanel: React.FunctionComponent<IUserProps> =(props) => {
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setRendered(true);
-    }, 1000); // 1000 milisekund = 1 sekunda
   
-    return () => {
-      clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
-    };
-  }, []);
-
-  // useEffect(()=>{
-  //   if(currentUser?.uid === "Y19J2pywqfd2YKN3zVVGlzYEWR82"){
-  //     setIsAdmin(true);
-  //   }
-
-  //},[currentUser,rendered])
-
-  const handleEditInjury =()=>{
-    setIsEditedInjury(!isEditedInjury)
-  }
-
-  const handleEditInjury2 =()=>{
-    setIsEditedInjury2(!isEditedInjury2)
-   }
-
-   const handleEditmembership =()=>{
-    setIsEditedMembership(!isEditedMembership)  
-
-   }
-//console.log("jakie tutaj id usera",currentUser?.uid)
-
 const handelonmouseover =()=>{
   setIsMouseOver(!isMouseOver);
 }
 
-      
-//console.log("czy w email component",isMouseOver)
+
 
 
 return ( 
@@ -140,22 +90,7 @@ return (
               </ul>     
             
          
-               {/* <li>
-              <NavLink  to="/test" >test
-            
-                  </NavLink>
-              </li>
-              <li>
-              <NavLink  to="/test2" >test
-            
-                  </NavLink>
-              </li> */}
-
-{/* 
-              <li>
-              {isAdmin &&<Link to="/adminpanel">Administracja</Link>}
-              </li> */}
-            
+                          
          
              
 </div>

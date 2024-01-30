@@ -37,7 +37,7 @@ const Membershipage: React.FunctionComponent =() => {
         <br></br>
   
         <p className={`title ${isBackAfterInjuryBlur ? "blurred" : ""}`}>
-          Oznacz powrót użytkownika po kontuzji
+          Oznacz powrót użytkownika do klubu
         </p>
         <div
           className={`component-container ${

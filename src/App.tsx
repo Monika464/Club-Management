@@ -58,7 +58,7 @@ export interface IApplicationProps {}
 
 
 
-const Application: React.FunctionComponent<IApplicationProps> = () => {
+const Application: React.FunctionComponent = () => {
  // const { currentUser} = useContext(UserContext);
 //const [isUser, setIsUser] = useContext(false)
   

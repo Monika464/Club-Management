@@ -5,8 +5,6 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../context/UserContext';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../App";
-//import { toNamespacedPath } from "path/win32";
-//import is from "date-fns/esm/locale/is/index.js";
 import { useSearchDatesPlusN } from "../../hooks/useSearchDatesPlusN";
 import './displayUserDataUser.css'
 import { format } from "date-fns";

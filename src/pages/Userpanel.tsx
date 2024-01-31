@@ -12,20 +12,13 @@ import { DisplayNextTrainings } from "../components/displayDetails/DisplayNextTr
 
 const Userpanel: React.FunctionComponent<IUserProps> =() => {  
   
-  // const [isEditedInjury, setIsEditedInjury] = useState<boolean>(false);
-  // const [isEditedInjury2, setIsEditedInjury2] = useState<boolean>(false);
-  // const [isEditedMembership, setIsEditedMembership] = useState<boolean>(false);
-  // const [rendered, setRendered] =   useState(false);
-  // const [isAdmin,setIsAdmin] = useState(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
-
   const { currentUser} = useContext(UserContext); 
-  //console.log('currentUser userpan',currentUser);
   const navigate = useNavigate();
 
 
   
-const handelonmouseover =()=>{
+const handelonmouseover =()=>{ 
   setIsMouseOver(!isMouseOver);
 }
 
@@ -64,7 +57,6 @@ return (
                 <NavLink  to="/home" >Aktualności
                   </NavLink>
               </li>
-
               <li>
               <NavLink  to="/archiveuser" >Archiwum
                </NavLink>
@@ -73,26 +65,16 @@ return (
                 <NavLink  to="/injuryuser" >Kontuzja          
                 </NavLink>
               </li>
-
               <li>
-              <NavLink  to="/membershipuser">Członkostwo 
-          
+              <NavLink  to="/membershipuser">Członkostwo    
               </NavLink>
               </li>
-
-
               <li>
-              <NavLink  to="/instruction">Instrukcja 
-          
+              <NavLink  to="/instruction">Instrukcja   
               </NavLink>
-              </li>
-             
+              </li>  
               </ul>     
-            
-         
-                          
-         
-             
+                       
 </div>
 <div className='glowna'>
            <DisplayNextTrainings

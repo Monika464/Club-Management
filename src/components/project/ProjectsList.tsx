@@ -72,10 +72,10 @@ export interface IComment{
              })
 
    props.projects?.map((el)=>{
-    console.log("pro",el.assignedUsers)
+    //console.log("pro",el.assignedUsers)
     //el to IDocument
     el.assignedUsers?.map((el2)=>{
-      console.log("props.projects",el2.value.name)
+      //console.log("props.projects",el2.value.name)
     })
   })
 

@@ -52,8 +52,9 @@ useEffect(() => {
              const userRef = doc(db, "usersData", id);
             const docSnap = await getDoc(userRef)
             if (docSnap.exists()) {
-           //console.log("czy mamy docSnap",docSnap?.data().due )
+          // console.log("czy mamy docSnapUseSerachN",docSnap?.data().due )
               if(docSnap?.data().due ){
+            
                setuserDueDate(docSnap?.data().due )
                }
               
@@ -63,7 +64,7 @@ useEffect(() => {
     }
     getUserDueDate();
 
-    
+    //console.log("userDueDate",userDueDate?.toDate(),"id",id)
    
   },[db,howMany,id,rendered])
 

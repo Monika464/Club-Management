@@ -44,10 +44,12 @@
 
   
   .glowna {
-     /* display: flex;  */
-    /* flex-basis: 2; Zwiększenie flex-basis dla Item 2 (przykład)
+      display: flex;  
+      justify-content: space-around;
+  flex-direction: column;
+    flex-basis: 2; 
     flex-grow: 1;
-    flex-wrap: wrap; */
+    flex-wrap: wrap;
 }
 
   .linkowisko{
@@ -59,6 +61,7 @@
     flex-wrap: wrap;
      /* max-width: 50%;  */
     margin-right: 20px;
+    outline: 1px solid gold;
   }
   .linkshape a {
     font-size: 18px; /* Dostosuj rozmiar czcionki według potrzeb */

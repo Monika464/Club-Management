@@ -51,9 +51,9 @@ interface ProjectSummaryProps {
  }
     const ProjectSummary: React.FunctionComponent<ProjectSummaryProps> =(props) => {
 
-       props?.project?.assignedUsers?.map((el)=>{
-        console.log("props.project",el.value.name)
-       })
+     //  props?.project?.assignedUsers?.map((el)=>{
+       // console.log("props.project",el.value.name)
+      // })
         
         
         return(<div>

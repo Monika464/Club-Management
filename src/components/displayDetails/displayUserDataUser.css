@@ -3,8 +3,18 @@
 
 .debt {
     animation: glow 1s ease-in-out infinite alternate;
-    /* box-shadow: 0 0 5px 2px red; */
-    display: inline-block; /* Dodaj tę linię */
+   box-shadow: 0 0 5px 2px red; 
+    display: inline-block; 
+    max-width: 30%;
+  }
+
+  .centered-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    color: aqua;
   }
    
 

@@ -50,6 +50,7 @@
     flex-basis: 2; 
     flex-grow: 1;
     flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
   .linkowisko{

@@ -36,6 +36,10 @@ const [injuryDescription, setInjuryDescripton] = useState<string>('');
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
 const [debt, setDebt] = useState<number | null>(null)
+const [rendered, setRendered] = useState(false);
+
+
+
 
 
    //ustawienie imienia i nazwiska

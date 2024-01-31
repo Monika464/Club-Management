@@ -36,7 +36,7 @@ const [isPass, setIsPass] = useState<boolean>(false)
 //const [modIndFin, setModIndFin] = useState<number | null>(null) 
 //const [modDatFin, setModDatFin] = useState<Date | null>(null) 
 //const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
-//const [rendered, setRendered] = useState(false);
+const [rendered, setRendered] = useState(false);
 //const [dataDue, setDataDue] = useState<IdateObj | null>()
 
 const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
@@ -49,7 +49,15 @@ const navigate = useNavigate();
 //ustawienie podstawowych danych
 
  // console.log("stop date from base", stopDateFromBase);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setRendered(true);
+  }, 1000); // 1000 milisekund = 1 sekunda
 
+  return () => {
+    clearTimeout(timer); // W przypadku odmontowania komponentu przed zakończeniem opóźnienia
+  };
+}, []);
 
 const settingName = useCallback( async ()=>{
 
@@ -131,6 +139,8 @@ const settingName = useCallback( async ()=>{
     console.log("brak polaczenia z baza")
    }
 
+  
+
 if(dueDate){
   // Sprawdź, czy jest dzisiaj
       if (isToday(dueDate.toMillis())) {
@@ -147,7 +157,7 @@ if(dueDate){
 }
           
    }
-   },[currentUser,db,dzisData])
+   },[currentUser,db,dzisData,rendered])
  
   //console.log("modDatFin1",modDatFin) 
           
@@ -160,9 +170,9 @@ useEffect(()=>{
       // console.log('modIndFin',modIndFin)
     // console.log("uzytkownik pauzujacy")
    
- },[currentUser,dzisIndex,settingName])
+ },[currentUser,dzisIndex,settingName,rendered])
 
-
+ console.log("czy jest stopdate",stopDate)
 
      const dataToActivityArchive = {
       created_at: serverTimestamp(),

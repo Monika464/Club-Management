@@ -1,9 +1,10 @@
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { db } from "../../App";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
+import startOfDay from "date-fns/startOfDay";
 
 export interface IUsersWithDebt {}
 export interface ItimestampArr1 {}
@@ -19,6 +20,36 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = () => {
   
   const najblizszyindexwbaziedat = useSearchIndexCloseToday();
   const najblizszadatawbazie = useSearchDatesByIndex(najblizszyindexwbaziedat);
+  const today = startOfDay(new Date()); // Początek dzisiejszego dnia
+  const timestampToday = today.getTime();
+  //console.log("today", today)
+
+  // const fetchData = async () => {
+  //   const usersRef = collection(db, "usersData");
+  //   const q = query(usersRef, where("due", "!=", null));
+  
+  //   try {
+  //     const querySnapshot = await getDocs(q);
+  //    // console.log("a tu co",querySnapshot.docs )
+  //     querySnapshot.forEach((doc) => {
+  //       console.log("jakie due",doc.data().due.toMillis(), "jakie dzis",timestampToday)
+  //       if(doc.data().due.toMillis() < timestampToday){
+  //         console.log("say naleznosc nie zapłacona",doc.data().name)
+  //       } else {
+  //         console.log("należność zapłacona",doc.data().name)
+  //       }
+  //           if((doc.data().due).toMillis() < timestampToday){
+  //                console.log("on zalega",doc.id, " => ", doc.data().name);
+  //             }
+  //           })    
+              
+     
+  //   } catch (error) {
+  //     console.error("Błąd podczas pobierania danych:", error);
+  //   }
+  // };
+  
+  // fetchData();
 
   const sendingQuery = useCallback(async () => {
     try {
@@ -28,21 +59,29 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = () => {
 
       querySnapshot.forEach((doc) => {
         const who = `${doc.data().name} ${doc.data().surname}`;
-        
+       // console.log("who",who)
+       
         if (doc.data().debt) {
+          //console.log("kto zadłuzony",doc.data().debt,doc.data().name, doc.id)
           //setIsDebt(true);
           deptors.push({ id: doc.id, who });
-        } 
+        }       
+//console.log("najbliższa data w bazie",najblizszadatawbazie.toDate())
+//console.log("data due",doc.data().due?.toDate())
 
-        
-
-        if (doc.data().due && najblizszadatawbazie < doc.data().due) {
+        if (doc.data().due && najblizszadatawbazie && (najblizszadatawbazie.toMillis() > doc.data().due.toMillis())) {
           //setIsDebt(true);
           deptors.push({ id: doc.id, who });
+          //console.log("jest tak");
+        } else {
+         // console.log("jest inaczej");
         }
+        //console.log("deptors", deptors);
+        
       });
 
       setDeptorsList(deptors);
+   
     } catch (error) {
       console.error("Error querying Firestore:", error);
     }
@@ -53,6 +92,7 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = () => {
   }, [sendingQuery]);
 
   return (
+
     <div>
      <p className="title"> Zadłużeni użytkownicy</p>
       {/* Render your debtors list here */}

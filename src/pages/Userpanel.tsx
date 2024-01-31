@@ -77,12 +77,14 @@ return (
                        
 </div>
 <div className='glowna'>
+
+<div className='glowna separate-components'>
            <DisplayNextTrainings
            userid={currentUser?.uid}       
            />
-            <br></br><br></br>
+          
           <DisplayUserDataUser/>
-          <br></br><br></br>
+  </div>    
 </div>
             <div>  
   

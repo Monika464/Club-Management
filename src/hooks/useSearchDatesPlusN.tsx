@@ -83,7 +83,7 @@ const paymentMonth = new Date(userDueDate?.toMillis()).getMonth()
 const paymentDay = new Date(userDueDate?.toMillis()).getDate() 
 
 
-//console.log("paymentYear",paymentYear, paymentMonth,paymentDay)
+console.log("paymentYear",paymentYear, paymentMonth,paymentDay)
 
 
 
@@ -92,8 +92,8 @@ const paymentDay = new Date(userDueDate?.toMillis()).getDate()
             const datYear = new Date(dat?.toMillis()).getFullYear() 
             const datMonth = new Date(dat?.toMillis()).getMonth()
             const datDay =  new Date(dat?.toMillis()).getDate()
-           // console.log("dat",dat)
-          //  const datYear = dat ? new Date((dat as Timestamp).toDate()).getFullYear() : null;
+
+            //  const datYear = dat ? new Date((dat as Timestamp).toDate()).getFullYear() : null;
           //  const datMonth = dat ? new Date((dat as Timestamp).toDate()).getMonth() : null;
           //  const datDay = dat ? new Date((dat as Timestamp).toDate()).getDate() : null;
             // const datYear = dat?.toDate().getFullYear();
@@ -103,11 +103,11 @@ const paymentDay = new Date(userDueDate?.toMillis()).getDate()
 
 
                      if (
-                            paymentYear === datYear &&
-                            paymentMonth === datMonth &&
-                            paymentDay === datDay
+                            paymentYear.toString() === datYear.toString() &&
+                            paymentMonth.toString() === datMonth.toString() &&
+                            paymentDay.toString() === datDay.toString()
                      ) {
-            //console.log("cos rowne", ind, dat?.toDate());
+           // console.log("cos rowne");
             //console.log("drugi parametr w usePusN czyli o ile munerów zmienic", howMany);
             //setWantedIndex(ind + 8);
                           if(howMany){
@@ -118,6 +118,8 @@ const paymentDay = new Date(userDueDate?.toMillis()).getDate()
 
                           }
             break; // Przerwij pętlę po znalezieniu odpowiedniego indeksu
+            } else {
+              //console.log("nic")
             }
         }
 

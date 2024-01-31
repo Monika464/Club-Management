@@ -36,7 +36,7 @@ const [surname,setSurname] = useState<string | null>(null)
     //console.log(chosenUserById,chosenUserByIdLabel)
 
 
-const  calculatedIndexOfNewDue= useSearchDatesPlusN(9, chosenUserById);
+const  calculatedIndexOfNewDue= useSearchDatesPlusN(8, chosenUserById);
 const newDate =  useSearchDatesByIndex(calculatedIndexOfNewDue);  
 
 const checkingFunction =async ()=>{

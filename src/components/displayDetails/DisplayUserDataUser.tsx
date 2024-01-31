@@ -47,7 +47,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 
     const getUserDatafromBase = useCallback(async () => {
       
-     // console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
+      console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
         if(currentUser){  
               
           const userRef = doc(db, "usersData",currentUser.uid);
@@ -80,6 +80,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
               //due
               if(docSnap.data().due){
                   setDue(docSnap.data().due)
+                  console.log("czy due",due?.toMillis().toString())
               }
               //pause
               if(docSnap.data().pause){
@@ -105,7 +106,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
         //paymentDateIndex < dzisIndex ? console.log('zzzadłuzenie:' , dzisIndex -paymentDateIndex, 'treningi') 
        // :console.log("nie ma zadluzenia")
    
-      },[getUserDatafromBase])
+      },[getUserDatafromBase,rendered])
 
       const handleEditDetails =()=>{
         setIsEdited(!isEdited)
@@ -118,8 +119,9 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
       {/*uzytkownik multi */}
       {isMulti && <>
    
-      {debt && <div className="debt">
+      {debt && <div className="debt">       
               <p> zadluzenie {debt} treningów</p>
+ 
        </div>}
       <div></div>
       </>}
@@ -134,7 +136,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
                </>}
               {isPause && <>
                 {add && <p>dodatkowo: {add} wejścia</p>}
-                 </>}
+                 </>} 
       </>}
         { (!isPause && !isStop && !isMulti) && <div>
          {(paymentDateIndex < dzisIndex) &&  

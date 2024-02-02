@@ -1,4 +1,4 @@
-import { CollectionReference, collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { CollectionReference, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../App";
 import { useCallback, useEffect, useState } from "react";
 //import '..Avatar/'

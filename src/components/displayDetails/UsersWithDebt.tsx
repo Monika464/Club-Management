@@ -1,10 +1,10 @@
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs} from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { db } from "../../App";
 import { useSearchIndexCloseToday } from "../../hooks/useSearchIndexCloseToday";
 import { useSearchDatesByIndex } from "../../hooks/useSearchDatesByIndex";
-import startOfDay from "date-fns/startOfDay";
+//import startOfDay from "date-fns/startOfDay";
 
 export interface IUsersWithDebt {}
 export interface ItimestampArr1 {}
@@ -20,8 +20,8 @@ export const UsersWithDebt: React.FunctionComponent<IUsersWithDebt> = () => {
   
   const najblizszyindexwbaziedat = useSearchIndexCloseToday();
   const najblizszadatawbazie = useSearchDatesByIndex(najblizszyindexwbaziedat);
-  const today = startOfDay(new Date()); // Początek dzisiejszego dnia
-  const timestampToday = today.getTime();
+  //const today = startOfDay(new Date()); // Początek dzisiejszego dnia
+ // const timestampToday = today.getTime();
   //console.log("today", today)
 
   // const fetchData = async () => {

@@ -71,13 +71,13 @@ export interface IComment{
                 return projectB - projectA;
              })
 
-   props.projects?.map((el)=>{
+  // props.projects?.map((el)=>{
     //console.log("pro",el.assignedUsers)
     //el to IDocument
-    el.assignedUsers?.map((el2)=>{
+   // el.assignedUsers?.map((el2)=>{
       //console.log("props.projects",el2.value.name)
-    })
-  })
+    //})
+  //})
 
      return (
           <div className="project-list">

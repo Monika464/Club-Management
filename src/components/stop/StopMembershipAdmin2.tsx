@@ -159,11 +159,11 @@ useEffect(()=>{
 
                        //jesli mamy multi
                       if(docSnap.data().optionMulti === true){  
-                        console.log("uzytkownik z multi")
+                       // console.log("uzytkownik z multi")
                            setIsMulti(true);
                           setStopDate(dzisData);
-                          console.log("isMulti",isMulti);
-                          console.log("StopDate",stopDate);
+                         // console.log("isMulti",isMulti);
+                          //console.log("StopDate",stopDate);
                             
                         
                             //jezeli jest debt w multi
@@ -186,14 +186,14 @@ useEffect(()=>{
 
                                   //jesli mamy pauze
                                 if(docSnap.data().pause){
-                                 console.log("uzytkownik pauzujacy")
+                                 //console.log("uzytkownik pauzujacy")
                                  setStopDate(dzisData);
                                  setCurrentUserPausaDate(docSnap.data().pause);
 
 
                                  //jesli zadluzenie w pauzie
                               if(docSnap.data().debt){          
-                               console.log("uzytkownik zadluzony")
+                               //console.log("uzytkownik zadluzony")
                               setStopDate(dzisData);
                                setFinalDebt(docSnap.data().debt)  
                               }

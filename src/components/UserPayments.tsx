@@ -161,7 +161,10 @@ useEffect(()=>{
       userUid: chosenUserById,
       kto: `${name} ${surname}`,
       trenings: 8,
-      amount: 120  
+      amount: 120,
+      due: newDueDate,
+      prevdebt: hasDebt,
+      prevadd: hasAdd
     } 
 
    if(newDueDate){
@@ -175,6 +178,7 @@ useEffect(()=>{
       
    }
  //dodaj do archive
+ 
  await addDoc(collection(db, "paymentArchive"), dataToPaymentArchive)
  .then(()=> console.log("payment set to archive"))
  }

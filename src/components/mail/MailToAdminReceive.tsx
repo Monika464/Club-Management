@@ -38,7 +38,7 @@ export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = 
         if (currentUser) {
             const messageRef = collection(db, "usersmessages");
             const querySnapshot = await getDocs(messageRef );
-            console.log("messageRef", messageRef)
+            //console.log("messageRef", messageRef)
 
             const temp: IMessage[] = [];
 
@@ -46,7 +46,7 @@ export const MailToAdminReceive: React.FunctionComponent<IMailToAdminReceive> = 
               // doc.data() is never undefined for query doc snapshots
              // console.log("czytanie messages", doc.id, " => ", doc.data());
               temp.push({...doc.data(),id:doc.id} as IMessage );
-              console.log("...doc.data(),id:doc.id", doc.data(),doc.id)
+             // console.log("...doc.data(),id:doc.id", doc.data(),doc.id)
               
             });
 
@@ -138,7 +138,7 @@ const readMessagesIds = Object.keys(readMessages).filter((id) => readMessages[id
 return(<div>
     <div>
       <div className="checkboxFlex">
-        Skrzynka trenera 
+       <p className="title">Skrzynka trenera </p> 
         {messages &&
           messages.map((elem) => {
            // const labelStyle = isReadMessages[elem.id] ? { color: 'gray' } : {};
@@ -149,6 +149,7 @@ return(<div>
             return (
               <div key={elem.id} className="messageContainer">
                 <label style={labelStyle}>
+                <p className="maildate">{`${format(new Date(elem.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
                   <div className="checkbox">
                     <input
                       type="checkbox"
@@ -158,8 +159,9 @@ return(<div>
                       }}
                     />
                   </div>
-                  {elem.message}
-                  <p className="comment-date">{`${format(new Date(elem.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
+                 
+                  <p className="message">{elem.message}</p>
+                 
                   {/* {elem.created_at.toDate().toString()} */}
                   {/* <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL',{
               year: 'numeric',
@@ -169,14 +171,21 @@ return(<div>
               minute: '2-digit',
              })}`}</p> */}
                      <div className="comment-author mail">
-                  <p>wiadomośc od: {elem.name}{elem.surname}</p>
+                  <p className="od">wiadomośc od: {elem.name}{elem.surname}</p>
                   </div>
                   <br></br>
                 </label>
                 {elem.fresh === true ? (
-                  <img src={isReadMessages[elem.id] ? read : notread} onClick={() => handleReadChange(elem.id)} style={{ width: '17px', height: '17px' }}/>
+                  <img src={isReadMessages[elem.id] ? read : notread} 
+                  onClick={() => handleReadChange(elem.id)} 
+    
+                  className="readnotread"
+                  />
                 ) : (
-                  <img src={read} style={{ width: '17px', height: '17px' }}/>
+                  <img src={read} 
+                 
+                  className="readnotread"
+                  />
                 )}
               </div>
             );

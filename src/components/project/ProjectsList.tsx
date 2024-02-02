@@ -95,13 +95,13 @@ export interface IComment{
                                            
                             <h4>{project.name}</h4>
                             {/* <p>{`${project.eventdate.toDate().toLocaleDateString('pl-PL')}`}</p> */}
-                            <p>{`${format(new Date(project.eventdate?.toMillis()), 'PPP',{locale: pl})}`}</p>
+                            <p style={{ fontSize: 'small' }}>{`${format(new Date(project.eventdate?.toMillis()), 'PPP',{locale: pl})}`}</p>
                        </Link> 
                             <div className="details">
                               {/* <p>{project.details}</p>  */}
                               {/* <p>{catDetail}</p> */}
                               <p>{ project.details &&  project.details.slice(0, 180)}</p> 
-                              <Link to={`/projects/${project.id}`} style={{ fontSize: 'small' }}>{'czytaj dalej >>>'}</Link>
+                              <Link to={`/projects/${project.id}`} style={{ fontSize: 'small', color: 'var(--primary-color)'  }}>{'czytaj dalej >>>'}</Link>
                           </div>
                           <Link to={`/projects/${project.id}`}>
                           <img src={project.photo} alt="photo" className="photo" />

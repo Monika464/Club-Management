@@ -47,7 +47,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
 
     const getUserDatafromBase = useCallback(async () => {
       
-      console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
+     // console.log('paymentDateIndex',paymentDateIndex, "dis index",dzisIndex )
         if(currentUser){  
               
           const userRef = doc(db, "usersData",currentUser.uid);
@@ -80,7 +80,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
               //due
               if(docSnap.data().due){
                   setDue(docSnap.data().due)
-                  console.log("czy due",due?.toMillis().toString())
+                  //console.log("czy due",due?.toMillis().toString())
               }
               //pause
               if(docSnap.data().pause){

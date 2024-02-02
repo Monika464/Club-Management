@@ -136,10 +136,11 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => {
                      })
                 .then(()=>console.log("you are back. update succesful"))
                  .then(()=>setisSent(true))
+                 .then(()=> alert("powrót do treningów zapisany"))
+                 .then(()=> navigate('/userpanel'))
                 
                  await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-                    .then(()=> console.log("archive"))
-                    .then(()=> navigate('/injuryuser'))
+                    
                 }
 
                 if(isPass){ 
@@ -152,11 +153,13 @@ export const BackAfterInjuryUser2 : React.FunctionComponent<Itest> =() => {
                   })
                   .then(()=>{console.log("powrot do treningów nowa płatnosc zapisana")})
                   .then(()=>{setisSent(true)})
+                  .then(()=> alert("powrót do treningów zapisany"))
+                  .then(()=> navigate('/userpanel'))
                   
                   //kopia do archive
                   await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-                  .then(()=> console.log("archive"))
-                  .then(()=> navigate('/injuryuser'))
+                  //.then(()=> console.log("archive"))
+                  
                   } 
                     
                 }    

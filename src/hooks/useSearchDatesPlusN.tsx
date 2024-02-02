@@ -83,7 +83,7 @@ const paymentMonth = new Date(userDueDate?.toMillis()).getMonth()
 const paymentDay = new Date(userDueDate?.toMillis()).getDate() 
 
 
-console.log("paymentYear",paymentYear, paymentMonth,paymentDay)
+//console.log("paymentYear",paymentYear, paymentMonth,paymentDay)
 
 
 

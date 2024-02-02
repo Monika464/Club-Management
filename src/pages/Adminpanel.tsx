@@ -29,7 +29,7 @@ const Adminpanel: React.FunctionComponent =() => {
 
               <div className='zero'>
                      <div className="profile">
-                      <p>Witaj adminie  </p> 
+                      <p className="title">Witaj adminie  </p> 
                       <br></br><br></br>
                     {/* <img src={mail} onClick={() => navigate('/mailboxadmin')}/>  */}
                     </div>
@@ -49,23 +49,23 @@ const Adminpanel: React.FunctionComponent =() => {
 <div className='linkowisko'>
             <ul className="linkshape">
                 <li>              
-                    <NavLink to="/home"  >Aktualności     
+                    <NavLink to="/home"  >Wydarzenia    
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/create"  >Stwórz              
+                    <NavLink  to="/create"  >Dodaj event              
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/membershipadmin"  >Zatrzymaj
+                    <NavLink  to="/membershipadmin"  >Rezygnacje
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/paymentadmin"  >Płatnośc          
+                    <NavLink  to="/paymentadmin"  >Płatności          
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/injuryadmin"  >Kontuzja
+                    <NavLink  to="/injuryadmin"  >Kontuzje
                   
                     </NavLink>
                 </li>
@@ -86,7 +86,7 @@ const Adminpanel: React.FunctionComponent =() => {
                     </NavLink>
                 </li>
                 <li>              
-                    <NavLink  to="/signup"  >Nowy
+                    <NavLink  to="/signup"  >Nowy użytkownik
                     </NavLink>
                 </li>           
             </ul>

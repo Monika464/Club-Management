@@ -67,7 +67,7 @@ export interface IDocument {
 
     return (
         <>
-            <h2 className='page-title'>Dashboard</h2>
+            <h2 className='page-title'>Wydarzenia klubowe</h2>
        {error && <p className='error'>{error}</p>}
        {dataFromCollection && <ProjectList projects={dataFromCollection}/>}
 

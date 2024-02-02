@@ -138,14 +138,15 @@ return(
      <ul>
     {props.project?.comments &&  props.project?.comments?.length>0 && props.project.comments.map((com)=>(
       <li key={com.id}>
+         <p className="comment-date">{`${format(new Date(com.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
         <div className="comment-author" data-comment-id={com.id}>
           {com.uid && (com.uid === currentUser?.uid) && <img src={dot} width="20px" onClick={handleClickDot}></img>}
-
+         
           <Avatar src={com.photoURL}/>
 
             <p className="comment-content">{com.displayName}</p>
             </div>
-            <p className="comment-date">{`${format(new Date(com.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
+           
         
 
  

@@ -33,9 +33,6 @@ const [name, setName] = useState<string | null>(null)
 const [surname, setSurname] = useState<string | null>(null)
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
-//const [modIndFin, setModIndFin] = useState<number | null>(null) 
-//const [modDatFin, setModDatFin] = useState<Date | null>(null) 
-//const [stopDateFromBase, setStopDateFromBase] = useState<Date | null>()
 const [rendered, setRendered] = useState(false);
 //const [dataDue, setDataDue] = useState<IdateObj | null>()
 
@@ -198,6 +195,8 @@ if(currentUser) {
       .then(()=>console.log("stop date update succesful"))
       .then(()=>  setStopDate(null))
       .then(()=>   setisSent(true))
+      .then(()=> alert("rezygnacja zapisana"))
+      .then(()=> navigate('/userpanel'))
     } 
 
     if(isMulti){
@@ -212,6 +211,8 @@ if(currentUser) {
       .then(()=>  setStopDate(null))
       .then(()=>   setisSent(true))
       .then(()=>   setFinalDebt(null))
+      .then(()=> alert("rezygnacja zapisana"))
+      .then(()=> navigate('/userpanel'))
     }
    // console.log("czy tu jest isPass",isPass)   false
     if(isPass){
@@ -228,6 +229,8 @@ if(currentUser) {
           .then(()=>  setStopDate(null))
           .then(()=>   setisSent(true))
           .then(()=>   setFinalDebt(null))
+          .then(()=> alert("rezygnacja zapisana"))
+          .then(()=> navigate('/userpanel'))
 
       }
      
@@ -254,8 +257,8 @@ if(currentUser) {
 
 
          await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-        .then(()=> console.log("archive"))  
-        .then(()=> navigate('/membershipuser'))
+        // .then(()=> console.log("archive"))  
+        // .then(()=> navigate('/membershipuser'))
 
   }
 }

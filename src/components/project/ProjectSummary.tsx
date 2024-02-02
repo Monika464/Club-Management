@@ -57,10 +57,11 @@ interface ProjectSummaryProps {
         
         
         return(<div>
+              
 {props.project && 
 
     <div className="project-summary"> 
-
+<p><Link to="/home" className='linkback'>Aktualności</Link></p>
             <h1 className="page-title">{props?.project?.name}</h1>
 
            
@@ -70,7 +71,7 @@ interface ProjectSummaryProps {
 
             <img src={props?.project?.photo} className='photo' />
 
-        <h4>projekt realizujemy z</h4>
+        <h4>Jesteśmy z zawodnikami</h4>
        
        
         <div className="assigned-users">
@@ -86,9 +87,9 @@ interface ProjectSummaryProps {
            
           </ul>
           </div>
-          <p className='linkback'><Link to="/home">powrót</Link></p>
+        
 
-</div>     
+  </div>     
 
 
 }

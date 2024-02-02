@@ -36,7 +36,7 @@ const [injuryDescription, setInjuryDescripton] = useState<string>('');
 const [isMulti, setIsMulti] = useState<boolean>(false)
 const [isPass, setIsPass] = useState<boolean>(false)
 const [debt, setDebt] = useState<number | null>(null)
-const [rendered, setRendered] = useState(false);
+//const [rendered, setRendered] = useState(false);
 
 
 
@@ -144,11 +144,13 @@ if(currentUser){
         })
         .then(()=>console.log("debt modified. update succesful"))
         .then(()=>setisSent(true))
-      
+        .then(()=> alert("przerwa w treningach zapisana"))
+         .then(()=> navigate('/userpanel'))
       
         await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-        .then(()=> console.log("archive"))
-        .then(()=> navigate('/userpanel'))
+           // .then(()=> alert("przerwa w treningach zapisana"))
+        //  .then(()=> navigate('/userpanel'))
+  
       } 
 
         if(isPass){
@@ -164,12 +166,15 @@ if(currentUser){
              .then(()=>  setPausaDate(null))
             .then(()=>   setisSent(true))
             .then(()=>   setPausaAdd(null))  
-           }
+            .then(()=> alert("przerwa w treningach zapisana"))
+            .then(()=> navigate('/userpanel'))
+          
+        }
          
 
           await addDoc(collection(db, "activitiArchive"), dataToActivityArchive)
-         //.then(()=> console.log("archive tu"))
-          .then(()=> navigate('/injuryuser'))
+        //  .then(()=> console.log("archive tu"))
+        //   .then(()=> navigate('/injuryuser'))
           }
 
 

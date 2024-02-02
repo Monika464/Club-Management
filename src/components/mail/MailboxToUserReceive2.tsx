@@ -132,9 +132,9 @@ const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMess
 };
 
     return(<div>
-        
+         <p className="title">Wiadomości od trenera</p>
         <div className="checkboxFlex">
-      {/* ... Pozostała część kodu ... */}
+   
       {messages &&
         messages.map((elem) => {
           const labelStyle = {
@@ -142,8 +142,10 @@ const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMess
           };
 
           return (
+
+           
             <div key={elem.id} className="messageContainer">
-              <label style={labelStyle}>
+             <label style={labelStyle}>
                 <div className="checkbox">
                   <input
                     type="checkbox"
@@ -153,8 +155,8 @@ const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMess
                     }}
                   />
                 </div>
-                {elem.message}
-                <p className="comment-date">{`${format(new Date(elem.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
+                <p className="message">{elem.message}</p>
+                <p className="maildate">{`${format(new Date(elem.created_at?.toMillis()), 'yyyy-MM-dd HH:mm')}`}</p>
                 {/* <p className="comment-date">{`${elem.created_at?.toDate().toLocaleDateString('pl-PL', {
                   year: 'numeric',
                   month: 'numeric',
@@ -170,11 +172,15 @@ const filteredCheckedMessages = messages ? messages.filter((elem) => checkedMess
                   </div> */}
                   <img src={isReadMessages[elem.id] ? read : notread} 
                   onClick={() => handleReadChange(elem.id)} 
-                  style={{ width: '17px', height: '17px' }}         
+                  // style={{ width: '15px', height: '15px' }}         
+                  className="readnotread"
                   />
                 </>
               ) : (
-                <img src={read} style={{ width: '17px', height: '17px' }}/>
+                <img src={read} 
+                // style={{ width: '15px', height: '15px' }}
+                className="readnotread"
+                />
               )}
             </div>
           );

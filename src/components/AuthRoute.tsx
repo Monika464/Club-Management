@@ -19,7 +19,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> =(props) => {
      const AuthCheck = onAuthStateChanged (auth, (user)=>{
          if(user){
             setLoading(false)
-            console.log("jest user",user.displayName, user.email, user.uid);
+            //console.log("jest user",user.displayName, user.email, user.uid);
             navigate('/userpanel');
                        
          } else {

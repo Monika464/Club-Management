@@ -2,12 +2,13 @@
 import React, { ChangeEvent, FormEvent,useContext,useState } from 'react';
 import './Login.css';
 import {   signInWithEmailAndPassword} from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 import { auth } from "../App";
 import { useIsAdmin } from '../hooks/useIsAdmin';
 import { UserContext } from '../context/UserContext';
+
 
 export interface IApplicationProps {};
 
@@ -54,7 +55,7 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
       
    })
 
-   
+  
 };
 // const resetFormFields = () => {
 //   return (
@@ -100,6 +101,9 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
               <br/>
           <button className="btn" disabled={authing} >Zaloguj </button>
           </form>
+
+          {/* <ForgotPass/> */}
+          <Link to={'/forgotpass'} style={{fontSize: 'small'}}>Nie pamiętam hasła</Link>
        
 
     </div>

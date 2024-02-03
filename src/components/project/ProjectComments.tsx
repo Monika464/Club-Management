@@ -98,7 +98,7 @@ const deleteComment =async(projid: string, comid: string)=>{
   if (props.project && props.project.comments) {
     const filteredComments = props.project.comments.filter((comment) => comment.id.toString() !== comid );
    
-console.log('filteredComments',filteredComments)
+//console.log('filteredComments',filteredComments)
     const userRef = doc(db, 'projects',projid);
     await updateDoc(userRef, {
       comments: filteredComments,

@@ -12,7 +12,7 @@ import AuthRoute from './components/AuthRoute.tsx';
 import AdminRoute from './components/AdminRoute.tsx';
 import Navbar from './components/Navbar.tsx';
 import { UserContextProvider} from './context/UserContext.tsx';
-import { getAuth } from 'firebase/auth';
+import { getAuth,sendPasswordResetEmail } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import Signup2 from './components/newuserform/Signup2.tsx';
 import Create from './pages/Create.tsx';
@@ -42,6 +42,7 @@ import AdminMailbox from './pages/AdminMailbox.tsx';
 import { RaportUsersPage } from './pages/RaportUserspage.tsx';
 //import StopActivityPage from './pages/StopActivitypage.tsx';
 import Instruction from './pages/Instruction.tsx';
+import ForgotPass from './components/ForgotPass.tsx';
 // import PaymentAdminPage from './pages/PaymentAdminPage.tsx';
 
 
@@ -56,11 +57,40 @@ import Instruction from './pages/Instruction.tsx';
 
 export interface IApplicationProps {}
 
+// Funkcja resetująca hasło i wysyłająca e-mail z linkiem resetującym
 
+
+
+const actionCodeSettings = {
+        //url: 'https://example.com/reset-password',
+        url: 'https://club-ts-407c6.web.app',
+        handleCodeInApp: true,
+      };
+      
+      const sendCustomPasswordResetEmail = (email: string) => {
+        // Tutaj możesz umieścić własną logikę wysyłania e-maila resetującego, np. za pomocą usługi SMTP
+        console.log(`Wysłano e-mail resetujący na adres: ${email}`);
+        // W rzeczywistej aplikacji powinieneś użyć odpowiedniej usługi lub API do wysyłania e-maili
+      };
+      
+      export const resetPassForEmail = (email: string) => {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email, actionCodeSettings)
+          .then(() => {
+            return sendCustomPasswordResetEmail(email);
+          })
+          .then(()=>{console.log("wyslano hasło na email")} )
+          .catch((error) => {
+            console.error('Błąd podczas resetowania hasła:', error.message);
+            // Tutaj możesz obsłużyć błędy związane z wysyłaniem e-maila resetującego
+          });
+      };
 
 const Application: React.FunctionComponent = () => {
  // const { currentUser} = useContext(UserContext);
 //const [isUser, setIsUser] = useContext(false)
+
+
   
   return (
  <div className='App'>
@@ -274,7 +304,9 @@ const Application: React.FunctionComponent = () => {
               </AuthRoute>       
               }/>
 
-    
+        <Route path="forgotpass" element={               
+              <ForgotPass />                
+              }/>
           
            
               <Route path="signup" element={<SignupPage />}/>

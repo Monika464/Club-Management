@@ -6,7 +6,7 @@ import { useContext, useState } from 'react'
 import { getAuth, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
 //import { getStorage } from "firebase/storage";
 //import { v4 as uuidv4 } from 'uuid';
-import { auth } from '../App';
+import { auth, resetPassForEmail } from '../App';
 import SetAvatar from './newuserform/SetAvatar';
 import ChoosingAvatar from './ChoosingAvatar';
 import { UserContext } from '../context/UserContext';
@@ -107,6 +107,18 @@ const handleName = () =>{
         }
 
 
+        //to musisz dac zrobic mowy formularz
+        //nowa trone dla zapomnianego hasla
+
+        //console.log("current user", currentUser?.email )
+      // const handleSendPass =() =>{
+      //   if(currentUser){
+      //   resetPassForEmail(currentUser.email)
+      // }
+      // }
+      
+
+
     return(<>
 
 
@@ -195,6 +207,8 @@ const handleName = () =>{
        />
 
 <button onClick={updatingPassword}>Uaktualnij</button>
+
+{/* <button onClick={handleSendPass}>wyslij nowe hasło</button> */}
    </li>
    </ul>
   

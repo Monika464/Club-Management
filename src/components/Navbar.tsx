@@ -75,7 +75,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =() => {
    {currentUser && !isUserRegistered && <NavLink to="/signup2" className="navlink">Zarejestruj</NavLink>} 
     </li>
     <li>
-    {!currentUser &&    <NavLink to="/login" className="navlink">Login</NavLink>} 
+    {!currentUser &&    <NavLink to="/login" className="navlink">Zaloguj</NavLink>} 
     </li>
 
     <li> 
@@ -86,7 +86,7 @@ const Navbar: React.FunctionComponent<INavbarProps> =() => {
     </li> 
      
     <li> 
-   {currentUser && <button className="btn" onClick={logout}  >Logout</button>}
+   {currentUser && <button className="btn" onClick={logout}  >Wyloguj</button>}
     </li> 
   
     {/* <button onClick={handlePrzenies}>przenies</button> */}

@@ -6,7 +6,7 @@ import { useContext, useState } from 'react'
 import { getAuth, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
 //import { getStorage } from "firebase/storage";
 //import { v4 as uuidv4 } from 'uuid';
-import { auth, resetPassForEmail } from '../App';
+import { auth} from '../App';
 import SetAvatar from './newuserform/SetAvatar';
 import ChoosingAvatar from './ChoosingAvatar';
 import { UserContext } from '../context/UserContext';
@@ -23,8 +23,11 @@ export const UserProfile : React.FunctionComponent<IUserProfile > =() => {
   const [pictureURL, setPictureURL] = useState<string>('');
     const [isEdited, setIsEdited] = useState<boolean>(false);
     const [email, setEmail] = useState("");
+    const [showEmail, setShowEmail] = useState<boolean>(false);
+   
     const { currentUser} = useContext(UserContext);
- const navigate = useNavigate();
+ 
+    const navigate = useNavigate();
 
 const handleName = () =>{  
   const auth = getAuth();
@@ -79,11 +82,13 @@ const handleName = () =>{
         // ...
       });
     }
+    
     }
 
    //console.log('isEdited',isEdited)
     const handleEdit =()=>{
       setIsEdited(!isEdited)
+      setShowEmail(false)
       //navigate('/userpanel')
     }
 
@@ -106,7 +111,9 @@ const handleName = () =>{
          }
         }
 
-
+const showingEmail =()=>{
+  setShowEmail(true)
+}
         //to musisz dac zrobic mowy formularz
         //nowa trone dla zapomnianego hasla
 
@@ -190,11 +197,10 @@ const handleName = () =>{
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
       }} 
-
        />
-
 <button onClick={updatingEmail}>Uaktualnij</button>
-
+<button className='btnmikro' onClick={showingEmail}>Pokaz aktualny</button>
+{showEmail && currentUser && <p>{(currentUser.email)?.toString()}</p>}
    </li>
    <li>
    <br></br>

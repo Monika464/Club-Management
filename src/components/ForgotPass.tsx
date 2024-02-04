@@ -1,7 +1,7 @@
-import { ChangeEvent, SetStateAction, useState } from "react"
+import {  SetStateAction, useState } from "react"
 import { resetPassForEmail } from "../App";
 import './Login.css';
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export interface IForgotPassProps {
 
@@ -13,7 +13,7 @@ const ForgotPass: React.FunctionComponent<IForgotPassProps> =() => {
   const [isSend, setIsSend] = useState(false);
   //const [isError, setIsError] = useState('');
 
-  const navigate = useNavigate();
+
   
   const handleSendPass =() =>{
     if(email){

@@ -140,7 +140,7 @@ const paymentDateIndex  = useSearchDatesPlusN(0, currentUser?.uid);
       </>}
         { (!isPause && !isStop && !isMulti) && <div>
          {(paymentDateIndex < dzisIndex) &&  
-        <p className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} wejśc</p> 
+        <p className="debt">zadłuzenie: {dzisIndex -paymentDateIndex} wejść</p> 
          }
         </div>}
         <br></br> <br></br>

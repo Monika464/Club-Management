@@ -141,14 +141,14 @@ const settingName = useCallback( async ()=>{
 if(dueDate){
   // Sprawdź, czy jest dzisiaj
       if (isToday(dueDate.toMillis())) {
-         console.log("To jest dzisiaj!");
+        // console.log("To jest dzisiaj!");
         } else {
       // Porównaj daty
     const comparisonResult = compareAsc(dueDate.toMillis(), new Date());
        if (comparisonResult === 1) {
-     console.log("To będzie później");
+     //console.log("To będzie później");
   } else if (comparisonResult === -1) {
-    console.log("To było wcześniej");
+    //console.log("To było wcześniej");
   } 
 }
 }
@@ -169,7 +169,7 @@ useEffect(()=>{
    
  },[currentUser,dzisIndex,settingName,rendered])
 
- console.log("czy jest stopdate",stopDate)
+ //console.log("czy jest stopdate",stopDate)
 
      const dataToActivityArchive = {
       created_at: serverTimestamp(),

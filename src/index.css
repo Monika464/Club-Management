@@ -85,7 +85,21 @@ ul {
     color: #fff;
     background-color: var(--primary-color);
   }
-
+  .btnmikro{
+    background: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: var(--primary-color);
+    cursor: pointer;
+    /* font-size: 1em; */
+    border: 1px solid var(--primary-color);
+    max-width: 200px;
+    transform: scale(0.65)
+  }
+  .btnmikro:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+  }
 
 /* forms */
 label {
@@ -220,6 +234,10 @@ textarea {
   font-weight: bold;
   color: var(--highlight-color);
 }
+
+
+
+
 
 @media screen and (max-width: 600px) {
   /* Dodatkowe style dla ekranów o szerokości <= 600px (dla małych urządzeń) */
